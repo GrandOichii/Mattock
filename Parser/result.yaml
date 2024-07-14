@@ -1,0 +1,52 @@
+parentName: root
+status: SUCCESS
+children:
+- parentName: activated-ability
+  status: SUCCESS
+  children:
+  - parentName: cost-splitter
+    status: SUCCESS
+    children:
+    - parentName: cost-selector
+      status: SUCCESS
+      children:
+      - parentName: pip-cost
+        status: CHILD_FAILED
+        children:
+        - parentName: pip-splitter
+          status: DIDNT_MATCH
+          children:
+          - parentName: pip-selector
+            status: DIDNT_MATCH
+            children:
+            - parentName: mana-pip
+              status: DIDNT_MATCH
+              children: []
+              text: T
+            - parentName: generic-pip
+              status: DIDNT_MATCH
+              children: []
+              text: T
+            text: T
+          text: T
+        text: '{T}'
+      - parentName: tap
+        status: SUCCESS
+        children: []
+        text: '{T}'
+      text: '{T}'
+    text: '{T}'
+  - parentName: effect
+    status: SUCCESS
+    children:
+    - parentName: add-mana
+      status: DIDNT_MATCH
+      children: []
+      text: You gain 1 life.
+    - parentName: life-gain-effect
+      status: SUCCESS
+      children: []
+      text: You gain 1 life.
+    text: You gain 1 life.
+  text: '{T}: You gain 1 life.'
+text: '{T}: You gain 1 life.'
