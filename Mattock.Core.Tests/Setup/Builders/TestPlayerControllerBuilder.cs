@@ -1,23 +1,37 @@
+using Mattock.Core.Setup.Templates;
+
 namespace Mattock.Core.Tests.Setup.Builders;
 
 public class TestPlayerControllerBuilder
 {
     private string _name;
+    private DeckTemplate _deck;
 
     public PlayerChoicesBuilder PlayerChoices { get; }
 
     public TestPlayerControllerBuilder(string name)
     {
         _name = name;
+        _deck = new()
+        {
+            MainDeck = []
+        };
         PlayerChoices = new(this);
     }
 
     public PlayerChoicesBuilder ChoosePlayer => PlayerChoices;
 
+    public TestPlayerControllerBuilder SetDeck(DeckTemplate deck)
+    {
+        _deck = deck;
+        return this;
+    }
+
     public TestPlayerController Build()
     {
         return new(
             _name,
+            _deck,
             PlayerChoices.Queue
         );
     }

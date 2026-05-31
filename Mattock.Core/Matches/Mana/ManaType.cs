@@ -9,3 +9,17 @@ public enum ManaType
     Green = 4,
     Colorless = 5,
 }
+
+public static class ManaTypeExtensions
+{
+    public static string ToManaSymbol(this ManaType t) => "{" + (t switch
+    {
+        ManaType.White => "W",
+        ManaType.Blue => "U",
+        ManaType.Black => "B",
+        ManaType.Red => "R",
+        ManaType.Green => "G",
+        ManaType.Colorless => "C",
+        _ => throw new Exception($"Unrecognized mana type: {t}"),
+    }) + "}";
+}

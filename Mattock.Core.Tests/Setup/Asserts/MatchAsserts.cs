@@ -4,6 +4,15 @@ namespace Mattock.Core.Tests.Setup.Asserts;
 
 public class MatchAsserts(TestMatchWrapper match)
 {
+    public MatchAsserts NoChoicesLeft()
+    {
+        foreach (var player in match.Players)
+        {
+            player.AssertNoChoicesLeft();        
+        }
+        return this;
+    }
+
     public MatchAsserts CrashedIntentially()
     {
         match.Exception.ShouldNotBeNull();

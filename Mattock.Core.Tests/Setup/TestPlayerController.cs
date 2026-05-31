@@ -1,16 +1,20 @@
+using Mattock.Core.Setup.Templates;
+
 namespace Mattock.Core.Tests.Setup;
 
 public class TestPlayerController(
     string name,
-    // DeckTemplate deck,
+    DeckTemplate deck,
     Queue<TestPlayerController.PlayerChoice> playerChoices
     ) : IPlayerController
 {
     // public delegate Task<(string?, bool)> PlayerAction(TestMatch match, Player player, List<string> options);
     public delegate Task<(Player?, bool)> PlayerChoice(Player player, Player[] options, string hint);
 
-    // public DeckTemplate Deck { get; }
-
+    public void AssertNoChoicesLeft()
+    {
+        playerChoices.Count.ShouldBe(0, $"{nameof(PlayerChoice)} queue of player {name} is not empty");
+    }
 
     public PlayerSetup GetPlayerSetup()
     {
@@ -18,6 +22,7 @@ public class TestPlayerController(
         {
             Name = name,
             Controller = this,
+            Deck = deck,
         };
     }
 

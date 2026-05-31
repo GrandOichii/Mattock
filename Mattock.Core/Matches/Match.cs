@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Setup;
 
 namespace Mattock.Core.Matches;
@@ -11,6 +12,8 @@ public class Match
     public Player[] Players { get; }
     public int ActivePlayerIdx { get; private set; }
     public Battlefield Battlefield { get; }
+    private int _lastCardId;
+    public CardZoneChange? ZoneChange { get; private set; }
 
 
     // constructors
@@ -32,11 +35,15 @@ public class Match
             : config.FirstPlayerIdx;
 
         Battlefield = new(this);
+
+        _lastCardId = 0;
+        ZoneChange = null;
     }
 
     public Player GetActivePlayer() => Players[ActivePlayerIdx];
 
     // methods
+
     public async Task Run()
     {
         // Game start
@@ -56,7 +63,37 @@ public class Match
             player.Life.Set(Config.StartingLifeTotal);
         }
 
+        // Form player decks
+
+        foreach (var player in Players)
+        {
+            player.FormDeck();
+        }
+
+        // Draw initial hand
+
+        foreach (var player in Players)
+        {
+            player.Draw(Config.InitialHandSize);
+        }
+
         // TODO
     }
 
+    public string GenerateCardId() => $"c{++_lastCardId}";
+
+    public void MoveCard(
+        Card card,
+        ICardZone fromZone,
+        ICardZone toZone,
+        CardZoneChangeType type
+    )
+    {
+        ZoneChange = new(card, fromZone, toZone, type);
+
+        // TODO apply all zone change replacement effects
+
+        ZoneChange.Process();
+        ZoneChange = null;
+    }
 }

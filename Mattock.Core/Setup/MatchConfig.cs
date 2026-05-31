@@ -7,6 +7,8 @@ public class MatchConfig
     public required bool RandomFirstPlayer { get; set; }
     public required int FirstPlayerIdx { get; set; }
     public required int StartingLifeTotal { get; set; }
+    public required int InitialHandSize { get; set; }
+    public required bool GameLossIfRequiredToDrawFromEmptyDeck { get; set; }
 
     public readonly static MatchConfig Default = new()
     {
@@ -15,6 +17,8 @@ public class MatchConfig
         Seed = -1,
         RandomMatch = true,
         StartingLifeTotal = 20,
+        InitialHandSize = 7,
+        GameLossIfRequiredToDrawFromEmptyDeck = true,
     };
 
     public static MatchConfig Copy(MatchConfig config) => new()
@@ -24,5 +28,7 @@ public class MatchConfig
         RandomFirstPlayer = config.RandomFirstPlayer,
         RandomMatch = config.RandomMatch,
         StartingLifeTotal = config.StartingLifeTotal,
+        InitialHandSize = config.InitialHandSize,
+        GameLossIfRequiredToDrawFromEmptyDeck = config.GameLossIfRequiredToDrawFromEmptyDeck,
     };
 }

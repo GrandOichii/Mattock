@@ -1,3 +1,5 @@
+## 1. Game Concepts
+
 - [ ] 100. __General__
     - [ ] 100.4 
     - [ ] 100.5.
@@ -16,21 +18,21 @@
     - [ ] 102.3.
     - [ ] 102.4.
 - [ ] 103. __Starting the Game__
-    - [ ] 103.1. 
-    - [ ] 103.2. 
-        - [ ] 103.2a
-        - [ ] 103.2b
-        - [ ] 103.2c
-        - [ ] 103.2d
-        - [ ] 103.2e
-    - [ ] 103.3.
+    - [X] 103.1. At the start of a game, the players determine which one of them will choose who takes the first turn. In the first game of a match (including a single-game match), the players may use any mutually agreeable method (flipping a coin, rolling dice, etc.) to do so. In a match of several games, the loser of the previous game chooses who takes the first turn. If the previous game was a draw, the player who made the choice in that game makes the choice in this game. The player chosen to take the first turn is the starting player. The game’s default turn order begins with the starting player and proceeds clockwise.
+    - [ ] 103.2. Some games require additional steps that are taken after the starting player has been determined. Perform the actions listed in 103.2a–e in order, as applicable
+        - [ ] 103.2a If any players are using sideboards (see rule 100.4) or cards being represented by substitute cards (see rule 713), those cards are set aside. After this happens, each player’s deck is considered their starting deck.
+        - [ ] 103.2b  If any players wish to reveal a card with a companion ability that they own from outside the game, they may do so. A player may reveal no more than one card this way, and they may do so only if their deck fulfills the condition of that card’s companion ability. The revealed card remains outside the game. (See rule 702.139, “Companion.”)
+        - [ ] 103.2c In a Commander game, each player puts their commander from their deck face up into the command zone. See rule 903.6.
+        - [ ] 103.2d In a constructed game, each player playing with sticker sheets reveals all of their sticker sheets and chooses three of them at random. In a limited game, each player chooses up to three sticker sheets from among those in the sealed product they opened and reveals them. In either case, that player has access to only the stickers on the chosen sheets during the game, and those sticker sheets remain revealed. (See rule 123, “Stickers.”)
+        - [ ] 103.2e In a Conspiracy Draft game, each player puts any number of conspiracy cards from their sideboard into the command zone. See rule 905.4.
+    - [X] 103.3. After the starting player has been determined and any additional steps performed, each player shuffles their deck so that the cards are in a random order. Each player may then shuffle or cut their opponents’ decks. The players’ decks become their libraries.
         - [ ] 103.3a
-    - [ ] 103.4.
+    - [X] 103.4.  Each player begins the game with a starting life total of 20. Some variant games have different starting life totals.
         - [ ] 103.4b
         - [ ] 103.4c
         - [ ] 103.4d
         - [ ] 103.4e
-    - [ ] 103.5.
+    - [~] 103.5. Each player draws a number of cards equal to their starting hand size, which is normally seven. (Some effects can modify a player’s starting hand size.) A player who is dissatisfied with their initial hand may take a mulligan. First, the starting player declares whether they will take a mulligan. Then each other player in turn order does the same. Once each player has made a declaration, all players who decided to take mulligans do so at the same time. To take a mulligan, a player shuffles the cards in their hand back into their library, draws a new hand of cards equal to their starting hand size, then puts a number of those cards equal to the number of times that player has taken a mulligan on the bottom of their library in any order. Once a player chooses not to take a mulligan, the remaining cards become that player’s opening hand, and that player may not take any further mulligans. This process is then repeated until no player takes a mulligan. A player can take mulligans until their opening hand would be zero cards, after which they may not take further mulligans.
         - [ ] 103.5a
         - [ ] 103.5b
         - [ ] 103.5c
@@ -74,7 +76,7 @@
     - [ ] 104.5.
     - [ ] 104.6.
 - [ ] 105. __Colors__
-    - [X] 105.1.
+    - [X] 105.1. There are five colors in the Magic game: white, blue, black, red, and green.
     - [ ] 105.2.
         - [ ] 105.2a
         - [ ] 105.2b
@@ -84,8 +86,8 @@
     - [ ] 105.5.
 - [ ] 106. __Mana__
     - [ ] 106.1.
-        - [X] 106.1a
-        - [X] 106.1b
+        - [X] 106.1a There are five colors of mana: white, blue, black, red, and green.
+        - [X] 106.1b There are six types of mana: white, blue, black, red, green, and colorless.
     - [ ] 106.2.
     - [ ] 106.3.
     - [ ] 106.4.
@@ -227,3 +229,311 @@
     - [ ] 111.12.
     - [ ] 111.13.
 - [ ] 112. __Spells__
+    - [ ] 112.1.
+        - [ ] 112.1a
+        - [ ] 112.1b
+    - [ ] 112.2.
+        - [ ] 112.2a
+    - [ ] 112.3.
+    - [ ] 112.4.
+- [ ] 113. __Abilities__
+    - [ ] 113.1.
+        - [ ] 113.1a
+        - [ ] 113.1b
+        - [ ] 113.1c
+    - [ ] 113.2.
+        - [ ] 113.2a
+        - [ ] 113.2b
+        - [ ] 113.2c
+        - [ ] 113.2d
+    - [ ] 113.3.
+        - [ ] 113.3a
+        - [ ] 113.3b
+        - [ ] 113.3c
+        - [ ] 113.3d
+    - [ ] 113.4.
+    - [ ] 113.5.
+    - [ ] 113.6.
+        - [ ] 113.6a
+        - [ ] 113.6b
+        - [ ] 113.6c
+        - [ ] 113.6d
+        - [ ] 113.6e
+        - [ ] 113.6f
+        - [ ] 113.6j
+        - [ ] 113.6h
+        - [ ] 113.6i
+        - [ ] 113.6j
+        - [ ] 113.6k
+        - [ ] 113.6m
+        - [ ] 113.6n
+        - [ ] 113.6p
+    - [ ] 113.7.
+        - [ ] 113.7a
+    - [ ] 113.8.
+    - [ ] 113.9.
+    - [ ] 113.10.
+        - [ ] 113.10a
+        - [ ] 113.10b
+        - [ ] 113.10c
+    - [ ] 113.11.
+    - [ ] 113.12.
+- [ ] 114. __Emblems__
+    - [ ] 114.1.
+    - [ ] 114.2.
+    - [ ] 114.3.
+    - [ ] 114.4.
+    - [ ] 114.5.
+- [ ] 115. __Targets__
+    - [ ] 115.1.
+        - [ ] 115.1a
+        - [ ] 115.1b
+        - [ ] 115.1c
+        - [ ] 115.1d
+        - [ ] 115.1e
+    - [ ] 115.2.
+    - [ ] 115.3.
+    - [ ] 115.4.
+    - [ ] 115.5.
+    - [ ] 115.6.
+    - [ ] 115.7.
+        - [ ] 115.7a
+        - [ ] 115.7b
+        - [ ] 115.7c
+        - [ ] 115.7d
+        - [ ] 115.7e
+        - [ ] 115.7f
+    - [ ] 115.8.
+    - [ ] 115.9.
+        - [ ] 115.9a
+        - [ ] 115.9b
+        - [ ] 115.9c
+    - [ ] 115.10.
+- [ ] 116. __Special Actions__
+    - [ ] 116.1.
+    - [ ] 116.2.
+        - [ ] 116.2a
+        - [ ] 116.2b
+        - [ ] 116.2c
+        - [ ] 116.2d
+        - [ ] 116.2e
+        - [ ] 116.2f
+        - [ ] 116.2g
+        - [ ] 116.2h
+        - [ ] 116.2i
+        - [ ] 116.2j
+        - [ ] 116.2k
+        - [ ] 116.2m
+    - [ ] 116.3.
+- [ ] 117. __Timing and Priority__
+    - [ ] 117.1.
+        - [ ] 117.1a
+        - [ ] 117.1b
+        - [ ] 117.1c
+        - [ ] 117.1d
+    - [ ] 117.2.
+        - [ ] 117.2a
+        - [ ] 117.2b
+        - [ ] 117.2c
+        - [ ] 117.2d
+        - [ ] 117.2e
+    - [ ] 117.3.
+        - [ ] 117.3a
+        - [ ] 117.3b
+        - [ ] 117.3c
+        - [ ] 117.3d
+    - [ ] 117.4.
+    - [ ] 117.5.
+    - [ ] 117.6.
+    - [ ] 117.7.
+- [ ] 118. __Costs__
+    - [ ] 118.1.
+    - [ ] 118.2.
+    - [ ] 118.3.
+        - [ ] 118.3a
+        - [ ] 118.3b
+        - [ ] 118.3c
+    - [ ] 118.4.
+    - [ ] 118.5.
+        - [ ] 118.5a
+    - [ ] 118.6.
+        - [ ] 118.6a
+    - [ ] 118.7.
+        - [ ] 118.7a
+        - [ ] 118.7b
+        - [ ] 118.7c
+        - [ ] 118.7d
+        - [ ] 118.7e
+        - [ ] 118.7f
+        - [ ] 118.7g
+    - [ ] 118.8.
+        - [ ] 118.8a
+        - [ ] 118.8b
+        - [ ] 118.8c
+        - [ ] 118.8d
+    - [ ] 118.9.
+        - [ ] 118.9a
+        - [ ] 118.9b
+        - [ ] 118.9c
+        - [ ] 118.9d
+    - [ ] 118.10.
+    - [ ] 118.11.
+    - [ ] 118.12.
+        - [ ] 118.12a
+        - [ ] 118.12b
+    - [ ] 118.13.
+        - [ ] 118.13a
+        - [ ] 118.13b
+        - [ ] 118.13c
+    - [ ] 118.14.
+- [ ] 119. __Life__
+    - [X] 119.1. Each player begins the game with a starting life total of 20. Some variant games have different starting life totals.
+        - [ ] 119.1b
+        - [ ] 119.1c
+        - [ ] 119.1d
+        - [ ] 119.1e
+    - [ ] 119.2.
+    - [ ] 119.3.
+    - [ ] 119.4.
+        - [ ] 119.4a
+        - [ ] 119.4b
+    - [ ] 119.5.
+    - [ ] 119.6.
+    - [ ] 119.7.
+    - [ ] 119.8.
+    - [ ] 119.9.
+    - [ ] 119.10.
+- [ ] 120. __Damage__
+    - [ ] 120.1.
+        - [ ] 120.1a
+    - [ ] 120.2.
+        - [ ] 120.2a
+        - [ ] 120.2b
+    - [ ] 120.3.
+        - [ ] 120.3a
+        - [ ] 120.3b
+        - [ ] 120.3c
+        - [ ] 120.3d
+        - [ ] 120.3e
+        - [ ] 120.3f
+        - [ ] 120.3g
+        - [ ] 120.3h
+    - [ ] 120.4.
+        - [ ] 120.4a
+        - [ ] 120.4b
+        - [ ] 120.4c
+        - [ ] 120.4d
+    - [ ] 120.5.
+    - [ ] 120.6.
+    - [ ] 120.7.
+    - [ ] 120.8.
+    - [ ] 120.9.
+    - [ ] 120.10.
+- [ ] 121. __Drawing a Card__
+    - [ ] 121.1.
+    - [ ] 121.2.
+        - [ ] 121.2a
+        - [ ] 121.2b
+        - [ ] 121.2c
+        - [ ] 121.2d
+    - [ ] 121.3.
+        - [ ] 121.3a
+    - [ ] 121.4.
+    - [ ] 121.5.
+    - [ ] 121.6.
+        - [ ] 121.6a
+        - [ ] 121.6b
+        - [ ] 121.6c
+    - [ ] 121.7.
+    - [ ] 121.8.
+    - [ ] 121.9.
+- [ ] 122. __Counters__
+    - [ ] 122.1.
+        - [ ] 122.1a
+        - [ ] 122.1b
+        - [ ] 122.1c
+        - [ ] 122.1d
+        - [ ] 122.1e
+        - [ ] 122.1f
+        - [ ] 122.1g
+        - [ ] 122.1h
+        - [ ] 122.1i
+    - [ ] 122.2.
+    - [ ] 122.3.
+    - [ ] 122.4.
+    - [ ] 122.5.
+    - [ ] 122.6.
+        - [ ] 122.6a
+    - [ ] 122.7.
+    - [ ] 122.8.
+    - [ ] 122.9.
+- [ ] 123. __Stickers__
+    - [ ] 123.1.
+    - [ ] 123.2.
+        - [ ] 123.2a
+        - [ ] 123.2b
+        - [ ] 123.2c
+    - [ ] 123.3.
+        - [ ] 123.3a
+        - [ ] 123.3b
+        - [ ] 123.3c
+        - [ ] 123.3d
+    - [ ] 123.4.
+    - [ ] 123.5.
+        - [ ] 123.5a
+        - [ ] 123.5b
+        - [ ] 123.5c
+    - [ ] 123.6.
+        - [ ] 123.6a
+        - [ ] 123.6b
+        - [ ] 123.6c
+        - [ ] 123.6d
+        - [ ] 123.6e
+    - [ ] 123.7.
+        - [ ] 123.7a
+    - [ ] 123.8.
+        - [ ] 123.8a
+    - [ ] 123.9.
+
+## 2. Parts of a Card
+
+- [ ] 200. __General__
+    - [ ] 200.1. 
+    - [ ] 200.2.
+    - [ ] 200.3.
+- [ ] 201. __Name__
+    - [ ] 201.2.
+        - [ ] 201.2a
+        - [ ] 201.2b
+        - [ ] 201.2c
+    - [ ] 201.3.
+        - [ ] 201.3a
+        - [ ] 201.3b
+        - [ ] 201.3c
+    - [ ] 201.4.
+        - [ ] 201.4a
+        - [ ] 201.4b
+        - [ ] 201.4c
+        - [ ] 201.4d
+        - [ ] 201.4e
+        - [ ] 201.4f
+        - [ ] 201.4g
+    - [ ] 201.5.
+        - [ ] 201.5a
+        - [ ] 201.5b
+        - [ ] 201.5c
+    - [ ] 201.6.
+- [ ] 202. __Mana Cost and Color__
+    - [ ] 202.1.
+        - [ ] 202.1a
+        - [ ] 202.1b
+    - [ ] 202.2. An object is the color or colors of the mana symbols in its mana cost, regardless of the color of its frame.
+        - [X] 202.2a The five colors are white, blue, black, red, and green. The white mana symbol is represented by {W}, blue by {U}, black by {B}, red by {R}, and green by {G}
+        - [ ] 202.2b Objects with no colored mana symbols in their mana costs are colorless
+        - [ ] 202.2c An object with two or more different colored mana symbols in its mana cost is each of the colors of those mana symbols. Most multicolored cards are printed with a gold frame, but this is not a requirement for a card to be multicolored.
+        - [ ] 202.2d An object with one or more hybrid mana symbols and/or Phyrexian mana symbols in its mana cost is all of the colors of those mana symbols, in addition to any other colors the object might be. (Most cards with hybrid mana symbols in their mana costs are printed in a two-tone frame. See rule 107.4e.)
+        - [ ] 202.2e An object may have a color indicator printed to the left of the type line. That object is each color denoted by that color indicator. (See rule 204.)
+        - [ ] 202.2f Effects may change an object’s color, give a color to a colorless object, or make a colored object become colorless; see rule 105.3.
+    - [ ] 202.3. The mana value of an object is a number equal to the total amount of mana in its mana cost,regardless of color.
+        - [ ] 202.3a The mana value of an object with no mana cost is 0, unless that object is the back face of a nonmodal double-faced permanent or spell, or it is a melded permanent
+        - [ ] 203.3b The mana value of the back face of a nonmodal double-faced permanent or spell’s back face is calculated as though it had the mana cost of its front face. If a permanent or spell is a copy of the back face of a nonmodal double-faced object (even if the card representing that copy is itself a double-faced card), the mana value of the copy is 0.
