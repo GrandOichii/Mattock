@@ -8,7 +8,11 @@ public class MatchConfig
     public required int FirstPlayerIdx { get; set; }
     public required int StartingLifeTotal { get; set; }
     public required int InitialHandSize { get; set; }
-    public required bool GameLossIfRequiredToDrawFromEmptyDeck { get; set; }
+    public required bool GameLossIfRequiredToDrawFromEmptyLibrary { get; set; }
+    public required int DrawStepDrawAmount { get; set; }
+    public required bool FirstPlayerNoDrawIfSingleOpponent { get; set; }
+    public required int MaxHandSize { get; set; }
+    public required int MaxLandsPerTurn { get; set; }
 
     public readonly static MatchConfig Default = new()
     {
@@ -18,7 +22,11 @@ public class MatchConfig
         RandomMatch = true,
         StartingLifeTotal = 20,
         InitialHandSize = 7,
-        GameLossIfRequiredToDrawFromEmptyDeck = true,
+        GameLossIfRequiredToDrawFromEmptyLibrary = true,
+        DrawStepDrawAmount = 1,
+        FirstPlayerNoDrawIfSingleOpponent = true,
+        MaxHandSize = 7,
+        MaxLandsPerTurn = 1,
     };
 
     public static MatchConfig Copy(MatchConfig config) => new()
@@ -29,6 +37,10 @@ public class MatchConfig
         RandomMatch = config.RandomMatch,
         StartingLifeTotal = config.StartingLifeTotal,
         InitialHandSize = config.InitialHandSize,
-        GameLossIfRequiredToDrawFromEmptyDeck = config.GameLossIfRequiredToDrawFromEmptyDeck,
+        GameLossIfRequiredToDrawFromEmptyLibrary = config.GameLossIfRequiredToDrawFromEmptyLibrary,
+        DrawStepDrawAmount = config.DrawStepDrawAmount,
+        FirstPlayerNoDrawIfSingleOpponent = config.FirstPlayerNoDrawIfSingleOpponent,
+        MaxHandSize = config.MaxHandSize,
+        MaxLandsPerTurn = config.MaxLandsPerTurn,
     };
 }

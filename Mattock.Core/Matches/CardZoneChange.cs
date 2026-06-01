@@ -5,19 +5,16 @@ namespace Mattock.Core.Matches;
 public class CardZoneChange
 {
     public Card Card { get; }
-    public ICardZone FromZone { get; }
     public ICardZone ToZone { get; private set; }
     public CardZoneChangeType Type { get; private set; }
 
     public CardZoneChange(
         Card card,
-        ICardZone fromZone,
         ICardZone toZone,
         CardZoneChangeType type
     )
     {
         Card = card;
-        FromZone = fromZone;
         ToZone = toZone;
         Type = type;
     }
@@ -29,7 +26,13 @@ public class CardZoneChange
 
     public void Process()
     {
-        FromZone.Remove(Card);
+        if (!ToZone.Accepts(Card))
+        {
+            return;
+        }
+        Card.Zone?.Remove(Card);
+
+        Card.SetZone(ToZone);
         ToZone.Add(Card, Type);
     }
 }

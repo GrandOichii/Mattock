@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Tests.Setup.Asserts;
 
 namespace Mattock.Core.Tests.Setup;
@@ -6,8 +7,13 @@ public class TestMatch : Match
 {
     public TestMatch(
         MatchConfig config,
-        PlayerSetup[] setups
-        ) : base(config, setups)
+        PlayerSetup[] setups,
+        Mechanics mechanics
+    ) : base(
+        config, 
+        setups, 
+        mechanics
+    )
     {
     }
 }
@@ -17,16 +23,28 @@ public class TestMatchWrapper
     public MatchConfig Config { get; }
     public Exception? Exception { get; private set; }
     public TestPlayerController[] Players { get; }
+    public Mechanics Mechanics { get; }
 
     public TestMatch? Match { get; private set; }
 
-    public TestMatchWrapper(MatchConfig config, TestPlayerController[] players)
+    public TestMatchWrapper(MatchConfig config, TestPlayerControllerBuilder[] players)
     {
         Config = config;
 
         Match = null;
         Exception = null;
-        Players = players;
+        Players = [.. players.Select(p => p.Build(this))];
+        Mechanics = new();
+    }
+
+    public void SetMulligan(IMulliganRule mulligan)
+    {
+        Mechanics.Mulligan = mulligan;
+    }
+
+    public void RemoveMulligans()
+    {
+        Mechanics.Mulligan = null;
     }
 
     public async Task Run()
@@ -35,7 +53,8 @@ public class TestMatchWrapper
 
         Match = new TestMatch(
             Config,
-            [ .. Players.Select(p => p.GetPlayerSetup() )]
+            [ .. Players.Select(p => p.GetPlayerSetup() )],
+            Mechanics
         );
 
         try

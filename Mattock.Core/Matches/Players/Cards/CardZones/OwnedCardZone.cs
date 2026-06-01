@@ -26,6 +26,7 @@ public abstract class OwnedCardZone : ICardZone
     public void AddRaw(Card card)
     {
         Cards.Add(card);
+        card.SetZone(this);
     }
 
     public Card? GetLast()
@@ -43,14 +44,27 @@ public abstract class OwnedCardZone : ICardZone
 
     public void Add(Card card, CardZoneChangeType type)
     {
+        // * 400.3. If an object would go to any library, graveyard, or hand other than its owner’s, it goes to its owner’s corresponding zone.
+        if (card.OwnerIdx != Player.Idx)
+        {
+            var zone = Match.Players[card.OwnerIdx].GetZoneByName(GetZoneName());
+            zone.Add(card, type);
+            return;
+        }
+        
         switch (type)
         {
             case CardZoneChangeType.Bottom:
-                Cards.Insert(0, card);
-                return;
-            case CardZoneChangeType.Top:
                 Cards.Add(card);
                 return;
+            case CardZoneChangeType.Top:
+                Cards.Insert(0, card);
+                return;
         };
+    }
+
+    public bool Accepts(Card card)
+    {
+        return true;
     }
 }

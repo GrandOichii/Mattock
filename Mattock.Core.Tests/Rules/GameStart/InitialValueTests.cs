@@ -1,42 +1,43 @@
+namespace Mattock.Core.Tests.Rules.GameStart;
 
-using Mattock.Core.Setup.Templates;
-using Mattock.Core.Tests.Setup;
-
-namespace Mattock.Core.Tests.Rules;
-
-public class GameStart
+public class InitialValueTests
 {
     [Theory]
     [Trait("Rules", "103,103.1.,103.4.,119.1.,103.3,103.5")]
     [InlineData(0)]
     [InlineData(1)]
-    public async Task FirstPlayerPrompt_StartingLifeTotal_EmptyDecks(int firstPlayerIdx)
+    public async Task FirstPlayerPrompt_StartingLifeTotal_EmptyLibraries(int firstPlayerIdx)
     {
         // Arrange
         var p1 = new TestPlayerControllerBuilder("p1")
-            .ChoosePlayer.WithIdx(firstPlayerIdx)
-            .Build();
+            .ChoosePlayer.WithIdx(firstPlayerIdx);
 
-        var p2 = new TestPlayerControllerBuilder("p2")
-            .Build();
+        var p2 = new TestPlayerControllerBuilder("p2");
+
+        (firstPlayerIdx == 0
+            ? p1
+            : p2).Act.Crash();
 
         // Act
         var match = new TestMatchWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
+                .GameLossIfRequiredToDrawFromEmptyLibrary(false)
                 .Build(),
             [ p1, p2 ]
         );
+        match.RemoveMulligans();
 
         await match.Run();
 
         // Assert
         match.Assert(a => a
+            .CrashedIntentially()
             .NoChoicesLeft()
             .ActivePlayerIs(firstPlayerIdx)
             .AssertPlayer(0, ap => ap
                 .HasLife(20)
-                .AssertDeck(ad => ad
+                .AssertLibrary(ad => ad
                     .HasCardCount(0)
                 )
                 .AssertHand(ad => ad
@@ -45,7 +46,7 @@ public class GameStart
             )
             .AssertPlayer(1, ap => ap
                 .HasLife(20)
-                .AssertDeck(ad => ad
+                .AssertLibrary(ad => ad
                     .HasCardCount(0)
                 )
                 .AssertHand(ad => ad
@@ -69,33 +70,17 @@ public class GameStart
         var deck = new DeckTemplate()
         {
             MainDeck = [
-                new() {
-                    Amount = 20,
-                    Card = new() {
-                        ColorIndicator = [],
-                        Defense = "",
-                        HandModifier = "",
-                        LifeModifier = "",
-                        Loyalty = 0,
-                        ManaCost = [],
-                        Name = "c1",
-                        Power = "",
-                        Toughness = "",
-                        TextBox = "",
-                        TypeLine = ""
-                    }
-                }
+                new DeckCardTemplateBuilder().Amount(deckSize).Build()
             ]
         };
 
         var p1 = new TestPlayerControllerBuilder("p1")
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
-            .Build();
+            .Act.Crash();
 
         var p2 = new TestPlayerControllerBuilder("p2")
-            .SetDeck(deck)
-            .Build();
+            .SetDeck(deck);
 
         // Act
         var match = new TestMatchWrapper(
@@ -105,14 +90,16 @@ public class GameStart
                 .Build(),
             [ p1, p2 ]
         );
+        match.RemoveMulligans();
 
         await match.Run();
 
         // Assert
         match.Assert(a => a
+            .CrashedIntentially()
             .NoChoicesLeft()
             .AssertPlayer(0, ap => ap
-                .AssertDeck(ad => ad
+                .AssertLibrary(ad => ad
                     .HasCardCount(deckSize - initialHandSize)
                 )
                 .AssertHand(ad => ad
@@ -120,7 +107,7 @@ public class GameStart
                 )
             )
             .AssertPlayer(1, ap => ap
-                .AssertDeck(ad => ad
+                .AssertLibrary(ad => ad
                     .HasCardCount(deckSize - initialHandSize)
                 )
                 .AssertHand(ad => ad

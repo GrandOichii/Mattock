@@ -19,9 +19,15 @@ public class MatchConfigBuilder
         return this;
     }
 
-    public MatchConfigBuilder GameLossIfRequiredToDrawFromEmptyDeck(bool v)
+    public MatchConfigBuilder GameLossIfRequiredToDrawFromEmptyLibrary(bool v)
     {
-        _result.GameLossIfRequiredToDrawFromEmptyDeck = v;
+        _result.GameLossIfRequiredToDrawFromEmptyLibrary = v;
+        return this;
+    }
+
+    public MatchConfigBuilder FirstPlayerNoDrawIfSingleOpponent(bool v)
+    {
+        _result.FirstPlayerNoDrawIfSingleOpponent = v;
         return this;
     }
 }

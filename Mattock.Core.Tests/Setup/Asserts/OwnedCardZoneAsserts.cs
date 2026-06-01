@@ -6,7 +6,13 @@ public class OwnedCardZoneAsserts<T>(T zone) where T : OwnedCardZone
 {
     public OwnedCardZoneAsserts<T> HasCardCount(int v)
     {
-        zone.GetCount().ShouldBe(v, $"Card count of {nameof(OwnedCardZone)} of player {zone.Player.GetDisplayName()} should be {v}, but was {zone.GetCount()}");
+        zone.GetCount().ShouldBe(v, $"Card count of {typeof(T)} of player {zone.Player.GetDisplayName()} should be {v}, but was {zone.GetCount()}");
+        return this;
+    }
+
+    public OwnedCardZoneAsserts<T> AssertCard(int idx, Action<CardAsserts> action)
+    {
+        action(new(zone.Cards[idx]));
         return this;
     }
 }

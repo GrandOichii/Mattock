@@ -7,7 +7,11 @@ public class CardTemplate
     public required string Name { get; set; }
     public required ManaCost[] ManaCost { get; set; }
     public required Color[] ColorIndicator { get; set; }
-    public required string TypeLine { get; set; }
+
+    public required string[] Types { get; set; }
+    public required string[] Subtypes { get; set; }
+    public required string[] Supertypes { get; set; }
+
     public required string TextBox { get; set; }
     public required string Power { get; set; }
     public required string Toughness { get; set; }

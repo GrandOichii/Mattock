@@ -7,4 +7,5 @@ public interface ICardZone
     string GetZoneName();
     void Remove(Card card);
     void Add(Card card, CardZoneChangeType type);
+    bool Accepts(Card card);
 }

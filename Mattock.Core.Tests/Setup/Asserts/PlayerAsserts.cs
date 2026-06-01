@@ -10,15 +10,21 @@ public class PlayerAsserts(Player player)
         return this;
     }
 
-    public PlayerAsserts AssertDeck(Action<DeckAsserts> action)
+    public PlayerAsserts AssertLibrary(Action<LibraryAsserts> action)
     {
-        action(new(player.Deck));
+        action(new(player.Library));
         return this;
     }
 
     public PlayerAsserts AssertHand(Action<HandAsserts> action)
     {
         action(new(player.Hand));
+        return this;
+    }
+
+    public PlayerAsserts AssertGraveyard(Action<GraveyardAsserts> action)
+    {
+        action(new(player.Graveyard));
         return this;
     }
 }

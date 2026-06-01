@@ -1,22 +1,25 @@
 ## 1. Game Concepts
 
 - [ ] 100. __General__
-    - [ ] 100.4 
-    - [ ] 100.5.
+    - [ ] 100.4 Each player may also have a sideboard, which is a group of additional cards the player may use to modify their deck between games of a match. Sideboard rules and restrictions for some formats are modified by the Magic: The Gathering Tournament Rules (found at WPN.Wizards.com/en/rules-documents).
+    - [ ] 100.5. If a deck must contain at least a certain number of cards, that number is referred to as a minimum deck size. There is no maximum deck size for non-Commander decks.
 - [ ] 101. __Golden rules__
-    - [ ] 101.2 __When a rule or effect allows or directs something to happen, and another effect states that it can't happen, the "can't" effect takes precedence.__
-    - [ ] 101.3 __Any part of an instruction that's impossible to perform is ignored.__
-    - [ ] 101.4 __APNAP (Active Player, Nonactive Player)__
-        - [ ] 101.4a
-        - [ ] 101.4b
-        - [ ] 101.4c
-        - [ ] 101.4d
-        - [ ] 101.4e
+    - [ ] 101.2 When a rule or effect allows or directs something to happen, and another effect states that it can’t happen, the “can’t” effect takes precedence.
+    ```
+    Example: If one effect reads “You may play an additional land this turn” and another reads “You can’t play lands this turn,” the effect that precludes you from playing lands wins.
+    ```
+    - [ ] 101.3 Any part of an instruction that’s impossible to perform is ignored. (In many cases the card will specify consequences for this; if it doesn’t, there’s no effect.)
+    - [ ] 101.4 If multiple players would make choices and/or take actions at the same time, the active player (the player whose turn it is) makes any choices required, then the next player in turn order (usually the player seated to the active player’s left) makes any choices required, followed by the remaining nonactive players in turn order. Then the actions happen simultaneously. This rule is often referred to as the “Active Player, Nonactive Player (APNAP) order” rule. `Example: A card reads “Each player sacrifices a creature.” First, the active player chooses a creature they control. Then each of the nonactive players, in turn order, chooses a creature they control. Then all creatures chosen this way are sacrificed simultaneously.`
+        - [ ] 101.4a If an effect has each player choose a card in a hidden zone, such as their hand or library, those cards may remain face down as they’re chosen. However, each player must clearly indicate which face-down card they are choosing.
+        - [ ] 101.4b A player knows the choices made by the previous players when making their choice, except as specified in 101.4a.
+        - [ ] 101.4c If a player would make more than one choice at the same time, the player makes the choices in the order specified. If no order is specified, the player chooses the order.
+        - [ ] 101.4d If a choice made by a nonactive player causes the active player, or a different nonactive player earlier in the turn order, to have to make a choice, APNAP order is restarted for all outstanding choices.
+        - [ ] 101.4e If multiple players would make choices or take actions while starting the game, the starting player is considered the active player and each other player is considered a nonactive player.
 - [ ] 102. __Players__
-    - [ ] 102.1.
-    - [ ] 102.2.
-    - [ ] 102.3.
-    - [ ] 102.4.
+    - [X] 102.1. A player is one of the people in the game. The active player is the player whose turn it is. The other players are nonactive players.
+    - [ ] 102.2. In a two-player game, a player’s opponent is the other player.
+    - [ ] 102.3. In a multiplayer game between teams, a player’s teammates are the other players on their team, and the player’s opponents are all players not on their team.
+    - [ ] 102.4. A spell or ability may use the term “your team” as shorthand for “you and/or your teammates.” In a game that isn’t a multiplayer game between teams, “your team” means the same thing as “you.”
 - [ ] 103. __Starting the Game__
     - [X] 103.1. At the start of a game, the players determine which one of them will choose who takes the first turn. In the first game of a match (including a single-game match), the players may use any mutually agreeable method (flipping a coin, rolling dice, etc.) to do so. In a match of several games, the loser of the previous game chooses who takes the first turn. If the previous game was a draw, the player who made the choice in that game makes the choice in this game. The player chosen to take the first turn is the starting player. The game’s default turn order begins with the starting player and proceeds clockwise.
     - [ ] 103.2. Some games require additional steps that are taken after the starting player has been determined. Perform the actions listed in 103.2a–e in order, as applicable
@@ -26,134 +29,146 @@
         - [ ] 103.2d In a constructed game, each player playing with sticker sheets reveals all of their sticker sheets and chooses three of them at random. In a limited game, each player chooses up to three sticker sheets from among those in the sealed product they opened and reveals them. In either case, that player has access to only the stickers on the chosen sheets during the game, and those sticker sheets remain revealed. (See rule 123, “Stickers.”)
         - [ ] 103.2e In a Conspiracy Draft game, each player puts any number of conspiracy cards from their sideboard into the command zone. See rule 905.4.
     - [X] 103.3. After the starting player has been determined and any additional steps performed, each player shuffles their deck so that the cards are in a random order. Each player may then shuffle or cut their opponents’ decks. The players’ decks become their libraries.
-        - [ ] 103.3a
+        - [ ] 103.3a In a game using one or more supplementary decks of nontraditional cards (see rule 100.2d), each supplementary deck’s owner shuffles it so the cards are in a random order. Each player may then shuffle or cut their opponents’ supplementary decks.
     - [X] 103.4.  Each player begins the game with a starting life total of 20. Some variant games have different starting life totals.
-        - [ ] 103.4b
-        - [ ] 103.4c
-        - [ ] 103.4d
-        - [ ] 103.4e
-    - [~] 103.5. Each player draws a number of cards equal to their starting hand size, which is normally seven. (Some effects can modify a player’s starting hand size.) A player who is dissatisfied with their initial hand may take a mulligan. First, the starting player declares whether they will take a mulligan. Then each other player in turn order does the same. Once each player has made a declaration, all players who decided to take mulligans do so at the same time. To take a mulligan, a player shuffles the cards in their hand back into their library, draws a new hand of cards equal to their starting hand size, then puts a number of those cards equal to the number of times that player has taken a mulligan on the bottom of their library in any order. Once a player chooses not to take a mulligan, the remaining cards become that player’s opening hand, and that player may not take any further mulligans. This process is then repeated until no player takes a mulligan. A player can take mulligans until their opening hand would be zero cards, after which they may not take further mulligans.
-        - [ ] 103.5a
-        - [ ] 103.5b
-        - [ ] 103.5c
-        - [ ] 103.5d
-    - [ ] 103.6.
-        - [ ] 103.6a
-        - [ ] 103.6b
-        - [ ] 103.6c
-    - [ ] 103.7.
-    - [ ] 103.8.
-        - [ ] 103.8a
-        - [ ] 103.8c
+        - [ ] 103.4b In a Vanguard game, each player’s starting life total is 20 plus or minus the life modifier of their vanguard card.
+        - [ ] 103.4c In a Commander game, each player’s starting life total is 40.
+        - [ ] 103.4d In a two-player Brawl game, each player’s starting life total is 25. In a multiplayer Brawl game, each player’s starting life total is 30.
+    - [X] 103.5. Each player draws a number of cards equal to their starting hand size, which is normally seven. (Some effects can modify a player’s starting hand size.) A player who is dissatisfied with their initial hand may take a mulligan. First, the starting player declares whether they will take a mulligan. Then each other player in turn order does the same. Once each player has made a declaration, all players who decided to take mulligans do so at the same time. To take a mulligan, a player shuffles the cards in their hand back into their library, draws a new hand of cards equal to their starting hand size, then puts a number of those cards equal to the number of times that player has taken a mulligan on the bottom of their library in any order. Once a player chooses not to take a mulligan, the remaining cards become that player’s opening hand, and that player may not take any further mulligans. This process is then repeated until no player takes a mulligan. A player can take mulligans until their opening hand would be zero cards, after which they may not take further mulligans.
+        - [ ] 103.5a In a Vanguard game, each player’s starting hand size is seven plus or minus the hand modifier of their vanguard card.
+        - [ ] 103.5b If an effect allows a player to perform an action “any time [that player] could mulligan,” the player may perform that action at a time they would declare whether they will take a mulligan. This need not be in the first round of mulligans. Other players may have already made their mulligan declarations by the time the player has the option to perform this action. If the player performs the action, they then declare whether they will take a mulligan
+        - [ ] 103.5c  In a multiplayer game and in any Brawl game, the first mulligan a player takes doesn’t count toward the number of cards that player will put on the bottom of their library or the number of mulligans that player may take. Subsequent mulligans are counted toward these numbers as normal.
+        - [ ] 103.5d In a multiplayer game using the shared team turns option, first each player on the starting team declares whether that player will take a mulligan, then the players on each other team in turn order do the same. Teammates may consult while making their decisions. Then all mulligans are taken at the same time. A player may take a mulligan even after a teammate has decided to keep their opening hand.
+    - [ ] 103.6. Some cards allow a player to take actions with them from their opening hand. Once the mulligan process (see rule 103.5) is complete, the starting player may take any such actions in any order. Then each other player in turn order may do the same.
+        - [ ] 103.6a If a card allows a player to begin the game with that card on the battlefield, the player taking this action puts that card onto the battlefield.
+        - [ ] 103.6b If a card allows a player to reveal it from their opening hand, the player taking this action does so. The card remains revealed until the first turn begins. Each card may be revealed this way only once.
+        - [ ] 103.6c In a multiplayer game using the shared team turns option, first each player on the starting team, in whatever order that team likes, may take such actions. Teammates may consult while making their decisions. Then each player on each other team in turn order does the same.
+    - [ ] 103.7. In a Planechase game, the starting player moves the top card of their planar deck off that planar deck and turns it face up. If it’s a phenomenon card, the player puts that card on the bottom of their planar deck and repeats this process until a plane card is turned face up. The face-up plane card becomes the starting plane. (See rule 901, “Planechase.”)
+    - [X] 103.8. The starting player takes their first turn.
+        - [X] 103.8a In a two-player game, the player who plays first skips the draw step (see rule 504, “Draw Step”) of their first turn.
+        - [X] 103.8c In all other multiplayer games, no player skips the draw step of their first turn.
 - [ ] 104. __Ending the Game__
-    - [ ] 104.1.
-    - [ ] 104.2.
-        - [ ] 104.2a
-        - [ ] 104.2b
-        - [ ] 104.2c
-        - [ ] 104.2d
-    - [ ] 104.3.
-        - [ ] 104.3a
-        - [ ] 104.3b
-        - [ ] 104.3c
-        - [ ] 104.3d
-        - [ ] 104.3e
-        - [ ] 104.3f
-        - [ ] 104.3g
-        - [ ] 104.3h
-        - [ ] 104.3i
-        - [ ] 104.3j
-    - [ ] 104.4.
-        - [ ] 104.4a
-        - [ ] 104.4b
-        - [ ] 104.4c
-        - [ ] 104.4d
-        - [ ] 104.4e
-        - [ ] 104.4f
-        - [ ] 104.4g
-        - [ ] 104.4h
-        - [ ] 104.4i
-    - [ ] 104.5.
-    - [ ] 104.6.
+    - [ ] 104.1. A game ends immediately when a player wins, when the game is a draw, or when the game is restarted.
+    - [ ] 104.2. There are several ways to win the game.
+        - [ ] 104.2a A player still in the game wins the game if that player’s opponents have all left the game. This happens immediately and overrides all effects that would preclude that player from winning the game.
+        - [ ] 104.2b An effect may state that a player wins the game.
+        - [ ] 104.2c In a multiplayer game between teams, a team with at least one player still in the game wins the game if all other teams have left the game. Each player on the winning team wins the game, even if one or more of those players had previously lost that game.
+        - [ ] 104.2d In an Emperor game, a team wins the game if its emperor wins the game. (See rule 809.5.)
+    - [ ] 104.3. There are several ways to lose the game.
+        - [ ] 104.3a A player can concede the game at any time. A player who concedes leaves the game immediately. That player loses the game.
+        - [ ] 104.3b If a player’s life total is 0 or less, that player loses the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
+        - [ ] 104.3c If a player is required to draw more cards than are left in their library, they draw the remaining cards and then lose the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
+        - [ ] 104.3d If a player has ten or more poison counters, that player loses the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
+        - [ ] 104.3e An effect may state that a player loses the game.
+        - [ ] 104.3f If a player would both win and lose the game simultaneously, that player loses the game.
+        - [ ] 104.3g In a multiplayer game between teams, a team loses the game if all players on that team have lost the game.
+        - [ ] 104.3h In a multiplayer game using the limited range of influence option (see rule 801), an effect that states that a player wins the game instead causes all of that player’s opponents within the player’s range of influence to lose the game. This may not cause the game to end.
+        - [ ] 104.3i In an Emperor game, a team loses the game if its emperor loses the game. (See rule 809.5.)
+        - [ ] 104.3j In a Commander game, a player who’s been dealt 21 or more combat damage by the same commander over the course of the game loses the game. (This is a state-based action. See rule 704. See also rule 903.10.)
+    - [ ] 104.4. There are several ways for the game to be a draw.
+        - [ ] 104.4a If all the players remaining in a game lose simultaneously, the game is a draw.
+        - [ ] 104.4b If a game that’s not using the limited range of influence option (including a two-player game) somehow enters a “loop” of mandatory actions, repeating a sequence of events with no way to stop, the game is a draw. Loops that contain an optional action don’t result in a draw.
+        - [ ] 104.4c An effect may state that the game is a draw.
+        - [ ] 104.4d In a multiplayer game between teams, the game is a draw if all remaining teams lose simultaneously.
+        - [ ] 104.4e In a multiplayer game using the limited range of influence option, the effect of a spell or ability that states that the game is a draw causes the game to be a draw for that spell or ability’s controller and all players within their range of influence. Only those players leave the game; the game continues for all other players.
+        - [ ] 104.4f In a multiplayer game using the limited range of influence option, if the game somehow enters a “loop” of mandatory actions, repeating a sequence of events with no way to stop, the game is a draw for each player who controls an object that’s involved in that loop, as well as for each player within the range of influence of any of those players. Only those players leave the game; the game continues for all other players.
+        - [ ] 104.4g In a multiplayer game between teams, the game is a draw for a team if the game is a draw for all remaining players on that team.
+        - [ ] 104.4h In the Emperor variant, the game is a draw for a team if the game is a draw for its emperor. (See rule 809.5.)
+    - [ ] 104.5. If a player loses the game, that player leaves the game. If the game is a draw for a player, that player leaves the game. The multiplayer rules handle what happens when a player leaves the game; see rule 800.4.
+    - [ ] 104.6. One card (Karn Liberated) restarts the game. All players still in the game when it restarts then immediately begin a new game. See rule 727, “Restarting the Game.”
 - [ ] 105. __Colors__
     - [X] 105.1. There are five colors in the Magic game: white, blue, black, red, and green.
-    - [ ] 105.2.
-        - [ ] 105.2a
-        - [ ] 105.2b
-        - [ ] 105.2c
-    - [ ] 105.3.
-    - [ ] 105.4.
-    - [ ] 105.5.
+    - [ ] 105.2. An object can be one or more of the five colors, or it can be no color at all. An object is the color or colors of the mana symbols in its mana cost, regardless of the color of its frame. An object’s color or colors may also be defined by a color indicator or a characteristic-defining ability. See rule 202.2.
+        - [ ] 105.2a A monocolored object is exactly one of the five colors.
+        - [ ] 105.2b A multicolored object is two or more of the five colors.
+        - [ ] 105.2c A colorless object has no color.
+    - [ ] 105.3. Effects may change an object’s color or give a color to a colorless object. If an effect gives an object a new color, the new color replaces all previous colors the object had (unless the effect said the object became that color “in addition” to its other colors). Effects may also make a colored object become colorless.
+    - [ ] 105.4. If a player is asked to choose a color, they must choose one of the five colors. “Multicolored” is not a color. Neither is “colorless.”
+    - [ ] 105.5. If an effect refers to a color pair, it means exactly two of the five colors. There are ten color pairs: white and blue, white and black, blue and black, blue and red, black and red, black and green, red and green, red and white, green and white, and green and blue.
 - [ ] 106. __Mana__
-    - [ ] 106.1.
+    - [ ] 106.1. Mana is the primary resource in the game. Players spend mana to pay costs, usually when casting spells and activating abilities.
         - [X] 106.1a There are five colors of mana: white, blue, black, red, and green.
         - [X] 106.1b There are six types of mana: white, blue, black, red, green, and colorless.
-    - [ ] 106.2.
-    - [ ] 106.3.
-    - [ ] 106.4.
-        - [ ] 106.4a
-        - [ ] 106.4b
-    - [ ] 106.5.
-    - [ ] 106.6.
-        - [ ] 106.6a
-    - [ ] 106.7.
-    - [ ] 106.8.
-    - [ ] 106.9.
-    - [ ] 106.10.
-    - [ ] 106.11.
-    - [ ] 106.12.
-        - [ ] 106.12a
-        - [ ] 106.12b
-    - [ ] 106.13.
+    - [ ] 106.2. Mana is represented by mana symbols (see rule 107.4). Mana symbols also represent mana costs (see rule 202).
+    - [ ] 106.3. Mana is produced by the effects of mana abilities (see rule 605). It may also be produced by the effects of spells, as well as by the effects of abilities that aren’t mana abilities. A spell or ability that produces mana instructs a player to add that mana. If mana is produced by a spell, the source of that mana is that spell. If mana is produced by an ability, the source of that mana is the source of that ability (see rule 113.7).
+    - [ ] 106.4. When an effect instructs a player to add mana, that mana goes into a player’s mana pool. From there, it can be used to pay costs immediately, or it can stay in the player’s mana pool as unspent mana. Each player’s mana pool empties at the end of each step and phase, and the player is said to lose this mana. Cards with abilities that produce mana or refer to unspent mana have received errata in the Oracle™ card reference to no longer explicitly refer to the mana pool.
+    - [ ] 106.5. If an ability would produce one or more mana of an undefined type, it produces no mana instead.
+    ```
+    Example: Meteor Crater has the ability “{T}: Choose a color of a permanent you control. Add one mana of that color.” If you control no colored permanents, activating Meteor Crater’s mana ability produces no mana.
+    ```
+    - [ ] 106.6. Some spells or abilities that produce mana restrict how that mana can be spent, have an additional effect that affects the spell or ability that mana is spent on, or create a delayed triggered ability (see rule 603.7a) that triggers when that mana is spent. This doesn’t affect the mana’s type. `Example: A player’s mana pool contains {R}{G} which can be spent only to cast creature spells. That player activates Doubling Cube’s ability, which reads “{3}, {T}: Double the amount of each type of unspent mana you have.” The player’s mana pool now has {R}{R}{G}{G} in it, {R}{G} of which can be spent on anything.`
+        - [ ] 106.6a Some replacement effects increase the amount of mana produced by a spell or ability. In these cases, any restrictions or additional effects created by the spell or ability will apply to all mana produced. If the spell or ability creates a delayed triggered ability that triggers when the mana is spent, a separate delayed triggered ability is created for each mana produced. If the spell or ability creates a continuous effect or replacement effect if the mana is spent, a separate effect is created once for each mana produced.
+    - [ ] 106.7. Some abilities produce mana based on the type of mana another permanent or permanents “could produce.” The type of mana a permanent could produce at any time includes any type of mana that an ability of that permanent would produce if the ability were to resolve at that time, taking into account any applicable replacement effects in any possible order. Ignore whether any costs of the ability could or could not be paid. If that permanent wouldn’t produce any mana under these conditions, or no type of mana can be defined this way, there’s no type of mana it could produce.
+    ```
+    Example: Exotic Orchard has the ability “{T}: Add one mana of any color that a land an opponent controls could produce.” If your opponent controls no lands, activating Exotic Orchard’s mana ability will produce no mana. The same is true if you and your opponent each control no lands other than Exotic Orchards. However, if you control a Forest and an Exotic Orchard, and your opponent controls an Exotic Orchard, then each Exotic Orchard could produce {G}.
+    ```
+    - [ ] 106.8. If an effect would add mana represented by a hybrid mana symbol to a player’s mana pool, that player chooses one half of that symbol. If a colored half is chosen, one mana of that color is added to that player’s mana pool. If a generic half is chosen, an amount of colorless mana represented by that half’s number is added to that player’s mana pool.
+    - [ ] 106.9. If an effect would add mana represented by a Phyrexian mana symbol to a player’s mana pool, one mana of the color of that symbol is added to that player’s mana pool.
+    - [ ] 106.10. If an effect would add mana represented by a generic mana symbol to a player’s mana pool, that much colorless mana is added to that player’s mana pool.
+    - [ ] 106.11. If an effect would add mana represented by one or more snow mana symbols to a player’s mana pool, that much colorless mana is added to that player’s mana pool.
+    - [ ] 106.12. To “tap [a permanent] for mana” is to activate a mana ability of that permanent that includes the {T} symbol in its activation cost. See rule 605, “Mana Abilities.”
+        - [ ] 106.12a  An ability that triggers whenever a permanent “is tapped for mana” or is tapped for mana of a specified type triggers whenever such a mana ability resolves and produces mana or the specified type of mana.
+        - [ ] 106.12b A replacement effect that applies if a permanent “is tapped for mana” or tapped for mana of a specific type and/or amount modifies the mana production event while such an ability is resolving and producing mana or the specified type and/or amount of mana.
+    - [ ] 106.13. One card (Drain Power) causes one player to lose unspent mana and another to add “the mana lost this way.” (Note that these may be the same player.) This empties the former player’s mana pool and causes the mana emptied this way to be put into the latter player’s mana pool. Which permanents, spells, and/or abilities produced that mana are unchanged, as are any restrictions or additional effects associated with any of that mana.
 - [ ] 107. __Numbers and Symbols__
-    - [ ] 107.1.
-        - [ ] 107.1a
-        - [ ] 107.1b
-        - [ ] 107.1c
-    - [ ] 107.2.
-    - [ ] 107.3.
-        - [ ] 107.3a
-        - [ ] 107.3b
-        - [ ] 107.3c
-        - [ ] 107.3d
-        - [ ] 107.3e
-        - [ ] 107.3f
-        - [ ] 107.3g
-        - [ ] 107.3h
-        - [ ] 107.3i
-        - [ ] 107.3j
-        - [ ] 107.3k
-        - [ ] 107.3m
-        - [ ] 107.3n
-    - [ ] 107.4.
-        - [ ] 107.4a
-        - [ ] 107.4b
-        - [ ] 107.4c
-        - [ ] 107.4d
-        - [ ] 107.4e
-        - [ ] 107.4f
-        - [ ] 107.4g
-        - [ ] 107.4h
-    - [ ] 107.5.
-    - [ ] 107.6.
-    - [ ] 107.7.
-    - [ ] 107.8.
-        - [ ] 107.8a
-        - [ ] 107.8b
-    - [ ] 107.9.
-    - [ ] 107.10.
-    - [ ] 107.11.
-    - [ ] 107.12.
-    - [ ] 107.13.
-    - [ ] 107.14.
-    - [ ] 107.15.
-        - [ ] 107.15a
-        - [ ] 107.15b
-    - [ ] 107.16.
-        - [ ] 107.16a
-    - [ ] 107.17.
-        - [ ] 107.17a
-    - [ ] 107.18.
+    - [ ] 107.1. The only numbers the Magic game uses are integers.
+        - [ ] 107.1a You can’t choose a fractional number, deal fractional damage, gain fractional life, and so on. If a spell or ability could generate a fractional number, the spell or ability will tell you whether to round up or down.
+        - [ ] 107.1b Most of the time, the Magic game uses only positive numbers and zero. You can’t choose a negative number, deal negative damage, gain negative life, and so on. However, it’s possible for a game value, such as a creature’s power, to be less than zero. If a calculation or comparison needs to use a negative value, it does so. If a calculation that would determine the result of an effect yields a negative number, zero is used instead, unless that effect doubles, triples, or sets to a specific value a player’s life total or the power and/or toughness of a creature or creature card.
+        ```
+        Example: If a 3/4 creature gets -5/-0, it’s a -2/4 creature. It doesn’t assign damage in combat. Its total power and toughness is 2. Giving it +3/+0 would raise its power to 1.
+        Example: Viridian Joiner is a 1/2 creature with the ability “{T}: Add an amount of {G} equal to this creature’s power.” An effect gives it -2/-0, then its ability is activated. The ability adds no mana to your mana pool.
+        Example: Chameleon Colossus is a 4/4 creature with the ability “{2}{G}{G}: This creature gets +X/+X until end of turn, where X is its power.” An effect gives it -6/-0, then its ability is activated. It remains a -2/4 creature. It doesn’t become -4/2.
+        ```
+        - [ ] 107.1c If a rule or ability instructs a player to choose “any number,” that player may choose any positive number or zero.
+    - [ ] 107.2. If anything needs to use a number that can’t be determined, either as a result or in a calculation, it uses 0 instead.
+    - [ ] 107.3. Many objects use the letter X as a placeholder for a number that needs to be determined. Some objects have abilities that define the value of X; the rest let their controller choose the value of X.
+        - [ ] 107.3a If a spell or activated ability has a mana cost, alternative cost, additional cost, and/or activation cost with an {X}, [-X], or X in it, and the value of X isn’t defined by the text of that spell or ability, the controller of that spell or ability chooses and announces the value of X as part of casting the spell or activating the ability. (See rule 601, “Casting Spells.”) While a spell is on the stack, any X in its mana cost or in any alternative cost or additional cost it has equals the announced value. While an activated ability is on the stack, any X in its activation cost equals the announced value.
+        - [ ] 107.3b If a player is casting a spell that has an {X} in its mana cost, the value of X isn’t defined by the text of that spell, and an effect lets that player cast that spell while paying neither its mana cost nor an alternative cost that includes X, then the only legal choice for X is 0. This doesn’t apply to effects that only reduce a cost, even if they reduce it to zero. See rule 601, “Casting Spells.”
+        - [ ] 107.3c If a spell or activated ability has an {X}, [-X], or X in its cost and/or its text, and the value of X is defined by the text of that spell or ability, then that’s the value of X while that spell or ability is on the stack. The controller of that spell or ability doesn’t get to choose the value. Note that the value of X may change while that spell or ability is on the stack.
+        - [ ] 107.3d If a cost associated with a special action, such as a suspend cost or a morph cost, has an {X} or an X in it, the value of X is chosen by the player taking the special action immediately before they pay that cost.
+        - [ ] 107.3e If a spell or ability refers to the {X} or X in the mana cost, alternative cost, additional cost, or activation cost of another object, any X in that spell or ability’s text uses the value of X used by the other object.
+        - [ ] 107.3f Sometimes X appears in the text of a spell or ability but not in a mana cost, alternative cost, additional cost, or activation cost. If the value of X isn’t defined, the controller of the spell or ability chooses the value of X at the appropriate time (either as it’s put on the stack or as it resolves).
+        - [ ] 107.3g If a card in any zone other than the stack has an {X} in its mana cost, the value of {X} is treated as 0, even if the value of X is defined somewhere within its text.
+        - [ ] 107.3h If an effect instructs a player to pay an object’s mana cost that includes {X}, the value of X is treated as 0 unless the object is a spell on the stack. In that case, the value of X is the value chosen or determined for it as the spell was cast.
+        - [ ] 107.3i Normally, all instances of X on an object have the same value at any given time.
+        - [ ] 107.3j If an object gains an ability, the value of X within that ability is the value defined by that ability, or 0 if that ability doesn’t define a value of X. This is an exception to rule 107.3i. This may occur with ability-adding effects, text-changing effects, or copy effects.
+        - [ ] 107.3k If an object’s activated ability has an {X}, [-X], or X in its activation cost, the value of X for that ability is independent of any other values of X chosen for that object or for other instances of abilities of that object. This is an exception to rule 107.3i.
+        - [ ] 107.3m If an object’s enters-the-battlefield triggered ability or replacement effect refers to X, and the spell that became that object as it resolved had a value of X chosen for any of its costs, the value of X for that ability is the same as the value of X for that spell, although the value of X for that permanent is 0. This is an exception to rule 107.3i.
+        - [ ] 107.3n If a delayed triggered ability created by a resolving spell or ability refers to X, X is not defined in the text of that triggered ability, and the spell or ability that created it had a value of X chosen for any of its costs, the value of X for the triggered ability is the same as the value of X for the spell of ability that created it.
+        - [ ] 107.3p Some objects use the letter Y in addition to the letter X. Y follows the same rules as X.
+    - [ ] 107.4. The mana symbols are {W}, {U}, {B}, {R}, {G}, and {C}; the numerical symbols {0}, {1}, {2}, {3}, {4}, and so on; the variable symbol {X}; the hybrid symbols {W/U}, {W/B}, {U/B}, {U/R}, {B/R}, {B/G}, {R/G}, {R/W}, {G/W}, and {G/U}; the monocolored hybrid symbols {2/W}, {2/U}, {2/B}, {2/R}, {2/G}, {C/W}, {C/U}, {C/B}, {C/R}, and {C/G}; the Phyrexian mana symbols {W/P}, {U/P}, {B/P}, {R/P}, and {G/P}; the hybrid Phyrexian symbols {W/U/P}, {W/B/P}, {U/B/P}, {U/R/P}, {B/R/P}, {B/G/P}, {R/G/P}, {R/W/P}, {G/W/P}, and {G/U/P}; and the snow mana symbol {S}.
+        - [ ] 107.4a There are five primary colored mana symbols: {W} is white, {U} blue, {B} black, {R} red, and {G} green. These symbols are used to represent colored mana, and also to represent colored mana in costs. Colored mana in costs can be paid only with the appropriate color of mana. See rule 202, “Mana Cost and Color.”
+        - [ ] 107.4b Numerical symbols (such as {1}) and variable symbols (such as {X}) represent generic mana in costs. Generic mana in costs can be paid with any type of mana. For more information about {X}, see rule 107.3.
+        - [ ] 107.4c The colorless mana symbol {C} is used to represent one colorless mana, and also to represent a cost that can be paid only with one colorless mana.
+        - [ ] 107.4d The symbol {0} represents zero mana and is used as a placeholder for a cost that can be paid with no resources. (See rule 118.5.)
+        - [ ] 107.4e A hybrid mana symbol is also a colored mana symbol, even if one of its components is colorless. Each one represents a cost that can be paid in one of two ways, as represented by the two halves of the symbol. A hybrid symbol such as {W/U} can be paid with either white or blue mana, and a monocolored hybrid symbol such as {2/B} can be paid with either one black mana or two mana of any type. A hybrid mana symbol is all of its component colors.
+        ```
+        Example: {G/W}{G/W} can be paid by spending {G}{G}, {G}{W}, or {W}{W}.
+        ```
+        - [ ] 107.4f Phyrexian mana symbols are colored mana symbols: {W/P} is white, {U/P} is blue, {B/P} is black, {R/P} is red, and {G/P} is green. A Phyrexian mana symbol represents a cost that can be paid either with one mana of its color or by paying 2 life. There are also ten hybrid Phyrexian mana symbols. A hybrid Phyrexian mana symbol represents a cost that can be paid with one mana of either of its component colors or by paying 2 life. A hybrid Phyrexian mana symbol is both of its component colors.
+        ```
+        Example: {W/P}{W/P} can be paid by spending {W}{W}, by spending {W} and paying 2 life, or by paying 4 life.
+        ```
+        - [ ] 107.4g In rules text, the Phyrexian symbol {H} with no colored background means any of the fifteen Phyrexian mana symbols.
+        - [ ] 107.4h When used in a cost, the snow mana symbol {S} represents a cost that can be paid with one mana of any type produced by a snow source (see rule 106.3). Effects that reduce the amount of generic mana you pay don’t affect {S} costs. The {S} symbol can also be used to refer to mana of any type produced by a snow source spent to pay a cost. Snow is neither a color nor a type of mana.
+    - [ ] 107.5. The tap symbol is {T}. The tap symbol in an activation cost means “Tap this permanent.” A permanent that’s already tapped can’t be tapped again to pay the cost. A creature’s activated ability with the tap symbol in its activation cost can’t be activated unless the creature has been under its controller’s control continuously since their most recent turn began. See rule 302.6.
+    - [ ] 107.6. The untap symbol is {Q}. The untap symbol in an activation cost means “Untap this permanent.” A permanent that’s already untapped can’t be untapped again to pay the cost. A creature’s activated ability with the untap symbol in its activation cost can’t be activated unless the creature has been under its controller’s control continuously since their most recent turn began. See rule 302.6.
+    - [ ] 107.7. Each activated ability of a planeswalker has a loyalty symbol in its cost. Positive loyalty symbols point upward and feature a plus sign followed by a number. Negative loyalty symbols point downward and feature a minus sign followed by a number or an X. Neutral loyalty symbols don’t point in either direction and feature a 0. [+N] means “Put N loyalty counters on this permanent,” [-N] means “Remove N loyalty counters from this permanent,” and [0] means “Put zero loyalty counters on this permanent.” Loyalty symbols may also appear in abilities that modify loyalty costs.
+    - [ ] 107.8. The text box of a leveler card contains two level symbols, each of which is a keyword ability that represents a static ability. The level symbol includes either a range of numbers, indicated here as “N1-N2,” or a single number followed by a plus sign, indicated here as “N3+.” Any abilities printed within the same text box striation as a level symbol are part of its static ability. The same is true of the power/toughness box printed within that striation, indicated here as “[P/T].” See rule 711, “Leveler Cards.”
+        - [ ] 107.8a “{LEVEL N1-N2} [Abilities] [P/T]” means “As long as this creature has at least N1 level counters on it, but no more than N2 level counters on it, it has base power and toughness [P/T] and has [abilities].”
+        - [ ] 107.8b “{LEVEL N3+} [Abilities] [P/T]” means “As long as this creature has N3 or more level counters on it, it has base power and toughness [P/T] and has [abilities].”
+    - [ ] 107.11. The Planeswalker symbol is {PW}. It appears on one face of the planar die used in the Planechase casual variant. It has five tines at the top and tapers to a point at the bottom. See rule 901, “Planechase.”
+    - [ ] 107.12. The chaos symbol is {CHAOS}. It appears on one face of the planar die used in the Planechase casual variant, as well as in abilities that refer to the results of rolling the planar die. It looks like a swirling vortex. See rule 901, “Planechase.”
+    - [ ] 107.13. A color indicator is a circular symbol that appears to the left of the type line on some cards. The color of the symbol defines the card’s color or colors. See rule 202, “Mana Cost and Color.”
+    - [ ] 107.14. The energy symbol is {E}. It represents one energy counter. To pay {E}, a player removes one energy counter from themselves.
+    - [ ] 107.15. The text box of a Saga card contains chapter symbols, each of which is a keyword ability that represents a triggered ability. A chapter symbol includes a Roman numeral, indicated here as “rN”. The text printed in the text box striation to the right of a chapter symbol is the effect of the triggered ability it represents. See rule 714, “Saga Cards.”
+        - [ ] 107.15a “{rN}—[Effect]” means “When one or more lore counters are put onto this Saga, if the number of lore counters on it was less than N and became at least N, [effect].”
+        - [ ] 107.15b “{rN1}, {rN2}—[Effect]” is the same as “{rN1}—[Effect]” and “{rN2}—[Effect].”
+    - [ ] 107.16. The text box of a Class card contains class level bars, each of which is a keyword ability that represents both an activated ability and a static ability. A class level bar includes the activation cost of its activated ability and a level number. Any abilities printed within the same text box section as the class level bar are part of its static ability. See rule 716, “Class Cards.”
+        - [ ] 107.16a “[Cost]: Level N — [Abilities]” means “[Cost]: This Class’s level becomes N. Activate only if this Class is level N-1 and only as a sorcery” and “As long as this Class is level N or greater, it has [abilities].”
+    - [ ] 107.17. The ticket symbol is {TK}. It represents one ticket counter.
+        - [ ] 107.17a A ticket symbol with a number inside it represents a ticket cost. To pay that cost, a player removes that many ticket counters from themselves.
+    - [ ] 107.18. The pawprint symbol is {P}. This symbol is used to indicate the modes on some modal spells, and does not represent a cost, mana, counters, or any type of persistent resource. See rule 700.2i.
 - [ ] 108. __Cards__
     - [ ] 108.2.
         - [ ] 108.2b
@@ -310,42 +325,41 @@
         - [ ] 115.9c
     - [ ] 115.10.
 - [ ] 116. __Special Actions__
-    - [ ] 116.1.
-    - [ ] 116.2.
-        - [ ] 116.2a
-        - [ ] 116.2b
-        - [ ] 116.2c
-        - [ ] 116.2d
-        - [ ] 116.2e
-        - [ ] 116.2f
-        - [ ] 116.2g
-        - [ ] 116.2h
-        - [ ] 116.2i
-        - [ ] 116.2j
-        - [ ] 116.2k
-        - [ ] 116.2m
+    - [ ] 116.1.Special actions are actions a player may take when they have priority that don’t use the stack. These are not to be confused with turn-based actions and state-based actions, which the game generates automatically. (See rule 703, “Turn-Based Actions,” and rule 704, “State-Based Actions.”)
+    - [ ] 116.2. There are twelve special actions:
+        - [X] 116.2a Playing a land is a special action. To play a land, a player puts that land onto the battlefield from the zone it was in (usually that player’s hand). By default, a player can take this action only once during each of their turns. A player can take this action any time they have priority and the stack is empty during a main phase of their turn. See rule 305, “Lands.”
+        - [ ] 116.2b Turning a face-down creature face up is a special action. A player can take this action any time they have priority. See rule 708, “Face-Down Spells and Permanents.”
+        - [ ] 116.2c Some effects allow a player to take an action at a later time, usually to end a continuous effect or to stop a delayed triggered ability from triggering. Doing so is a special action. A player can take such an action any time they have priority, unless that effect specifies another timing restriction, for as long as the effect allows it.
+        - [ ] 116.2d Some effects from static abilities allow a player to take an action to ignore the effect from that ability for a duration. Doing so is a special action. A player can take such an action any time they have priority.
+        - [ ] 116.2e One card (Circling Vultures) has the ability “You may discard Circling Vultures any time you could cast an instant.” Doing so is a special action. A player can take such an action any time they have priority.
+        - [ ] 116.2f A player who has a card with suspend in their hand may exile that card. This is a special action. A player can take this action any time they have priority, but only if they could begin to cast that card by putting it onto the stack. See rule 702.62, “Suspend.”
+        - [ ] 116.2g A player who has chosen a companion may pay {3} to put that card from outside the game into their hand. This is a special action. A player can take this action any time they have priority and the stack is empty during a main phase of their turn, but only if they haven’t done so yet this game. (See rule 702.139, “Companion.”)
+        - [ ] 116.2h A player who has a card with foretell in their hand may pay {2} and exile that card face down. This is a special action. A player may take this action any time they have priority during their turn. See rule 702.143, “Foretell.”
+        - [ ] 116.2i In a Planechase game, rolling the planar die is a special action. A player can take this action any time they have priority and the stack is empty during a main phase of their turn. Taking this action costs a player an amount of mana equal to the number of times they have previously taken this action on that turn. Note that this number won’t be equal to the number of times the player has rolled the planar die that turn if an effect has caused the player to roll the planar die that turn. See rule 901, “Planechase.”
+        - [ ] 116.2j In a Conspiracy Draft game, turning a face-down conspiracy card in the command zone face up is a special action. A player can take this action any time they have priority. See rule 905.4a.
+        - [ ] 116.2k A player who has a card with plot in their hand may exile that card. This is a special action. A player can take this action any time they have priority during their own turn while the stack is empty. See rule 702.170, “Plot.”
+        - [ ] 116.2m A player who controls a permanent that has one or more locked halves (see rule 709.5) may pay the mana cost of a locked half of that permanent to give that permanent the appropriate unlocked designation. This cost is referred to as an “unlock cost.” A player can take this action any time they have priority and the stack is empty during a main phase of their turn.
     - [ ] 116.3.
 - [ ] 117. __Timing and Priority__
-    - [ ] 117.1.
-        - [ ] 117.1a
-        - [ ] 117.1b
-        - [ ] 117.1c
-        - [ ] 117.1d
-    - [ ] 117.2.
-        - [ ] 117.2a
-        - [ ] 117.2b
-        - [ ] 117.2c
-        - [ ] 117.2d
-        - [ ] 117.2e
-    - [ ] 117.3.
-        - [ ] 117.3a
-        - [ ] 117.3b
-        - [ ] 117.3c
-        - [ ] 117.3d
-    - [ ] 117.4.
-    - [ ] 117.5.
-    - [ ] 117.6.
-    - [ ] 117.7.
+    - [ ] 117.1. Unless a spell or ability is instructing a player to take an action, which player can take actions at any given time is determined by a system of priority. The player with priority may cast spells, activate abilities, and take special actions.
+        - [ ] 117.1a A player may cast an instant spell any time they have priority. A player may cast a noninstant spell during their main phase any time they have priority and the stack is empty.
+        - [ ] 117.1b A player may activate an activated ability any time they have priority.
+        - [ ] 117.1c A player may take some special actions any time they have priority. A player may take other special actions during their main phase any time they have priority and the stack is empty. See rule 116, “Special Actions.”
+        - [ ] 117.1d A player may activate a mana ability whenever they have priority, whenever they are casting a spell or activating an ability that requires a mana payment, or whenever a rule or effect asks for a mana payment (even in the middle of casting or resolving a spell or activating or resolving an ability).
+    - [ ] 117.2. Other kinds of abilities and actions are automatically generated or performed by the game rules, or are performed by players without receiving priority.
+        - [ ] 117.2a Triggered abilities can trigger at any time, including while a spell is being cast, an ability is being activated, or a spell or ability is resolving. (See rule 603, “Handling Triggered Abilities.”) However, nothing actually happens at the time an ability triggers. Each time a player would receive priority, each ability that has triggered but hasn’t yet been put on the stack is put on the stack. See rule 117.5.
+        - [ ] 117.2b Static abilities continuously affect the game. Priority doesn’t apply to them. (See rule 604, “Handling Static Abilities,” and rule 611, “Continuous Effects.”)
+        - [ ] 117.2c Turn-based actions happen automatically when certain steps or phases begin. They’re dealt with before a player would receive priority. See rule 117.3a. Turn-based actions also happen automatically when each step and phase ends; no player receives priority afterward. See rule 703, “Turn-Based Actions.”
+        - [ ] 117.2d State-based actions happen automatically when certain conditions are met. See rule 704. They’re dealt with before a player would receive priority. See rule 117.5.
+        - [ ] 117.2e Resolving spells and abilities may instruct players to make choices or take actions, or may allow players to activate mana abilities. Even if a player is doing so, no player has priority while a spell or ability is resolving. See rule 608, “Resolving Spells and Abilities.”
+    - [ ] 117.3. Which player has priority is determined by the following rules:
+        - [ ] 117.3a The active player receives priority at the beginning of most steps and phases, after any turn-based actions (such as drawing a card during the draw step; see rule 703) have been dealt with and abilities that trigger at the beginning of that phase or step have been put on the stack. No player receives priority during the untap step. Players usually don’t get priority during the cleanup step (see rule 514.3).
+        - [ ] 117.3b The active player receives priority after a spell or ability (other than a mana ability) resolves.
+        - [ ] 117.3c If a player has priority when they cast a spell, activate an ability, or take a special action, that player receives priority afterward.
+        - [ ] 117.3d If a player has priority and chooses not to take any actions, that player passes. If any mana is in that player’s mana pool, they announce what mana is there. Then the next player in turn order receives priority.
+    - [ ] 117.4. If all players pass in succession (that is, if all players pass without taking any actions in between passing), the spell or ability on top of the stack resolves or, if the stack is empty, the phase or step ends.
+    - [ ] 117.5. Each time a player would get priority, the game first performs all applicable state-based actions as a single event (see rule 704, “State-Based Actions”), then repeats this process until no state-based actions are performed. Then triggered abilities are put on the stack (see rule 603, “Handling Triggered Abilities”). These steps repeat in order until no further state-based actions are performed and no abilities trigger. Then the player who would have received priority does so.
+    - [ ] 117.7. If a player with priority casts a spell or activates an activated ability while another spell or ability is already on the stack, the new spell or ability has been cast or activated “in response to” the earlier spell or ability. The new spell or ability will resolve first. See rule 608, “Resolving Spells and Abilities.”
 - [ ] 118. __Costs__
     - [ ] 118.1.
     - [ ] 118.2.
@@ -537,3 +551,313 @@
     - [ ] 202.3. The mana value of an object is a number equal to the total amount of mana in its mana cost,regardless of color.
         - [ ] 202.3a The mana value of an object with no mana cost is 0, unless that object is the back face of a nonmodal double-faced permanent or spell, or it is a melded permanent
         - [ ] 203.3b The mana value of the back face of a nonmodal double-faced permanent or spell’s back face is calculated as though it had the mana cost of its front face. If a permanent or spell is a copy of the back face of a nonmodal double-faced object (even if the card representing that copy is itself a double-faced card), the mana value of the copy is 0.
+- [ ] 204. __Color Indicator__
+    - [ ] 204.1. The color indicator is printed to the left of the type line directly below the illustration. It consists of a circular symbol filled in with one or more colors. A color indicator is usually found on nonland cards without a mana cost.
+    - [ ] 204.2. An object with a color indicator is each color denoted by that color indicator.
+- [ ] 205. __Type Line__
+    - [X] 205.1. The type line is printed directly below the illustration. It contains the card’s card type(s). It also contains the card’s subtype(s) and supertype(s), if applicable.
+        - [ ] 205.1a Some effects set an object’s card type. In most such cases, the new card type(s) replaces any existing card types. However, an object with either the instant or sorcery card type retains that type. Counters, stickers, effects, and damage marked on the object remain with it, even if they are meaningless to the new card type. Similarly, when an effect sets one or more of an object’s subtypes, the new subtype(s) replaces any existing subtypes from the appropriate set (creature types, land types, artifact types, enchantment types, planeswalker types, or spell types). If an object’s card type is removed, the subtypes correlated with that card type will remain if they are also the subtypes of a card type the object currently has; otherwise, they are also removed for the entire time the object’s card type is removed. Removing an object’s subtype doesn’t affect its card types at all.
+        - [ ] 205.1b Some effects change an object’s card type, supertype, or subtype but specify that the object retains a prior card type, supertype, or subtype. In such cases, all the object’s prior card types, supertypes, and subtypes are retained. This rule applies to effects that use phrases such as “in addition to its other types” or that state that something is “still a [type, supertype, or subtype].” Some effects state that an object becomes an “artifact creature”; these effects also allow the object to retain all of its prior card types and subtypes. Some effects state that an object becomes a “[creature type or types] artifact creature”; these effects also allow the object to retain all of its prior card types and subtypes other than creature types, but replace any existing creature types.
+        ```
+        Example: An ability reads, “All lands are 1/1 creatures that are still lands.” The affected lands now have two card types: creature and land. If there were any lands that were also artifacts before the ability’s effect applied to them, those lands would become “artifact land creatures,” not just “creatures,” or “land creatures.” The effect allows them to retain both the artifact and land card types. In addition, each land affected by the ability retains any land types and supertypes it had before the ability took effect.
+        Example: An ability reads, “All artifacts are 1/1 artifact creatures.” If a permanent is both an artifact and an enchantment, it will become an artifact enchantment creature.
+        ```
+    - [ ] 205.2. Card Types
+        - [ ] 205.2a The card types are artifact, battle, conspiracy, creature, dungeon, enchantment, instant, kindred, land, phenomenon, plane, planeswalker, scheme, sorcery, and vanguard. See section 3, “Card Types.”
+        - [ ] 205.2b Some objects have more than one card type (for example, an artifact creature). Such objects satisfy the criteria for any effect that applies to any of their card types.
+        - [ ] 205.2c Tokens have card types even though they aren’t cards. The same is true of copies of spells and copies of cards.
+    - [ ] 205.3. Subtypes
+        - [ ] 205.3a A card can have one or more subtypes printed on its type line.
+        - [ ] 205.3b Subtypes of each card type except creature and plane are always single words and are listed after a long dash. Each word after the dash is a separate subtype. Subtypes of creature cards are one or two words and are listed after a long dash. Each word or two-word phrase, as listed in rule 205.3m, is a separate subtype. Objects other than planes may have multiple subtypes. Subtypes of planes are also listed after a long dash, but may be multiple words; all words after the dash are, collectively, a single subtype.
+        ```
+        Example: “Basic Land — Mountain” means the card is a land with the subtype Mountain. “Creature — Goblin Wizard” means the card is a creature with the subtypes Goblin and Wizard. “Artifact — Equipment” means the card is an artifact with the subtype Equipment.
+        ```
+        - [ ] 205.3c If a card with multiple card types has one or more subtypes, each subtype is correlated to its appropriate card type.
+        ```
+        Example: Dryad Arbor’s type line says “Land Creature — Forest Dryad.” Forest is a land type, and Dryad is a creature type.
+        ```
+        - [ ] 205.3d An object can’t gain a subtype that doesn’t correspond to one of that object’s types.
+        - [ ] 205.3e If an effect instructs a player to choose a subtype, that player must choose one, and only one, existing subtype, and the subtype must be for the appropriate card type. For example, the player can’t choose a land type if an instruction requires choosing a creature type.
+        ```
+        Example: When choosing a creature type, “Merfolk” or “Wizard” is acceptable, but “Merfolk Wizard” is not. Words like “artifact,” “opponent,” “Swamp,” or “truck” can’t be chosen because they aren’t creature types.
+        ```
+        - [ ] 205.3g Artifacts have their own unique set of subtypes; these subtypes are called artifact types. The artifact types are Attraction (see rule 717), Blood, Bobblehead, Book, Clue, Contraption, Equipment (see rule 301.5), Food, Fortification (see rule 301.6), Gold, Incubator, Infinity, Junk, Lander, Map, Mutagen, Powerstone, Spacecraft, Stone, Treasure, and Vehicle (see rule 301.7).
+        - [ ] 205.3h Enchantments have their own unique set of subtypes; these subtypes are called enchantment types. The enchantment types are Aura (see rule 303.4), Background, Cartouche, Case (see rule 719), Class (see rule 716), Curse, Role (see rule 303.7), Room, Rune, Saga (see rule 714), Shard, and Shrine.
+        - [ ] 205.3i Lands have their own unique set of subtypes; these subtypes are called land types. The land types are Cave, Desert, Forest, Gate, Island, Lair, Locus, Mine, Mountain, Plains, Planet, Power-Plant, Sphere, Swamp, Tower, Town, and Urza’s. Of that list, Forest, Island, Mountain, Plains, and Swamp are the basic land types. See rule 305.6.
+        - [ ] 205.3j Planeswalkers have their own unique set of subtypes; these subtypes are called planeswalker types. The planeswalker types are Ajani, Aminatou, Angrath, Arlinn, Ashiok, Bahamut, Basri, Bolas, Calix, Chandra, Comet, Dack, Dakkon, Daretti, Davriel, Dellian, Dihada, Domri, Dovin, Ellywick, Elminster, Elspeth, Estrid, Freyalise, Garruk, Gideon, Grist, Guff, Huatli, Jace, Jared, Jaya, Jeska, Kaito, Karn, Kasmina, Kaya, Kiora, Koth, Liliana, Lolth, Lukka, Minsc, Mordenkainen, Nahiri, Narset, Niko, Nissa, Nixilis, Oko, Quintorius, Ral, Rowan, Saheeli, Samut, Sarkhan, Serra, Sivitri, Sorin, Szat, Tamiyo, Tasha, Teferi, Teyo, Tezzeret, Tibalt, Tyvar, Ugin, Urza, Venser, Vivien, Vraska, Vronos, Will, Windgrace, Wrenn, Xenagos, Yanggu, Yanling, and Zariel.
+        - [ ] 205.3k Instants and sorceries share their lists of subtypes; these subtypes are called spell types. The spell types are Adventure, Arcane, Lesson, Omen, and Trap.
+        - [ ] 205.3m Creatures and kindreds share their lists of subtypes; these subtypes are called creature types. One creature type is two words long: Time Lord. All other creature types are one word long: Advisor, Aetherborn, Alien, Ally, Angel, Antelope, Ape, Archer, Archon, Armadillo, Army, Artificer, Assassin, Assembly-Worker, Astartes, Atog, Aurochs, Avatar, Azra, Badger, Balloon, Barbarian, Bard, Basilisk, Bat, Bear, Beast, Beaver, Beeble, Beholder, Berserker, Bird, Bison, Blinkmoth, Boar, Bringer, Brushwagg, Camarid, Camel, Capybara, Caribou, Carrier, Cat, Centaur, Child, Chimera, Citizen, Cleric, Clown, Cockatrice, Construct, Coward, Coyote, Crab, Crocodile, C’tan, Custodes, Cyberman, Cyclops, Dalek, Dauthi, Demigod, Demon, Deserter, Detective, Devil, Dinosaur, Djinn, Doctor, Dog, Dragon, Drake, Dreadnought, Drix, Drone, Druid, Dryad, Dwarf, Echidna, Efreet, Egg, Elder, Eldrazi, Elemental, Elephant, Elf, Elk, Employee, Eye, Faerie, Ferret, Fish, Flagbearer, Fox, Fractal, Frog, Fungus, Gamer, Gargoyle, Germ, Giant, Giraffe, Gith, Glimmer, Gnoll, Gnome, Goat, Goblin, God, Golem, Gorgon, Graveborn, Gremlin, Griffin, Guest, Hag, Halfling, Hamster, Harpy, Hedgehog, Hellion, Hero, Hippo, Hippogriff, Homarid, Homunculus, Horror, Horse, Human, Hydra, Hyena, Illusion, Imp, Incarnation, Inkling, Inquisitor, Insect, Jackal, Jellyfish, Juggernaut, Kangaroo, Kavu, Kirin, Kithkin, Knight, Kobold, Kor, Kraken, Llama, Lamia, Lammasu, Leech, Lemur, Leviathan, Lhurgoyf, Licid, Lizard, Lobster, Manticore, Masticore, Mercenary, Merfolk, Metathran, Minion, Minotaur, Mite, Mole, Monger, Mongoose, Monk, Monkey, Moogle, Moonfolk, Mount, Mouse, Mutant, Myr, Mystic, Nautilus, Necron, Nephilim, Nightmare, Nightstalker, Ninja, Noble, Noggle, Nomad, Nymph, Octopus, Ogre, Ooze, Orb, Orc, Orgg, Otter, Ouphe, Ox, Oyster, Pangolin, Peasant, Pegasus, Pentavite, Performer, Pest, Phelddagrif, Phoenix, Phyrexian, Pilot, Pincher, Pirate, Plant, Platypus, Porcupine, Possum, Praetor, Primarch, Prism, Processor, Qu, Rabbit, Raccoon, Ranger, Rat, Rebel, Reflection, Rhino, Rigger, Robot, Rogue, Sable, Salamander, Samurai, Sand, Saproling, Satyr, Scarecrow, Scientist, Scion, Scorpion, Scout, Sculpture, Seal, Serf, Serpent, Servo, Shade, Shaman, Shapeshifter, Shark, Sheep, Siren, Skeleton, Skunk, Slith, Sliver, Sloth, Slug, Snail, Snake, Soldier, Soltari, Sorcerer, Spawn, Specter, Spellshaper, Sphinx, Spider, Spike, Spirit, Splinter, Sponge, Squid, Squirrel, Starfish, Surrakar, Survivor, Symbiote, Synth, Tentacle, Tetravite, Thalakos, Thopter, Thrull, Tiefling, Toy, Treefolk, Trilobite, Triskelavite, Troll, Turtle, Tyranid, Unicorn, Utrom, Vampire, Varmint, Vedalken, Villain, Volver, Wall, Walrus, Warlock, Warrior, Weasel, Weird, Werewolf, Whale, Wizard, Wolf, Wolverine, Wombat, Worm, Wraith, Wurm, Yeti, Zombie, and Zubera.
+        - [ ] 205.3n Planes have their own unique set of subtypes; these subtypes are called planar types. The planar types are The Abyss, Alara, Alfava Metraxis, Amonkhet, Androzani Minor, Antausia, Apalapucia, Arcavios, Arkhos, Avishkar, Azgol, Belenon, Bolas’s Meditation Realm, Capenna, Cridhe, The Dalek Asylum, Darillium, Dominaria, Earth, Echoir, Eldraine, Equilor, Ergamon, Fabacin, Fiora, Gallifrey, Gargantikar, Gobakhan, Horsehead Nebula, Ikoria, Innistrad, Iquatana, Ir, Ixalan, Kaldheim, Kamigawa, Kandoka, Karsus, Kephalai, Kinshala, Kolbahan, Kylem, Kyneth, The Library, Lorwyn, Luvion, Mars, Mercadia, Mirrodin, Moag, Mongseng, Moon, Muraganda, Necros, New Earth, New Phyrexia, Outside Mutter’s Spiral, Phyrexia, Pyrulea, Rabiah, Rath, Ravnica, Regatha, Segovia, Serra’s Realm, Shadowmoor, Shandalar, Shenmeng, Skaro, Spacecraft, Tarkir, Theros, Time, Trenzalore, Ulgrotha, Unknown Planet, Valla, Vryn, Wildfire, Xerex, Zendikar, and Zhalfir.
+        - [ ] 205.3p One dungeon card (Undercity) has a subtype; this subtype is called a dungeon type. That dungeon type is Undercity.
+        - [ ] 205.3q Battles have a unique subtype, called a battle type. That battle type is Siege.
+        - [ ] 205.3r Phenomenon cards, scheme cards, vanguard cards, and conspiracy cards have no subtypes.
+    - [ ] 205.4. Supertypes
+        - [ ] 205.4a An object can have one or more supertypes. A card’s supertypes are printed directly before its card types. The supertypes are basic, legendary, ongoing, snow, and world.
+        - [ ] 205.4b An object’s supertype is independent of its card type and subtype, even though some supertypes are closely identified with specific card types. Changing an object’s card types or subtypes won’t change its supertypes. Changing an object’s supertypes won’t change its card types or subtypes. When an object gains or loses a supertype, it retains any other supertypes it had.
+        ```
+        Example: An ability reads, “All lands are 1/1 creatures that are still lands.” If any of the affected lands were legendary, they are still legendary.
+        ```
+        - [ ] 205.4c Any land with the supertype “basic” is a basic land. Any land that doesn’t have this supertype is a nonbasic land, even if it has a basic land type. Cards printed in sets prior to the Eighth Edition core set didn’t use the word “basic” to indicate a basic land. Cards from those sets with the following names are basic lands and have received errata in the Oracle card reference accordingly: Forest, Island, Mountain, Plains, Swamp, Snow-Covered Forest, Snow-Covered Island, Snow-Covered Mountain, Snow-Covered Plains, and Snow-Covered Swamp.
+        - [ ] 205.4d Any permanent with the supertype “legendary” is subject to the state-based action for legendary permanents, also called the “legend rule” (see rule 704.5j).
+        - [ ] 205.4e Any instant or sorcery spell with the supertype “legendary” is subject to a casting restriction. A player can’t cast a legendary instant or sorcery spell unless that player controls a legendary creature or a legendary planeswalker.
+        - [ ] 205.4f Any permanent with the supertype “world” is subject to the state-based action for world permanents, also called the “world rule” (see rule 704.5k).
+        - [ ] 205.4g Any permanent with the supertype “snow” is a snow permanent. Any permanent that doesn’t have this supertype is a nonsnow permanent, regardless of its name.
+        - [ ] 205.4h Any scheme card with the supertype “ongoing” is exempt from the state-based action for schemes (see rule 704.6e).
+    - [ ] 207. Text Box
+        - [ ] 207.1. The text box is printed on the lower half of the card. It usually contains rules text defining the card’s abilities.
+        - [ ] 207.2. The text box may also contain italicized text that has no game function.
+        - [ ] 207.2a Reminder text is italicized text within parentheses that summarizes a rule that applies to that card. It usually appears on the same line as the ability it’s relevant to, but it may appear on its own line if it applies to an aspect of the card other than an ability.
+        - [ ] 207.2b Flavor text is italicized text that, like the illustration, adds artistic appeal to the game. It usually appears below the rules text.
+        - [ ] 207.2c An ability word appears in italics at the beginning of some abilities. Ability words are similar to keywords in that they tie together cards that have similar functionality, but they have no special rules meaning and no individual entries in the Comprehensive Rules. The ability words are adamant, addendum, alliance, battalion, bloodrush, celebration, channel, chroma, cohort, constellation, converge, council’s dilemma, coven, delirium, descend 4, descend 8, disappear, domain, eerie, eminence, enrage, fateful hour, fathomless descent, ferocious, flurry, formidable, grandeur, hellbent, heroic, imprint, infusion, inspired, join forces, kinship, landfall, lieutenant, magecraft, metalcraft, morbid, opus, pack tactics, paradox, parley, radiance, raid, rally, renew, repartee, revolt, secret council, spell mastery, strive, survival, sweep, tempting offer, threshold, undergrowth, valiant, vivid, void, and will of the council.
+        - [ ] 207.2d Similar to ability words, flavor words appear in italics at the beginning of some abilities. Flavor words provide a flavorful description of abilities, but they have no special rules meaning and are not listed in the Comprehensive Rules. While an ability word ties together several abilities with similar functionality, each flavor word is tailored to the specific ability it appears with.
+        - [ ] 207.3. Some cards have decorative icons in the background of their text boxes. For example, a guild icon appears in the text box of many cards associated with the guilds of Ravnica, and a faction icon appears in the text box of most Scars of Mirrodin™ block cards. Similarly, many promotional cards include decorative icons. These icons have no effect on game play.
+        - [ ] 207.4. The chaos symbol appears in the text box of each plane card to the left of a triggered ability that triggers whenever chaos ensues. The symbol itself has no special rules meaning. See rule 901, “Planechase.”
+        - [ ] 207.5. One card (Cryptic Spires) has a set of symbols below the text box that represent each color and an ability that instructs a player to circle two of those colors as they create their deck. To circle a color, the player circles (or otherwise clearly indicates) that color’s symbol. The mana symbol of each circled color is considered part of that card’s printed rules text (see rule 613.1) and affects that card’s color identity (see rule 903.4).
+    - [ ] 208. Power/Toughness
+        - [ ] 208.1. A creature card has two numbers separated by a slash printed in its lower right corner. The first number is its power (the amount of damage it deals in combat); the second is its toughness (the amount of damage needed to destroy it). For example, 2/3 means the object has power 2 and toughness 3. Power and toughness can be modified or set to particular values by effects.
+        - [ ] 208.2. Rather than a fixed number, some creature cards have power and/or toughness that includes a star (*).
+            - [ ] 208.2a The card may have a characteristic-defining ability that sets its power and/or toughness according to some stated condition. (See rule 604.3.) Such an ability is worded “[This creature’s] [power or toughness] is equal to . . .” or “[This creature’s] power and toughness are each equal to . . .” This ability functions everywhere, even outside the game. If the ability needs to use a number that can’t be determined, including inside a calculation, use 0 instead of that number.
+            ```
+            Example: Lost Order of Jarkeld has power and toughness each equal to 1+*. It has the abilities “As this creature enters, choose an opponent” and “Lost Order of Jarkeld’s power and toughness are each equal to 1 plus the number of creatures the chosen player controls.” While Lost Order of Jarkeld isn’t on the battlefield, there won’t be a chosen player. Its power and toughness will each be equal to 1 plus 0, so it’s 1/1.        
+            ```
+            - [ ] 208.2b The card may have a static ability that creates a replacement effect that sets the creature’s power and toughness to one of a number of specific values as it enters the battlefield or is turned face up. (See rule 614, “Replacement Effects.”) Such an ability is worded “As [this creature] enters . . . ,” “As [this creature] is turned face up . . . ,” or “[This creature] enters as . . .” and lists two or more specific power and toughness values (and may also list additional characteristics). The characteristics chosen or determined with these effects affect the creature’s copiable values. (See rule 707.2.) While the card isn’t on the battlefield, its power and toughness are each considered to be 0.
+        - [ ] 208.3. A noncreature permanent has no power or toughness, even if it’s a card with a power and toughness printed on it (such as a Vehicle). A noncreature object not on the battlefield has power or toughness only if it has a power and toughness printed on it.
+            - [ ] 208.3a If an effect would be created that sets the base power and/or toughness of a noncreature permanent, or otherwise modifies its power and/or toughness, that effect is created even though it doesn’t do anything unless that permanent becomes a creature.
+            ```
+            Example: Veteran Motorist has the ability “Whenever this creature crews a Vehicle, that Vehicle gets +1/+1 until end of turn,” and it’s tapped to pay the crew cost of a Vehicle. This triggered ability resolves while the Vehicle it crewed isn’t yet a creature. The continuous effect is created and will apply to the Vehicle once it becomes a creature.
+            ```
+        - [ ] 208.4. Some effects refer to a creature’s “base power,” “base toughness,” or “base power and toughness.”
+            - [ ] 208.4a Effects that set a creature’s power and/or toughness to specific values may refer to base power and/or toughness. Other continuous effects may further modify the creature’s power and toughness. See rule 613, “Interaction of Continuous Effects.”
+
+## 3. Card Types
+
+- [ ] 305. Lands
+    - [X] 305.1. A player who has priority may play a land card from their hand during a main phase of their turn when the stack is empty. Playing a land is a special action; it doesn’t use the stack (see rule 116). Rather, the player simply puts the land onto the battlefield. Since the land doesn’t go on the stack, it is never a spell, and players can’t respond to it with instants or activated abilities.
+    - [ ] 305.2. A player can normally play one land during their turn; however, continuous effects may increase this number.
+        - [X] 305.2a To determine whether a player can play a land, compare the number of lands the player can play this turn with the number of lands they have already played this turn (including lands played as special actions and lands played during the resolution of spells and abilities). If the number of lands the player can play is greater, the play is legal.
+        - [ ] 305.2b A player can’t play a land, for any reason, if the number of lands the player can play this turn is equal to or less than the number of lands they have already played this turn. Ignore any part of an effect that instructs a player to do so.
+    - [X] 305.3. A player can’t play a land, for any reason, if it isn’t their turn. Ignore any part of an effect that instructs a player to do so.
+    - [ ] 305.4. Effects may also allow players to “put” lands onto the battlefield. This isn’t the same as “playing a land” and doesn’t count as a land played during the current turn.
+    - [ ] 305.5. Land subtypes are always a single word and are listed after a long dash. Land subtypes are also called land types. Lands may have multiple subtypes. See rule 205.3i for the complete list of land types.
+    ```
+    Example: “Basic Land — Mountain” means the card is a land with the subtype Mountain.
+    ```
+    - [ ] 305.6. The basic land types are Plains, Island, Swamp, Mountain, and Forest. If an object uses the words “basic land type,” it’s referring to one of these subtypes. An object with the land card type and a basic land type has the intrinsic ability “{T}: Add [mana symbol],” even if the text box doesn’t actually contain that text or the object has no text box. For Plains, [mana symbol] is {W}; for Islands, {U}; for Swamps, {B}; for Mountains, {R}; and for Forests, {G}. See rule 107.4a. See also rule 605, “Mana Abilities.”
+    - [ ] 305.7. If an effect sets a land’s subtype to one or more of the basic land types, the land no longer has its old land type. It loses all abilities generated from its rules text, its old land types, and any copiable effects affecting that land, and it gains the appropriate mana ability for each new basic land type. Note that this doesn’t remove any abilities that were granted to the land by other effects. Setting a land’s subtype doesn’t add or remove any card types (such as creature) or supertypes (such as basic, legendary, and snow) the land may have. If a land gains one or more land types in addition to its own, it keeps its land types and rules text, and it gains the new land types and mana abilities.
+    - [ ] 305.8. Any land with the supertype “basic” is a basic land. Any land that doesn’t have this supertype is a nonbasic land, even if it has a basic land type.
+    - [ ] 305.9. If an object is both a land and another card type, it can be played only as a land. It can’t be cast as a spell.
+
+## 4. Zones
+
+- [ ] 400. General
+    - [ ] 400.1. A zone is a place where objects can be during a game. There are normally seven zones: library, hand, battlefield, graveyard, stack, exile, and command. Some older cards also use the ante zone. Each player has their own library, hand, and graveyard. The other zones are shared by all players.
+    - [ ] 400.2. Public zones are zones in which all players can see the cards’ faces, except for those cards that some rule or effect specifically allow to be face down. Graveyard, battlefield, stack, exile, ante, and command are public zones. Hidden zones are zones in which not all players can be expected to see the cards’ faces. Library and hand are hidden zones, even if all the cards in one such zone happen to be revealed.
+    - [X] 400.3. If an object would go to any library, graveyard, or hand other than its owner’s, it goes to its owner’s corresponding zone.
+    - [ ] 400.4. Cards with certain card types can’t enter certain zones.
+        - [X] 400.4a If an instant or sorcery card would enter the battlefield, it remains in its previous zone.
+        - [ ] 400.4b If a conspiracy, phenomenon, plane, scheme, or vanguard card would leave the command zone, it remains in the command zone.
+    - [ ] 400.5. The order of objects in a library, in a graveyard, or on the stack can’t be changed except when effects or rules allow it. The same is true for objects arranged in face-down piles in other zones. Other objects in other zones can be arranged however their owners wish, although who controls those objects, whether they’re tapped or flipped, and what other objects are attached to them must remain clear to all players.
+    - [ ] 400.6. If an object would move from one zone to another, determine what event is moving the object. If the object is moving to a public zone and its owner will be able to look at it in that zone, its owner looks at it to see if it has any abilities that would affect the move. If the object is moving to the battlefield, each other player who will be able to look at it in that zone does so. Then any appropriate replacement effects, whether they come from that object or from elsewhere, are applied to that event. If any effects or rules try to do two or more contradictory or mutually exclusive things to a particular object, that object’s controller—or its owner if it has no controller—chooses which effect to apply, and what that effect does. (Note that multiple instances of the same thing may be mutually exclusive; for example, two simultaneous “destroy” effects.) Then the event moves the object.
+    ```
+    Example: Exquisite Archangel has an ability which reads “If you would lose the game, instead exile this creature and your life total becomes equal to your starting life total.” A spell deals 5 damage to a player with 5 life and 5 damage to an Exquisite Archangel under that player’s control. As state-based actions are performed, that player’s life total becomes equal to their starting life total, and that player chooses whether Exquisite Archangel moves to its owner’s graveyard or to exile.
+    ```
+    - [ ] 400.7. An object that moves from one zone to another becomes a new object with no memory of, or relation to, its previous existence. This rule has the following exceptions.
+        - [ ] 400.7a Effects from spells, activated abilities, and triggered abilities that change the characteristics or controller of a permanent spell on the stack continue to apply to the permanent that spell becomes.
+        - [ ] 400.7b Effects from static abilities that grant an ability to a permanent spell that functions on the battlefield continue to apply to the permanent that spell becomes (see rule 611.3d).
+        - [ ] 400.7c Prevention effects that apply to damage from a permanent spell on the stack continue to apply to damage from the permanent that spell becomes.
+        - [ ] 400.7d An ability of a permanent can reference information about the spell that became that permanent as it resolved, including what costs were paid to cast that spell or what mana was spent to pay those costs.
+        - [ ] 400.7e Abilities that trigger when an object moves from one zone to another (for example, “When this Aura is put into a graveyard from the battlefield”) can find the new object that it became in the zone it moved to when the ability triggered, if that zone is a public zone.
+        - [ ] 400.7f Abilities that trigger when an enchanted permanent leaves the battlefield can find the new object that each Aura enchanting that permanent became in its owner’s graveyard if it was put into that graveyard at the same time the enchanted permanent left the battlefield. It can also find the new object that each Aura enchanting it became in its owner’s graveyard as a result of being put there as a state-based action for not being attached to a permanent. (See rule 704.5m.)
+        - [ ] 400.7g If an effect grants a nonland card an ability that allows it to be cast, that ability will continue to apply to the new object that card became after it moved to the stack as a result of being cast this way.
+        - [ ] 400.7h If an effect allows a nonland card to be cast, other parts of that effect can find the new object that card becomes after it moves to the stack as a result of being cast this way.
+        - [ ] 400.7i If an effect allows a land card to be played, other parts of that effect can find the new object that land card becomes after it moves to the battlefield as a result of being played this way.
+        - [ ] 400.7j If an effect causes an object to move to a public zone, other parts of that effect can find that object. If the cost of a spell or ability causes an object to move to a public zone, that spell or ability’s effects can find that object.
+        - [ ] 400.7k After resolving a madness triggered ability (see rule 702.35), if the exiled card wasn’t cast and was moved to a public zone, effects referencing the discarded card can find that object.
+        - [ ] 400.7m Stickers on an object in a public zone are retained as it moves to another public zone (see rule 123.5). Any effects from stickers continue to apply to the new object it becomes in that zone.
+    - [ ] 400.8. If an object in the exile zone is exiled, it doesn’t change zones, but it becomes a new object that has just been exiled.
+    - [ ] 400.9. If a face-up object in the command zone is turned face down, it becomes a new object.
+    - [ ] 400.10. If an object in the command zone is put into the command zone, it doesn’t change zones, but it becomes a new object that has just entered the command zone.
+    - [ ] 400.11. An object is outside the game if it isn’t in any of the game’s zones. Outside the game is not a zone.
+        - [ ] 400.11a Cards in a player’s sideboard are outside the game. See rule 100.4.
+        - [ ] 400.11b Some effects bring cards into a game from outside the game. Those cards remain in the game until the game ends, their owner leaves the game, or a rule or effect removes them from the game, whichever comes first.
+        - [ ] 400.11c Cards outside the game can’t be affected by spells or abilities, except for characteristic-defining abilities printed on them (see rule 604.3) and spells and abilities that allow those cards to be brought into the game.
+    - [ ] 400.12. Some effects instruct a player to do something to a zone (such as “Shuffle your hand into your library”). That action is performed on all cards in that zone. The zone itself is not affected.
+
+## 5. Turn Structure
+- [ ] 550. General
+    - [X] 500.1. A turn consists of five phases, in this order: beginning, precombat main, combat, postcombat main, and ending. Each of these phases takes place every turn, even if nothing happens during the phase. The beginning, combat, and ending phases are further broken down into steps, which proceed in order.
+    - [ ] 500.2. A phase or step in which players receive priority ends when the stack is empty and all players pass in succession. Simply having the stack become empty doesn’t cause such a phase or step to end; all players have to pass in succession with the stack empty. Because of this, each player gets a chance to add new things to the stack before that phase or step ends.
+    - [ ] 500.3. A step in which no players receive priority ends when all specified actions that take place during that step are completed. The only such steps are the untap step (see rule 502) and certain cleanup steps (see rule 514).
+    - [ ] 500.4. As a step or phase begins, if there are effects that last until that step or phase, those effects expire.
+    - [ ] 500.5. As a step or phase ends, if there are effects that last until the end of that step or phase, those effects expire. Then any unspent mana left in a player’s mana pool empties. This is a turn-based action that doesn’t use the stack (see rule 703.4q).
+        - [ ] 500.5a Effects that last “until end of combat” expire at the end of the combat phase, not at the beginning of the end of combat step.
+        - [ ] 500.5b Effects that last “until end of turn” are subject to special rules; see rule 514.2.
+    - [ ] 500.6. When a phase or step begins, any abilities that trigger “at the beginning of” that phase or step trigger. They are put on the stack the next time a player would receive priority. (See rule 117, “Timing and Priority.”)
+    - [ ] 500.7. Some effects can give a player extra turns. They do this by adding the turns directly after the specified turn. If a player is given multiple extra turns, the extra turns are added one at a time. If multiple players are given extra turns, the extra turns are added one at a time, in APNAP order (see rule 101.4). The most recently created turn will be taken first.
+    - [ ] 500.8. Some effects can add phases to a turn. They do this by adding the phases directly after the specified phase. If multiple extra phases are created after the same phase, the most recently created phase will occur first.
+    - [ ] 500.9. Some effects can add steps to a phase. They do this by adding the steps directly after a specified step or directly before a specified step. If multiple extra steps are created after the same step, the most recently created step will occur first.
+    - [ ] 500.10. Some effects add a step after a particular phase. In that case, that effect first creates the phase which normally contains that step directly after the specified phase. Any other steps that phase would normally have are skipped (see rule 500.11). `Example: Obeka, Splitter of Seconds says, in part, “Whenever Obeka deals combat damage to a player, you get that many additional upkeep steps after this phase.” After that ability resolves, its controller adds that many beginning phases after this phase. Those new beginning phases have only an upkeep step. The untap steps and draw steps of those phases are skipped.`
+        - [ ] 500.10a If an effect that says “you get” an additional step or phase would add a step or phase to a turn other than its controller’s, no steps or phases are added.
+    - [ ] 500.11. Some effects can cause a step, phase, or turn to be skipped. To skip a step, phase, or turn is to proceed past it as though it didn’t exist. See rule 614.10.
+    - [ ] 500.12. No game events can occur between steps, phases, or turns.
+- [X] 501. Beginning Phase
+    - [X] 501.1. The beginning phase consists of three steps, in this order: untap, upkeep, and draw.
+- [ ] 502. Untap Step
+    - [ ] 502.1. First, all phased-in permanents with phasing that the active player controls phase out, and all phased-out permanents that the active player controlled when they phased out phase in. This all happens simultaneously. This turn-based action doesn’t use the stack. See rule 702.26, “Phasing.”
+    - [ ] 502.2. Second, if it’s day and the previous turn’s active player didn’t cast any spells during that turn, it becomes night. If it’s night and the previous turn’s active player cast two or more spells during that turn, it becomes day. If it’s neither day nor night, this check doesn’t happen and it remains neither. This turn-based action doesn’t use the stack. See rule 731, “Day and Night.”
+    - [ ] 502.3. Third, the active player determines which permanents they control will untap. Then they untap them all simultaneously. This turn-based action doesn’t use the stack. Normally, all of a player’s permanents untap, but effects can keep one or more of a player’s permanents from untapping.
+    - [~] 502.4. No player receives priority during the untap step, so no spells can be cast or resolve and no abilities can be activated or resolve. Any ability that triggers during this step will be held until the next time a player would receive priority, which is usually during the upkeep step. (See rule 503, “Upkeep Step.”)
+- [ ] 503. Upkeep Step
+    - [X] 503.1. The upkeep step has no turn-based actions. Once it begins, the active player gets priority. (See rule 117, “Timing and Priority.”)
+        - [ ] 503.1a Any abilities that triggered during the untap step and any abilities that triggered at the beginning of the upkeep are put onto the stack before the active player gets priority; the order in which they triggered doesn’t matter. (See rule 603, “Handling Triggered Abilities.”)
+        - [ ] 503.2. If a spell states that it may be cast only “after [a player’s] upkeep step,” and the turn has multiple upkeep steps, that spell may be cast any time after the first upkeep step ends.
+- [X] 504. Draw Step
+    - [X] 504.1. First, the active player draws a card. This turn-based action doesn’t use the stack.
+    - [X] 504.2. Second, the active player gets priority. (See rule 117, “Timing and Priority.”)
+- [ ] 505. Main Phase
+    - [ ] 505.1. There are two main phases in a turn. In each turn, the first main phase (also known as the precombat main phase) and the second main phase (also known as the postcombat main phase) are separated by the combat phase (see rule 506, “Combat Phase”). The precombat and postcombat main phases are individually and collectively known as the main phase.
+        - [ ] 505.1a Only the first main phase of the turn is a precombat main phase. All other main phases are postcombat main phases. This includes the second main phase of a turn in which the combat phase has been skipped. It is also true of a turn in which an effect has caused an additional combat phase and an additional main phase to be created.
+        - [ ] 505.1b In card text, phrases such as “first main phase,” “second main phase,” and so on count the number of main phases that have occurred only in the current turn unless that text specifies otherwise.
+    - [ ] 505.2. The main phase has no steps, so a main phase ends when all players pass in succession while the stack is empty. (See rule 500.2.)
+    - [ ] 505.3. First, but only if the players are playing an Archenemy game (see rule 904), the active player is the archenemy, and it’s the active player’s precombat main phase, the active player sets the top card of their scheme deck in motion (see rule 701.32). This turn-based action doesn’t use the stack.
+    - [ ] 505.4. Second, if the active player controls one or more Saga enchantments and it’s the active player’s precombat main phase, the active player puts a lore counter on each Saga they control with one or more chapter abilities. (See rule 714, “Saga Cards.”) This turn-based action doesn’t use the stack.
+    - [ ] 505.5. Third, if the active player controls one or more Attractions and it’s the active player’s precombat main phase, the active player rolls to visit their Attractions. (See rule 701.52, “Roll to Visit Your Attractions.”) This turn-based action doesn’t use the stack.
+    - [X] 505.6. Fourth, the active player gets priority. (See rule 117, “Timing and Priority.”)
+        - [ ] 505.6a The main phase is the only phase in which a player can normally cast artifact, creature, enchantment, planeswalker, and sorcery spells. The active player may cast these spells.
+        - [ ] 505.6b During either main phase, the active player may play one land card from their hand if the stack is empty, if the player has priority, and if they haven’t played a land this turn (unless an effect states the player may play additional lands). This action doesn’t use the stack. Neither the land nor the action of playing the land is a spell or ability, so it can’t be countered, and players can’t respond to it with instants or activated abilities. (See rule 305, “Lands.”)
+- [ ] 506. Combat Phase
+    - [ ] 506.1. The combat phase has five steps, which proceed in order: beginning of combat, declare attackers, declare blockers, combat damage, and end of combat. The declare blockers and combat damage steps are skipped if no creatures are declared as attackers or put onto the battlefield attacking (see rule 508.8). There are two combat damage steps if any attacking or blocking creature has first strike (see rule 702.7) or double strike (see rule 702.4).
+    - [ ] 506.2. During the combat phase, the active player is the attacking player; creatures that player controls may attack. During the combat phase of a two-player game, the nonactive player is the defending player; that player, planeswalkers they control, and battles they protect may be attacked.
+        - [ ] 506.2a During the combat phase of a multiplayer game, there may be one or more defending players, depending on the variant being played and the options chosen for it. Unless all the attacking player’s opponents automatically become defending players during the combat phase, the attacking player chooses one of their opponents as a turn-based action during the beginning of combat step. (Note that the choice may be dictated by the variant being played or the options chosen for it.) That player becomes the defending player. See rule 802, “Attack Multiple Players Option,” rule 803, “Attack Left and Attack Right Options,” and rule 809, “Emperor Variant.”
+    - [ ] 506.3. Only a creature can attack or block. Only a player, a planeswalker, or a battle can be attacked.
+        - [ ] 506.3a If an effect would put a noncreature permanent onto the battlefield attacking or blocking, the permanent does enter the battlefield but it’s never considered to be an attacking or blocking permanent.
+        - [ ] 506.3b If an effect would put a creature onto the battlefield attacking under the control of any player except an attacking player, that creature does enter the battlefield, but it’s never considered to be an attacking creature.
+        - [ ] 506.3c If an effect would put a creature onto the battlefield attacking either a player not in the game or a permanent that’s no longer on the battlefield or isn’t either a planeswalker or a battle, that creature does enter the battlefield, but it’s never considered to be an attacking creature. See rule 508.4a.
+        - [ ] 506.3d If an effect puts a creature onto the battlefield attacking during the declare blockers step, combat damage step, or end of combat step, that creature enters the battlefield unblocked. See rule 508.4d.
+        - [ ] 506.3e If an effect would put a creature onto the battlefield blocking but the creature it would block isn’t attacking the entering creature’s controller, a planeswalker that player controls, or a battle that player protects, that creature does enter the battlefield, but it’s never considered to be a blocking creature.
+        - [ ] 506.3f If an effect would put a creature that’s also a battle onto the battlefield attacking or blocking, that permanent enters the battlefield but it’s never considered to be an attacking or blocking creature.
+        - [ ] 506.3g If a resolving spell or ability would cause a battle to become an attacking or blocking creature, that part of the effect does nothing.
+    - [ ] 506.4. A permanent is removed from combat if it leaves the battlefield, if its controller changes, if it phases out, if an effect specifically removes it from combat, if it’s a planeswalker that’s being attacked and stops being a planeswalker, if it’s a battle that’s being attacked and stops being a battle, or if it’s an attacking or blocking creature that regenerates (see rule 701.19), stops being a creature, or becomes a battle. A creature that’s removed from combat stops being an attacking, blocking, blocked, and/or unblocked creature. A planeswalker or battle that’s removed from combat stops being attacked.
+        - [ ] 506.4a Once a creature has been declared as an attacking or blocking creature, spells or abilities that would have kept that creature from attacking or blocking don’t remove the creature from combat.
+        - [ ] 506.4b Tapping or untapping a creature that’s already been declared as an attacker or blocker doesn’t remove it from combat and doesn’t prevent its combat damage.
+        - [ ] 506.4c If a creature is attacking a planeswalker or battle, removing that planeswalker or battle from combat doesn’t remove that creature from combat. It continues to be an attacking creature, although it is not attacking any player, planeswalker, or battle. It may be blocked. If it is unblocked, it will deal no combat damage.
+        - [ ] 506.4d A permanent that’s both a blocking creature and a planeswalker that’s being attacked is removed from combat if it stops being both a creature and a planeswalker. If it stops being one of those card types but continues to be the other, it continues to be either a blocking creature or a planeswalker that’s being attacked, whichever is appropriate.
+        - [ ] 506.4e A permanent that’s being attacked that is both a planeswalker and a battle is removed from combat if it stops being both a planeswalker and a battle. If it stops being a battle but is still a planeswalker, it is removed from combat only if it is not controlled by its protector. If it stops being a planeswalker but is still a battle, it is not removed from combat. It continues to be a battle that’s being attacked.
+    - [ ] 506.5. A creature attacks alone if it’s the only creature declared as an attacker during the declare attackers step. A creature is attacking alone if it’s attacking but no other creatures are. A creature blocks alone if it’s the only creature declared as a blocker during the declare blockers step. A creature is blocking alone if it’s blocking but no other creatures are.
+    - [ ] 506.6. Some abilities check to see whether or not a creature “had to attack” during a particular combat phase. A creature had to attack if one or more effects were requiring that creature to attack at the time attackers were declared in that combat. A creature did not “have to attack” if there were no such effects that required it to attack, even if there were no other legal attacks that could have been declared. (See rule 508.)
+    - [ ] 506.7. Some spells state that they may be cast “only [before/after] [a particular point in the combat phase],” in which that point may be “attackers are declared,” “blockers are declared,” “the combat damage step,” “the end of combat step,” “the combat phase,” or “combat.”
+        - [ ] 506.7a A spell that states it may be cast “only before (or after) attackers are declared” is referring to the turn-based action of declaring attackers. It may be cast only before (or after) the declare attackers step begins, regardless of whether any attackers are actually declared. (See rule 508.)
+        - [ ] 506.7b A spell that states it may be cast “only before (or after) blockers are declared” is referring to the turn-based action of declaring blockers. It may be cast only before (or after) the declare blockers step begins, regardless of whether any blockers are actually declared. (See rule 509.)
+        - [ ] 506.7c Some spells state that they may be cast only “during combat” or “during a certain player’s combat phase” in addition to the criteria described in rule 506.7. If a turn has multiple combat phases, such spells may be cast at an appropriate time during any of them.
+        - [ ] 506.7d Some spells state that they may be cast “only before (or after) [a particular point in the combat phase],” but don’t meet the additional criteria described in rule 506.7c. If a turn has multiple combat phases, such spells may be cast that turn only before (or after) the stated point of the first combat phase.
+        - [ ] 506.7e If a spell states that it may be cast “only before [a particular point in the combat phase],” but the stated point doesn’t exist within the relevant combat phase because the declare blockers step and the combat damage step are skipped (see rule 508.8), then the spell may be cast only before the declare attackers step ends. If the stated point doesn’t exist because the relevant combat phase has been skipped, then the spell may be cast only before the precombat main phase ends.
+        - [ ] 506.7f If a spell states that it may be cast “only during combat after blockers are declared,” but the declare blockers step is skipped that combat phase (see rule 508.8), then the spell may not be cast during that combat phase.
+        - [ ] 506.7g Rules 506.7 and 506.7a–f apply to abilities that state that they may be activated only at certain times with respect to combat just as they apply to spells that state that they may be cast only at certain times with respect to combat.
+- [ ] 507. Beginning of Combat Step
+    - [ ] 507.1. First, if the game being played is a multiplayer game in which the active player’s opponents don’t all automatically become defending players, the active player chooses one of their opponents. That player becomes the defending player. This turn-based action doesn’t use the stack. (See rule 506.2.)
+    - [X] 507.2. Second, the active player gets priority. (See rule 117, “Timing and Priority.”)
+- [ ] 508. Declare Attackers Step
+    - [ ] 508.1. First, the active player declares attackers. This turn-based action doesn’t use the stack. To declare attackers, the active player follows the steps below, in order. If at any point during the declaration of attackers, the active player is unable to comply with any of the steps listed below, the declaration is illegal; the game returns to the moment before the declaration (see rule 733, “Handling Illegal Actions”).
+        - [ ] 508.1a The active player chooses which creatures that they control, if any, will attack. The chosen creatures must be untapped, they can’t also be battles, and each one must either have haste or have been controlled by the active player continuously since the turn began.
+        - [ ] 508.1b If the defending player controls any planeswalkers, is the protector of any battles, or the game allows the active player to attack multiple other players, the active player announces which player, planeswalker, or battle each of the chosen creatures is attacking.
+        - [ ] 508.1c The active player checks each creature they control to see whether it’s affected by any restrictions (effects that say a creature can’t attack, or that it can’t attack unless some condition is met). If any restrictions are being disobeyed, the declaration of attackers is illegal.
+        ```
+        Example: A player controls two creatures, each with a restriction that states “This creature can’t attack alone.” It’s legal to declare both as attackers.
+        ```
+        - [ ] 508.1d The active player checks each creature they control to see whether it’s affected by any requirements (effects that say a creature attacks if able, or that it attacks if some condition is met). If the number of requirements that are being obeyed is fewer than the maximum possible number of requirements that could be obeyed without disobeying any restrictions, the declaration of attackers is illegal. If a creature can’t attack unless a player pays a cost, that player is not required to pay that cost, even if attacking with that creature would increase the number of requirements being obeyed. If a requirement that says a creature attacks if able during a certain turn refers to a turn with multiple combat phases, the creature attacks if able during each declare attackers step in that turn.
+        ```
+        Example: A player controls two creatures: one that “attacks if able” and one with no abilities. An effect states “No more than one creature can attack each turn.” The only legal attack is for just the creature that “attacks if able” to attack. It’s illegal to attack with the other creature, attack with both, or attack with neither.
+        ```
+        - [ ] 508.1e If any of the chosen creatures have banding or a “bands with other” ability, the active player announces which creatures, if any, are banded with which. (See rule 702.22, “Banding.”)
+        - [ ] 508.1f The active player taps the chosen creatures. Tapping a creature when it’s declared as an attacker isn’t a cost; attacking simply causes creatures to become tapped.
+        - [ ] 508.1g If there are any optional costs to attack with the chosen creatures (expressed as costs a player may pay “as” a creature attacks), the active player chooses which, if any, they will pay.
+        - [ ] 508.1h If any of the chosen creatures require paying costs to attack, or if any optional costs to attack were chosen, the active player determines the total cost to attack. Costs may include paying mana, tapping permanents, sacrificing permanents, discarding cards, and so on. Once the total cost is determined, it becomes “locked in.” If effects would change the total cost after this time, ignore this change.
+        - [ ] 508.1i If any of the costs require mana, the active player then has a chance to activate mana abilities (see rule 605, “Mana Abilities”).
+        - [ ] 508.1j Once the player has enough mana in their mana pool, they pay all costs in any order. Partial payments are not allowed.
+        - [ ] 508.1k Each chosen creature still controlled by the active player becomes an attacking creature. It remains an attacking creature until it’s removed from combat or the combat phase ends, whichever comes first. See rule 506.4.
+        - [ ] 508.1m Any abilities that trigger on attackers being declared trigger.
+    - [X] 508.2. Second, the active player gets priority. (See rule 117, “Timing and Priority.”)
+        - [ ] 508.2a Abilities that trigger on a creature attacking trigger only at the point the creature is declared as an attacker. They will not trigger if a creature attacks and then that creature’s characteristics change to match the ability’s trigger condition.
+        ```
+        Example: A permanent has the ability “Whenever a green creature attacks, destroy that creature at end of combat.” If a blue creature attacks and is later turned green, the ability will not trigger.
+        ```
+        - [ ] 508.2b Any abilities that triggered on attackers being declared or that triggered during the process described in rules 508.1 are put onto the stack before the active player gets priority; the order in which they triggered doesn’t matter. (See rule 603, “Handling Triggered Abilities.”)
+        - [ ] 508.3. Triggered abilities that trigger on attackers being declared may have different trigger conditions.
+        - [ ] 508.3a An ability that reads “Whenever [a creature] attacks, . . .” triggers if that creature is declared as an attacker. Similarly, “Whenever [a creature] attacks [a player, planeswalker, or battle], . . .” triggers if that creature is declared as an attacker attacking that player or permanent. Such abilities won’t trigger if a creature is put onto the battlefield attacking.
+        - [ ] 508.3b An ability that reads “Whenever [a player, planeswalker, or battle] is attacked, . . .” triggers if one or more creatures are declared as attackers attacking that player or permanent. It won’t trigger if a creature is put onto the battlefield attacking that player or permanent.
+        - [ ] 508.3c An ability that reads “Whenever [a player] attacks with [a creature], . . .” triggers if a creature that player controls is declared as an attacker.
+        - [ ] 508.3d An ability that reads “Whenever [a player] attacks, . . .” triggers if one or more creatures that player controls are declared as attackers.
+        - [ ] 508.3e An ability that reads “Whenever [a player] attacks [another player], . . .” triggers if one or more creatures the first player controls are declared as attackers attacking the second player. It won’t trigger if a creature is put onto the battlefield attacking or if a creature attacks a planeswalker or a battle.
+        - [ ] 508.3f An ability that reads “Whenever [a creature] attacks and isn’t blocked, . . .” triggers during the declare blockers step, not the declare attackers step. See rule 509.3g.
+    - [ ] 508.4. If a creature is put onto the battlefield attacking, its controller chooses which defending player, planeswalker a defending player controls, or battle a defending player protects it’s attacking as it enters the battlefield (unless the effect that put it onto the battlefield specifies what it’s attacking). Similarly, if an effect states that a creature is attacking, its controller chooses which defending player, planeswalker a defending player controls, or battle a defending player protects it’s attacking (unless the effect has already specified). Such creatures are “attacking” but, for the purposes of trigger events and effects, they never “attacked.” They remain attacking creatures until they’re removed from combat or the combat phase ends, whichever comes first.
+        - [ ] 508.4a If a creature would be put onto the battlefield attacking a certain player, and that player is no longer in the game, the creature is put onto the battlefield but is never considered an attacking creature. The same is true if a creature would be put onto the battlefield attacking a planeswalker or battle and that permanent is no longer on the battlefield, is no longer a planeswalker or battle, is a planeswalker that is no longer controlled by a defending player, or is a battle that is no longer protected by a defending player.
+        - [ ] 508.4b If the effect that states a creature is attacking specifies it’s attacking a certain player, and that player is no longer in the game when the effect resolves, the creature doesn’t become an attacking creature. The same is true if the effect specifies a creature is attacking a planeswalker or battle and, when the effect resolves, that permanent is no longer on the battlefield, is no longer a planeswalker or battle, is a planeswalker that is no longer controlled by a defending player, or is a battle that is no longer protected by a defending player.
+        - [ ] 508.4c A creature that’s put onto the battlefield attacking or that is stated to be attacking isn’t affected by requirements or restrictions that apply to the declaration of attackers.
+        - [ ] 508.4d A creature that’s put onto the battlefield attacking during the declare blockers step, combat damage step, or end of combat step enters the battlefield as an unblocked creature. It remains unblocked until it is removed from combat, an effect says it becomes blocked, or the combat phase ends, whichever comes first.
+    - [ ] 508.5. If an ability of an attacking creature refers to a defending player, or a spell or ability refers to both an attacking creature and a defending player, then unless otherwise specified, the defending player it’s referring to is the player that creature is attacking, the controller of the planeswalker that creature is attacking, or the protector of the battle that creature is attacking. If that creature is no longer attacking, the defending player it’s referring to is the player that creature was attacking before it was removed from combat, the controller of the planeswalker that creature was attacking before it was removed from combat, or the protector of the battle that creature was attacking before it was removed from combat.
+        - [ ] 508.5a In a multiplayer game, any rule, object, or effect that refers to a “defending player” refers to one specific defending player, not to all of the defending players. If a spell or ability could apply to multiple attacking creatures, the appropriate defending player is individually determined for each of those attacking creatures. If there are multiple defending players that could be chosen, the controller of the spell or ability chooses one.
+    - [ ] 508.6. A player is “attacking [a player]” if the first player controls a creature that is attacking the second player. A player has “attacked [a player]” if the first player declared one or more creatures as attackers attacking the second player.
+    - [ ] 508.7. Some cards allow a player to reselect which player, planeswalker, or battle a creature is attacking.
+        - [ ] 508.7a The attacking creature isn’t removed from combat and it isn’t considered to have attacked a second time. That creature is attacking the reselected player or permanent, but it’s still considered to have attacked the player or permanent chosen as it was declared as an attacker.
+        - [ ] 508.7b While reselecting which player, planeswalker, or battle a creature is attacking, that creature isn’t affected by requirements or restrictions that apply to the declaration of attackers.
+        - [ ] 508.7c The reselected player, planeswalker, or battle must be an opponent of the attacking creature’s controller, a planeswalker controlled by an opponent of the attacking creature’s controller, or a battle protected by an opponent of the attacking creature’s controller.
+        - [ ] 508.7d In a multiplayer game not using the attack multiple players option (see rule 802), the reselected player, planeswalker, or battle must be the chosen defending player, a planeswalker controlled by that player, or a battle protected by that player.
+        - [ ] 508.7e In a multiplayer game using the limited range of influence option (see rule 801), the reselected player, planeswalker, or battle must be within the range of influence of the attacking creature’s controller. In the case of a battle, the battle’s protector must also be within the range of influence of the attacking creature’s controller.
+    - [ ] 508.8. If no creatures are declared as attackers or put onto the battlefield attacking, skip the declare blockers and combat damage steps.
+- [ ] 509. Declare Blockers Step
+    - [ ] 509.1. First, the defending player declares blockers. This turn-based action doesn’t use the stack. To declare blockers, the defending player follows the steps below, in order. If at any point during the declaration of blockers, the defending player is unable to comply with any of the steps listed below, the declaration is illegal; the game returns to the moment before the declaration (see rule 733, “Handling Illegal Actions”).
+        - [ ] 509.1a The defending player chooses which creatures they control, if any, will block. The chosen creatures must be untapped and they can’t also be battles. For each of the chosen creatures, the defending player chooses one creature for it to block that’s attacking that player, a planeswalker they control, or a battle they protect.
+        - [ ] 509.1b The defending player checks each creature they control to see whether it’s affected by any restrictions (effects that say a creature can’t block, or that it can’t block unless some condition is met). If any restrictions are being disobeyed, the declaration of blockers is illegal. A restriction may be created by an evasion ability (a static ability an attacking creature has that restricts what can block it). If an attacking creature gains or loses an evasion ability after a legal block has been declared, it doesn’t affect that block. Different evasion abilities are cumulative.
+        Example: An attacking creature with flying and shadow can’t be blocked by a creature with flying but without shadow.
+        - [ ] 509.1c The defending player checks each creature they control to see whether it’s affected by any requirements (effects that say a creature must block, or that it must block if some condition is met). If the number of requirements that are being obeyed is fewer than the maximum possible number of requirements that could be obeyed without disobeying any restrictions, the declaration of blockers is illegal. If a creature can’t block unless a player pays a cost, that player is not required to pay that cost, even if blocking with that creature would increase the number of requirements being obeyed. If a requirement that says a creature blocks if able during a certain turn refers to a turn with multiple combat phases, the creature blocks if able during each declare blockers step in that turn.
+        Example: A player controls one creature that “blocks if able” and another creature with no abilities. If a creature with menace attacks that player, the player must block with both creatures. Having only the first creature block violates the restriction created by menace (the attacking creature can’t be blocked except by two or more creatures). Having only the second creature block violates both the menace restriction and the first creature’s blocking requirement. Having neither creature block fulfills the restriction but not the requirement.
+        - [ ] 509.1d If any of the chosen creatures require paying costs to block, the defending player determines the total cost to block. Costs may include paying mana, tapping permanents, sacrificing permanents, discarding cards, and so on. Once the total cost is determined, it becomes “locked in.” If effects would change the total cost after this time, ignore this change.
+        - [ ] 509.1e If any of the costs require mana, the defending player then has a chance to activate mana abilities (see rule 605, “Mana Abilities”).
+        - [ ] 509.1f Once the player has enough mana in their mana pool, they pay all costs in any order. Partial payments are not allowed.
+        - [ ] 509.1g Each chosen creature still controlled by the defending player becomes a blocking creature. Each one is blocking the attacking creatures chosen for it. It remains a blocking creature until it’s removed from combat or the combat phase ends, whichever comes first. See rule 506.4.
+        - [ ] 509.1h An attacking creature with one or more creatures declared as blockers for it becomes a blocked creature; one with no creatures declared as blockers for it becomes an unblocked creature. This remains unchanged until the creature is removed from combat, an effect says that it becomes blocked or unblocked, or the combat phase ends, whichever comes first. A creature remains blocked even if all the creatures blocking it are removed from combat.
+        - [ ] 509.1i Any abilities that trigger on blockers being declared trigger. See rule 509.2a for more information.
+    - [ ] 509.2. Second, the active player gets priority. (See rule 117, “Timing and Priority.”)
+
+        - [ ] 509.2a Any abilities that triggered on blockers being declared or that triggered during the process described in rule 509.1 are put onto the stack before the active player gets priority; the order in which they triggered doesn’t matter. (See rule 603, “Handling Triggered Abilities.”)
+    - [ ] 509.3. Triggered abilities that trigger on blockers being declared may have different trigger conditions.
+        - [ ] 509.3a An ability that reads “Whenever [a creature] blocks, . . .” generally triggers only once each combat for that creature, even if it blocks multiple creatures. It triggers if the creature is declared as a blocker. It will also trigger if that creature becomes a blocker as the result of an effect, but only if it wasn’t a blocking creature at that time. (See rule 509.1g.) It won’t trigger if the creature is put onto the battlefield blocking.
+        - [ ] 509.3b An ability that reads “Whenever [a creature] blocks a creature, . . .” triggers once for each attacking creature the creature with the ability blocks. It triggers if the creature is declared as a blocker. It will also trigger if an effect causes that creature to block an attacking creature, but only if it wasn’t already blocking that attacking creature at that time. It won’t trigger if the creature is put onto the battlefield blocking.
+        - [ ] 509.3c An ability that reads “Whenever [a creature] becomes blocked, . . .” generally triggers only once each combat for that creature, even if it’s blocked by multiple creatures. It will trigger if that creature becomes blocked by at least one creature declared as a blocker. It will also trigger if that creature becomes blocked by an effect or by a creature that’s put onto the battlefield as a blocker, but only if the attacking creature was an unblocked creature at that time. (See rule 509.1h.)
+        - [ ] 509.3d An ability that reads “Whenever [a creature] becomes blocked by a creature, . . .” triggers once for each creature that blocks the specified creature. It triggers if a creature is declared as a blocker for the attacking creature. It will also trigger if an effect causes a creature to block the attacking creature, but only if it wasn’t already blocking that attacking creature at that time. In addition, it will trigger if a creature is put onto the battlefield blocking that creature. It won’t trigger if the creature becomes blocked by an effect rather than a creature.
+        - [ ] 509.3e If an ability triggers when a creature blocks or becomes blocked by a particular number of creatures, the ability triggers if the creature blocks or is blocked by that many creatures when blockers are declared. Effects that add or remove blockers can also cause such abilities to trigger. This applies to abilities that trigger on a creature blocking or being blocked by at least a certain number of creatures as well.
+        - [ ] 509.3f If an ability triggers when a creature with certain characteristics blocks, it will trigger only if the creature has those characteristics at the point blockers are declared, or at the point an effect causes it to block. If an ability triggers when a creature with certain characteristics becomes blocked, it will trigger only if the creature has those characteristics at the point it becomes a blocked creature. If an ability triggers when a creature becomes blocked by a creature with certain characteristics, it will trigger only if the latter creature has those characteristics at the point it becomes a blocking creature. None of those abilities will trigger if the relevant creature’s characteristics change to match the ability’s trigger condition later on.
+        Example: A creature has the ability “Whenever this creature becomes blocked by a white creature, destroy that creature at end of combat.” If the creature becomes blocked by a black creature that is later turned white, the ability will not trigger.
+        - [ ] 509.3g An ability that reads “Whenever [a creature] attacks and isn’t blocked, . . .” triggers if no creatures are declared as blockers for that creature. It will trigger even if the creature was never declared as an attacker (for example, if it entered the battlefield attacking). It won’t trigger if the attacking creature is blocked and then all its blockers are removed from combat.
+    - [ ] 509.4. If a creature is put onto the battlefield blocking, its controller chooses which attacking creature it’s blocking as it enters the battlefield (unless the effect that put it onto the battlefield specifies what it’s blocking). A creature put onto the battlefield this way is “blocking” but, for the purposes of trigger events and effects, it never “blocked.”
+        - [ ] 509.4a If the effect that puts a creature onto the battlefield blocking specifies it’s blocking a certain creature and that creature is no longer attacking, the creature is put onto the battlefield but is never considered a blocking creature. The same is true if the controller of the creature that’s put onto the battlefield blocking isn’t a defending player for the specified attacking creature.
+        - [ ] 509.4b A creature that’s put onto the battlefield blocking isn’t affected by requirements or restrictions that apply to the declaration of blockers.
+- [ ] 510. Combat Damage Step
+    - [ ] 510.1. First, the active player announces how each attacking creature assigns its combat damage, then the defending player announces how each blocking creature assigns its combat damage. This turn-based action doesn’t use the stack. A player assigns a creature’s combat damage according to the following rules:
+        - [ ] 510.1a Each attacking creature and each blocking creature assigns combat damage equal to its power. Creatures that would assign 0 or less damage this way don’t assign combat damage at all.
+        - [ ] 510.1b An unblocked creature assigns its combat damage to the player, planeswalker, or battle it’s attacking. If it isn’t currently attacking anything (if, for example, it was attacking a planeswalker that has left the battlefield), it assigns no combat damage.
+        - [ ] 510.1c A blocked creature assigns its combat damage to the creatures blocking it. If no creatures are currently blocking it (if, for example, they were destroyed or removed from combat), it assigns no combat damage. If exactly one creature is blocking it, it assigns all its combat damage to that creature. If two or more creatures are blocking it, it assigns its combat damage to those creatures divided as its controller chooses among them.
+        ```
+        Example: An attacking Elvish Regrower (a 4/3 creature) is blocked by Vampire Spawn (a 2/3 creature) and Helpful Hunter (a 1/1 creature). Elvish Regrower’s controller can assign all 4 damage to the Hunter, 1 damage to the Spawn and 3 damage to the Hunter, 2 damage to each creature, 3 damage to the Spawn and 1 damage to the Hunter, or all 4 damage to the Spawn.
+        ```
+        - [ ] 510.1d A blocking creature assigns combat damage to the creatures it’s blocking. If it isn’t currently blocking any creatures (if, for example, they were destroyed or removed from combat), it assigns no combat damage. If it’s blocking exactly one creature, it assigns all its combat damage to that creature. If it’s blocking two or more creatures, it assigns its combat damage divided as its controller chooses among them.
+        - [ ] 510.1e Once a player has assigned combat damage from each attacking or blocking creature they control, the total damage assignment (not solely the damage assignment of any individual attacking or blocking creature) is checked to see if it complies with the above rules. If it doesn’t, the combat damage assignment is illegal; the game returns to the moment before that player began to assign combat damage. (See rule 733, “Handling Illegal Actions.”)
+    - [ ] 510.2. Second, all combat damage that’s been assigned is dealt simultaneously. This turn-based action doesn’t use the stack. No player has the chance to cast spells or activate abilities between the time combat damage is assigned and the time it’s dealt.
+    - [ ] 510.3. Third, the active player gets priority. (See rule 117, “Timing and Priority.”)
+        - [ ] 510.3a Any abilities that triggered on damage being dealt or while state-based actions are performed afterward are put onto the stack before the active player gets priority; the order in which they triggered doesn’t matter. (See rule 603, “Handling Triggered Abilities.”)
+    - [ ] 510.4. If at least one attacking or blocking creature has first strike (see rule 702.7) or double strike (see rule 702.4) as the combat damage step begins, the only creatures that assign combat damage in that step are those with first strike or double strike. After that step, instead of proceeding to the end of combat step, the phase gets a second combat damage step. The only creatures that assign combat damage in that step are the remaining attackers and blockers that had neither first strike nor double strike as the first combat damage step began, as well as the remaining attackers and blockers that currently have double strike. After that step, the phase proceeds to the end of combat step.
+- [ ] 511. End of Combat Step
+    - [ ] 511.1. The end of combat step has no turn-based actions. Once it begins, the active player gets priority. (See rule 117, “Timing and Priority.”)
+    - [ ] 511.2. Abilities that trigger “at end of combat” trigger as the end of combat step begins. Effects that last “until end of combat” expire at the end of the combat phase.
+    - [ ] 511.3. As soon as the end of combat step ends, all creatures, battles, and planeswalkers are removed from combat. After the end of combat step ends, the combat phase is over and the postcombat main phase begins (see rule 505).
+- [X] 512. Ending Phase
+    - [X] 512.1. The ending phase consists of two steps: end and cleanup.
+- [ ] 513. End Step
+    - [ ] 513.1. The end step has no turn-based actions. Once it begins, the active player gets priority. (See rule 117, “Timing and Priority.”)
+        - [ ] 513.1a Previously, abilities that triggered at the beginning of the end step were printed with the trigger condition “at end of turn.” Cards that were printed with that text have received errata in the Oracle card reference to say “at the beginning of the end step” or “at the beginning of the next end step.”
+    - [ ] 513.2. If a permanent with an ability that triggers “at the beginning of the end step” enters the battlefield during this step, that ability won’t trigger until the next turn’s end step. Likewise, if a delayed triggered ability that triggers “at the beginning of the next end step” is created during this step, that ability won’t trigger until the next turn’s end step. In other words, the step doesn’t “back up” so those abilities can go on the stack. This rule applies only to triggered abilities; it doesn’t apply to continuous effects whose durations say “until end of turn” or “this turn.” (See rule 514, “Cleanup Step.”)
+- [ ] 514. Cleanup Step
+    - [ ] 514.1. First, if the active player’s hand contains more cards than their maximum hand size (normally seven), they discard enough cards to reduce their hand size to that number. This turn-based action doesn’t use the stack.
+    - [ ] 514.2. Second, the following actions happen simultaneously: all damage marked on permanents (including phased-out permanents) is removed and all “until end of turn” and “this turn” effects end. This turn-based action doesn’t use the stack.
+    - [ ] 514.3. Normally, no player receives priority during the cleanup step, so no spells can be cast and no abilities can be activated. However, this rule is subject to the following exception:
+        - [ ] 514.3a At this point, the game checks to see if any state-based actions would be performed and/or any triggered abilities are waiting to be put onto the stack (including those that trigger “at the beginning of the next cleanup step”). If so, those state-based actions are performed, then those triggered abilities are put on the stack, then the active player gets priority. Players may cast spells and activate abilities. Once the stack is empty and all players pass in succession, another cleanup step begins.
