@@ -24,7 +24,7 @@ public class PlayLandSpecialAction : IAction
         var match = player.Match;
 
         // Player has to be the active player
-        if (match.TurnOrderManager.ActivePlayerIdx != player.Idx) return [];
+        if (match.TurnManager.ActivePlayerIdx != player.Idx) return [];
 
         // Phase has to be a main phase
         var phase = match.TurnManager.GetCurrentPhase();

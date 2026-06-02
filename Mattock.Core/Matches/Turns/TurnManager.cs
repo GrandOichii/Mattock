@@ -6,10 +6,16 @@ namespace Mattock.Core.Matches.Turns;
 
 public class TurnManager(Match match)
 {
+    public int ActivePlayerIdx { get; set; } = -1;
     public List<Phase> Phases { get; } = [];
     public int CurrentPhaseIdx { get; private set; } = 0;
 
-    public void Reset()
+    public int NextInTurnOrderIdx(int playerIdx)
+    {
+        return (playerIdx + 1) % match.Players.Length;
+    }
+
+    public void ResetTurn()
     {
         Phases.Clear();
         CurrentPhaseIdx = 0;
@@ -30,7 +36,13 @@ public class TurnManager(Match match)
         Phases.Add(endingPhase);
     }
 
-    public void Advance()
+    public void AdvanceTurn()
+    {
+        // TODO
+        ActivePlayerIdx = NextInTurnOrderIdx(ActivePlayerIdx);
+    }
+
+    public void AdvancePhase()
     {
         ++CurrentPhaseIdx;
     }

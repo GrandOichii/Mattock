@@ -15,7 +15,7 @@ public class DeckCardTemplateBuilder(string? cardName = null)
             Supertypes = [],
             Types = [],
             Loyalty = 0,
-            ManaCost = [],
+            ManaCosts = [],
             Power = "",
             Toughness = "",
             TextBox = "",
@@ -31,14 +31,28 @@ public class DeckCardTemplateBuilder(string? cardName = null)
         return this;
     }
 
-    public DeckCardTemplateBuilder Land()
-    {
-        return AddType("Land");
-    }
+    public DeckCardTemplateBuilder Land() => AddType("Land");
+
+    public DeckCardTemplateBuilder Instant() => AddType("Instant");
+
+    public DeckCardTemplateBuilder Sorcery() =>  AddType("Sorcery");
 
     public DeckCardTemplateBuilder AddType(string type)
     {
         _result.Card.Types = [.. _result.Card.Types, type];
         return this;
     }
+
+    public DeckCardTemplateBuilder AddManaCost(ManaCost cost)
+    {
+        _result.Card.ManaCosts = [ .. _result.Card.ManaCosts, cost];
+        return this;
+    }
+
+    public DeckCardTemplateBuilder ZeroCost() =>
+        AddManaCost(new ManaCost()
+        {
+            Amount = 0,
+            Type = Matches.Mana.ManaType.Colorless
+        });
 }

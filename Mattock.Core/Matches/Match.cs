@@ -20,7 +20,6 @@ public class Match
     private int _lastCardId;
     public CardZoneChange? ZoneChange { get; private set; }
     public TheStack Stack { get; }
-    public TurnOrderManager TurnOrderManager { get; }
     public Priority? Priority { get; private set; }
     public TurnManager TurnManager { get; }
     public IAction[] Actions { get; }
@@ -38,7 +37,6 @@ public class Match
         Config = config;
         Mechanics = mechanics;
 
-        TurnOrderManager = new(this);
         ZoneChange = null;
         Priority = null;
         Stack = new(this);
@@ -54,17 +52,18 @@ public class Match
         Rng = config.RandomMatch
             ? new()
             : new(config.Seed);
-        TurnOrderManager.ActivePlayerIdx = config.RandomFirstPlayer
+        TurnManager.ActivePlayerIdx = config.RandomFirstPlayer
             ? Rng.Next() % Players.Length
             : config.FirstPlayerIdx;
 
         Actions = [
             new PassAction(),
-            new PlayLandSpecialAction()
+            new PlayLandSpecialAction(),
+            new CastSpellAction(),
         ];
     }
 
-    public Player GetActivePlayer() => Players[TurnOrderManager.ActivePlayerIdx];
+    public Player GetActivePlayer() => Players[TurnManager.ActivePlayerIdx];
 
     // methods
 
@@ -78,7 +77,7 @@ public class Match
             [.. Players ],
             "Choose the active player"
         );
-        TurnOrderManager.ActivePlayerIdx = chosenActivePlayer.Idx;
+        TurnManager.ActivePlayerIdx = chosenActivePlayer.Idx;
 
         // Set life totals
         foreach (var player in Players)
@@ -115,9 +114,9 @@ public class Match
             ++TurnCounter;
             
             for (
-                TurnManager.Reset();
+                TurnManager.ResetTurn();
                 !TurnManager.IsTurnEnded();
-                TurnManager.Advance()
+                TurnManager.AdvancePhase()
             )
             {
                 var phase = TurnManager.GetCurrentPhase();
@@ -127,8 +126,8 @@ public class Match
                 await phase.DoPostPhases();
             }
 
-            TurnManager.Reset();
-            TurnOrderManager.Advance();
+            TurnManager.ResetTurn();
+            TurnManager.AdvanceTurn();
 
             foreach (var p in Players)
                 p.ResetTrackers();

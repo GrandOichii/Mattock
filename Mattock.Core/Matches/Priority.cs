@@ -11,7 +11,7 @@ public class Priority
     {
         Match = match;
 
-        InitialPlayerIdx = match.TurnOrderManager.ActivePlayerIdx;
+        InitialPlayerIdx = match.TurnManager.ActivePlayerIdx;
         Reset();
     }
 
@@ -50,6 +50,6 @@ public class Priority
 
     private void CalculateNext()
     {
-        NextPlayerIdx = Match.TurnOrderManager.NextInTurnOrderIdx(PriorityPlayerIdx);
+        NextPlayerIdx = Match.TurnManager.NextInTurnOrderIdx(PriorityPlayerIdx);
     }
 }

@@ -182,19 +182,41 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
 
         public Asserts CanPass()
         {
-            options.Any(a => a.ToCommandString() == PassAction.ActionWord).ShouldBeTrue();
+            options.Any(a => a.ToCommandString() == PassAction.ActionWord).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} should be able to pass priority"
+            );
             return this;
         }
 
         public Asserts CanPlayLand()
         {
-            options.Any(a => a.ToCommandString().StartsWith(PlayLandSpecialAction.ActionWord)).ShouldBeTrue();
+            options.Any(a => a.ToCommandString().StartsWith(PlayLandSpecialAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} should be able to play lands"
+            );
+            return this;
+        }
+
+        public Asserts CanCastSpell()
+        {
+            options.Any(a => a.ToCommandString().StartsWith(CastSpellAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} should be able to cast spells"
+            );
             return this;
         }
 
         public Asserts CantPlayLand()
         {
-            options.All(a => !a.ToCommandString().StartsWith(PlayLandSpecialAction.ActionWord)).ShouldBeTrue();
+            options.All(a => !a.ToCommandString().StartsWith(PlayLandSpecialAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} shouldn't be able to play lands"
+            );
+            return this;
+        }
+
+        public Asserts CantCastSpell()
+        {
+            options.All(a => !a.ToCommandString().StartsWith(CastSpellAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} shouldn't be able to cast spells"
+            );
             return this;
         }
     }

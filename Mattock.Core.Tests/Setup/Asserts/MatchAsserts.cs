@@ -49,7 +49,7 @@ public class MatchAsserts(TestMatchWrapper match)
     public MatchAsserts ActivePlayerIs(int playerIdx)
     {
         var m = match.Match!;
-        m.TurnOrderManager.ActivePlayerIdx.ShouldBe(playerIdx);
+        m.TurnManager.ActivePlayerIdx.ShouldBe(playerIdx);
         return this;
     }
 

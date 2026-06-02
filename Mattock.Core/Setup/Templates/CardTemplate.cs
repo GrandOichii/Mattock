@@ -5,7 +5,7 @@ namespace Mattock.Core.Setup.Templates;
 public class CardTemplate
 {
     public required string Name { get; set; }
-    public required ManaCost[] ManaCost { get; set; }
+    public required ManaCost[] ManaCosts { get; set; }
     public required Color[] ColorIndicator { get; set; }
 
     public required string[] Types { get; set; }

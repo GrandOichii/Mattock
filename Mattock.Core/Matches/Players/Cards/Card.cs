@@ -33,21 +33,52 @@ public class Card
         return Template.Name == name;
     }
 
-    public bool IsLand()
+    public bool HasType(string type)
     {
         // TODO
-        return Template.Types.Contains("Land");
+        return Template.Types.Contains(type);
     }
 
-    public bool IsSorcery()
+    public bool IsLand() => HasType("Land");
+
+    public bool IsSorcery() => HasType("Sorcery");
+
+    public bool IsInstant() => HasType("Instant");
+
+    public List<ManaCost> GetManaCosts()
     {
         // TODO
-        return Template.Types.Contains("Sorcery");
+        return [ .. Template.ManaCosts ];
     }
 
-    public bool IsInstant()
+    public bool CanBePlayedAsLand(Player player)
     {
+        if (!IsLand()) return false;
+
         // TODO
-        return Template.Types.Contains("Instant");
+        return Zone == player.Hand;
+    }
+
+    public bool CanBeCast(Player player)
+    {
+        if (IsLand())
+            return false;
+
+        if (!CardTypes.Castable.Any(HasType))
+            return false;
+
+        // TODO alternative costs
+        var costs = GetManaCosts();
+        if (costs.Count == 0)
+            return false;
+
+        // TODO this is very basic, change later
+        if (!IsInstant() && !(Match.TurnManager.GetCurrentPhase().IsMainPhase() && player.IsActive()))
+            return false; 
+
+        if (Zone != player.Hand)
+            return false;
+
+        return true;
     }
 }

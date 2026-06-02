@@ -65,10 +65,10 @@ public class Player
         LandsPlayedThisTurn = 0;
     } 
 
-    public bool IsActive() => Idx == Match.TurnOrderManager.ActivePlayerIdx;
+    public bool IsActive() => Idx == Match.TurnManager.ActivePlayerIdx;
 
 
-    public bool IsNonActive() => Idx != Match.TurnOrderManager.ActivePlayerIdx;
+    public bool IsNonActive() => Idx != Match.TurnManager.ActivePlayerIdx;
 
 
     public string GetDisplayName() => $"{Setup.Name} [{Idx}]";
@@ -152,11 +152,18 @@ public class Player
 
     public List<Card> GetPlayableLands()
     {
-        // TODO some effects change this
         return [ 
             .. Match.Cards.Where(c => 
-                c.Zone == Hand &&
-                c.IsLand()
+                c.CanBePlayedAsLand(this)
+            )
+        ];
+    }
+
+    public List<Card> GetCastableCards()
+    {
+        return [
+            .. Match.Cards.Where(c => 
+                c.CanBeCast(this)
             )
         ];
     }

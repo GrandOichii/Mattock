@@ -229,7 +229,7 @@ public class PlayLandSpecialActionTests
                 .OptionsCount(1 + 2) // pass + 2 available lands
             )
             .Act.Pass()
-            // * beginning of combat 1
+            // * beginning of combat 3
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .CurrentPhase(PhaseType.Combat)
@@ -239,7 +239,7 @@ public class PlayLandSpecialActionTests
                 .CantPlayLand()
             )
             .Act.Pass()
-            // * declare attackers 1
+            // * declare attackers 3
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .CurrentPhase(PhaseType.Combat)
@@ -250,7 +250,7 @@ public class PlayLandSpecialActionTests
             )
             .Act.Pass()
             // TODO declare attackers
-            // * end of combat 1
+            // * end of combat 3
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .CurrentPhase(PhaseType.Combat)
@@ -260,7 +260,7 @@ public class PlayLandSpecialActionTests
                 .CantPlayLand()
             )
             .Act.Pass()
-            // * postcombat main 1
+            // * postcombat main 3
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .CurrentPhase(PhaseType.PostcombatMain)
@@ -271,7 +271,7 @@ public class PlayLandSpecialActionTests
             )
             .Act.PlayLandWithName("l2")
             .Act.Pass()
-            // * end 1
+            // * end 3
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .CurrentPhase(PhaseType.Ending)
