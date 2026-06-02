@@ -18,9 +18,9 @@ public class CastSpellAction : IAction
 
 public class CastSpellCommand(Player player, Card card) : ICommand
 {
-    public Task Do()
+    public async Task Do()
     {
-        throw new NotImplementedException();
+        await player.Cast(card);
     }
 
     public string ToCommandString() => $"{CastSpellAction.ActionWord} {card.Id}";

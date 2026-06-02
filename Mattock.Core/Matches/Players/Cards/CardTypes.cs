@@ -25,4 +25,13 @@ public static class CardTypes
         Sorcery,
         Battle,
     ];
+
+    public static readonly string[] Permanents = [
+        Artifact,
+        Creature,
+        Enchantment,
+        Planeswalker,
+        Battle,
+        Land,
+    ];
 }

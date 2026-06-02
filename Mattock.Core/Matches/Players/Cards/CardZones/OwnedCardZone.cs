@@ -42,25 +42,27 @@ public abstract class OwnedCardZone : ICardZone
         throw new Exception($"Failed to remove card {card.GetDisplayName()} from zone \"{GetZoneName()}\" of player {Player.GetDisplayName()}");
     }
 
-    public void Add(Card card, CardZoneChangeType type)
+    public string Add(Card card, CardZoneChangeType type)
     {
         // * 400.3. If an object would go to any library, graveyard, or hand other than its owner’s, it goes to its owner’s corresponding zone.
         if (card.OwnerIdx != Player.Idx)
         {
             var zone = Match.Players[card.OwnerIdx].GetZoneByName(GetZoneName());
-            zone.Add(card, type);
-            return;
+            return zone.Add(card, type);;
         }
         
         switch (type)
         {
             case CardZoneChangeType.Bottom:
                 Cards.Add(card);
-                return;
+                return card.Id;
             case CardZoneChangeType.Top:
                 Cards.Insert(0, card);
-                return;
+                return card.Id;
+            default:
+                throw new Exception($"Unrecognized {nameof(CardZoneChangeType)}: {type}");
         };
+
     }
 
     public bool Accepts(Card card)

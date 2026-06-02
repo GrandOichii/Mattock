@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Actions;
+using Mattock.Core.Matches.Turns.Phases;
 using Mattock.Core.Matches.Turns.Steps;
 using Mattock.Core.Setup.Templates;
 using Mattock.Core.Tests.Setup.Asserts;
@@ -116,6 +117,19 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         ));
     }
 
+    public TestPlayerControllerBuilder CastSpellWithName(string name)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                var card = player.GetCastableCards().First(c => c.HasName(name));
+                var command = new CastSpellCommand(player, card);
+                return (command, true, true);
+            },
+            true
+        ));
+    }
+
     public TestPlayerControllerBuilder AutoPass()
     {
         return Enqueue((
@@ -134,6 +148,20 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
             {
                 var currentStep = match.Match!.TurnManager.GetCurrentPhase().GetCurrentStep();
                 if (currentStep is null || currentStep.Type != step)
+                    return (PassChoice(options), true, false);
+                return (null, false, true);
+            },
+            false
+        ));
+    }
+
+    public TestPlayerControllerBuilder AutoPassToPhase(PhaseType phase)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                var currentPhase = match.Match!.TurnManager.GetCurrentPhase();
+                if (currentPhase is null || currentPhase.Type != phase)
                     return (PassChoice(options), true, false);
                 return (null, false, true);
             },

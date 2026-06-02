@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 
@@ -5,6 +6,7 @@ namespace Mattock.Core.Matches;
 
 public class Permanent
 {
+    public string Pid { get; }
     public Match Match { get; }
     public Card Card { get; }
     public Player? Controller { get; private set; }
@@ -13,11 +15,14 @@ public class Permanent
 
     public Permanent(Card card)
     {
+        Pid = card.Match.Battlefield.GeneratePid();
         Match = card.Match;
         Card = card;
         Controller = null;
         _tapped = false;
     }
+
+    public string GetDisplayName() => $"[{Pid}]";
 
     public Player GetOwner() => Match.Players[Card.OwnerIdx];
 
@@ -26,10 +31,10 @@ public class Permanent
         Controller = controller;
     }
 
-    public bool IsLand()
+    public bool HasType(string type)
     {
         // TODO
-        return Card.IsLand();
+        return Card.HasType(type);
     }
 
     public bool IsControlledBy(int playerIdx)
@@ -46,5 +51,5 @@ public class Permanent
     {
         // TODO 
         return Card.HasName(name);
-    }   
+    }
 }

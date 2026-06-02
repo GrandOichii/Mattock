@@ -1,6 +1,5 @@
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
-using Mattock.Core.Setup.Templates;
 
 namespace Mattock.Core.Tests.Setup;
 

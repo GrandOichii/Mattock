@@ -12,6 +12,12 @@ public class CastSpellActionTests
     public static IEnumerable<object[]> CastableTypes_SorcerySpeed_Data => 
         CardTypes.Castable.Where(t => t != CardTypes.Instant).Select(t => new object[] { t });
 
+    public static IEnumerable<object[]> PermanentSpellTypes_Data => 
+        CardTypes.Permanents.Where(t => t != CardTypes.Land).Select(t => new object[] { t });
+
+    public static IEnumerable<object[]> NonPermanentSpellTypes_Data => 
+        [ [ CardTypes.Sorcery ], [ CardTypes.Instant ] ];
+
     [Trait("Rules", "202.1b")]
     [Theory]
     [MemberData(nameof(CastableTypesAll_Data))]
@@ -1229,4 +1235,235 @@ public class CastSpellActionTests
             )
         );
     }
+
+    [Trait("Rules", "608.3.")]
+    [Theory]
+    [MemberData(nameof(PermanentSpellTypes_Data))]
+    public async Task ZeroCost_Permanent(string type)
+    {
+        // Arrange
+        var deckSize = 3;
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [
+                new DeckCardTemplateBuilder("c1")
+                    .Amount(deckSize)
+                    .AddType(type)
+                    .ZeroCost()
+                    .Build(),
+            ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1")
+            .ChoosePlayer.WithIdx(0)
+            .SetDeck(deck)
+            // *** turn 1
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            // * precombat main phase 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am.CurrentPhase(PhaseType.PrecombatMain))
+                .CanPass()
+                .CanCastSpell()
+                .OptionsCount(1 + deckSize) // pass + 3 spells
+            )
+            .Act.CastSpellWithName("c1")
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .CurrentPhase(PhaseType.PrecombatMain)
+                    .AssertStack(sa => sa
+                        .EffectCount(1)
+                        .AssertEffect(0, ea => ea
+                            .HasController(0)
+                            .AssertAsSpell(sea => sea
+                                .CardName("c1")
+                            )
+                        )
+                    )
+                )
+            )
+            .Act.Pass() // pass priority after spell
+            .Act.Pass() // pass from empty stack
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .CurrentPhase(PhaseType.Combat)
+                    .CurrentStep(StepType.BeginningOfCombat)
+                    .AssertStack(sa => sa
+                        .IsEmpty()
+                    )
+                )
+            )
+            .Act.Crash()
+            ;
+
+        var p2 = new TestPlayerControllerBuilder("p2")
+            .SetDeck(deck)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .AssertStack(sa => sa
+                        .EffectCount(1)
+                    )
+                )
+            )
+            .Act.Pass() // pass priority after spell
+            .Act.AutoPass()
+            ;
+
+        // Act
+        var match = new TestMatchWrapper(
+            new MatchConfigBuilder()
+                .FirstPlayerIdx(0)
+                .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+                .FirstPlayerNoDrawIfSingleOpponent(false)
+                .InitialHandSize(deckSize)
+                .Build(),
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertPlayer(0, ap => ap
+                .AssertLibrary(ad => ad
+                    .HasCardCount(0)
+                )
+                .AssertHand(ad => ad
+                    .HasCardCount(2)
+                )
+                .AssertGraveyard(ad => ad
+                    .HasCardCount(0)
+                )
+            )
+            .AssertStack(sa => sa
+                .IsEmpty()
+            )
+            .AssertBattlefield(ab => ab
+                .HasPermanents(1)
+                .AssertPermanent("c1", pa => pa
+                    .ControlledBy(0)
+                    .IsUntapped()
+                    .IsOfType(type)
+                )
+            )
+        );
+    }
+
+    
+    [Trait("Rules", "608.2.")]
+    [Theory]
+    [MemberData(nameof(NonPermanentSpellTypes_Data))]
+    public async Task ZeroCost_NonPermanent(string type)
+    {
+        // Arrange
+        var deckSize = 3;
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [
+                new DeckCardTemplateBuilder("c1")
+                    .Amount(deckSize)
+                    .AddType(type)
+                    .ZeroCost()
+                    .Build(),
+            ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1")
+            .ChoosePlayer.WithIdx(0)
+            .SetDeck(deck)
+            // *** turn 1
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            // * precombat main phase 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am.CurrentPhase(PhaseType.PrecombatMain))
+                .CanPass()
+                .CanCastSpell()
+                .OptionsCount(1 + deckSize) // pass + 3 spells
+            )
+            .Act.CastSpellWithName("c1")
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .CurrentPhase(PhaseType.PrecombatMain)
+                    .AssertStack(sa => sa
+                        .EffectCount(1)
+                        .AssertEffect(0, ea => ea
+                            .HasController(0)
+                            .AssertAsSpell(sea => sea
+                                .CardName("c1")
+                            )
+                        )
+                    )
+                )
+            )
+            .Act.Pass() // pass priority after spell
+            .Act.Pass() // pass from empty stack
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .CurrentPhase(PhaseType.Combat)
+                    .CurrentStep(StepType.BeginningOfCombat)
+                    .AssertStack(sa => sa
+                        .IsEmpty()
+                    )
+                )
+            )
+            .Act.Crash()
+            ;
+
+        var p2 = new TestPlayerControllerBuilder("p2")
+            .SetDeck(deck)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .AssertStack(sa => sa
+                        .EffectCount(1)
+                    )
+                )
+            )
+            .Act.Pass() // pass priority after spell
+            .Act.AutoPass()
+            ;
+
+        // Act
+        var match = new TestMatchWrapper(
+            new MatchConfigBuilder()
+                .FirstPlayerIdx(0)
+                .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+                .FirstPlayerNoDrawIfSingleOpponent(false)
+                .InitialHandSize(deckSize)
+                .Build(),
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertPlayer(0, ap => ap
+                .AssertLibrary(ad => ad
+                    .HasCardCount(0)
+                )
+                .AssertHand(ad => ad
+                    .HasCardCount(2)
+                )
+                .AssertGraveyard(ad => ad
+                    .HasCardCount(1)
+                    // TODO
+                )
+            )
+            .AssertStack(sa => sa
+                .IsEmpty()
+            )
+            .AssertBattlefield(ab => ab
+                .HasPermanents(0)
+            )
+        );
+    }
+
+
 }

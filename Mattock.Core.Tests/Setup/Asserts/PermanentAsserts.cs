@@ -1,10 +1,19 @@
+using Mattock.Core.Matches.Players.Cards;
+
 namespace Mattock.Core.Tests.Setup.Asserts;
 
 public class PermanentAsserts(Permanent permanent)
 {
     public PermanentAsserts IsLand()
     {
-        permanent.IsLand().ShouldBeTrue();
+        return IsOfType(CardTypes.Land);
+    }
+
+    public PermanentAsserts IsOfType(string type)
+    {
+        permanent.HasType(type).ShouldBeTrue(
+            $"Expected permanent {permanent.GetDisplayName()} to have type {type}, but it didn't"
+        );
         return this;
     }
 

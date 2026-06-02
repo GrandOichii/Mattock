@@ -31,7 +31,6 @@ public class Priority
             await command.Do();
         } 
         
-        
         var pp = Match.Players[PriorityPlayerIdx];
         var c = await pp.PromptCommand();
         await c.Do();

@@ -4,6 +4,7 @@ using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
+using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.Turns;
 using Mattock.Core.Setup;
 
@@ -141,11 +142,18 @@ public class Match
 
     public async Task CreateAndResolvePriority()
     {
-        CreatePriority();
+        while (true)
+        {
+            CreatePriority();
 
-        await Priority!.Resolve();
+            await Priority!.Resolve();
 
-        Priority = null;
+            Priority = null;
+
+            if (Stack.IsEmpty()) break;
+
+            await Stack.ResolveTop();
+        }
     }
 
     public void ResetPriority()
@@ -189,7 +197,7 @@ public class Match
 
     public Card GetCardById(string id) => Cards.Single(c => c.Id == id);
 
-    public void MoveCard(
+    public string? MoveCard(
         Card card,
         ICardZone toZone,
         CardZoneChangeType type
@@ -199,8 +207,9 @@ public class Match
 
         // TODO apply all zone change replacement effects
 
-        ZoneChange.Process();
+        var newId = ZoneChange.Process();
         ZoneChange = null;
+        return newId;
     }
 
     public List<ICommand> GetAvailableCommands(Player player)

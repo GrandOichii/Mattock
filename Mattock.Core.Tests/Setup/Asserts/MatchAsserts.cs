@@ -89,4 +89,10 @@ public class MatchAsserts(TestMatchWrapper match)
         match.Match!.TurnManager.GetCurrentPhase().GetCurrentStep()!.Type.ShouldBe(type);
         return this;
     }
+
+    public MatchAsserts AssertStack(Action<StackAsserts> action)
+    {
+        action(new(match.Match!.Stack));
+        return this;
+    }
 }

@@ -45,6 +45,8 @@ public class Card
 
     public bool IsInstant() => HasType("Instant");
 
+    public bool IsPermanentType() => CardTypes.Permanents.Any(HasType);
+
     public List<ManaCost> GetManaCosts()
     {
         // TODO

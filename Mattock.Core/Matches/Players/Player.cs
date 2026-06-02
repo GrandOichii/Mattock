@@ -168,6 +168,40 @@ public class Player
         ];
     }
 
+    public async Task Cast(Card card)
+    {
+        // 601.2a Move the card onto the stack
+        var effect = Match.Stack.Create(card, this);
+        // TODO
+
+        // 601.2b Modal spells
+        // TODO
+
+        // 601.2c Choose targets
+        // TODO
+        
+        // 601.2d Announce divisions
+        // TODO
+
+        // 601.2e Check if the spell can be legally cast (733)
+        // TODO
+
+        // 601.2f Determine the spell cost
+        // TODO
+
+        // 601.2g Activate mana abilities to pay for costs
+        // TODO
+
+        // 601.2h Pay the cost
+        // TODO
+
+        // 601.2i Modify characteristics
+        // TODO
+
+        // Triggers
+        // TODO
+    }
+
     public async Task<ICommand> ChooseCommand(ICommand[] options)
     {
         await Match.UpdateExcept(this);

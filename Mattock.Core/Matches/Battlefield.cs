@@ -8,11 +8,16 @@ public class Battlefield(Match match) : ICardZone
 {
     public List<Permanent> Permanents { get; } = [];
 
-    public void Add(Card card, CardZoneChangeType type)
+    private int _lastPid = 0;
+
+    public string GeneratePid() => $"p{++_lastPid}";
+
+    public string Add(Card card, CardZoneChangeType type)
     {
         // * type doesn't matter
         var permanent = new Permanent(card);
         Permanents.Add(permanent);
+        return permanent.Pid;
     }
 
     public string GetZoneName() => "Battlefield";
@@ -24,6 +29,7 @@ public class Battlefield(Match match) : ICardZone
     }
 
     public Permanent? GetPermanentById(string id) => Permanents.SingleOrDefault(p => p.Card.Id == id);
+    public Permanent? GetPermanentByPid(string pid) => Permanents.SingleOrDefault(p => p.Pid == pid);
 
     public async Task MoveCard(Card card, Player controller)
     {

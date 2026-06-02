@@ -24,16 +24,16 @@ public class CardZoneChange
         ToZone = toZone;
     }
 
-    public void Process()
+    public string? Process()
     {
         if (!ToZone.Accepts(Card))
         {
-            return;
+            return null;
         }
         Card.Zone?.Remove(Card);
 
         Card.SetZone(ToZone);
-        ToZone.Add(Card, Type);
+        return ToZone.Add(Card, Type);
     }
 }
 
