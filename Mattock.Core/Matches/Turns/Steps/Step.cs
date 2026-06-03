@@ -22,4 +22,23 @@ public abstract class Step
     public abstract bool CanBeTaken();
     public abstract Task DoPrePriority();
     public abstract Task DoPostPriority();
+
+    public async Task Do()
+    {
+        await DoPrePriority();
+        if (ActivePlayerReceivesPriority)
+        {
+            // TODO? if the stack had resolved effects, does the active player still gain priority?
+
+            await Match.CreateAndResolvePriority();
+        }
+
+        await DoPostPriority();
+
+        // 500.5.
+        Match.EmptyManaPools();
+
+        if (!Match.Stack.IsEmpty())
+            throw new Exception($"Code error: the stack was not empty at the end of the step {Type}");
+    }
 }

@@ -122,9 +122,7 @@ public class Match
             {
                 var phase = TurnManager.GetCurrentPhase();
 
-                await phase.DoPrePhases();
-                await phase.DoPhases();
-                await phase.DoPostPhases();
+                await phase.Do();
             }
 
             TurnManager.ResetTurn();
@@ -234,12 +232,20 @@ public class Match
         foreach (var p in Players)
         {
             if (p == player) continue;
-            await p.Controller.Update(player, $"Waiting for {player.GetDisplayName()}");
+            await player.Update($"Waiting for {player.GetDisplayName()}");
         }
     }
 
     public async Task PutOntoTheBattlefield(Card card, Player controller)
     {
         await Battlefield.MoveCard(card, controller);
+    }
+
+    public void EmptyManaPools()
+    {
+        foreach (var player in Players)
+        {
+            player.ManaPool.Clear();
+        }
     }
 }

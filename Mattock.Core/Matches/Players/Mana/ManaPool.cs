@@ -21,4 +21,9 @@ public class ManaPool(Player player)
     }
 
     public int GetTotal() => Mana.Sum(m => m.Amount);
+
+    public void Clear()
+    {
+        Mana.Clear();
+    }
 }

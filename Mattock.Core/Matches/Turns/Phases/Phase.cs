@@ -21,17 +21,27 @@ public class Phase
 
     public bool IsMainPhase() => Type == PhaseType.PrecombatMain || Type == PhaseType.PostcombatMain;
 
-    public virtual Task DoPrePhases()
+    public async Task Do()
+    {
+        await DoPreSteps();
+        await DoSteps();
+        await DoPostSteps();
+
+        // 500.5.
+        Match.EmptyManaPools();
+    }
+
+    public virtual Task DoPreSteps()
     {
         return Task.CompletedTask;
     }
 
-    public virtual Task DoPostPhases()
+    public virtual Task DoPostSteps()
     {
         return Task.CompletedTask;
     }
 
-    public async Task DoPhases()
+    public async Task DoSteps()
     {
         for (; CurrentStepIdx < Steps.Count; ++CurrentStepIdx)
         {
@@ -39,21 +49,7 @@ public class Phase
 
             if (!step.CanBeTaken()) continue;
 
-            await step.DoPrePriority();
-
-            // await Match.Stack.Resolve();
-
-            if (step.ActivePlayerReceivesPriority)
-            {
-                // TODO? if the stack had resolved effects, does the active player still gain priority?
-
-                await Match.CreateAndResolvePriority();
-            }
-
-            await step.DoPostPriority();
-
-            if (!Match.Stack.IsEmpty())
-                throw new Exception($"Code error: the stack was not empty at the end of the step {step.Type}");
+            await step.Do();
         }
     }
 

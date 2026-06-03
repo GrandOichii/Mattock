@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Mana;
+using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Tests.Rules.Mana;
 
@@ -117,9 +118,9 @@ public class ManaPoolTests
     ];
 
     [Theory]
-    [Trait("Rules", "106.4.,500.5.")]
+    [Trait("Rules", "500.5.")]
     [MemberData(nameof(AddGeneric_Data))]
-    public async Task AddGeneric((ManaType type, int amount)[] mana)
+    public async Task TotalMana((ManaType type, int amount)[] mana)
     {
         // Arrange
         var deck = new DeckTemplate()
@@ -180,7 +181,136 @@ public class ManaPoolTests
         match.Assert(a => a
             .CrashedIntentially()
             .NoChoicesLeft()
-            // TODO
+        );
+    }
+
+    [Theory]
+    [Trait("Rules", "500.5.")]
+    [MemberData(nameof(AddGeneric_Data))]
+    public async Task EmptiesAfterEachPhaseAndStep((ManaType type, int amount)[] mana)
+    {
+        // Arrange
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [
+            ]
+        };
+
+        static void manaPoolIsEmpty(CommandChoicesBuilder.Asserts a) => a
+            .AssertMatch(ma => ma
+                .AssertPlayer(0, sa => sa
+                    .AssertManaPool(pa => pa
+                        .IsEmpty()
+                    )
+                )
+            );
+
+        var p1 = new TestPlayerControllerBuilder("p1")
+            .ChoosePlayer.WithIdx(0)
+            .SetDeck(deck)
+            // *** turn 1
+            // * upkeep 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.Beginning)
+                    .CurrentStep(StepType.Upkeep)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * draw 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.Beginning)
+                    .CurrentStep(StepType.Draw)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * precombat main phase 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.PrecombatMain)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * beginning of combat 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.Combat)
+                    .CurrentStep(StepType.BeginningOfCombat)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * declare attackers 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.Combat)
+                    .CurrentStep(StepType.DeclareAttackers)
+                )
+            )
+            // TODO declare attackers
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * end of combat 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.Combat)
+                    .CurrentStep(StepType.EndOfCombat)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * postcombat main 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.PostcombatMain)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.AddMana(ManaType.Colorless, 1)
+            .Act.Pass()
+            // * end 1
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .CurrentPhase(PhaseType.Ending)
+                    .CurrentStep(StepType.End)
+                )
+            )
+            .Act.Assert(manaPoolIsEmpty)
+            .Act.Crash()
+            ;
+
+        var p2 = new TestPlayerControllerBuilder("p2")
+            .SetDeck(deck)
+            .Act.AutoPass()
+            ;
+
+        // Act
+        var match = new TestMatchWrapper(
+            new MatchConfigBuilder()
+                .FirstPlayerIdx(0)
+                .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+                .FirstPlayerNoDrawIfSingleOpponent(false)
+                .Build(),
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
         );
     }
 }

@@ -15,7 +15,7 @@ public class Player
     public Match Match { get; }
     public int Idx { get; }
     public PlayerSetup Setup { get; }
-    public IPlayerController Controller { get; }
+    private readonly IPlayerController _controller;
     public Life Life { get; }
     public ManaPool ManaPool { get; }
 
@@ -39,7 +39,7 @@ public class Player
         Match = match;
         Idx = idx;
         Setup = setup;
-        Controller = setup.Controller;
+        _controller = setup.Controller;
 
         Life = new(this);
         ManaPool = new(this);
@@ -203,27 +203,32 @@ public class Player
         // TODO
     }
 
+    public async Task Update(string msg)
+    {
+        await _controller.Update(this, msg);
+    }
+
     public async Task<ICommand> ChooseCommand(ICommand[] options)
     {
         await Match.UpdateExcept(this);
-        return await Controller.ChooseCommand(this, options);
+        return await _controller.ChooseCommand(this, options);
     }
 
     public async Task<Card> ChooseCard(Card[] options, string hint)
     {
         await Match.UpdateExcept(this);
-        return await Controller.ChooseCard(this, options, hint);
+        return await _controller.ChooseCard(this, options, hint);
     }
 
     public async Task<string> ChooseString(string[] options, string hint)
     {
         await Match.UpdateExcept(this);
-        return await Controller.ChooseString(this, options, hint);
+        return await _controller.ChooseString(this, options, hint);
     }
 
     public async Task<Player> ChoosePlayer(Player[] options, string hint)
     {
         await Match.UpdateExcept(this);
-        return await Controller.ChoosePlayer(this, options, hint);
+        return await _controller.ChoosePlayer(this, options, hint);
     }
 }
