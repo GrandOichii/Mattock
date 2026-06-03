@@ -27,4 +27,10 @@ public class PlayerAsserts(Player player)
         action(new(player.Graveyard));
         return this;
     }
+
+    public PlayerAsserts AssertManaPool(Action<ManaPoolAsserts> action)
+    {
+        action(new(player.ManaPool));
+        return this;
+    }
 }

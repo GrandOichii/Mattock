@@ -68,8 +68,33 @@ public class SpellResolver : IStackEffectResolver
         // 608.2f ???
         // TODO
 
-        // 608.2g
+        // 608.2g ???
+        // TODO
 
+        // 608.2h ???
+        // TODO
+
+        // 608.2i ???
+        // TODO
+
+        // 608.2j ???
+        // TODO
+
+        // 608.2k ???
+        // TODO
+
+        // 608.2m ???
+        // TODO
+
+        // 608.2n Move from stack to owner's graveyard
+        Match.MoveCard(
+            Card,
+            Match.Players[Card.OwnerIdx].Graveyard,
+            CardZoneChangeType.Top
+        );
+
+        // 608.2p Triggers
+        // TODO
     }
 
     public bool IsCard(Card card) => Card == card;

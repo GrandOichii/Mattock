@@ -6,7 +6,7 @@ public class InitialValueTests
     [Trait("Rules", "103,103.1.,103.4.,119.1.,103.3,103.5")]
     [InlineData(0)]
     [InlineData(1)]
-    public async Task FirstPlayerPrompt_StartingLifeTotal_EmptyLibraries(int firstPlayerIdx)
+    public async Task FirstPlayerPrompt_StartingLifeTotal_EmptyLibraries_EmptyManaPools(int firstPlayerIdx)
     {
         // Arrange
         var p1 = new TestPlayerControllerBuilder("p1")
@@ -43,6 +43,9 @@ public class InitialValueTests
                 .AssertHand(ad => ad
                     .HasCardCount(0)
                 )
+                .AssertManaPool(pa => pa
+                    .IsEmpty()
+                )
             )
             .AssertPlayer(1, ap => ap
                 .HasLife(20)
@@ -51,6 +54,9 @@ public class InitialValueTests
                 )
                 .AssertHand(ad => ad
                     .HasCardCount(0)
+                )
+                .AssertManaPool(pa => pa
+                    .IsEmpty()
                 )
             )
         );

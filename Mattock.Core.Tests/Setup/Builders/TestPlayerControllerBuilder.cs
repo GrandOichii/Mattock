@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Turns.Phases;
 using Mattock.Core.Matches.Turns.Steps;
@@ -82,6 +83,21 @@ public class PlayerChoicesBuilder(TestPlayerControllerBuilder builder)
 public class CommandChoicesBuilder(TestPlayerControllerBuilder builder) 
     : ChoicesBuilder<(TestPlayerController.CommandChoice, bool)>(builder)
 {
+    
+    public TestPlayerControllerBuilder NTimes(int n, Action<CommandChoicesBuilder> action)
+    {
+        for (int i = 0; i < n; ++i)
+            action(this);
+        return _builder;
+    }
+
+    public TestPlayerControllerBuilder ForEach<T>(IEnumerable<T> list, Action<T, CommandChoicesBuilder> action)
+    {
+        foreach (var item in list)
+            action(item, this);
+        return _builder;
+    }
+
     public TestPlayerControllerBuilder Crash()
     {
         return Enqueue((
@@ -125,6 +141,18 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
                 var card = player.GetCastableCards().First(c => c.HasName(name));
                 var command = new CastSpellCommand(player, card);
                 return (command, true, true);
+            },
+            true
+        ));
+    }
+
+    public TestPlayerControllerBuilder AddMana(ManaType type, int amount)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                player.ManaPool.AddGenericMana(type, amount);
+                return (null, false, true);
             },
             true
         ));
@@ -269,7 +297,6 @@ public class StringChoicesBuilder(TestPlayerControllerBuilder builder)
         });
     }
 }
-
 
 public class CardChoicesBuilder(TestPlayerControllerBuilder builder) 
     : ChoicesBuilder<TestPlayerController.CardChoice>(builder)

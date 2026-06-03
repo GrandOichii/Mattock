@@ -3,6 +3,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Controllers;
+using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Setup;
 
 namespace Mattock.Core.Matches.Players;

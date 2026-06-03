@@ -2,6 +2,8 @@ using Mattock.Core.Matches.Turns.Steps;
 
 namespace Mattock.Core.Matches.Turns.Phases;
 
+// TODO add 500.5.
+
 public class Phase
 {
     public int CurrentStepIdx { get; private set; }

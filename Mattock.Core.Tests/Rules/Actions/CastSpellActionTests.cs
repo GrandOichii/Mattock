@@ -1453,7 +1453,9 @@ public class CastSpellActionTests
                 )
                 .AssertGraveyard(ad => ad
                     .HasCardCount(1)
-                    // TODO
+                    .AssertCard(0, ca => ca
+                        .HasName("c1")
+                    )
                 )
             )
             .AssertStack(sa => sa
