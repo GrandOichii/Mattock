@@ -27,6 +27,9 @@ public class CleanupStep : Step
 
         // 514.3. Priority (if any effects on the stack)
         // TODO
+
+        // 514.3a State-based actions
+        Match.StateBasedActions.Apply();
         return Task.CompletedTask;
     }
 

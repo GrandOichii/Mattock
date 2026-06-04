@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using Mattock.Core.Matches.Players;
+
 namespace Mattock.Core.Matches;
 
 public class Priority
@@ -26,14 +29,17 @@ public class Priority
         // TODO make this better
         while(NextPlayerIdx != InitialPlayerIdx)
         {
-            var priorityPlayer = Match.Players[PriorityPlayerIdx];
-            var command = await priorityPlayer.PromptCommand();
-            await command.Do();
+            await ProcessPriority(Match.Players[PriorityPlayerIdx]);
         } 
         
-        var pp = Match.Players[PriorityPlayerIdx];
-        var c = await pp.PromptCommand();
-        await c.Do();
+        await ProcessPriority(Match.Players[PriorityPlayerIdx]);
+    }
+
+    private async Task ProcessPriority(Player player)
+    {
+        Match.StateBasedActions.Apply();
+        var command = await player.PromptCommand();
+        await command.Do();
     }
 
     public void Advance()

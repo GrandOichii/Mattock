@@ -5,6 +5,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Matches.Stack;
+using Mattock.Core.Matches.StateBasedActions;
 using Mattock.Core.Matches.Turns;
 using Mattock.Core.Setup;
 
@@ -23,6 +24,7 @@ public class Match
     public TheStack Stack { get; }
     public Priority? Priority { get; private set; }
     public TurnManager TurnManager { get; }
+    public StateBasedActionsManager StateBasedActions { get; }
     public IAction[] Actions { get; }
     public int TurnCounter { get; private set; }
     public List<Card> Cards { get; }
@@ -43,6 +45,7 @@ public class Match
         Stack = new(this);
         Battlefield = new(this);
         TurnManager = new(this);
+        StateBasedActions = new(this);
         _lastCardId = 0;
         TurnCounter = 0;
         Cards = [];

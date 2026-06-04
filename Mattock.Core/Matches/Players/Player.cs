@@ -26,6 +26,7 @@ public class Player
     public Dictionary<string, OwnedCardZone> OwnedZoneMap { get; }
 
     private bool _libraryFormed;
+    public bool DrewFromEmptyLibrary { get; private set; }
 
     public int LandsPlayedThisTurn { get; set; }
 
@@ -49,6 +50,7 @@ public class Player
         Graveyard = new(this);
 
         _libraryFormed = false;
+        DrewFromEmptyLibrary = false;
         LandsPlayedThisTurn = 0;
         OwnedZoneMap = new()
         {
@@ -110,7 +112,8 @@ public class Player
             if (!Match.Config.GameLossIfRequiredToDrawFromEmptyLibrary)
                 return;
 
-            throw new NotImplementedException();
+            DrewFromEmptyLibrary = true;
+            return;
         }
 
         Match.MoveCard(

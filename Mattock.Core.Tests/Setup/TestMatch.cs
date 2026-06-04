@@ -20,10 +20,13 @@ public class TestMatch : Match
 
 public class TestMatchWrapper
 {
+    public delegate void PreLaunchAction(Match match);
+
     public MatchConfig Config { get; }
     public Exception? Exception { get; private set; }
     public TestPlayerController[] Players { get; }
     public Mechanics Mechanics { get; }
+    public List<PreLaunchAction> PreLaunchActions { get; }
 
     public TestMatch? Match { get; private set; }
 
@@ -35,6 +38,7 @@ public class TestMatchWrapper
         Exception = null;
         Players = [.. players.Select(p => p.Build(this))];
         Mechanics = new();
+        PreLaunchActions = [];
     }
 
     public void SetMulligan(IMulliganRule mulligan)
@@ -56,6 +60,9 @@ public class TestMatchWrapper
             [ .. Players.Select(p => p.GetPlayerSetup() )],
             Mechanics
         );
+
+        foreach (var act in PreLaunchActions)
+            act(Match);
 
         try
         {
