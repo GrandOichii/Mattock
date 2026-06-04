@@ -53,6 +53,12 @@ public class DeckCardTemplateBuilder(string? cardName = null)
         AddManaCost(new ManaCost()
         {
             Amount = 0,
-            Type = Matches.Mana.ManaType.Colorless
+            Type = null
         });
+
+    public DeckCardTemplateBuilder ManaCost(ManaCost[] costs)
+    {
+        _result.Card.ManaCosts = costs;
+        return this;
+    }
 }

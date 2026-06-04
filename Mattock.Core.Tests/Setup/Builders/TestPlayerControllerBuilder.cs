@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Players.Actions;
+using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Turns.Phases;
 using Mattock.Core.Matches.Turns.Steps;
 using Mattock.Core.Setup.Templates;
@@ -16,6 +17,8 @@ public class TestPlayerControllerBuilder
     public PlayerChoicesBuilder PlayerChoices { get; }
     public StringChoicesBuilder StringChoices { get; }
     public CardChoicesBuilder CardChoices { get; }
+    public CostCollectionChoicesBuilder CostCollectionChoices { get; }
+    public StoredManaChoicesBuilder StoredManaChoices { get; }
 
     public TestPlayerControllerBuilder(string name)
     {
@@ -29,11 +32,15 @@ public class TestPlayerControllerBuilder
         PlayerChoices = new(this);
         StringChoices = new(this);
         CardChoices = new(this);
+        CostCollectionChoices = new(this);
+        StoredManaChoices = new(this);
     }
 
     public PlayerChoicesBuilder ChoosePlayer => PlayerChoices;
     public StringChoicesBuilder ChooseString => StringChoices;
     public CardChoicesBuilder ChooseCard => CardChoices;
+    public CostCollectionChoicesBuilder ChooseCostCollection => CostCollectionChoices;
+    public StoredManaChoicesBuilder ChooseMana => StoredManaChoices;
     public CommandChoicesBuilder Act => CommandChoices;
 
     public TestPlayerControllerBuilder SetDeck(DeckTemplate deck)
@@ -51,7 +58,9 @@ public class TestPlayerControllerBuilder
             CommandChoices.Queue,
             PlayerChoices.Queue,
             StringChoices.Queue,
-            CardChoices.Queue
+            CardChoices.Queue,
+            CostCollectionChoices.Queue,
+            StoredManaChoices.Queue
         );
     }
 }
@@ -317,3 +326,55 @@ public class CardChoicesBuilder(TestPlayerControllerBuilder builder)
         });
     }
 }
+
+public class CostCollectionChoicesBuilder(TestPlayerControllerBuilder builder)
+    : ChoicesBuilder<TestPlayerController.CostCollectionChoice>(builder)
+{
+    
+}
+
+public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
+    : ChoicesBuilder<TestPlayerController.StoredManaChoice>(builder)
+{
+    public TestPlayerControllerBuilder NTimes(int n, Action<StoredManaChoicesBuilder> action)
+    {
+        for (int i = 0; i < n; ++i)
+            action(this);
+        return _builder;
+    }
+
+    public TestPlayerControllerBuilder First()
+    {
+        return Enqueue(async (player, options, hint) =>
+        {
+            return (options.First(), true);
+        });
+    }
+
+    public TestPlayerControllerBuilder FirstOfType(ManaType type)
+    {
+        return Enqueue(async (player, options, hint) =>
+        {
+            return (options.First(o => o.Type == type), true);
+        });
+    }
+
+    public TestPlayerControllerBuilder Assert(Action<Asserts> action)
+    {
+        return Enqueue(async (player, options, hint) =>
+        {
+            action(new(player, options, hint));
+            return (null, false);
+        });
+    }
+    
+    public class Asserts(Player player, StoredMana[] options, string hint)
+    {
+        public Asserts OptionsCount(int v)
+        {
+            options.Length.ShouldBe(v);
+            return this;
+        }
+    }
+}
+

@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Setup.Templates;
 
 namespace Mattock.Core.Matches.Players.Cards;
@@ -20,7 +21,13 @@ public class Card
         Id = Match.GenerateCardId(this);
     }
 
-    public string GetDisplayName() => $"{{{Id}}}"; // TODO
+    public string GetShortName()
+    {
+        // TODO
+        return Template.Name;
+    }
+
+    public string GetDisplayName() => $"{GetShortName()} {{{Id}}}"; // TODO
 
     public void SetZone(ICardZone zone)
     {
@@ -47,7 +54,7 @@ public class Card
 
     public bool IsPermanentType() => CardTypes.Permanents.Any(HasType);
 
-    public List<ManaCost> GetManaCosts()
+    public List<ManaCost> GetManaCosts(Player player)
     {
         // TODO
         return [ .. Template.ManaCosts ];
@@ -69,9 +76,8 @@ public class Card
         if (!CardTypes.Castable.Any(HasType))
             return false;
 
-        // TODO alternative costs
-        var costs = GetManaCosts();
-        if (costs.Count == 0)
+        var costVariations = GetCostCollections(player);
+        if (costVariations.All(c => !c.CanBePayed(player)))
             return false;
 
         // TODO this is very basic, change later
@@ -82,5 +88,24 @@ public class Card
             return false;
 
         return true;
+    }
+
+    public List<CostCollection> GetCostCollections(Player player)
+    {
+        List<CostCollection> result = [];
+
+        var manaCosts = GetManaCosts(player);
+        if (manaCosts.Count > 0)
+        {
+            // TODO additional costs
+            result.Add(new()
+            {
+                Text = "Default", // TODO rename
+                ManaCosts = [ .. manaCosts ]
+            });
+        }
+        // TODO alternative costs
+
+        return result;
     }
 }

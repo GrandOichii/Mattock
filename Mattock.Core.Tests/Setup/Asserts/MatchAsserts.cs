@@ -1,6 +1,5 @@
 using System.Runtime.ExceptionServices;
 using Mattock.Core.Matches.Turns.Phases;
-using Mattock.Core.Matches.Turns.Steps;
 
 namespace Mattock.Core.Tests.Setup.Asserts;
 
@@ -20,7 +19,9 @@ public class MatchAsserts(TestMatchWrapper match)
         bool checkCommandChoices = true,
         bool checkPlayerChoices = true,
         bool checkStringChoices = true,
-        bool checkCardChoices = true
+        bool checkCardChoices = true,
+        bool checkCostCollectionChoices = true,
+        bool checkStoredManaChoices = true
     )
     {
         foreach (var player in match.Players)
@@ -29,7 +30,9 @@ public class MatchAsserts(TestMatchWrapper match)
                 checkCommandChoices,
                 checkPlayerChoices,
                 checkStringChoices,
-                checkCardChoices
+                checkCardChoices,
+                checkCostCollectionChoices,
+                checkStoredManaChoices
             );        
         }
         return this;

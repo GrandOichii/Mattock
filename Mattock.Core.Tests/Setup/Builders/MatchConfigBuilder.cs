@@ -30,4 +30,11 @@ public class MatchConfigBuilder
         _result.FirstPlayerNoDrawIfSingleOpponent = v;
         return this;
     }
+    
+    public MatchConfigBuilder DisableManaPoolEmptying()
+    {
+        _result.ManaPoolEmptiesAtEndOfEachPhase = false;
+        _result.ManaPoolEmptiesAtEndOfEachStep = false;
+        return this;
+    }
 }

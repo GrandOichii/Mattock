@@ -184,10 +184,9 @@ public class ManaPoolTests
         );
     }
 
-    [Theory]
+    [Fact]
     [Trait("Rules", "500.5.")]
-    [MemberData(nameof(AddGeneric_Data))]
-    public async Task EmptiesAfterEachPhaseAndStep((ManaType type, int amount)[] mana)
+    public async Task EmptiesAfterEachPhaseAndStep()
     {
         // Arrange
         var deck = new DeckTemplate()

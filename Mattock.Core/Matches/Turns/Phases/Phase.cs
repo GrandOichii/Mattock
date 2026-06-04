@@ -28,7 +28,8 @@ public class Phase
         await DoPostSteps();
 
         // 500.5.
-        Match.EmptyManaPools();
+        if (Match.Config.ManaPoolEmptiesAtEndOfEachStep)
+            Match.EmptyManaPools();
     }
 
     public virtual Task DoPreSteps()

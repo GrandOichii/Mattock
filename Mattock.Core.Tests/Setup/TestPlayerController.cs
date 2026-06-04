@@ -1,5 +1,7 @@
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Costs;
+using Mattock.Core.Matches.Players.Mana;
 
 namespace Mattock.Core.Tests.Setup;
 
@@ -10,19 +12,25 @@ public class TestPlayerController(
     Queue<(TestPlayerController.CommandChoice, bool)> commandChoices,
     Queue<TestPlayerController.PlayerChoice> playerChoices,
     Queue<TestPlayerController.StringChoice> stringChoices,
-    Queue<TestPlayerController.CardChoice> cardChoices
-    ) : IPlayerController
+    Queue<TestPlayerController.CardChoice> cardChoices,
+    Queue<TestPlayerController.CostCollectionChoice> costCollectionChoices,
+    Queue<TestPlayerController.StoredManaChoice> storedManaChoices
+) : IPlayerController
 {
     public delegate Task<(ICommand?, bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
     public delegate Task<(Player?, bool)> PlayerChoice(Player player, Player[] options, string hint);
     public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint);
     public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint);
+    public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint);
+    public delegate Task<(StoredMana?, bool)> StoredManaChoice(Player player, StoredMana[] options, string hint);
 
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
         bool checkPlayerChoices,
         bool checkStringChoices,
-        bool checkCardChoices
+        bool checkCardChoices,
+        bool checkCostCollectionChoices,
+        bool checkStoredManaChoices
     )
     {
         if (checkPlayerChoices)
@@ -33,6 +41,12 @@ public class TestPlayerController(
 
         if (checkCardChoices)
             cardChoices.Count.ShouldBe(0, $"{nameof(CardChoice)} queue of player {name} is not empty (size: {cardChoices.Count})");
+
+        if (checkCostCollectionChoices)
+            costCollectionChoices.Count.ShouldBe(0, $"{nameof(CostCollectionChoice)} queue of player {name} is not empty (size: {costCollectionChoices.Count})");
+
+        if (checkStoredManaChoices)
+            storedManaChoices.Count.ShouldBe(0, $"{nameof(StoredManaChoice)} queue of player {name} is not empty (size: {storedManaChoices.Count})");
 
         if (checkCommandChoices)
         {
@@ -63,7 +77,7 @@ public class TestPlayerController(
             if (result is null) throw new Exception($"Provided null choice for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
             return result;
         }
-        
+
         throw new Exception($"No choices left in queue for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
     }
 
@@ -84,7 +98,7 @@ public class TestPlayerController(
             if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
         }
-        
+
         throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
     }
 
@@ -99,7 +113,7 @@ public class TestPlayerController(
             nameof(ChoosePlayer)
         );
     }
-    
+
     public async Task<string> ChooseString(Player player, string[] options, string hint)
     {
         return await Dequeue(
@@ -120,7 +134,31 @@ public class TestPlayerController(
             hint,
             (d, p, o, h) => d(p, o, h),
             cardChoices,
-            nameof(ChooseString)
+            nameof(ChooseCard)
+        );
+    }
+
+    public async Task<CostCollection> ChooseCostCollection(Player player, CostCollection[] options, string hint)
+    {
+        return await Dequeue(
+            player,
+            options,
+            hint,
+            (d, p, o, h) => d(p, o, h),
+            costCollectionChoices,
+            nameof(ChooseCostCollection)
+        );
+    }
+
+    public async Task<StoredMana> ChooseStoredMana(Player player, StoredMana[] options, string hint)
+    {
+        return await Dequeue(
+            player,
+            options,
+            hint,
+            (d, p, o, h) => d(p, o, h),
+            storedManaChoices,
+            nameof(ChooseStoredMana)
         );
     }
 

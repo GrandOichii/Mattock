@@ -3,6 +3,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Controllers;
+using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Setup;
 
@@ -39,7 +40,7 @@ public class Player
         Match = match;
         Idx = idx;
         Setup = setup;
-        _controller = setup.Controller;
+        _controller = new SafePlayerControllerWrapper(setup.Controller);
 
         Life = new(this);
         ManaPool = new(this);
@@ -188,18 +189,50 @@ public class Player
         // TODO
 
         // 601.2f Determine the spell cost
-        // TODO
+        var costVariations = card.GetCostCollections(this);
+        if (costVariations.Count != new HashSet<string>(costVariations.Select(c => c.Text)).Count)
+        {
+            throw new Exception($"Computed cost variations with duplicate texts (texts: {string.Join(", ", costVariations.Select(c => $"\"{c.Text}\""))})");
+        }
+        var choice = await ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
 
         // 601.2g Activate mana abilities to pay for costs
         // TODO
 
         // 601.2h Pay the cost
+        await PayCost(card, choice);
         // TODO
 
         // 601.2i Modify characteristics
         // TODO
 
         // Triggers
+        // TODO
+    }
+
+    public async Task PayCost(Card card, CostCollection cost)
+    {
+        // mana
+        var manaCosts = cost.GetManaCosts();
+        while (manaCosts.Count > 0)
+        {
+            var manaCost = manaCosts.Dequeue();
+            for (int i = 0; i < manaCost.Amount; ++i)
+            {
+                var candidates = ManaPool.GetCandidates(manaCost.Type);
+                if (candidates.Count == 0)
+                {
+                    var postFix = manaCost.Type is null
+                        ? "generic type"
+                        : $"type {manaCost.Type}";
+                    throw new Exception($"Code error: failed to find stored mana candidates to pay for mana cost of {postFix}");
+                }
+                var choice = await ChooseStoredMana([.. candidates], $"Pay for card {card.GetDisplayName()}");
+                ManaPool.Remove(choice);
+            }
+        }
+
+        // other
         // TODO
     }
 
@@ -230,5 +263,21 @@ public class Player
     {
         await Match.UpdateExcept(this);
         return await _controller.ChoosePlayer(this, options, hint);
+    }
+
+    public async Task<StoredMana> ChooseStoredMana(StoredMana[] options, string hint)
+    {
+        await Match.UpdateExcept(this);
+        return await _controller.ChooseStoredMana(this, options, hint);
+    }
+
+    public async Task<CostCollection> ChooseCostCollection(CostCollection[] options, string hint)
+    {
+        if (options.Length == 0)
+            throw new Exception($"Provided empty options for {nameof(ChooseCostCollection)} (hint: {hint})");
+        if (options.Length == 1)
+            return options[0];
+
+        return await _controller.ChooseCostCollection(this, options, hint);
     }
 }

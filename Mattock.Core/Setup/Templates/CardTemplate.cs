@@ -19,4 +19,9 @@ public class CardTemplate
     public required string Defense { get; set; }
     public required string HandModifier { get; set; } // TODO type
     public required string LifeModifier { get; set; } // TODO type
+
+    public int GetManaValue()
+    {
+        return ManaCosts.Sum(c => c.Amount);
+    }
 }

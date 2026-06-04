@@ -36,7 +36,8 @@ public abstract class Step
         await DoPostPriority();
 
         // 500.5.
-        Match.EmptyManaPools();
+        if (Match.Config.ManaPoolEmptiesAtEndOfEachStep)
+            Match.EmptyManaPools();
 
         if (!Match.Stack.IsEmpty())
             throw new Exception($"Code error: the stack was not empty at the end of the step {Type}");
