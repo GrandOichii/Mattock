@@ -4,8 +4,14 @@ public class Life(Player player)
 {
     public int Current { get; private set; }
 
-    public void Set(int v)
+    public void SetRaw(int v)
     {
         Current = v;
+    }
+
+    public void Set(int v)
+    {
+        // TODO
+        SetRaw(v);
     }
 }

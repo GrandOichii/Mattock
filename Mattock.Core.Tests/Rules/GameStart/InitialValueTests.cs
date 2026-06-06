@@ -9,10 +9,10 @@ public class InitialValueTests
     public async Task FirstPlayerPrompt_StartingLifeTotal_EmptyLibraries_EmptyManaPools(int firstPlayerIdx)
     {
         // Arrange
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(firstPlayerIdx);
 
-        var p2 = new TestPlayerControllerBuilder("p2");
+        var p2 = new TestPlayerControllerBuilder("p2", 1);
 
         (firstPlayerIdx == 0
             ? p1
@@ -80,12 +80,12 @@ public class InitialValueTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             .Act.Crash();
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck);
 
         // Act

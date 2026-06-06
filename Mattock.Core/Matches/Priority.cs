@@ -27,10 +27,12 @@ public class Priority
     public async Task Resolve()
     {
         // TODO make this better
-        while(NextPlayerIdx != InitialPlayerIdx)
+        while(NextPlayerIdx != InitialPlayerIdx && !Match.AreWinnersDecided())
         {
             await ProcessPriority(Match.Players[PriorityPlayerIdx]);
-        } 
+        }
+
+        if (Match.AreWinnersDecided()) return;
         
         await ProcessPriority(Match.Players[PriorityPlayerIdx]);
     }
@@ -38,12 +40,22 @@ public class Priority
     private async Task ProcessPriority(Player player)
     {
         Match.StateBasedActions.Apply();
+        if (player.Status == PlayerStatus.Lost)
+        {
+            Advance();
+            return;
+        }
+        if (Match.AreWinnersDecided())
+        {
+            return;
+        }
         var command = await player.PromptCommand();
         await command.Do();
     }
 
     public void Advance()
     {
+        if (Match.AreWinnersDecided()) return;
         CalculateCurrent();
         CalculateNext();
     }

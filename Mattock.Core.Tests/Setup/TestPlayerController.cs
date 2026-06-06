@@ -9,6 +9,7 @@ public class TestPlayerController(
     TestMatchWrapper match,
     string name,
     DeckTemplate deck,
+    int teamIdx,
     Queue<(TestPlayerController.CommandChoice, bool)> commandChoices,
     Queue<TestPlayerController.PlayerChoice> playerChoices,
     Queue<TestPlayerController.StringChoice> stringChoices,
@@ -62,6 +63,7 @@ public class TestPlayerController(
             Name = name,
             Controller = this,
             Deck = deck,
+            TeamIdx = teamIdx,
         };
     }
 

@@ -93,6 +93,18 @@ public class MatchAsserts(TestMatchWrapper match)
         return this;
     }
 
+    public MatchAsserts NoWinnersDecided()
+    {
+        match.Match!.AreWinnersDecided().ShouldBeFalse();
+        return this;
+    }
+
+    public MatchAsserts WinningTeams(int[] teams)
+    {
+        match.Match!.GetWinningTeams().ShouldBeEquivalentTo(teams);
+        return this;
+    }
+
     public MatchAsserts AssertStack(Action<StackAsserts> action)
     {
         action(new(match.Match!.Stack));

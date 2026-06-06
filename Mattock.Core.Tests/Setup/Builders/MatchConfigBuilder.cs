@@ -19,9 +19,27 @@ public class MatchConfigBuilder
         return this;
     }
 
+    public MatchConfigBuilder TeamCount(int v)
+    {
+        _result.TeamCount = v;
+        return this;
+    }
+
+    public MatchConfigBuilder MaxTeamSize(int v)
+    {
+        _result.MaxTeamSize = v;
+        return this;
+    }
+
     public MatchConfigBuilder GameLossIfRequiredToDrawFromEmptyLibrary(bool v)
     {
         _result.GameLossIfRequiredToDrawFromEmptyLibrary = v;
+        return this;
+    }
+
+    public MatchConfigBuilder GameLossIfZeroOrLessLife(bool v)
+    {
+        _result.GameLossIfZeroOrLessLife = v;
         return this;
     }
 

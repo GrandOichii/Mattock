@@ -75,7 +75,7 @@ public class ManaCostTests
             ? a => a.CanCastSpell()
             : a => a.CantCastSpell();
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -87,7 +87,7 @@ public class ManaCostTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             ;
@@ -132,7 +132,7 @@ public class ManaCostTests
     //         ]
     //     };
 
-    //     var p1 = new TestPlayerControllerBuilder("p1")
+    //     var p1 = new TestPlayerControllerBuilder("p1", 0)
     //         .ChoosePlayer.WithIdx(0)
     //         .SetDeck(deck)
     //         // *** turn 1
@@ -155,7 +155,7 @@ public class ManaCostTests
     //         .Act.Crash()
     //         ;
 
-    //     var p2 = new TestPlayerControllerBuilder("p2")
+    //     var p2 = new TestPlayerControllerBuilder("p2", 1)
     //         .SetDeck(deck)
     //         .Act.AutoPass()
     //         ;
@@ -227,7 +227,7 @@ public class ManaCostTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -244,7 +244,7 @@ public class ManaCostTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             ;

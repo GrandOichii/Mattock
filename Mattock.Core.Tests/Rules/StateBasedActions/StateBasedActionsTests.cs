@@ -5,9 +5,11 @@ namespace Mattock.Core.Tests.Rules.StateBasedActions;
 public class CheckerSBA : IStateBasedAction
 {
     public int Called { get; private set; } = 0;
+    public List<StepType?> Steps { get; } = [];
 
     public bool Apply(Match match)
     {
+        Steps.Add(match.TurnManager.GetCurrentPhase().GetCurrentStep()?.Type);
         ++Called;
         return false;
     }
@@ -31,14 +33,14 @@ public class StateBasedActionTests
             MainDeck = []
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             .Act.AutoPassToStep(skipToStep)            
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             ;
@@ -69,5 +71,53 @@ public class StateBasedActionTests
         checker.Called.ShouldBe(expectedCalled);
     }
 
-    // TODO add test for checking if state-based actions were checked during cleanup step
+    [Trait("Rules", "704.3.")]
+    [Fact]
+    public async Task CheckCalledAmount_OnOppsTurn()
+    {
+        // Arrange
+        var deck = new DeckTemplate()
+        {
+            MainDeck = []
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .ChoosePlayer.WithIdx(0)
+            .SetDeck(deck)
+            .Act.AutoPassToStep(StepType.End)            
+            .Act.Pass()
+            .Act.Crash()
+            ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPassToTurn(2)
+            .Act.Crash()
+            ;
+
+        // Act
+        var match = new TestMatchWrapper(
+            new MatchConfigBuilder()
+                .FirstPlayerIdx(0)
+                .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+                .FirstPlayerNoDrawIfSingleOpponent(false)
+                .Build(),
+            [ p1, p2 ]
+        );
+        var checker = new CheckerSBA();
+        match.PreLaunchActions.Add(
+            m => m.StateBasedActions.StateBasedActions.Add(checker)
+        );
+        match.RemoveMulligans();
+
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+        );
+
+        checker.Called.ShouldBe(18 * 2);
+    }
 }

@@ -32,6 +32,7 @@ public abstract class Step
 
             await Match.CreateAndResolvePriority();
         }
+        if (Match.AreWinnersDecided()) return;
 
         await DoPostPriority();
 

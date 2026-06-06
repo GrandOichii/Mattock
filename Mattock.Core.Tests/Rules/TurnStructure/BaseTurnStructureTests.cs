@@ -16,7 +16,7 @@ public class BaseTurnStructureTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // * upkeep
@@ -91,7 +91,7 @@ public class BaseTurnStructureTests
             .Act.Pass() // pass priority around
             ;
 
-        TestPlayerControllerBuilder notP1(string name) => new TestPlayerControllerBuilder("p2")
+        TestPlayerControllerBuilder notP1(string name, int teamIdx) => new TestPlayerControllerBuilder(name, teamIdx)
             // * upkeep
             .Act.Assert(a => a
                 .AssertMatch(ma => ma
@@ -164,10 +164,10 @@ public class BaseTurnStructureTests
                 .Build(),
             [ 
                 p1, 
-                notP1("p2")
+                notP1("p2", 1)
                     .Act.Crash(), 
-                notP1("p3"), 
-                notP1("p4") 
+                notP1("p3", 2), 
+                notP1("p4", 3) 
             ]
         );
         match.RemoveMulligans();

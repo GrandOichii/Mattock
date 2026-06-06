@@ -21,7 +21,7 @@ public class DrawStepTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.No()
@@ -46,7 +46,7 @@ public class DrawStepTests
 
         p1.Act.Crash();
 
-        TestPlayerControllerBuilder nonP1(string name) => new TestPlayerControllerBuilder(name)
+        TestPlayerControllerBuilder nonP1(string name, int teamIdx) => new TestPlayerControllerBuilder(name, teamIdx)
             .SetDeck(deck)
             .ChooseString.No()
             .Act.AutoPass()
@@ -62,7 +62,7 @@ public class DrawStepTests
                 p1, 
                 .. Enumerable
                     .Range(0, opponentCount)
-                    .Select(idx => nonP1($"p{idx+2}"))
+                    .Select(idx => nonP1($"p{idx+2}", idx+1))
             ]
         );
 
@@ -115,7 +115,7 @@ public class DrawStepTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.No()
@@ -123,7 +123,7 @@ public class DrawStepTests
             .Act.AutoPassToTurn(4 * turnCount + 1)
             .Act.Crash();
 
-        TestPlayerControllerBuilder nonP1(string name) => new TestPlayerControllerBuilder(name)
+        TestPlayerControllerBuilder nonP1(string name, int teamIdx) => new TestPlayerControllerBuilder(name, teamIdx)
             .SetDeck(deck)
             .ChooseString.No()
             .Act.AutoPass()
@@ -139,7 +139,7 @@ public class DrawStepTests
                 p1, 
                 .. Enumerable
                     .Range(0, 3)
-                    .Select(idx => nonP1($"p{idx+2}"))
+                    .Select(idx => nonP1($"p{idx+2}", idx+1))
             ]
         );
 

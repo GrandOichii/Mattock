@@ -5,9 +5,9 @@
     - [ ] 100.5. If a deck must contain at least a certain number of cards, that number is referred to as a minimum deck size. There is no maximum deck size for non-Commander decks.
 - [ ] 101. __Golden rules__
     - [ ] 101.2 When a rule or effect allows or directs something to happen, and another effect states that it can’t happen, the “can’t” effect takes precedence.
-    ```
-    Example: If one effect reads “You may play an additional land this turn” and another reads “You can’t play lands this turn,” the effect that precludes you from playing lands wins.
-    ```
+        ```
+        Example: If one effect reads “You may play an additional land this turn” and another reads “You can’t play lands this turn,” the effect that precludes you from playing lands wins.
+        ```
     - [ ] 101.3 Any part of an instruction that’s impossible to perform is ignored. (In many cases the card will specify consequences for this; if it doesn’t, there’s no effect.)
     - [ ] 101.4 If multiple players would make choices and/or take actions at the same time, the active player (the player whose turn it is) makes any choices required, then the next player in turn order (usually the player seated to the active player’s left) makes any choices required, followed by the remaining nonactive players in turn order. Then the actions happen simultaneously. This rule is often referred to as the “Active Player, Nonactive Player (APNAP) order” rule. `Example: A card reads “Each player sacrifices a creature.” First, the active player chooses a creature they control. Then each of the nonactive players, in turn order, chooses a creature they control. Then all creatures chosen this way are sacrificed simultaneously.`
         - [ ] 101.4a If an effect has each player choose a card in a hidden zone, such as their hand or library, those cards may remain face down as they’re chosen. However, each player must clearly indicate which face-down card they are choosing.
@@ -17,8 +17,8 @@
         - [ ] 101.4e If multiple players would make choices or take actions while starting the game, the starting player is considered the active player and each other player is considered a nonactive player.
 - [ ] 102. __Players__
     - [X] 102.1. A player is one of the people in the game. The active player is the player whose turn it is. The other players are nonactive players.
-    - [ ] 102.2. In a two-player game, a player’s opponent is the other player.
-    - [ ] 102.3. In a multiplayer game between teams, a player’s teammates are the other players on their team, and the player’s opponents are all players not on their team.
+    - [X] 102.2. In a two-player game, a player’s opponent is the other player.
+    - [X] 102.3. In a multiplayer game between teams, a player’s teammates are the other players on their team, and the player’s opponents are all players not on their team.
     - [ ] 102.4. A spell or ability may use the term “your team” as shorthand for “you and/or your teammates.” In a game that isn’t a multiplayer game between teams, “your team” means the same thing as “you.”
 - [ ] 103. __Starting the Game__
     - [X] 103.1. At the start of a game, the players determine which one of them will choose who takes the first turn. In the first game of a match (including a single-game match), the players may use any mutually agreeable method (flipping a coin, rolling dice, etc.) to do so. In a match of several games, the loser of the previous game chooses who takes the first turn. If the previous game was a draw, the player who made the choice in that game makes the choice in this game. The player chosen to take the first turn is the starting player. The game’s default turn order begins with the starting player and proceeds clockwise.
@@ -48,16 +48,16 @@
         - [X] 103.8a In a two-player game, the player who plays first skips the draw step (see rule 504, “Draw Step”) of their first turn.
         - [X] 103.8c In all other multiplayer games, no player skips the draw step of their first turn.
 - [ ] 104. __Ending the Game__
-    - [ ] 104.1. A game ends immediately when a player wins, when the game is a draw, or when the game is restarted.
+    - [~] 104.1. A game ends immediately when a player wins, when the game is a draw, or when the game is restarted.
     - [ ] 104.2. There are several ways to win the game.
-        - [ ] 104.2a A player still in the game wins the game if that player’s opponents have all left the game. This happens immediately and overrides all effects that would preclude that player from winning the game.
+        - [~] 104.2a A player still in the game wins the game if that player’s opponents have all left the game. This happens immediately and overrides all effects that would preclude that player from winning the game.
         - [ ] 104.2b An effect may state that a player wins the game.
-        - [ ] 104.2c In a multiplayer game between teams, a team with at least one player still in the game wins the game if all other teams have left the game. Each player on the winning team wins the game, even if one or more of those players had previously lost that game.
+        - [X] 104.2c In a multiplayer game between teams, a team with at least one player still in the game wins the game if all other teams have left the game. Each player on the winning team wins the game, even if one or more of those players had previously lost that game.
         - [ ] 104.2d In an Emperor game, a team wins the game if its emperor wins the game. (See rule 809.5.)
     - [ ] 104.3. There are several ways to lose the game.
         - [ ] 104.3a A player can concede the game at any time. A player who concedes leaves the game immediately. That player loses the game.
-        - [ ] 104.3b If a player’s life total is 0 or less, that player loses the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
-        - [ ] 104.3c If a player is required to draw more cards than are left in their library, they draw the remaining cards and then lose the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
+        - [X] 104.3b If a player’s life total is 0 or less, that player loses the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
+        - [X] 104.3c If a player is required to draw more cards than are left in their library, they draw the remaining cards and then lose the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
         - [ ] 104.3d If a player has ten or more poison counters, that player loses the game the next time a player would receive priority. (This is a state-based action. See rule 704.)
         - [ ] 104.3e An effect may state that a player loses the game.
         - [ ] 104.3f If a player would both win and lose the game simultaneously, that player loses the game.
@@ -114,11 +114,11 @@
     - [ ] 107.1. The only numbers the Magic game uses are integers.
         - [ ] 107.1a You can’t choose a fractional number, deal fractional damage, gain fractional life, and so on. If a spell or ability could generate a fractional number, the spell or ability will tell you whether to round up or down.
         - [ ] 107.1b Most of the time, the Magic game uses only positive numbers and zero. You can’t choose a negative number, deal negative damage, gain negative life, and so on. However, it’s possible for a game value, such as a creature’s power, to be less than zero. If a calculation or comparison needs to use a negative value, it does so. If a calculation that would determine the result of an effect yields a negative number, zero is used instead, unless that effect doubles, triples, or sets to a specific value a player’s life total or the power and/or toughness of a creature or creature card.
-        ```
-        Example: If a 3/4 creature gets -5/-0, it’s a -2/4 creature. It doesn’t assign damage in combat. Its total power and toughness is 2. Giving it +3/+0 would raise its power to 1.
-        Example: Viridian Joiner is a 1/2 creature with the ability “{T}: Add an amount of {G} equal to this creature’s power.” An effect gives it -2/-0, then its ability is activated. The ability adds no mana to your mana pool.
-        Example: Chameleon Colossus is a 4/4 creature with the ability “{2}{G}{G}: This creature gets +X/+X until end of turn, where X is its power.” An effect gives it -6/-0, then its ability is activated. It remains a -2/4 creature. It doesn’t become -4/2.
-        ```
+            ```
+            Example: If a 3/4 creature gets -5/-0, it’s a -2/4 creature. It doesn’t assign damage in combat. Its total power and toughness is 2. Giving it +3/+0 would raise its power to 1.
+            Example: Viridian Joiner is a 1/2 creature with the ability “{T}: Add an amount of {G} equal to this creature’s power.” An effect gives it -2/-0, then its ability is activated. The ability adds no mana to your mana pool.
+            Example: Chameleon Colossus is a 4/4 creature with the ability “{2}{G}{G}: This creature gets +X/+X until end of turn, where X is its power.” An effect gives it -6/-0, then its ability is activated. It remains a -2/4 creature. It doesn’t become -4/2.
+            ```
         - [ ] 107.1c If a rule or ability instructs a player to choose “any number,” that player may choose any positive number or zero.
     - [ ] 107.2. If anything needs to use a number that can’t be determined, either as a result or in a calculation, it uses 0 instead.
     - [ ] 107.3. Many objects use the letter X as a placeholder for a number that needs to be determined. Some objects have abilities that define the value of X; the rest let their controller choose the value of X.
@@ -142,13 +142,13 @@
         - [ ] 107.4c The colorless mana symbol {C} is used to represent one colorless mana, and also to represent a cost that can be paid only with one colorless mana.
         - [ ] 107.4d The symbol {0} represents zero mana and is used as a placeholder for a cost that can be paid with no resources. (See rule 118.5.)
         - [ ] 107.4e A hybrid mana symbol is also a colored mana symbol, even if one of its components is colorless. Each one represents a cost that can be paid in one of two ways, as represented by the two halves of the symbol. A hybrid symbol such as {W/U} can be paid with either white or blue mana, and a monocolored hybrid symbol such as {2/B} can be paid with either one black mana or two mana of any type. A hybrid mana symbol is all of its component colors.
-        ```
-        Example: {G/W}{G/W} can be paid by spending {G}{G}, {G}{W}, or {W}{W}.
-        ```
+            ```
+            Example: {G/W}{G/W} can be paid by spending {G}{G}, {G}{W}, or {W}{W}.
+            ```
         - [ ] 107.4f Phyrexian mana symbols are colored mana symbols: {W/P} is white, {U/P} is blue, {B/P} is black, {R/P} is red, and {G/P} is green. A Phyrexian mana symbol represents a cost that can be paid either with one mana of its color or by paying 2 life. There are also ten hybrid Phyrexian mana symbols. A hybrid Phyrexian mana symbol represents a cost that can be paid with one mana of either of its component colors or by paying 2 life. A hybrid Phyrexian mana symbol is both of its component colors.
-        ```
-        Example: {W/P}{W/P} can be paid by spending {W}{W}, by spending {W} and paying 2 life, or by paying 4 life.
-        ```
+            ```
+            Example: {W/P}{W/P} can be paid by spending {W}{W}, by spending {W} and paying 2 life, or by paying 4 life.
+            ```
         - [ ] 107.4g In rules text, the Phyrexian symbol {H} with no colored background means any of the fifteen Phyrexian mana symbols.
         - [ ] 107.4h When used in a cost, the snow mana symbol {S} represents a cost that can be paid with one mana of any type produced by a snow source (see rule 106.3). Effects that reduce the amount of generic mana you pay don’t affect {S} costs. The {S} symbol can also be used to refer to mana of any type produced by a snow source spent to pay a cost. Snow is neither a color nor a type of mana.
     - [ ] 107.5. The tap symbol is {T}. The tap symbol in an activation cost means “Tap this permanent.” A permanent that’s already tapped can’t be tapped again to pay the cost. A creature’s activated ability with the tap symbol in its activation cost can’t be activated unless the creature has been under its controller’s control continuously since their most recent turn began. See rule 302.6.
@@ -207,23 +207,23 @@
         - [ ] 110.5a Status is not a characteristic, though it may affect a permanent’s characteristics.
         - [ ] 110.5b Permanents enter the battlefield untapped, unflipped, face up, and phased in unless a spell or ability says otherwise.
         - [ ] 110.5c A permanent retains its status until a spell, ability, or turn-based action changes it, even if that status is not relevant to it.
-        ```
-        Example: Dimir Doppelganger says “{1}{U}{B}: Exile target creature card from a graveyard. This creature becomes a copy of that card, except it has this ability.” It becomes a copy of Jushi Apprentice, a flip card. Through use of Jushi Apprentice’s ability, this creature flips, making it a copy of Tomoya the Revealer with the Dimir Doppelganger ability. If this permanent then becomes a copy of Runeclaw Bear, it will retain its flipped status even though that has no relevance to Runeclaw Bear. If its copy ability is activated again, this time targeting a Nezumi Shortfang card (another flip card), this permanent’s flipped status means it will have the characteristics of Stabwhisker the Odious (the flipped version of Nezumi Shortfang) with the Dimir Doppelganger ability.
-        ```
+            ```
+            Example: Dimir Doppelganger says “{1}{U}{B}: Exile target creature card from a graveyard. This creature becomes a copy of that card, except it has this ability.” It becomes a copy of Jushi Apprentice, a flip card. Through use of Jushi Apprentice’s ability, this creature flips, making it a copy of Tomoya the Revealer with the Dimir Doppelganger ability. If this permanent then becomes a copy of Runeclaw Bear, it will retain its flipped status even though that has no relevance to Runeclaw Bear. If its copy ability is activated again, this time targeting a Nezumi Shortfang card (another flip card), this permanent’s flipped status means it will have the characteristics of Stabwhisker the Odious (the flipped version of Nezumi Shortfang) with the Dimir Doppelganger ability.
+            ```
         - [ ] 110.5d Only permanents have status. Cards not on the battlefield do not. Although an exiled card may be face down, this has no correlation to the face-down status of a permanent. Similarly, cards not on the battlefield are neither tapped nor untapped, regardless of their physical state.
 - [ ] 111. __Tokens__
     - [ ] 111.1. Some effects put tokens onto the battlefield. A token is a marker used to represent any permanent that isn’t represented by a card.
     - [ ] 111.2. The player who creates a token is its owner. The token enters the battlefield under that player’s control.
     - [ ] 111.3. The spell or ability that creates a token may define the values of any number of characteristics for the token. This becomes the token’s “text.” The characteristic values defined this way are functionally equivalent to the characteristic values that are printed on a card; for example, they define the token’s copiable values. A token doesn’t have any characteristics not defined by the spell or ability that created it.
-    ```
-    Example: Jade Mage has the ability “{2}{G}: Create a 1/1 green Saproling creature token.” The resulting token has no mana cost, supertypes, rules text, or abilities.
-    ```
+        ```
+        Example: Jade Mage has the ability “{2}{G}: Create a 1/1 green Saproling creature token.” The resulting token has no mana cost, supertypes, rules text, or abilities.
+        ```
     - [ ] 111.4. A spell or ability that creates a token sets both its name and its subtype(s). If the spell or ability doesn’t specify the name of the token, its name is the same as its subtype(s) plus the word “Token.” Once a token is on the battlefield, changing its name doesn’t change its subtype(s), and vice versa.
-    ```
-    Example: Dwarven Reinforcements is a sorcery that says, in part, “Create two 2/1 red Dwarf Berserker creature tokens.” The tokens created as it resolves are each named Dwarf Berserker Token and each have the creature types Dwarf and Berserker.
-    Example: Minsc, Beloved Ranger says, in part, “When Minsc enters, create Boo, a legendary 1/1 red Hamster creature token with trample and haste.” That token’s subtype is Hamster, but because Minsc specifies that the token’s name is Boo, neither “Hamster” nor “Token” are part of its name.
-    Example: Spitting Image is a sorcery that says, in part, “Create a token that’s a copy of target creature.” All of that token’s characteristics will match the copiable characteristics of the creature targeted by that spell. If Spitting Image targets Doomed Dissenter, a Human creature, the name of the token the spell creates will be Doomed Dissenter, not Human Token or Doomed Dissenter Token.
-    ```
+        ```
+        Example: Dwarven Reinforcements is a sorcery that says, in part, “Create two 2/1 red Dwarf Berserker creature tokens.” The tokens created as it resolves are each named Dwarf Berserker Token and each have the creature types Dwarf and Berserker.
+        Example: Minsc, Beloved Ranger says, in part, “When Minsc enters, create Boo, a legendary 1/1 red Hamster creature token with trample and haste.” That token’s subtype is Hamster, but because Minsc specifies that the token’s name is Boo, neither “Hamster” nor “Token” are part of its name.
+        Example: Spitting Image is a sorcery that says, in part, “Create a token that’s a copy of target creature.” All of that token’s characteristics will match the copiable characteristics of the creature targeted by that spell. If Spitting Image targets Doomed Dissenter, a Human creature, the name of the token the spell creates will be Doomed Dissenter, not Human Token or Doomed Dissenter Token.
+        ```
     - [ ] 111.5. If a spell or ability would create a token, but a rule or effect states that a permanent with one or more of that token’s characteristics can’t enter the battlefield, the token is not created. Similarly, if an effect would create a token that is a copy of an instant or sorcery card, no token is created.
     - [ ] 111.6. A token is subject to anything that affects permanents in general or that affects the token’s card type or subtype. A token isn’t a card (even if represented by a card that has a Magic back or that came from a Magic booster pack).
     - [ ] 111.7. A token that’s in a zone other than the battlefield ceases to exist. This is a state-based action; see rule 704. (Note that if a token changes zones, applicable triggered abilities will trigger before the token ceases to exist.)
@@ -251,13 +251,13 @@
         - [ ] 111.10u A Lander token is a colorless Lander artifact token with “{2}, {T}, Sacrifice this token: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.”
         - [ ] 111.10v A Mutagen token is a colorless Mutagen artifact token with “{1}, {T}, Sacrifice this token: Put a +1/+1 counter on target creature. Activate only as a sorcery.”
     - [ ] 111.11. If an effect instructs a player to create a token by name, doesn’t define any other characteristics for that token, and the name is not one of the types in the list of predefined tokens above, that player uses the card with that name in the Oracle card reference to determine the characteristics of that token.
-    ```
-    Example: Disa the Restless has the ability “Whenever one or more creatures you control deal combat damage to a player, create a Tarmogoyf token.” As that ability resolves, its controller creates a token with the same characteristics as the card named Tarmogoyf, as determined by the Oracle card reference.
-    ```
+        ```
+        Example: Disa the Restless has the ability “Whenever one or more creatures you control deal combat damage to a player, create a Tarmogoyf token.” As that ability resolves, its controller creates a token with the same characteristics as the card named Tarmogoyf, as determined by the Oracle card reference.
+        ```
     - [ ] 111.12. If an effect instructs a player to create a token that is a copy of a nonexistent object, no token is created (see rule 707, “Copying Objects”). This does not apply to an effect that would use the last known information of an object.
-    ```
-    Example: Mimic Vat has a triggered ability whose effect gives you the option to exile a card and an activated ability that says “Create a token that’s a copy of a card exiled with this artifact. It gains haste. Exile it at the beginning of the next end step.” If no card has been exiled with Mimic Vat’s triggered ability, no token is created.
-    ```
+        ```
+        Example: Mimic Vat has a triggered ability whose effect gives you the option to exile a card and an activated ability that says “Create a token that’s a copy of a card exiled with this artifact. It gains haste. Exile it at the beginning of the next end step.” If no card has been exiled with Mimic Vat’s triggered ability, no token is created.
+        ```
     - [ ] 111.13. A copy of a permanent spell becomes a token as it resolves. The token has the characteristics of the spell that became that token. The token is not “created” for the purposes of any replacement effects or triggered abilities that refer to creating a token.
 - [ ] 112. __Spells__
     - [ ] 112.1. A spell is a card on the stack. As the first step of being cast (see rule 601, “Casting Spells”), the card becomes a spell and is moved to the top of the stack from the zone it was in, which is usually its owner’s hand. (See rule 405, “Stack.”) A spell remains on the stack as a spell until it resolves (see rule 608, “Resolving Spells and Abilities”), is countered (see rule 701.6), or otherwise leaves the stack. For more information, see section 6, “Spells, Abilities, and Effects.”
@@ -267,9 +267,9 @@
         - [ ] 112.2a Some effects instruct a player to create a copy of a card and say they may cast it. In that case, the owner of that copy is the player who is instructed to create it and given permission to cast it.
     - [ ] 112.3. A noncopy spell’s characteristics are the same as those printed on its card, as modified by any continuous effects. See rule 613, “Interaction of Continuous Effects.”
     - [ ] 112.4. If an effect of a resolving spell or ability changes any characteristics of a permanent spell, the effect continues to apply to the permanent when the spell resolves. See rule 400.7.
-    ```
-    Example: If an effect changes a black creature spell to white, the creature is white when it enters the battlefield and remains white for the duration of the effect changing its color.
-    ```
+        ```
+        Example: If an effect changes a black creature spell to white, the creature is white when it enters the battlefield and remains white for the duration of the effect changing its color.
+        ```
 - [ ] 113. __Abilities__
     - [ ] 113.1. An ability can be one of three things:
         - [ ] 113.1a An ability can be a characteristic an object has that lets it affect the game. An object’s abilities are defined by its rules text or by the effect that created it. Abilities can also be granted to objects by rules or effects. (Effects that grant abilities usually use the words “has,” “have,” “gains,” or “gain.”) Abilities generate effects. (See rule 609, “Effects.”)
@@ -277,9 +277,9 @@
         - [ ] 113.1c An ability can be an activated or triggered ability on the stack. This kind of ability is an object. (See section 6, “Spells, Abilities, and Effects.”)
     - [ ] 113.2. Abilities can affect the objects they’re on. They can also affect other objects and/or players.
         - [ ] 113.2a Abilities can be beneficial or detrimental.
-        ```
-        Example: “This creature can’t block” is an ability.
-        ```
+            ```
+            Example: “This creature can’t block” is an ability.
+            ```
         - [ ] 113.2b An additional cost or alternative cost to cast a card is an ability of the card.
         - [ ] 113.2c An object may have multiple abilities. If the object is represented by a card, then aside from certain defined abilities that may be strung together on a single line (see rule 702, “Keyword Abilities”), each paragraph break in a card’s text marks a separate ability. If the object is not represented by a card, the effect that created it may have given it multiple abilities. An object may also be granted additional abilities by a spell or ability. If an object has multiple instances of the same ability, each instance functions independently. This may or may not produce more effects than a single instance; refer to the specific ability for more information.
         - [ ] 113.2d Abilities can generate one-shot effects or continuous effects. Some continuous effects are replacement effects or prevention effects. See rule 609, “Effects.”
@@ -302,13 +302,13 @@
         - [ ] 113.6i An object’s ability that states counters can’t be put on that object functions as that object is entering the battlefield in addition to functioning while that object is on the battlefield.
         - [ ] 113.6j An object’s activated ability that has a cost that can’t be paid while the object is on the battlefield functions from any zone in which its cost can be paid.
         - [ ] 113.6k A trigger condition that can’t trigger from the battlefield functions in all zones it can trigger from. Other trigger conditions of the same triggered ability may function in different zones.
-        ```
-        Example: Absolver Thrull has the ability “When this creature enters or the creature it haunts dies, destroy target enchantment.” The first trigger condition functions from the battlefield and the second trigger condition functions from the exile zone. (See rule 702.55, “Haunt.”)
-        ```
+            ```
+            Example: Absolver Thrull has the ability “When this creature enters or the creature it haunts dies, destroy target enchantment.” The first trigger condition functions from the battlefield and the second trigger condition functions from the exile zone. (See rule 702.55, “Haunt.”)
+            ```
         - [ ] 113.6m An ability whose cost or effect specifies that it moves the object it’s on out of a particular zone functions only in that zone, unless its trigger condition or a previous part of its cost or effect specifies that the object is put into that zone or, if the object is an Aura, that the object it enchants leaves the battlefield. The same is true if the effect of that ability creates a delayed triggered ability whose effect moves the object out of a particular zone.
-        ```
-        Example: Reassembling Skeleton says “{1}{B}: Return this card from your graveyard to the battlefield tapped.” A player may activate this ability only if Reassembling Skeleton is in their graveyard.
-        ```
+            ```
+            Example: Reassembling Skeleton says “{1}{B}: Return this card from your graveyard to the battlefield tapped.” A player may activate this ability only if Reassembling Skeleton is in their graveyard.
+            ```
         - [ ] 113.6n An ability that modifies the rules for deck construction functions before the game begins. Such an ability modifies not just the Comprehensive Rules, but also the Magic: The Gathering Tournament Rules and any other documents that set the deck construction rules for a specific format. However, such an ability can’t affect the format legality of a card, including whether it’s banned or restricted. The current Magic: The Gathering Tournament Rules can be found at WPN.Wizards.com/en/rules-documents.
         - [ ] 113.6p Abilities of emblems, plane cards, vanguard cards, scheme cards, and conspiracy cards function in the command zone. See rule 114, “Emblems”; rule 901, “Planechase”; rule 902, “Vanguard”; rule 904, “Archenemy”; and rule 905, “Conspiracy Draft.”
     - [ ] 113.7. The source of an ability is the object that generated it. The source of an activated ability on the stack is the object whose ability was activated. The source of a triggered ability (other than a delayed triggered ability) on the stack, or one that has triggered and is waiting to be put on the stack, is the object whose ability triggered. To determine the source of a delayed triggered ability, see rules 603.7d–f.
@@ -321,9 +321,9 @@
         - [ ] 113.10c If two or more effects add and remove the same ability, in general the most recent one prevails. See rule 613 for more information about the interaction of continuous effects.
     - [ ] 113.11. Effects can stop an object from having a specified ability. These effects say that the object “can’t have” that ability. If the object has that ability, it loses it. It’s also impossible for an effect or keyword counter to add that ability to the object. If a resolving spell or ability creates a continuous effect that would add the specified ability to such an object, that part of that continuous effect does not apply; however, other parts of that continuous effect will still apply, and that resolving spell or ability can still create other continuous effects. Continuous effects created by static abilities that would add the specified ability won’t apply to that object.
     - [ ] 113.12. An effect that sets an object’s characteristic, or simply states a quality of that object, is different from an ability granted by an effect. When an object “gains” or “has” an ability, that ability can be removed by another effect. If an effect defines a characteristic of the object (“[permanent] is [characteristic value]”), it’s not granting an ability. (See rule 604.3.) Similarly, if an effect states a quality of that object (“[creature] can’t be blocked,” for example), it’s neither granting an ability nor setting a characteristic.
-    ```
-    Example: Muraganda Petroglyphs reads, “Creatures with no abilities get +2/+2.” A Runeclaw Bear (a creature with no abilities) enchanted by an Aura that says “Enchanted creature has flying” would not get +2/+2. A Runeclaw Bear enchanted by an Aura that says “Enchanted creature is red” or “Enchanted creature can’t be blocked” would get +2/+2.
-    ```
+        ```
+        Example: Muraganda Petroglyphs reads, “Creatures with no abilities get +2/+2.” A Runeclaw Bear (a creature with no abilities) enchanted by an Aura that says “Enchanted creature has flying” would not get +2/+2. A Runeclaw Bear enchanted by an Aura that says “Enchanted creature is red” or “Enchanted creature can’t be blocked” would get +2/+2.
+        ```
 - [ ] 114. __Emblems__
     - [ ] 114.1. Some effects put emblems into the command zone. An emblem is a marker used to represent an object that has one or more abilities, but usually no other characteristics.
     - [ ] 114.2. An effect that creates an emblem is written “[Player] gets an emblem with [ability].” This means that [player] puts an emblem with [ability] into the command zone. The emblem is both owned and controlled by that player.
@@ -333,9 +333,9 @@
 - [ ] 115. __Targets__
     - [ ] 115.1. Some spells and abilities require their controller to choose one or more targets for them. The targets are object(s) and/or player(s) the spell or ability will affect. These targets are declared as part of the process of putting the spell or ability on the stack. The targets can’t be changed except by another spell or ability that explicitly says it can do so.
         - [ ] 115.1a An instant or sorcery spell is targeted if its spell ability identifies something it will affect by using the phrase “target [something],” where the “something” is a phrase that describes an object and/or player. The target(s) are chosen as the spell is cast; see rule 601.2c. (If an activated or triggered ability of an instant or sorcery uses the word target, that ability is targeted, but the spell is not.)
-        ```
-        Example: A sorcery card has the ability “When you cycle this card, target creature gets -1/-1 until end of turn.” This triggered ability is targeted, but that doesn’t make the card it’s on targeted.
-        ```
+            ```
+            Example: A sorcery card has the ability “When you cycle this card, target creature gets -1/-1 until end of turn.” This triggered ability is targeted, but that doesn’t make the card it’s on targeted.
+            ```
         - [ ] 115.1b Aura spells are always targeted. An Aura’s target is specified by its enchant keyword ability (see rule 702.5, “Enchant”). The target is chosen as the spell is cast; see rule 601.2c. An Aura permanent doesn’t target anything; only the spell is targeted. (An activated or triggered ability of an Aura permanent can also be targeted.)
         - [ ] 115.1c An activated ability is targeted if it identifies something it will affect by using the phrase “target [something],” where the “something” is a phrase that describes an object and/or player. The target(s) are chosen as the ability is activated; see rule 602.2b.
         - [ ] 115.1d A triggered ability is targeted if it identifies something it will affect by using the phrase “target [something],” where the “something” is a phrase that describes an object and/or player. The target(s) are chosen as the ability is put on the stack; see rule 603.3d.
@@ -351,9 +351,9 @@
         - [ ] 115.7c If an effect allows a player to “change any targets” of a spell or ability, the process described in rule 115.7a is followed, except that any number of those targets may be changed (rather than all of them or none of them).
         - [ ] 115.7d If an effect allows a player to “choose new targets” for a spell or ability, the player may leave any number of the targets unchanged, even if those targets would be illegal. If the player chooses to change some or all of the targets, the new targets must be legal and must not cause any unchanged targets to become illegal.
         - [ ] 115.7e When changing targets or choosing new targets for a spell or ability, only the final set of targets is evaluated to determine whether the change is legal.
-        ```
-        Example: Arc Trail is a sorcery that reads “Arc Trail deals 2 damage to any target and 1 damage to any other target.” The current targets of Arc Trail are Runeclaw Bear and Llanowar Elves, in that order. You cast Redirect, an instant that reads “You may choose new targets for target spell,” targeting Arc Trail. You can change the first target to Llanowar Elves and change the second target to Runeclaw Bear.
-        ```
+            ```
+            Example: Arc Trail is a sorcery that reads “Arc Trail deals 2 damage to any target and 1 damage to any other target.” The current targets of Arc Trail are Runeclaw Bear and Llanowar Elves, in that order. You cast Redirect, an instant that reads “You may choose new targets for target spell,” targeting Arc Trail. You can change the first target to Llanowar Elves and change the second target to Runeclaw Bear.
+            ```
         - [ ] 115.7f A spell or ability may “divide” or “distribute” an effect (such as damage or counters) among one or more targets. When changing targets or choosing new targets for that spell or ability, the original division can’t be changed.
     - [ ] 115.8. Modal spells and abilities may have different targeting requirements for each mode. An effect that allows a player to change the target(s) of a modal spell or ability, or to choose new targets for a modal spell or ability, doesn’t allow that player to change its mode. (See rule 700.2.)
     - [ ] 115.9. Some objects check what another spell or ability is targeting. Depending on the wording, these may check the current state of the targets, the state of the targets at the time they were selected, or both.
@@ -643,10 +643,10 @@
     - [X] 205.1. The type line is printed directly below the illustration. It contains the card’s card type(s). It also contains the card’s subtype(s) and supertype(s), if applicable.
         - [ ] 205.1a Some effects set an object’s card type. In most such cases, the new card type(s) replaces any existing card types. However, an object with either the instant or sorcery card type retains that type. Counters, stickers, effects, and damage marked on the object remain with it, even if they are meaningless to the new card type. Similarly, when an effect sets one or more of an object’s subtypes, the new subtype(s) replaces any existing subtypes from the appropriate set (creature types, land types, artifact types, enchantment types, planeswalker types, or spell types). If an object’s card type is removed, the subtypes correlated with that card type will remain if they are also the subtypes of a card type the object currently has; otherwise, they are also removed for the entire time the object’s card type is removed. Removing an object’s subtype doesn’t affect its card types at all.
         - [ ] 205.1b Some effects change an object’s card type, supertype, or subtype but specify that the object retains a prior card type, supertype, or subtype. In such cases, all the object’s prior card types, supertypes, and subtypes are retained. This rule applies to effects that use phrases such as “in addition to its other types” or that state that something is “still a [type, supertype, or subtype].” Some effects state that an object becomes an “artifact creature”; these effects also allow the object to retain all of its prior card types and subtypes. Some effects state that an object becomes a “[creature type or types] artifact creature”; these effects also allow the object to retain all of its prior card types and subtypes other than creature types, but replace any existing creature types.
-        ```
-        Example: An ability reads, “All lands are 1/1 creatures that are still lands.” The affected lands now have two card types: creature and land. If there were any lands that were also artifacts before the ability’s effect applied to them, those lands would become “artifact land creatures,” not just “creatures,” or “land creatures.” The effect allows them to retain both the artifact and land card types. In addition, each land affected by the ability retains any land types and supertypes it had before the ability took effect.
-        Example: An ability reads, “All artifacts are 1/1 artifact creatures.” If a permanent is both an artifact and an enchantment, it will become an artifact enchantment creature.
-        ```
+            ```
+            Example: An ability reads, “All lands are 1/1 creatures that are still lands.” The affected lands now have two card types: creature and land. If there were any lands that were also artifacts before the ability’s effect applied to them, those lands would become “artifact land creatures,” not just “creatures,” or “land creatures.” The effect allows them to retain both the artifact and land card types. In addition, each land affected by the ability retains any land types and supertypes it had before the ability took effect.
+            Example: An ability reads, “All artifacts are 1/1 artifact creatures.” If a permanent is both an artifact and an enchantment, it will become an artifact enchantment creature.
+            ```
     - [ ] 205.2. Card Types
         - [ ] 205.2a The card types are artifact, battle, conspiracy, creature, dungeon, enchantment, instant, kindred, land, phenomenon, plane, planeswalker, scheme, sorcery, and vanguard. See section 3, “Card Types.”
         - [ ] 205.2b Some objects have more than one card type (for example, an artifact creature). Such objects satisfy the criteria for any effect that applies to any of their card types.
@@ -654,18 +654,18 @@
     - [ ] 205.3. Subtypes
         - [ ] 205.3a A card can have one or more subtypes printed on its type line.
         - [ ] 205.3b Subtypes of each card type except creature and plane are always single words and are listed after a long dash. Each word after the dash is a separate subtype. Subtypes of creature cards are one or two words and are listed after a long dash. Each word or two-word phrase, as listed in rule 205.3m, is a separate subtype. Objects other than planes may have multiple subtypes. Subtypes of planes are also listed after a long dash, but may be multiple words; all words after the dash are, collectively, a single subtype.
-        ```
-        Example: “Basic Land — Mountain” means the card is a land with the subtype Mountain. “Creature — Goblin Wizard” means the card is a creature with the subtypes Goblin and Wizard. “Artifact — Equipment” means the card is an artifact with the subtype Equipment.
-        ```
+            ```
+            Example: “Basic Land — Mountain” means the card is a land with the subtype Mountain. “Creature — Goblin Wizard” means the card is a creature with the subtypes Goblin and Wizard. “Artifact — Equipment” means the card is an artifact with the subtype Equipment.
+            ```
         - [ ] 205.3c If a card with multiple card types has one or more subtypes, each subtype is correlated to its appropriate card type.
-        ```
-        Example: Dryad Arbor’s type line says “Land Creature — Forest Dryad.” Forest is a land type, and Dryad is a creature type.
-        ```
+            ```
+            Example: Dryad Arbor’s type line says “Land Creature — Forest Dryad.” Forest is a land type, and Dryad is a creature type.
+            ```
         - [ ] 205.3d An object can’t gain a subtype that doesn’t correspond to one of that object’s types.
         - [ ] 205.3e If an effect instructs a player to choose a subtype, that player must choose one, and only one, existing subtype, and the subtype must be for the appropriate card type. For example, the player can’t choose a land type if an instruction requires choosing a creature type.
-        ```
-        Example: When choosing a creature type, “Merfolk” or “Wizard” is acceptable, but “Merfolk Wizard” is not. Words like “artifact,” “opponent,” “Swamp,” or “truck” can’t be chosen because they aren’t creature types.
-        ```
+            ```
+            Example: When choosing a creature type, “Merfolk” or “Wizard” is acceptable, but “Merfolk Wizard” is not. Words like “artifact,” “opponent,” “Swamp,” or “truck” can’t be chosen because they aren’t creature types.
+            ```
         - [ ] 205.3g Artifacts have their own unique set of subtypes; these subtypes are called artifact types. The artifact types are Attraction (see rule 717), Blood, Bobblehead, Book, Clue, Contraption, Equipment (see rule 301.5), Food, Fortification (see rule 301.6), Gold, Incubator, Infinity, Junk, Lander, Map, Mutagen, Powerstone, Spacecraft, Stone, Treasure, and Vehicle (see rule 301.7).
         - [ ] 205.3h Enchantments have their own unique set of subtypes; these subtypes are called enchantment types. The enchantment types are Aura (see rule 303.4), Background, Cartouche, Case (see rule 719), Class (see rule 716), Curse, Role (see rule 303.7), Room, Rune, Saga (see rule 714), Shard, and Shrine.
         - [ ] 205.3i Lands have their own unique set of subtypes; these subtypes are called land types. The land types are Cave, Desert, Forest, Gate, Island, Lair, Locus, Mine, Mountain, Plains, Planet, Power-Plant, Sphere, Swamp, Tower, Town, and Urza’s. Of that list, Forest, Island, Mountain, Plains, and Swamp are the basic land types. See rule 305.6.
@@ -679,9 +679,9 @@
     - [ ] 205.4. Supertypes
         - [ ] 205.4a An object can have one or more supertypes. A card’s supertypes are printed directly before its card types. The supertypes are basic, legendary, ongoing, snow, and world.
         - [ ] 205.4b An object’s supertype is independent of its card type and subtype, even though some supertypes are closely identified with specific card types. Changing an object’s card types or subtypes won’t change its supertypes. Changing an object’s supertypes won’t change its card types or subtypes. When an object gains or loses a supertype, it retains any other supertypes it had.
-        ```
-        Example: An ability reads, “All lands are 1/1 creatures that are still lands.” If any of the affected lands were legendary, they are still legendary.
-        ```
+            ```
+            Example: An ability reads, “All lands are 1/1 creatures that are still lands.” If any of the affected lands were legendary, they are still legendary.
+            ```
         - [ ] 205.4c Any land with the supertype “basic” is a basic land. Any land that doesn’t have this supertype is a nonbasic land, even if it has a basic land type. Cards printed in sets prior to the Eighth Edition core set didn’t use the word “basic” to indicate a basic land. Cards from those sets with the following names are basic lands and have received errata in the Oracle card reference accordingly: Forest, Island, Mountain, Plains, Swamp, Snow-Covered Forest, Snow-Covered Island, Snow-Covered Mountain, Snow-Covered Plains, and Snow-Covered Swamp.
         - [ ] 205.4d Any permanent with the supertype “legendary” is subject to the state-based action for legendary permanents, also called the “legend rule” (see rule 704.5j).
         - [ ] 205.4e Any instant or sorcery spell with the supertype “legendary” is subject to a casting restriction. A player can’t cast a legendary instant or sorcery spell unless that player controls a legendary creature or a legendary planeswalker.
@@ -702,15 +702,15 @@
     - [ ] 208.1. A creature card has two numbers separated by a slash printed in its lower right corner. The first number is its power (the amount of damage it deals in combat); the second is its toughness (the amount of damage needed to destroy it). For example, 2/3 means the object has power 2 and toughness 3. Power and toughness can be modified or set to particular values by effects.
     - [ ] 208.2. Rather than a fixed number, some creature cards have power and/or toughness that includes a star (*).
         - [ ] 208.2a The card may have a characteristic-defining ability that sets its power and/or toughness according to some stated condition. (See rule 604.3.) Such an ability is worded “[This creature’s] [power or toughness] is equal to . . .” or “[This creature’s] power and toughness are each equal to . . .” This ability functions everywhere, even outside the game. If the ability needs to use a number that can’t be determined, including inside a calculation, use 0 instead of that number.
-        ```
-        Example: Lost Order of Jarkeld has power and toughness each equal to 1+*. It has the abilities “As this creature enters, choose an opponent” and “Lost Order of Jarkeld’s power and toughness are each equal to 1 plus the number of creatures the chosen player controls.” While Lost Order of Jarkeld isn’t on the battlefield, there won’t be a chosen player. Its power and toughness will each be equal to 1 plus 0, so it’s 1/1.        
-        ```
+            ```
+            Example: Lost Order of Jarkeld has power and toughness each equal to 1+*. It has the abilities “As this creature enters, choose an opponent” and “Lost Order of Jarkeld’s power and toughness are each equal to 1 plus the number of creatures the chosen player controls.” While Lost Order of Jarkeld isn’t on the battlefield, there won’t be a chosen player. Its power and toughness will each be equal to 1 plus 0, so it’s 1/1.        
+            ```
         - [ ] 208.2b The card may have a static ability that creates a replacement effect that sets the creature’s power and toughness to one of a number of specific values as it enters the battlefield or is turned face up. (See rule 614, “Replacement Effects.”) Such an ability is worded “As [this creature] enters . . . ,” “As [this creature] is turned face up . . . ,” or “[This creature] enters as . . .” and lists two or more specific power and toughness values (and may also list additional characteristics). The characteristics chosen or determined with these effects affect the creature’s copiable values. (See rule 707.2.) While the card isn’t on the battlefield, its power and toughness are each considered to be 0.
     - [ ] 208.3. A noncreature permanent has no power or toughness, even if it’s a card with a power and toughness printed on it (such as a Vehicle). A noncreature object not on the battlefield has power or toughness only if it has a power and toughness printed on it.
         - [ ] 208.3a If an effect would be created that sets the base power and/or toughness of a noncreature permanent, or otherwise modifies its power and/or toughness, that effect is created even though it doesn’t do anything unless that permanent becomes a creature.
-        ```
-        Example: Veteran Motorist has the ability “Whenever this creature crews a Vehicle, that Vehicle gets +1/+1 until end of turn,” and it’s tapped to pay the crew cost of a Vehicle. This triggered ability resolves while the Vehicle it crewed isn’t yet a creature. The continuous effect is created and will apply to the Vehicle once it becomes a creature.
-        ```
+            ```
+            Example: Veteran Motorist has the ability “Whenever this creature crews a Vehicle, that Vehicle gets +1/+1 until end of turn,” and it’s tapped to pay the crew cost of a Vehicle. This triggered ability resolves while the Vehicle it crewed isn’t yet a creature. The continuous effect is created and will apply to the Vehicle once it becomes a creature.
+            ```
     - [ ] 208.4. Some effects refer to a creature’s “base power,” “base toughness,” or “base power and toughness.”
         - [ ] 208.4a Effects that set a creature’s power and/or toughness to specific values may refer to base power and/or toughness. Other continuous effects may further modify the creature’s power and toughness. See rule 613, “Interaction of Continuous Effects.”
         - [ ] 208.4b Some effects check a creature’s base power and/or toughness. These effects see that creature’s characteristics after applying any characteristic-defining abilities and abilities that set power and/or toughness, ignoring any effects and counters that modify power and/or toughness without setting them. See rule 613, “Interaction of Continuous Effects.”
@@ -798,9 +798,9 @@
     - [X] 305.3. A player can’t play a land, for any reason, if it isn’t their turn. Ignore any part of an effect that instructs a player to do so.
     - [ ] 305.4. Effects may also allow players to “put” lands onto the battlefield. This isn’t the same as “playing a land” and doesn’t count as a land played during the current turn.
     - [ ] 305.5. Land subtypes are always a single word and are listed after a long dash. Land subtypes are also called land types. Lands may have multiple subtypes. See rule 205.3i for the complete list of land types.
-    ```
-    Example: “Basic Land — Mountain” means the card is a land with the subtype Mountain.
-    ```
+        ```
+        Example: “Basic Land — Mountain” means the card is a land with the subtype Mountain.
+        ```
     - [ ] 305.6. The basic land types are Plains, Island, Swamp, Mountain, and Forest. If an object uses the words “basic land type,” it’s referring to one of these subtypes. An object with the land card type and a basic land type has the intrinsic ability “{T}: Add [mana symbol],” even if the text box doesn’t actually contain that text or the object has no text box. For Plains, [mana symbol] is {W}; for Islands, {U}; for Swamps, {B}; for Mountains, {R}; and for Forests, {G}. See rule 107.4a. See also rule 605, “Mana Abilities.”
     - [ ] 305.7. If an effect sets a land’s subtype to one or more of the basic land types, the land no longer has its old land type. It loses all abilities generated from its rules text, its old land types, and any copiable effects affecting that land, and it gains the appropriate mana ability for each new basic land type. Note that this doesn’t remove any abilities that were granted to the land by other effects. Setting a land’s subtype doesn’t add or remove any card types (such as creature) or supertypes (such as basic, legendary, and snow) the land may have. If a land gains one or more land types in addition to its own, it keeps its land types and rules text, and it gains the new land types and mana abilities.
     - [ ] 305.8. Any land with the supertype “basic” is a basic land. Any land that doesn’t have this supertype is a nonbasic land, even if it has a basic land type.
@@ -917,9 +917,9 @@
         - [ ] 400.4b If a conspiracy, phenomenon, plane, scheme, or vanguard card would leave the command zone, it remains in the command zone.
     - [ ] 400.5. The order of objects in a library, in a graveyard, or on the stack can’t be changed except when effects or rules allow it. The same is true for objects arranged in face-down piles in other zones. Other objects in other zones can be arranged however their owners wish, although who controls those objects, whether they’re tapped or flipped, and what other objects are attached to them must remain clear to all players.
     - [ ] 400.6. If an object would move from one zone to another, determine what event is moving the object. If the object is moving to a public zone and its owner will be able to look at it in that zone, its owner looks at it to see if it has any abilities that would affect the move. If the object is moving to the battlefield, each other player who will be able to look at it in that zone does so. Then any appropriate replacement effects, whether they come from that object or from elsewhere, are applied to that event. If any effects or rules try to do two or more contradictory or mutually exclusive things to a particular object, that object’s controller—or its owner if it has no controller—chooses which effect to apply, and what that effect does. (Note that multiple instances of the same thing may be mutually exclusive; for example, two simultaneous “destroy” effects.) Then the event moves the object.
-    ```
-    Example: Exquisite Archangel has an ability which reads “If you would lose the game, instead exile this creature and your life total becomes equal to your starting life total.” A spell deals 5 damage to a player with 5 life and 5 damage to an Exquisite Archangel under that player’s control. As state-based actions are performed, that player’s life total becomes equal to their starting life total, and that player chooses whether Exquisite Archangel moves to its owner’s graveyard or to exile.
-    ```
+        ```
+        Example: Exquisite Archangel has an ability which reads “If you would lose the game, instead exile this creature and your life total becomes equal to your starting life total.” A spell deals 5 damage to a player with 5 life and 5 damage to an Exquisite Archangel under that player’s control. As state-based actions are performed, that player’s life total becomes equal to their starting life total, and that player chooses whether Exquisite Archangel moves to its owner’s graveyard or to exile.
+        ```
     - [ ] 400.7. An object that moves from one zone to another becomes a new object with no memory of, or relation to, its previous existence. This rule has the following exceptions.
         - [ ] 400.7a Effects from spells, activated abilities, and triggered abilities that change the characteristics or controller of a permanent spell on the stack continue to apply to the permanent that spell becomes.
         - [ ] 400.7b Effects from static abilities that grant an ability to a permanent spell that functions on the battlefield continue to apply to the permanent that spell becomes (see rule 611.3d).
@@ -1071,13 +1071,13 @@
         - [ ] 508.1a The active player chooses which creatures that they control, if any, will attack. The chosen creatures must be untapped, they can’t also be battles, and each one must either have haste or have been controlled by the active player continuously since the turn began.
         - [ ] 508.1b If the defending player controls any planeswalkers, is the protector of any battles, or the game allows the active player to attack multiple other players, the active player announces which player, planeswalker, or battle each of the chosen creatures is attacking.
         - [ ] 508.1c The active player checks each creature they control to see whether it’s affected by any restrictions (effects that say a creature can’t attack, or that it can’t attack unless some condition is met). If any restrictions are being disobeyed, the declaration of attackers is illegal.
-        ```
-        Example: A player controls two creatures, each with a restriction that states “This creature can’t attack alone.” It’s legal to declare both as attackers.
-        ```
+            ```
+            Example: A player controls two creatures, each with a restriction that states “This creature can’t attack alone.” It’s legal to declare both as attackers.
+            ```
         - [ ] 508.1d The active player checks each creature they control to see whether it’s affected by any requirements (effects that say a creature attacks if able, or that it attacks if some condition is met). If the number of requirements that are being obeyed is fewer than the maximum possible number of requirements that could be obeyed without disobeying any restrictions, the declaration of attackers is illegal. If a creature can’t attack unless a player pays a cost, that player is not required to pay that cost, even if attacking with that creature would increase the number of requirements being obeyed. If a requirement that says a creature attacks if able during a certain turn refers to a turn with multiple combat phases, the creature attacks if able during each declare attackers step in that turn.
-        ```
-        Example: A player controls two creatures: one that “attacks if able” and one with no abilities. An effect states “No more than one creature can attack each turn.” The only legal attack is for just the creature that “attacks if able” to attack. It’s illegal to attack with the other creature, attack with both, or attack with neither.
-        ```
+            ```
+            Example: A player controls two creatures: one that “attacks if able” and one with no abilities. An effect states “No more than one creature can attack each turn.” The only legal attack is for just the creature that “attacks if able” to attack. It’s illegal to attack with the other creature, attack with both, or attack with neither.
+            ```
         - [ ] 508.1e If any of the chosen creatures have banding or a “bands with other” ability, the active player announces which creatures, if any, are banded with which. (See rule 702.22, “Banding.”)
         - [ ] 508.1f The active player taps the chosen creatures. Tapping a creature when it’s declared as an attacker isn’t a cost; attacking simply causes creatures to become tapped.
         - [ ] 508.1g If there are any optional costs to attack with the chosen creatures (expressed as costs a player may pay “as” a creature attacks), the active player chooses which, if any, they will pay.
@@ -1088,9 +1088,9 @@
         - [ ] 508.1m Any abilities that trigger on attackers being declared trigger.
     - [X] 508.2. Second, the active player gets priority. (See rule 117, “Timing and Priority.”)
         - [ ] 508.2a Abilities that trigger on a creature attacking trigger only at the point the creature is declared as an attacker. They will not trigger if a creature attacks and then that creature’s characteristics change to match the ability’s trigger condition.
-        ```
-        Example: A permanent has the ability “Whenever a green creature attacks, destroy that creature at end of combat.” If a blue creature attacks and is later turned green, the ability will not trigger.
-        ```
+            ```
+            Example: A permanent has the ability “Whenever a green creature attacks, destroy that creature at end of combat.” If a blue creature attacks and is later turned green, the ability will not trigger.
+            ```
         - [ ] 508.2b Any abilities that triggered on attackers being declared or that triggered during the process described in rules 508.1 are put onto the stack before the active player gets priority; the order in which they triggered doesn’t matter. (See rule 603, “Handling Triggered Abilities.”)
         - [ ] 508.3. Triggered abilities that trigger on attackers being declared may have different trigger conditions.
         - [ ] 508.3a An ability that reads “Whenever [a creature] attacks, . . .” triggers if that creature is declared as an attacker. Similarly, “Whenever [a creature] attacks [a player, planeswalker, or battle], . . .” triggers if that creature is declared as an attacker attacking that player or permanent. Such abilities won’t trigger if a creature is put onto the battlefield attacking.
@@ -1147,9 +1147,9 @@
         - [ ] 510.1a Each attacking creature and each blocking creature assigns combat damage equal to its power. Creatures that would assign 0 or less damage this way don’t assign combat damage at all.
         - [ ] 510.1b An unblocked creature assigns its combat damage to the player, planeswalker, or battle it’s attacking. If it isn’t currently attacking anything (if, for example, it was attacking a planeswalker that has left the battlefield), it assigns no combat damage.
         - [ ] 510.1c A blocked creature assigns its combat damage to the creatures blocking it. If no creatures are currently blocking it (if, for example, they were destroyed or removed from combat), it assigns no combat damage. If exactly one creature is blocking it, it assigns all its combat damage to that creature. If two or more creatures are blocking it, it assigns its combat damage to those creatures divided as its controller chooses among them.
-        ```
-        Example: An attacking Elvish Regrower (a 4/3 creature) is blocked by Vampire Spawn (a 2/3 creature) and Helpful Hunter (a 1/1 creature). Elvish Regrower’s controller can assign all 4 damage to the Hunter, 1 damage to the Spawn and 3 damage to the Hunter, 2 damage to each creature, 3 damage to the Spawn and 1 damage to the Hunter, or all 4 damage to the Spawn.
-        ```
+            ```
+            Example: An attacking Elvish Regrower (a 4/3 creature) is blocked by Vampire Spawn (a 2/3 creature) and Helpful Hunter (a 1/1 creature). Elvish Regrower’s controller can assign all 4 damage to the Hunter, 1 damage to the Spawn and 3 damage to the Hunter, 2 damage to each creature, 3 damage to the Spawn and 1 damage to the Hunter, or all 4 damage to the Spawn.
+            ```
         - [ ] 510.1d A blocking creature assigns combat damage to the creatures it’s blocking. If it isn’t currently blocking any creatures (if, for example, they were destroyed or removed from combat), it assigns no combat damage. If it’s blocking exactly one creature, it assigns all its combat damage to that creature. If it’s blocking two or more creatures, it assigns its combat damage divided as its controller chooses among them.
         - [ ] 510.1e Once a player has assigned combat damage from each attacking or blocking creature they control, the total damage assignment (not solely the damage assignment of any individual attacking or blocking creature) is checked to see if it complies with the above rules. If it doesn’t, the combat damage assignment is illegal; the game returns to the moment before that player began to assign combat damage. (See rule 733, “Handling Illegal Actions.”)
     - [ ] 510.2. Second, all combat damage that’s been assigned is dealt simultaneously. This turn-based action doesn’t use the stack. No player has the chance to cast spells or activate abilities between the time combat damage is assigned and the time it’s dealt.
@@ -1449,14 +1449,338 @@
             Example: Worms of the Earth has the ability “Lands can’t enter the battlefield.” Clone says “You may have this creature enter as a copy of any creature on the battlefield.” If a player casts Clone and chooses to copy Dryad Arbor (a land creature) while Worms of the Earth is on the battlefield, Clone can’t enter the battlefield from the stack. It’s put into its owner’s graveyard.
             ```
         - [ ] 608.3f If the object that’s resolving is a copy of a permanent spell, it will become a token permanent as it is put onto the battlefield in any of the steps above. A token put onto the battlefield this way is no longer a copy of a spell and is not “created” for the purposes of any rules or effects that refer to creating a token.
+- [ ] 609. __Effects__
+    - [ ] 609.1. An effect is something that happens in the game as a result of a spell or ability. When a spell, activated ability, or triggered ability resolves, it may create one or more one-shot or continuous effects. Static abilities may create one or more continuous effects. Text itself is never an effect.
+    - [ ] 609.2. Effects apply only to permanents unless the instruction’s text states otherwise or they clearly can apply only to objects in one or more other zones.
+        ```
+        Example: An effect that changes all lands into creatures won’t alter land cards in players’ graveyards. But an effect that says spells cost more to cast will apply only to spells on the stack, since a spell is always on the stack while a player is casting it.
+        ```
+    - [ ] 609.3. If an effect attempts to do something impossible, it does only as much as possible.
+        ```
+        Example: If a player is holding only one card, an effect that reads “Discard two cards” causes them to discard only that card. If an effect moves cards out of the library (as opposed to drawing), it moves as many as possible.
+        ```
+    - [ ] 609.4. Some effects state that a player may do something “as though” some condition were true or a creature can do something “as though” some condition were true. This applies only to the stated effect. For purposes of that effect, treat the game exactly as if the stated condition were true. For all other purposes, treat the game normally.
+        - [ ] 609.4a If two effects state that a player may (or a creature can) do the same thing “as though” different conditions were true, both conditions could apply. If one “as though” effect satisfies the requirements for another “as though” effect, then both effects will apply.
+            ```
+            Example: A player controls Vedalken Orrery, an artifact that says “You may cast spells as though they had flash.” That player casts Shaman’s Trance, an instant that says, in part, “You may play lands and cast spells from other players’ graveyards this turn as though those cards were in your graveyard.” The player may cast a sorcery with flashback from another player’s graveyard as though it were in that player’s graveyard and as though it had flash.
+            ```
+        - [ ] 609.4b If an effect allows a player to spend mana “as though it were mana of any [type or color],” this affects only how the player may pay a cost. It doesn’t change that cost, and it doesn’t change what mana was actually spent to pay that cost. The same is true for effects that say “mana of any type can be spent.”
+    - [ ] 609.5. If an effect could result in a tie, the text of the spell or ability that created the effect will specify what to do in the event of a tie. The Magic game has no default for ties.
+    - [ ] 609.6. Some continuous effects are replacement effects or prevention effects. See rules 614 and 615.
+        - [ ] 609.7. Some effects apply to damage from a source—for example, “The next time a red source of your choice would deal damage to you this turn, prevent that damage.”
+            - [ ] 609.7a If an effect requires a player to choose a source of damage, they may choose a permanent; a spell on the stack (including a permanent spell); any object referred to by an object on the stack, by a replacement or prevention effect that’s waiting to apply, or by a delayed triggered ability that’s waiting to trigger (even if that object is no longer in the zone it used to be in); or a face-up object in the command zone. A source doesn’t need to be capable of dealing damage to be a legal choice. The source is chosen when the effect is created. If the player chooses a permanent, the effect will apply to the next damage dealt by that permanent, regardless of whether it’s combat damage or damage dealt as the result of a spell or ability. If the player chooses a permanent spell, the effect will apply to any damage dealt by that spell and any damage dealt by the permanent that spell becomes when it resolves.
+        - [ ] 609.7b Some effects from resolved spells and abilities prevent or replace damage from sources with certain properties, such as a creature or a source of a particular color. When the source would deal damage, the “shield” rechecks the source’s properties. If the properties no longer match, the damage isn’t prevented or replaced. If for any reason the shield prevents no damage or replaces no damage, the shield isn’t used up.
+        - [ ] 609.7c Some effects from static abilities prevent or replace damage from sources with certain properties. For these effects, the prevention or replacement applies to sources that are permanents with that property and to any sources that aren’t on the battlefield that have that property.
+- [ ] 610. __One-Shot Effects__
+    - [ ] 610.1. A one-shot effect does something just once and doesn’t have a duration. Examples include dealing damage, destroying a permanent, creating a token, and moving an object from one zone to another.
+    - [ ] 610.2. Some one-shot effects create a delayed triggered ability, which instructs a player to do something later in the game (usually at a specific time) rather than as the spell or ability that’s creating the one-shot effect resolves. See rule 603.7.
+    - [ ] 610.3. Some one-shot effects cause an object to change zones “until” a specified event occurs. A second one-shot effect is created immediately after the specified event. This second one-shot effect returns the object to its previous zone.
+        - [ ] 610.3a If a resolving spell or activated ability creates the initial one-shot effect that causes the object to change zones, and the specified event has already occurred before that one-shot effect would occur but after that spell or ability was put onto the stack, the object doesn’t move.
+        - [ ] 610.3b If a resolving triggered ability creates the initial one-shot effect that causes the object to change zones, and the specified event has already occurred before that one-shot effect would occur but after that ability triggered, the object doesn’t move.
+        - [ ] 610.3c An object returned to the battlefield this way returns under its owner’s control unless otherwise specified.
+        - [ ] 610.3d If multiple one-shot effects are created this way immediately after one or more simultaneous events, those one-shot effects are also simultaneous.
+            ```
+            Example: Two Banisher Priests have each exiled a card. All creatures are destroyed at the same time by Day of Judgment. The two exiled cards are returned to the battlefield at the same time.
+            ```
+    - [ ] 610.4. Some one-shot effects cause a permanent to phase out “until” a specified event occurs. A second one-shot effect is created immediately after the specified event. This second one-shot effect causes the permanent to phase in.
+        - [ ] 610.4a A permanent phased out this way doesn’t phase in as a result of the turn-based action during a player’s untap step (see rule 502.1). Other effects may cause it to phase in. If a permanent phased out this way phases in due to another effect, the second one-shot effect doesn’t happen, even if that permanent has phased out again.
+        - [ ] 610.4b If a resolving spell or activated ability creates the initial one-shot effect that causes the permanent to phase out, and the specified event has already occurred before that one-shot effect would occur but after that spell or ability was put onto the stack, the permanent doesn’t phase out.
+        - [ ] 610.4c If a resolving triggered ability creates the initial one-shot effect that causes the permanent to phase out, and the specified event has already occurred before that one-shot effect would occur but after that ability triggered, the permanent doesn’t phase out.
+        - [ ] 610.4d If multiple one-shot effects are created this way immediately after one or more simultaneous events, those one-shot effects are also simultaneous.
+    - [ ] 610.5. Some static abilities create one-shot effects that cause spells a player casts to gain an ability as that player casts them. These effects begin to apply to appropriate spells at the time the player puts such a spell on the stack. See rule 601.2a.
+- [ ] 611. Continuous Effects
+    - [ ] 611.1. A continuous effect modifies characteristics of objects, modifies control of objects, or affects players or the rules of the game, for a fixed or indefinite period.
+    - [ ] 611.2. A continuous effect may be generated by the resolution of a spell or ability.
+        - [ ] 611.2a A continuous effect generated by the resolution of a spell or ability lasts as long as stated by the spell or ability creating it (such as “until end of turn”). If no duration is stated, it lasts until the end of the game.
+        - [ ] 611.2b Some continuous effects generated by the resolution of a spell or ability have durations worded “for as long as . . . .” If the “for as long as” duration never starts, the effect does nothing. Similarly, if that duration ends before the moment the effect would first be applied and doesn’t begin again during that spell or ability’s resolution, the effect does nothing. It doesn’t start and immediately stop again, and it doesn’t last forever.
+            ```
+            Example: Master Thief has the ability “When this creature enters, gain control of target artifact for as long as you control this creature.” If you lose control of Master Thief before the ability resolves, it does nothing, because its duration—as long as you control Master Thief—was over before the effect began.
+            ```
+        - [ ] 611.2c If a continuous effect generated by the resolution of a spell or ability modifies the characteristics or changes the controller of any objects, the set of objects it affects is determined when that continuous effect begins. After that point, the set won’t change. (Note that this works differently than a continuous effect from a static ability.) A continuous effect generated by the resolution of a spell or ability that doesn’t modify the characteristics or change the controller of any objects modifies the rules of the game, so it can affect objects that weren’t affected when that continuous effect began. If a single continuous effect has parts that modify the characteristics or changes the controller of any objects and other parts that don’t, the set of objects each part applies to is determined independently.
+            ```
+            Example: An effect that reads “All white creatures get +1/+1 until end of turn” gives the bonus to all permanents that are white creatures when the spell or ability resolves—even if they change color later—and doesn’t affect those that enter the battlefield or turn white afterward.
+            Example: An effect that reads “Prevent all damage creatures would deal this turn” doesn’t modify any object’s characteristics, so it’s modifying the rules of the game. That means the effect will apply even to damage from creatures that weren’t on the battlefield when the continuous effect began. It also affects damage from permanents that become creatures later in the turn.
+            ```
+        - [ ] 611.2d If a resolving spell or ability that creates a continuous effect contains a variable such as X, the value of that variable is determined only once, on resolution. See rule 608.2h.
+        - [ ] 611.2e If a resolving spell or ability both puts a nontoken permanent onto the battlefield and creates a continuous effect stating that the permanent “is [characteristic],” that it “has [characteristic],” or that it doesn’t have a particular characteristic, that continuous effect applies simultaneously with the permanent entering the battlefield. This characteristic is usually a color or a creature type. If the continuous effect says the permanent “becomes [characteristic]” or “gains [an ability],” that effect applies after the permanent is on the battlefield.
+            ```
+            Example: Arbiter of the Ideal puts an artifact, creature, or land card onto the battlefield and says, in part, “That permanent is an enchantment in addition to its other types.” An ability that triggers whenever an enchantment enters the battlefield would trigger. The permanent doesn’t enter the battlefield and then become an enchantment.
+            ```
+        - [ ] 611.2f Some spells and abilities generate a continuous effect that modifies the characteristics of the next spell a player casts, the next spell that fulfills certain conditions a player casts during some duration, or similar. These effects do not begin immediately. Rather, they begin to apply at the time that player next puts an appropriate spell on the stack, and they apply to that spell. See rule 601.2a.
+    - [ ] 611.3. A continuous effect may be generated by the static ability of an object.
+        - [ ] 611.3a A continuous effect generated by a static ability isn’t “locked in”; it applies at any given moment to whatever its text indicates.
+        - [ ] 611.3b The effect applies at all times that the permanent generating it is on the battlefield or the object generating it is in the appropriate zone.
+            ```
+            Example: A permanent with the static ability “All white creatures get +1/+1” generates an effect that continuously gives +1/+1 to each white creature on the battlefield. If a creature becomes white, it gets this bonus; a creature that stops being white loses it.
+            ```
+        - [ ] 611.3c Continuous effects that modify characteristics of permanents do so simultaneously with the permanent entering the battlefield. They don’t wait until the permanent is on the battlefield and then change it. Because such effects apply as the permanent enters the battlefield, they are applied before determining whether the permanent will cause an ability to trigger when it enters the battlefield.
+            ```
+            Example: A permanent with the static ability “All white creatures get +1/+1” is on the battlefield. A creature spell that would normally create a 1/1 white creature instead creates a 2/2 white creature. The creature doesn’t enter the battlefield as 1/1 and then change to 2/2.
+            ```
+        - [ ] 611.3d Continuous effects from static abilities may allow a player to play a land or cast a permanent spell, or may grant an ability to a permanent spell or card that allows it to be cast. If the effect also grants that object an ability that functions only on the battlefield, that ability lasts as long as stated by the effect granting that permission or ability. If no duration is stated, it lasts until the end of the game. This is an exception to rules 611.3a–b.
+- [ ] 612. __Text-Changing Effects__
+    - [ ] 612.1. Some continuous effects change an object’s text. This can apply to any words or symbols printed on that object, but generally affects only that object’s rules text (which appears in its text box) and/or the text that appears in its type line. Such an effect is a text-changing effect.
+    - [ ] 612.2. A text-changing effect changes only those words that are used in the correct way (for example, a Magic color word being used as a color word, a land type word used as a land type, or a creature type word used as a creature type). An effect that changes a color word or a subtype can’t change a card name, even if that name contains a word or a series of letters that is the same as a Magic color word, basic land type, or creature type.
+        - [ ] 612.2a Most spells and abilities that create creature tokens use creature types to define both the creature types and the names of the tokens. A text-changing effect that affects such a spell or an object with such an ability can change these words because they’re being used as creature types, even though they’re also being used as names.
+    - [ ] 612.3. Effects that add or remove abilities don’t change the text of the objects they affect, so any abilities that are granted to an object can’t be modified by text-changing effects that affect that object.
+    - [ ] 612.4. A token’s subtypes and rules text are defined by the spell or ability that created the token. A text-changing effect that affects a token can change these characteristics.
+    - [ ] 612.5. One card (Exchange of Words) instructs a player to exchange the text boxes of two objects. This replaces all of the rules text of each object with the rules text of the other object. (In games involving certain cards that aren’t covered by these rules, other elements of the text box may also be exchanged. See rule 100.7.)
+    - [ ] 612.6. One card (Volrath’s Shapeshifter) states that an object has the “full text” of another object. This changes not just the text that appears in the object’s text box and type line, but also changes the text that represents its name, mana cost, color indicator, power, and toughness.
+    - [ ] 612.7. One card (Spy Kit) states that an object has “all names of nonlegendary creature cards.” This changes the text that represents the object’s name. That object has the name of each nonlegendary creature card in the Oracle card reference. (See rule 108.1.)
+    - [ ] 612.8. Some cards create a continuous effect that sets the name of an object. This changes the text that represents the object’s name. That object loses any names it had and has only the specified name.
+    - [ ] 612.9. A name sticker on a permanent or on a card not on the battlefield creates a continuous effect that adds a word to the text that represents the object’s name. (See rule 123.6.)
+    - [ ] 612.10. A splice ability changes a spell’s text by adding the rules text of the card with splice to the spell, following that spell’s own rules text. It doesn’t modify or replace any of that spell’s own text. (See rule 702.47, “Splice.”)
+- [ ] 613. __Interaction of Continuous Effects__
+    - [ ] 613.1. The values of an object’s characteristics are determined by starting with the actual object. For a card, that means the values of the characteristics printed on that card. For a token or a copy of a spell or card, that means the values of the characteristics defined by the effect that created it. Then all applicable continuous effects are applied in a series of layers in the following order:
+        - [ ] 613.1a Layer 1: Rules and effects that modify copiable values are applied.
+        - [ ] 613.1b Layer 2: Control-changing effects are applied.
+        - [ ] 613.1c Layer 3: Text-changing effects are applied. See rule 612, “Text-Changing Effects.”
+        - [ ] 613.1d Layer 4: Type-changing effects are applied. These include effects that change an object’s card type, subtype, and/or supertype.
+        - [ ] 613.1e Layer 5: Color-changing effects are applied.
+        - [ ] 613.1f Layer 6: Ability-adding effects, keyword counters, ability-removing effects, and effects that say an object can’t have an ability are applied.
+        - [ ] 613.1g Layer 7: Power- and/or toughness-changing effects are applied.
+    - [ ] 613.2. Within layer 1, apply effects in a series of sublayers in the order described below. Within each sublayer, apply effects in timestamp order (see rule 613.7). Note that dependency may alter the order in which effects are applied within a sublayer. (See rule 613.8.)
+        - [ ] 613.2a Layer 1a: Copiable effects are applied. This includes copy effects (see rule 707, “Copying Objects”) and changes to an object’s characteristics determined by merging an object with a permanent (see rule 730, “Merging with Permanents”). “As . . . enters” and “as . . . is turned face up” abilities generate copiable effects if they set power and toughness, even if they also define other characteristics.
+        - [ ] 613.2b Layer 1b: Face-down spells and permanents have their characteristics modified as defined in rule 708.2.
+        - [ ] 613.2c After all rules and effects in layer 1 have been applied, the object’s characteristics are its copiable values. (See rule 707.2.)
+    - [ ] 613.3. Within layers 2–6, apply effects from characteristic-defining abilities first (see rule 604.3), then all other effects in timestamp order (see rule 613.7). Note that dependency may alter the order in which effects are applied within a layer. (See rule 613.8.)
+    - [ ] 613.4. Within layer 7, apply effects in a series of sublayers in the order described below. Within each sublayer, apply effects in timestamp order. (See rule 613.7.) Note that dependency may alter the order in which effects are applied within a sublayer. (See rule 613.8.)
+        - [ ] 613.4a Layer 7a: Effects from characteristic-defining abilities that define power and/or toughness are applied. See rule 604.3.
+        - [ ] 613.4b Layer 7b: Effects that set power and/or toughness to a specific number or value are applied. Effects that refer to the base power and/or toughness of a creature apply in this layer.
+        - [ ] 613.4c Layer 7c: Effects and counters that modify power and/or toughness (but don’t set power and/or toughness to a specific number or value) are applied.
+        - [ ] 613.4d Layer 7d: Effects that switch a creature’s power and toughness are applied. Such effects take the value of power and apply it to the creature’s toughness, and take the value of toughness and apply it to the creature’s power.
+            ```
+            Example: A 1/3 creature is given +0/+1 by an effect. Then another effect switches the creature’s power and toughness. Its new power and toughness is 4/1. A new effect gives the creature +5/+0. Its “unswitched” power and toughness would be 6/4, so its actual power and toughness is 4/6.
+            Example: A 1/3 creature is given +0/+1 by an effect. Then another effect switches the creature’s power and toughness. Its new power and toughness is 4/1. If the +0/+1 effect ends before the switch effect ends, the creature becomes 3/1.
+            Example: A 1/3 creature is given +0/+1 by an effect. Then another effect switches the creature’s power and toughness. Then another effect switches its power and toughness again. The two switches essentially cancel each other, and the creature becomes 1/4.
+            ```
+        - [ ] 613.5. The application of continuous effects as described by the layer system is continually and automatically performed by the game. All resulting changes to an object’s characteristics are instantaneous.
+            ```
+            Example: Honor of the Pure is an enchantment that reads “White creatures you control get +1/+1.” Honor of the Pure and a 2/2 black creature are on the battlefield under your control. If an effect then turns the creature white (layer 5), it gets +1/+1 from Honor of the Pure (layer 7c), becoming 3/3. If the creature’s color is later changed to red (layer 5), Honor of the Pure’s effect stops applying to it, and it will return to being 2/2.
+            Example: Gray Ogre, a 2/2 creature, is on the battlefield. An effect puts a +1/+1 counter on it (layer 7c), making it 3/3. A spell targeting it that says “Target creature gets +4/+4 until end of turn” resolves (layer 7c), making it 7/7. An enchantment that says “Creatures you control get +0/+2” enters the battlefield (layer 7c), making it 7/9. An effect that says “Target creature becomes 0/1 until end of turn” is applied to it (layer 7b), making it 5/8 (0/1, with +4/+4 from the resolved spell, +0/+2 from the enchantment, and +1/+1 from the counter).
+            ```
+        - [ ] 613.6. If an effect should be applied in different layers and/or sublayers, the parts of the effect each apply in their appropriate ones. If an effect starts to apply in one layer and/or sublayer, it will continue to be applied to the same set of objects in each other applicable layer and/or sublayer, even if the ability generating the effect is removed during this process.
+            ```
+            Example: An effect that reads “This creature gets +1/+1 and becomes the color of your choice until end of turn” is both a power- and toughness-changing effect and a color-changing effect. The “becomes the color of your choice” part is applied in layer 5, and then the “gets +1/+1” part is applied in layer 7c.
+            Example: Act of Treason has an effect that reads “Gain control of target creature until end of turn. Untap that creature. It gains haste until end of turn.” This is both a control-changing effect and an effect that adds an ability to an object. The “gain control” part is applied in layer 2, and then the “it gains haste” part is applied in layer 6.
+            Example: An effect that reads “All noncreature artifacts become 2/2 artifact creatures until end of turn” is both a type-changing effect and a power- and toughness-setting effect. The type-changing effect is applied to all noncreature artifacts in layer 4 and the power- and toughness-setting effect is applied to those same permanents in layer 7b, even though those permanents aren’t noncreature artifacts by then.
+            Example: Svogthos, the Restless Tomb, is on the battlefield. An effect that says “Until end of turn, target land becomes a 3/3 creature that’s still a land” is applied to it (layers 4 and 7b). An effect that says “Target creature gets +1/+1 until end of turn” is applied to it (layer 7c), making it a 4/4 land creature. Then while you have ten creature cards in your graveyard, you activate Svogthos’s ability: “Until end of turn, this land becomes a black and green Plant Zombie creature with ‘This creature’s power and toughness are each equal to the number of creature cards in your graveyard.’ It’s still a land.” (layers 4, 5, and 7b). It becomes an 11/11 land creature. If a creature card enters or leaves your graveyard, Svogthos’s power and toughness will be modified accordingly. If the first effect is applied to it again, it will become a 4/4 land creature again.
+            ```
+    - [ ] 613.7. Within a layer or sublayer, determining which order effects are applied in is usually done using a timestamp system. An effect with an earlier timestamp is applied before an effect with a later timestamp.
+        - [ ] 613.7a A continuous effect generated by a static ability has the same timestamp as the object the static ability is on, or the timestamp of the effect that created the ability, whichever is later. If the effect that created the ability has the later timestamp and the object the ability is on receives a new timestamp, each continuous effect generated by static abilities of that object receives a new timestamp as well, but the relative order of those timestamps remains the same.
+            ```
+            Example: Rune of Flight is an Aura that grants enchanted Equipment “Equipped creature has flying.” A player attaches Rune of Flight to Colossus Hammer, an Equipment with “Equipped creature gets +10/+10 and loses flying.” The ability granted by Rune of Flight shares Rune of Flight’s timestamp because it is later than Colossus Hammer’s timestamp. If Colossus Hammer becomes attached to a creature, both of its abilities receive new timestamps (see rule 613.7e), but the relative order of those timestamps remains the same.
+            ```
+        - [ ] 613.7b A continuous effect generated by the resolution of a spell or ability receives a timestamp at the time it’s created.
+        - [ ] 613.7c Each counter receives a timestamp as it’s put on an object or player. If that object or player already has a counter of that kind on it, each counter of that kind receives a new timestamp identical to that of the new counter.
+        - [ ] 613.7d An object receives a timestamp at the time it enters a zone.
+        - [ ] 613.7e An Aura, Equipment, or Fortification receives a new timestamp each time it becomes attached to an object or player.
+        - [ ] 613.7f A permanent receives a new timestamp each time it turns face up or face down.
+        - [ ] 613.7g A double-faced permanent receives a new timestamp each time it transforms or converts.
+        - [ ] 613.7h A face-up plane card, phenomenon card, or scheme card receives a timestamp at the time it’s turned face up.
+        - [ ] 613.7i A face-up vanguard card receives a timestamp at the beginning of the game.
+        - [ ] 613.7j A conspiracy card receives a timestamp at the beginning of the game. If it’s face down, it receives a new timestamp at the time it turns face up.
+        - [ ] 613.7k A sticker receives a new timestamp each time it’s put on an object. If the object a sticker is on receives a new timestamp, the sticker receives a new timestamp immediately after that one. If the object a sticker is on becomes part of a merged permanent on the battlefield, the sticker receives a new timestamp at that time. If an object has more than one sticker on it as it enters a zone or becomes part of a merged permanent, the relative timestamp order of those stickers remains unchanged.
+        - [ ] 613.7m If two or more objects would receive a timestamp simultaneously, such as by entering a zone simultaneously or becoming attached simultaneously, their relative timestamps are determined in APNAP order (see rule 101.4). Objects controlled by the active player (or owned by the active player, if they have no controller) have an earlier relative timestamp in the order of that player’s choice, followed by each other player in turn order.
+        - [ ] 613.7n If a continuous effect generated by a static ability of an object and a continuous effect generated by a resolving spell or ability that applies to that object would receive a timestamp simultaneously, such as due to an effect that puts that object onto the battlefield and sets its characteristics (see rule 611.2e), the continuous effect from the object’s own static ability receives an earlier relative timestamp.
+    - [ ] 613.8. Within a layer or sublayer, determining which order effects are applied in is sometimes done using a dependency system. If a dependency exists, it will override the timestamp system.
+        - [ ] 613.8a An effect is said to “depend on” another if (a) it’s applied in the same layer (and, if applicable, sublayer) as the other effect; (b) applying the other would change the text or the existence of the first effect, what it applies to, or what it does to any of the things it applies to; and (c) neither effect is from a characteristic-defining ability or both effects are from characteristic-defining abilities. Otherwise, the effect is considered to be independent of the other effect.
+        - [ ] 613.8b An effect dependent on one or more other effects waits to apply until just after all of those effects have been applied. If multiple dependent effects would apply simultaneously in this way, they’re applied in timestamp order relative to each other. If several dependent effects form a dependency loop, then this rule is ignored and the effects in the dependency loop are applied in timestamp order.
+        - [ ] 613.8c After each effect is applied, the order of remaining effects is reevaluated and may change if an effect that has not yet been applied becomes dependent on or independent of one or more other effects that have not yet been applied.
+    - [ ] 613.9. One continuous effect can override another. Sometimes the results of one effect determine whether another effect applies or what another effect does.
+        ```
+        Example: Two effects are affecting the same creature: one from an Aura that says “Enchanted creature has flying” and one from an Aura that says “Enchanted creature loses flying.” Neither of these depends on the other, since nothing changes what they affect or what they’re doing to it. Applying them in timestamp order means the one that was generated last “wins.” The same process would be followed, and the same result reached, if either of the effects had a duration (such as “Target creature loses flying until end of turn”) or came from a non-Aura source (such as “All creatures lose flying”).
+        Example: One effect reads, “White creatures get +1/+1,” and another reads, “Enchanted creature is white.” The enchanted creature gets +1/+1 from the first effect, regardless of its previous color.
+        ```
+    - [ ] 613.10. Some continuous effects affect players rather than objects. For example, an effect might give a player protection from red. All such effects are applied in timestamp order after the determination of objects’ characteristics. See also the rules for timestamp order and dependency (rules 613.7 and 613.8).
+    - [ ] 613.11. Some continuous effects affect game rules rather than objects. For example, effects may modify a player’s maximum hand size, or say that a creature must attack this turn if able. These effects are applied after all other continuous effects have been applied. Continuous effects that affect the costs of spells or abilities are applied according to the order specified in rule 601.2f. All other such effects are applied in timestamp order. See also the rules for timestamp order and dependency (rules 613.7 and 613.8).
+- [ ] 614. __Replacement Effects__
+    - [ ] 614.1. Some continuous effects are replacement effects. Like prevention effects (see rule 615), replacement effects apply continuously as events happen—they aren’t locked in ahead of time. Such effects watch for a particular event that would happen and completely or partially replace that event with a different event. They act like “shields” around whatever they’re affecting.
+        - [ ] 614.1a Effects that use the word “instead” are replacement effects. Most replacement effects use the word “instead” to indicate what events will be replaced with other events.
+        - [ ] 614.1b Effects that use the word “skip” are replacement effects. These replacement effects use the word “skip” to indicate what events, steps, phases, or turns will be replaced with nothing.
+        - [ ] 614.1c Effects that read “[This permanent] enters with . . . ,” “As [this permanent] enters . . . ,” or “[This permanent] enters as . . . “ are replacement effects.
+        - [ ] 614.1d Continuous effects that read “[This permanent] enters . . .” or “[Objects] enter [the battlefield] . . .” are replacement effects.
+        - [ ] 614.1e Effects that read “As [this permanent] is turned face up . . . ,” are replacement effects.
+    - [ ] 614.2. Some replacement effects apply to damage from a source. See rule 609.7.
+    - [ ] 614.3. There are no special restrictions on casting a spell or activating an ability that generates a replacement effect. Such effects last until they’re used up or their duration has expired.
+    - [ ] 614.4. Replacement effects must exist before the appropriate event occurs—they can’t “go back in time” and change something that’s already happened. Spells or abilities that generate these effects are often cast or activated in response to whatever would produce the event and thus resolve before that event would occur.
+        ```
+        Example: A player can activate an ability to regenerate a creature in response to a spell that would destroy it. Once the spell resolves, though, it’s too late to regenerate the creature.
+        ```
+    - [ ] 614.5. A replacement effect doesn’t invoke itself repeatedly; it gets only one opportunity to affect an event or any modified events that may replace that event.
+        ```
+        Example: A player controls two permanents, each with an ability that reads “If a creature you control would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.” A creature that normally deals 2 damage will deal 8 damage—not just 4, and not an infinite amount.
+        ```
+    - [ ] 614.6. If an event is replaced, it never happens. A modified event occurs instead, which may in turn trigger abilities. Note that the modified event may contain instructions that can’t be carried out, in which case the impossible instruction is simply ignored.
+    - [ ] 614.7. If a replacement effect would replace an event, but that event never happens, the replacement effect simply doesn’t do anything.
+        - [ ] 614.7a If a source would deal 0 damage, it does not deal damage at all. Replacement effects that would increase the damage dealt by that source, or would have that source deal that damage to a different object or player, have no event to replace, so they have no effect.
+    - [ ] 614.8. Regeneration is a destruction-replacement effect. The word “instead” doesn’t appear on the card but is implicit in the definition of regeneration. “Regenerate [permanent]” means “The next time [permanent] would be destroyed this turn, instead remove all damage marked on it and its controller taps it. If it’s an attacking or blocking creature, remove it from combat.” Abilities that trigger from damage being dealt still trigger even if the permanent regenerates. See rule 701.19.
+    - [ ] 614.9. Some effects replace damage dealt to one battle, creature, planeswalker, or player with the same damage dealt to another battle, creature, planeswalker, or player; such effects are called redirection effects. If one of those permanents is no longer on the battlefield when the damage would be redirected, or is no longer a battle, creature, or planeswalker when the damage would be redirected, the effect does nothing. If damage would be redirected to or from a player who has left the game, the effect does nothing.
+    - [ ] 614.10. An effect that causes a player to skip an event, step, phase, or turn is a replacement effect. “Skip [something]” is the same as “Instead of doing [something], do nothing.” Once a step, phase, or turn has started, it can no longer be skipped—any skip effects will wait until the next occurrence.
+        - [ ] 614.10a Anything scheduled for a skipped step, phase, or turn won’t happen. Anything scheduled for the “next” occurrence of something waits for the first occurrence that isn’t skipped. If two effects each cause a player to skip their next occurrence, that player must skip the next two; one effect will be satisfied in skipping the first occurrence, while the other will remain until another occurrence can be skipped.
+        - [ ] 614.10b Some effects cause a player to skip a step, phase, or turn, then take another action. That action is considered to be the first thing that happens during the next step, phase, or turn to actually occur.
+    - [ ] 614.11. Some effects replace card draws. These effects are applied even if no cards could be drawn because there are no cards in the affected player’s library.
+        - [ ] 614.11a If an effect replaces a draw within a sequence of card draws, all actions required by the replacement are completed, if possible, before resuming the sequence.
+        - [ ] 614.11b If an effect would have a player both draw a card and perform an additional action on that card, and the draw is replaced, the additional action is not performed on any cards that are drawn as a result of that replacement effect.
+    - [ ] 614.12. Some replacement effects modify how a permanent enters the battlefield. (See rules 614.1c–d.) Such effects may come from the permanent itself if they affect only that permanent (as opposed to a general subset of permanents that includes it). They may also come from other sources. To determine which replacement effects apply and how they apply, check the characteristics of the permanent as it would exist on the battlefield, taking into account replacement effects that have already modified how it enters the battlefield (see rule 616.1), continuous effects from the permanent’s own static abilities that would apply to it once it’s on the battlefield, and continuous effects that already exist and would apply to the permanent.
+        ```
+        Example: Voice of All says “As this creature enters, choose a color” and “This creature has protection from the chosen color.” An effect creates a token that’s a copy of Voice of All. As that token is created, the token’s controller chooses a color for it.
+        Example: Yixlid Jailer says “Cards in graveyards lose all abilities.” Scarwood Treefolk says “This creature enters tapped.” A Scarwood Treefolk that’s put onto the battlefield from a graveyard enters the battlefield tapped.
+        Example: Orb of Dreams is an artifact that says “Permanents enter tapped.” It won’t affect itself, so Orb of Dreams enters the battlefield untapped.
+        ```
+        - [ ] 614.12a If a replacement effect that modifies how a permanent enters the battlefield requires a choice, that choice is made before the permanent enters the battlefield.
+        - [ ] 614.12b If multiple replacement effects that require choices from a player would modify how multiple permanents enter the battlefield simultaneously, that player may not make choices for those effects that would cause the combined costs of those effects to not be payable.
+        - [ ] 614.12c Some replacement effects cause a permanent to enter the battlefield with its controller’s choice of one of two abilities, each marked with an anchor word and preceded by a bullet point. “[Anchor word] — [ability]” means “As long as [anchor word] was chosen as this permanent entered the battlefield, this permanent has [ability].” The abilities preceded by anchor words are each linked to the ability that causes a player to choose between them. See rule 607, “Linked Abilities.”
+    - [ ] 614.13. An effect that modifies how a permanent enters the battlefield may cause other objects to change zones.
+        - [ ] 614.13a While applying an effect that modifies how a permanent enters the battlefield, you may have to choose a number of objects that will also change zones. You can’t choose the object that will become that permanent or any other object entering the battlefield at the same time as that object.
+            ```
+            Example: Sutured Ghoul says, in part, “As this creature enters, exile any number of creature cards from your graveyard.” If Sutured Ghoul and Runeclaw Bear enter the battlefield from your graveyard at the same time, you can’t choose to exile either of them when applying Sutured Ghoul’s replacement effect.
+            ```
+        - [ ] 614.13b The same object can’t be chosen to change zones more than once when applying replacement effects that modify how one or more permanents enter the battlefield.
+            ```
+            Example: Jund (a plane card) says, “Whenever a player casts a black, red, or green creature spell, it gains devour 5.” A player controls Runeclaw Bear and casts Thunder-Thrash Elder, a red creature spell with devour 3. As Thunder-Thrash Elder enters the battlefield, its controller can choose to sacrifice Runeclaw Bear when applying the devour 3 effect or when applying the devour 5 effect, but not both. Thunder-Thrash Elder will enter the battlefield with zero, three, or five +1/+1 counters, depending on this choice.
+            ```
+        - [ ] 614.13c While applying a replacement effect that modifies how a permanent enters the battlefield, another replacement effect may cause a player to mill cards or exile cards from the top of a library. In that case, any card that is entering the battlefield from that library won’t be included in that effect, even though those cards are in the library as the effect is applied.
+            ```
+            Example: Ashiok, Wicked Manipulator has an ability that reads “If you would pay life while your library has at least that many cards in it, exile that many cards from the top of your library instead.” Breeding Pool is a land that reads, in part, “As this land enters, you may pay 2 life.” If an effect allows a player to play Breeding Pool from the top of their library while they control Ashiok, and they choose to pay life as Breeding Pool enters, Ashiok’s replacement effect will ignore Breeding Pool, because it is entering the battlefield, and the next two cards will be exiled.
+            ```
+    - [ ] 614.14. An object may have one ability printed on it that generates a replacement effect which causes one or more cards to be exiled, and another ability that refers either to “the exiled cards” or to cards “exiled with [this object].” These abilities are linked: the second refers only to cards in the exile zone that were put there as a direct result of the replacement event caused by the first. If another object gains a pair of linked abilities, the abilities will be similarly linked on that object. They can’t be linked to any other ability, regardless of what other abilities the object may currently have or may have had in the past. See rule 607, “Linked Abilities.”
+    - [ ] 614.15. Some replacement effects are not continuous effects. Rather, they are an effect of a resolving spell or ability that replace part or all of that spell or ability’s own effect(s). Such effects are called self-replacement effects. The text creating a self-replacement effect is usually part of the ability whose effect is being replaced, but the text can be a separate ability, particularly when preceded by an ability word. When applying replacement effects to an event, self-replacement effects are applied before other replacement effects.
+    - [ ] 614.16. Some replacement effects apply “if an effect would create one or more tokens” or “if an effect would put one or more counters on a permanent.” These replacement effects apply if the effect of a resolving spell or ability creates a token or puts a counter on a permanent, and they also apply if another replacement or prevention effect does so, even if the original event being modified wasn’t itself an effect. 
+    - [ ] 614.17. Some effects state that something can’t happen. These effects aren’t replacement effects, but follow similar rules.
+        - [ ] 614.17a “Can’t” effects must exist before the appropriate event occurs—they can’t “go back in time” and change something that’s already happened.
+        - [ ] 614.17b If an event can’t happen, a player can’t choose to pay a cost that includes that event.
+        - [ ] 614.17c If an event can’t happen, it can only be replaced by a self-replacement effect (see rule 614.15). Other replacement and/or prevention effects can’t modify or replace it.
+        - [ ] 614.17d Some “can’t” effects modify how a permanent enters the battlefield or whether it can enter the battlefield. Such effects may come from the permanent itself if they affect only that permanent (as opposed to a general subset of permanents that includes it). They may also come from other sources. To determine which “can’t” effects apply, check the characteristics of the permanent as it would exist on the battlefield, taking into account replacement effects that have already modified how it enters the battlefield (see rule 616.1), continuous effects from the permanent’s own static abilities that would apply to it once it’s on the battlefield, and continuous effects that already exist and would apply to the permanent.
+- [ ] 615. __Prevention Effects__
+    - [ ] 615.1. Some continuous effects are prevention effects. Like replacement effects (see rule 614), prevention effects apply continuously as events happen—they aren’t locked in ahead of time. Such effects watch for a damage event that would happen and completely or partially prevent the damage that would be dealt. They act like “shields” around whatever they’re affecting.
+        - [ ] 615.1a Effects that use the word “prevent” are prevention effects. Prevention effects use “prevent” to indicate what damage will not be dealt.
+    - [ ] 615.2. Many prevention effects apply to damage from a source. See rule 609.7.
+    - [ ] 615.3. There are no special restrictions on casting a spell or activating an ability that generates a prevention effect. Such effects last until they’re used up or their duration has expired.
+    - [ ] 615.4. Prevention effects must exist before the appropriate damage event occurs—they can’t “go back in time” and change something that’s already happened. Spells or abilities that generate these effects are often cast or activated in response to whatever would produce the event and thus resolve before that event would occur.
+        ```
+        Example: A player can activate an ability that prevents damage in response to a spell that would deal damage. Once the spell resolves, though, it’s too late to prevent the damage.
+        ```
+    - [ ] 615.5. Some prevention effects also include an additional effect, which may refer to the amount of damage that was prevented. The prevention takes place at the time the original event would have happened; the rest of the effect takes place immediately afterward.
+    - [ ] 615.6. If damage that would be dealt is prevented, it never happens. A modified event may occur instead, which may in turn trigger abilities. Note that the modified event may contain instructions that can’t be carried out, in which case the impossible instruction is simply ignored.
+    - [ ] 615.7. Some prevention effects generated by the resolution of a spell or ability refer to a specific amount of damage—for example, “Prevent the next 3 damage that would be dealt to any target this turn.” These work like shields. Each 1 damage that would be dealt to the “shielded” permanent or player is prevented. Preventing 1 damage reduces the remaining shield by 1. If damage would be dealt to the shielded permanent or player by two or more applicable sources at the same time, the player or the controller of the permanent chooses which damage the shield prevents. Once the shield has been reduced to 0, any remaining damage is dealt normally. Such effects count only the amount of damage; the number of events or sources dealing it doesn’t matter.
+    - [ ] 615.8. Some prevention effects generated by the resolution of a spell or ability refer to the next time a specific source would deal damage. These effects prevent the next instance of damage from that source, regardless of how much damage that is. Once an instance of damage from that source has been prevented, any subsequent instances of damage that would be dealt by that source are dealt normally.
+    - [ ] 615.9. Some effects generated by the resolution of a spell or ability prevent damage from a source of a player’s choice with certain properties. When the source would deal damage, the shield rechecks the source’s properties. If the properties no longer match, the damage isn’t prevented or replaced and the shield isn’t used up. See rule 609.7b.
+    - [ ] 615.10. Some prevention effects generated by static abilities refer to a specific amount of damage—for example, “If a source would deal damage to you, prevent 1 of that damage.” Such an effect prevents only the indicated amount of damage in any applicable damage event at any given time. It will apply separately to damage from other applicable events that would happen at the same time, or at a different time.
+        ```
+        Example: Daunting Defender says “If a source would deal damage to a Cleric creature you control, prevent 1 of that damage.” Pyroclasm says “Pyroclasm deals 2 damage to each creature.” Pyroclasm will deal 1 damage to each Cleric creature controlled by Daunting Defender’s controller. It will deal 2 damage to each other creature.
+        ```
+    - [ ] 615.11. Some prevention effects prevent the next N damage that would be dealt to each of a number of untargeted creatures. Such an effect creates a prevention shield for each applicable creature when the spell or ability that generates that effect resolves.
+        ```
+        Example: Wojek Apothecary has an ability that says “{T}: Prevent the next 1 damage that would be dealt to target creature and each other creature that shares a color with it this turn.” When the ability resolves, it gives the target creature and each other creature on the battlefield that shares a color with it at that time a shield preventing the next 1 damage that would be dealt to it. Changing creatures’ colors after the ability resolves doesn’t add or remove shields, and creatures that enter the battlefield later in the turn don’t get the shield.
+        ```
+    - [ ] 615.12. Some effects state that damage “can’t be prevented.” If unpreventable damage would be dealt, any applicable prevention effects are still applied to it. Those effects won’t prevent any damage, but any additional effects they have will take place. Existing damage prevention shields won’t be reduced by damage that can’t be prevented.
+        - [ ] 615.12a A prevention effect is applied to any particular unpreventable damage event just once. It won’t invoke itself repeatedly trying to prevent that damage.
+    - [ ] 615.13. Some triggered abilities trigger when damage that would be dealt is prevented. Such an ability triggers each time a prevention effect is applied to one or more simultaneous damage events and prevents some or all of that damage.
+- [ ] 616. __Interaction of Replacement and/or Prevention Effects__
+    - [ ] 616.1. If two or more replacement and/or prevention effects are attempting to modify the way an event affects an object or player, the affected object’s controller (or its owner if it has no controller) or the affected player chooses one to apply, following the steps listed below. If two or more players have to make these choices at the same time, choices are made in APNAP order (see rule 101.4).
+        - [ ] 616.1a If any of the replacement and/or prevention effects are self-replacement effects (see rule 614.15), one of them must be chosen. If not, proceed to rule 616.1b.
+        - [ ] 616.1b If any of the replacement and/or prevention effects would modify under whose control an object would enter the battlefield, one of them must be chosen. If not, proceed to rule 616.1c.
+        - [ ] 616.1c If any of the replacement and/or prevention effects would cause an object to become a copy of another object as it enters the battlefield, one of them must be chosen. If not, proceed to rule 616.1d.
+        - [ ] 616.1d If any of the replacement and/or prevention effects would cause a card to enter the battlefield with its back face up, one of them must be chosen (See rule 701.27, “Transform,” and rule 701.28, “Convert.”). If not, proceed to 616.1e.
+        - [ ] 616.1e Any of the applicable replacement and/or prevention effects may be chosen.
+        - [ ] 616.1f Once the chosen effect has been applied, this process is repeated (taking into account only replacement or prevention effects that would now be applicable) until there are no more left to apply.
+            ```
+            Example: Two permanents are on the battlefield. One is an enchantment that reads “If a card would be put into a graveyard from anywhere, instead exile it,” and the other is a creature that reads “If this creature would die, instead shuffle it into its owner’s library.” If the creature is destroyed, its controller decides which replacement to apply first; the other does nothing.
+            Example: Essence of the Wild reads “Creatures you control enter as a copy of this creature.” A player who controls Essence of the Wild casts Rusted Sentinel, which normally enters the battlefield tapped. As it enters the battlefield, the copy effect from Essence of the Wild is applied first. As a result, it no longer has the ability that causes it to enter the battlefield tapped. Rusted Sentinel will enter the battlefield as an untapped copy of Essence of the Wild.
+            ```
+        - [ ] 616.1g While following the steps in 616.1a–f, one replacement or prevention effect may apply to an event, and another may apply to an event contained within the first event. In this case, the second effect can’t be chosen until after the first effect has been chosen.
+            ```
+            Example: A player is instructed to create a token that’s a copy of Voice of All, which has the ability “As this creature enters, choose a color.” Doubling Season has an ability that reads “If an effect would create one or more tokens under your control, it creates twice that many of those tokens instead.” Because entering the battlefield is an event contained within the event of creating a token, the effect of Doubling Season must be applied first, and then the effects of the two Voice of All tokens may be applied in either order.
+            ```
+    - [ ] 616.2. A replacement or prevention effect can become applicable to an event as the result of another replacement or prevention effect that modifies the event.
+        ```
+        Example: One effect reads “If you would gain life, draw that many cards instead,” and another reads “If you would draw a card, return a card from your graveyard to your hand instead.” Both effects combine (regardless of the order they came into existence): Instead of gaining 1 life, the player puts a card from their graveyard into their hand.
+        ```
 
 ## 7. Additional Rules
 
+- [ ] 700. __General__
+    - [ ] 700.1. Anything that happens in a game is an event. Multiple events may take place during the resolution of a spell or ability. The text of triggered abilities and replacement effects defines the event they’re looking for. One “happening” may be treated as a single event by one ability and as multiple events by another.
+        ```
+        Example: If an attacking creature is blocked by two creatures, this is one event for a triggered ability that reads “Whenever this creature becomes blocked” but two events for a triggered ability that reads “Whenever this creature becomes blocked by a creature.”
+        ```
+    - [ ] 700.2. A spell or ability is modal if it has two or more options in a bulleted list preceded by instructions for a player to choose a number of those options, such as “Choose one —.” Each of those options is a mode. Modal cards printed prior to the Khans of Tarkir™ set didn’t use bulleted lists for the modes; these cards have received errata in the Oracle card reference so the modes do appear in a bulleted list.
+        - [ ] 700.2a The controller of a modal spell or activated ability chooses the mode(s) as part of casting that spell or activating that ability. If one of the modes would be illegal (due to an inability to choose legal targets, for example), that mode can’t be chosen. (See rule 601.2b.)
+        - [ ] 700.2b The controller of a modal triggered ability chooses the mode(s) as part of putting that ability on the stack. If one of the modes would be illegal (due to an inability to choose legal targets, for example), that mode can’t be chosen. If no mode is chosen, the ability is removed from the stack. (See rule 603.3c.)
+        - [ ] 700.2c If a spell or ability targets one or more targets only if a particular mode is chosen for it, its controller will need to choose those targets only if they chose that mode. Otherwise, the spell or ability is treated as though it did not have those targets. (See rule 601.2c.)
+        - [ ] 700.2d If a player is allowed to choose more than one mode for a modal spell or ability, that player normally can’t choose the same mode more than once. However, some modal spells include the instruction “You may choose the same mode more than once.” If a particular mode is chosen multiple times, the spell is treated as if that mode appeared that many times in sequence. If that mode requires a target, the same player or object may be chosen as the target for each of those modes, or different targets may be chosen.
+        - [ ] 700.2e Some spells and abilities specify that a player other than their controller chooses a mode for it. In that case, the other player does so when the spell or ability’s controller normally would do so. If there is more than one other player who could make such a choice, the spell or ability’s controller decides which of those players will make the choice.
+        - [ ] 700.2f Modal spells and abilities may have different targeting requirements for each mode. Changing a spell or ability’s target can’t change its mode.
+        - [ ] 700.2g A copy of a modal spell or ability copies the mode(s) chosen for it. The controller of the copy can’t choose a different mode. (See rule 707.10.)
+        - [ ] 700.2h Some modal spells have one or more modes with a cost listed before the effect of that mode. This indicates that the mode has an additional cost that must be paid as the spell is cast if that mode is chosen. If more than one such mode is chosen, all additional costs must be paid to cast that spell. Paying these costs follows the rules for paying additional costs in rules 601.2b and 601.2f–h.
+        - [ ] 700.2i Some modal spells have one or more pawprint symbols ({P}) rather than bullet points, as well as an instruction to choose up to a specified number of {P} “worth of modes.” While casting such a spell, its controller can choose any number of modes such that the total number of pawprint symbols listed for the chosen modes is not greater than the specified number.
+    - [ ] 700.3. Some effects cause objects to be temporarily grouped into piles.
+        - [ ] 700.3a Each of the affected objects must be put into exactly one of those piles, unless the effect specifies otherwise.
+        - [ ] 700.3b Each object in a pile is still an individual object. The pile is not an object.
+        - [ ] 700.3c Objects grouped into piles don’t leave the zone they’re currently in. If cards in a graveyard are split into piles, the order of the graveyard must be maintained.
+            ```
+            Example: Fact or Fiction reads, “Reveal the top five cards of your library. An opponent separates those cards into two piles. Put one pile into your hand and the other into your graveyard.” While an opponent is separating the revealed cards into piles, they’re still in their owner’s library. They don’t leave the library until they’re put into their owner’s hand or graveyard.
+            ```
+        - [ ] 700.3d A pile can contain zero or more objects.
+    - [ ] 700.4. The term dies means “is put into a graveyard from the battlefield.”
+    - [ ] 700.5. A player’s devotion to [color] is equal to the number of mana symbols of that color among the mana costs of permanents that player controls. A player’s devotion to [color 1] and [color 2] is equal to the number of mana symbols among the mana costs of permanents that player controls that are [color 1], [color 2], or both colors.
+        - [ ] 700.5a A player’s devotion to each color and combination of colors, taking into account any effects that modify devotion, is calculated after considering any copy, control, or text-changing effects but before any other effects that modify the characteristics of permanents. This is an exception to 613.10. See also rule 613, “Interaction of Continuous Effects.”
+            ```
+            Example: Altar of the Pantheon is an artifact with no colored mana in its cost and an ability that says “Your devotion to each color and each combination of colors is increased by one.” Purphoros, God of the Forge is a permanent mana cost {3}{R} and an ability that says “As long as your devotion to red is less than five, Purphoros isn’t a creature.” If a player controls both of these permanents and another permanent that costs {R}{R}{R}, that player’s devotion to red is calculated to be five before Purphoros’s type-changing effect is applied, and Purphoros is a creature.
+            ```
+    - [ ] 700.6. The term historic refers to an object that has the legendary supertype, the artifact card type, or the Saga subtype.
+    - [ ] 700.7. If an ability uses a phrase such as “this [something]” to identify an object, where [something] is a characteristic or other quality, it is referring to that particular object, even if it isn’t the appropriate quality at the time.
+        ```
+        Example: An ability reads “Target creature gets +2/+2 until end of turn. Destroy that creature at the beginning of the next end step.” The ability will destroy the object it gave +2/+2 to even if that object isn’t a creature at the beginning of the next end step.
+        ```
+    - [ ] 700.8. Some cards refer to a player’s party. A player’s party consists of up to one Cleric creature that player controls, up to one Rogue creature they control, up to one Warrior creature they control, and up to one Wizard creature they control.
+        - [ ] 700.8a If a spell, ability, or effect needs to determine the number of creatures in a player’s party, the calculation of that number is performed automatically by the game and results in a number between zero and four. Players don’t declare which specific creatures they control are in their party for such an effect.
+        - [ ] 700.8b If a creature has multiple creature types for which it could be the party member, it is counted as the party member for only one of those types. If there are different ways to count such a creature that results in different numbers of creatures in a player’s party, it is counted in such a way to get the highest result.
+        - [ ] 700.8c A player has a full party if there are four creatures in that player’s party.
+        - [ ] 700.8d One card, Stick Together, instructs players to choose a party from among creatures they control. To do so, for each of the creature types listed in rule 700.8, each player chooses up to one creature they control of that type.
+    - [ ] 700.9. Some cards refer to modified permanents. A permanent is modified if it has one or more counters on it (see rule 122), if it is equipped (see rule 301.5), or if it is enchanted by an Aura that is controlled by that permanent’s controller (see rule 303.4).
+    - [ ] 700.10. Some cards refer to a permanent “that was activated this turn.” This means that the permanent was the source of an ability that was activated this turn, regardless of whether that permanent still has that activated ability or the player who activated it is still in the game.
+    - [ ] 700.11. Some cards refer to whether a player has “descended this turn.” This means that a permanent card has been put into that player’s graveyard from anywhere this turn. “The number of times [a player] descended this turn” means “the number of permanent cards put into [that player’s] graveyard from anywhere this turn.” In both cases, no permanent cards put into the player’s graveyard that turn are required to still be in that graveyard.
+    - [ ] 700.12. The term outlaw refers to an object that has the Assassin, Mercenary, Pirate, Rogue, and/or Warlock creature types.
+        - [ ] 700.12a Some cards refer to outlaws that a player controls. Only outlaw permanents are considered for these effects unless otherwise specified.
+    - [ ] 700.13. Some cards refer to committing a crime. A player commits a crime as that player casts a spell, activates an ability, or puts a triggered ability on the stack and that spell or ability targets at least one opponent; at least one permanent, spell, or ability an opponent controls; and/or at least one card in an opponent’s graveyard.
+    - [ ] 700.14. Some abilities trigger “Whenever you expend N.” A player expends N if they pay a cost to cast a spell and the amount of mana that player spent this turn to cast spells prior to paying that cost was less than N and became at least N after paying that cost.
+        ```
+        Example: A player casts Bark-Knuckle Boxer, which costs {1}{G} and reads “Whenever you expend 4, this creature gains indestructible until end of turn.” After it resolves, that player casts Divination, a spell that costs {2}{U}. Prior to paying the cost to cast Divination, that player has spent two mana to cast spells this turn. After paying the cost, they have spent five mana to cast spells this turn. Since they have now spent at least four mana to cast spells this turn, Bark-Knuckle Boxer’s ability triggers.
+        ```
+    - [ ] 700.15. The term enter[s] is short for “enter[s] the battlefield.”
+- [ ] 701. __Keyword Actions__
+    - [ ] 701.1. Most actions described in a card’s rules text use the standard English definitions of the verbs within, but some specialized verbs are used whose meanings may not be clear. These “keywords” are game terms; sometimes reminder text summarizes their meanings.
+    - [ ] 701.2. Activate
+        - [ ] 701.2a To activate an activated ability is to put it onto the stack and pay its costs, so that it will eventually resolve and have its effect. Only an object’s controller (or its owner, if it doesn’t have a controller) can activate its activated ability unless the object specifically says otherwise. A player may activate an ability if they have priority. See rule 602, “Activating Activated Abilities.”
+    - [ ] 701.3. Attach
+        - [ ] 701.3a To attach an Aura, Equipment, or Fortification to an object or player means to take it from where it currently is and put it onto that object or player. If something is attached to a permanent on the battlefield, it’s customary to place it so that it’s physically touching the permanent. An Aura, Equipment, or Fortification can’t be attached to an object or player it couldn’t enchant, equip, or fortify, respectively.
+        - [ ] 701.3b If an effect tries to attach an Aura, Equipment, or Fortification to an object or player it can’t be attached to, the Aura, Equipment, or Fortification doesn’t move. If an effect tries to attach an Aura, Equipment, or Fortification to the object or player it’s already attached to, the effect does nothing. If an effect tries to attach an object that isn’t an Aura, Equipment, or Fortification to another object or player, the effect does nothing and the first object doesn’t move.
+        - [ ] 701.3c Attaching an Aura, Equipment, or Fortification on the battlefield to a different object or player causes the Aura, Equipment, or Fortification to receive a new timestamp.
+        - [ ] 701.3d To “unattach” an Equipment from a creature means to move it away from that creature so the Equipment is on the battlefield but is not equipping anything. It should no longer be physically touching any creature. If an Aura, Equipment, or Fortification that was attached to an object or player ceases to be attached to it, that counts as “becoming unattached [from that object or player]”; this includes if that Aura, Equipment, or Fortification leaves the battlefield, the object leaves the zone it was in, or that player leaves the game.
+    - [ ] 701.4. Behold
+        - [ ] 701.4a “Behold a [quality]” means “Reveal a [quality] card from your hand or choose a [quality] permanent you control on the battlefield.”
+        - [ ] 701.4b The phrase “if a [quality] was beheld” refers to whether or not the object had that quality at the time the player took that action, regardless of whether or not the revealed card or chosen permanent still has that quality as the spell or ability including that phrase resolves.
+    - [ ] 701.5. Cast
+        - [X] 701.5a To cast a spell is to take it from the zone it’s in (usually the hand), put it on the stack, and pay its costs, so that it will eventually resolve and have its effect. A player may cast a spell if they have priority. See rule 601, “Casting Spells.”
+        - [ ] 701.5b To cast a card is to cast it as a spell.
+    - [ ] 701.6. Counter
+        - [ ] 701.6a To counter a spell or ability means to cancel it, removing it from the stack. It doesn’t resolve and none of its effects occur. A countered spell is put into its owner’s graveyard.
+        - [ ] 701.6b The player who cast a countered spell or activated a countered ability doesn’t get a “refund” of any costs that were paid.
+    - [ ] 701.7. Create
+        - [ ] 701.7a To create one or more tokens with certain characteristics, put the specified number of tokens with the specified characteristics onto the battlefield.
+        - [ ] 701.7b If a replacement effect applies to a token being created, that effect applies before considering any continuous effects that will modify the characteristics of that token. If a replacement effect applies to a token entering the battlefield, that effect applies after considering any continuous effects that will modify the characteristics of that token.
+        - [ ] 701.7c Previously, an effect that created tokens instructed a player to “put [those tokens] onto the battlefield.” Cards that were printed with that text have received errata in the Oracle card reference so they now “create” those tokens.
+    - [ ] 701.8. Destroy
+        - [ ] 701.8a To destroy a permanent, move it from the battlefield to its owner’s graveyard.
+        - [ ] 701.8b The only ways a permanent can be destroyed are as a result of an effect that uses the word “destroy” or as a result of the state-based actions that check for lethal damage (see rule 704.5g) or damage from a source with deathtouch (see rule 704.5h). If a permanent is put into its owner’s graveyard for any other reason, it hasn’t been “destroyed.”
+        - [ ] 701.8c A regeneration effect replaces a destruction event. See rule 701.19, “Regenerate.”
 - [ ] 704. __State-Based Actions__
     - [ ] 704.1. State-based actions are game actions that happen automatically whenever certain conditions (listed below) are met. State-based actions don’t use the stack.
         - [ ] 704.1a Abilities that watch for a specified game state are triggered abilities, not state-based actions. (See rule 603, “Handling Triggered Abilities.”)
-    - [ ] 704.2. State-based actions are checked throughout the game and are not controlled by any player.
-    - [ ] 704.3. Whenever a player would get priority (see rule 117, “Timing and Priority”), the game checks for any of the listed conditions for state-based actions, then performs all applicable state-based actions simultaneously as a single event. If any state-based actions are performed as a result of a check, the check is repeated; otherwise all triggered abilities that are waiting to be put on the stack are put on the stack, then the check is repeated. Once no more state-based actions have been performed as the result of a check and no triggered abilities are waiting to be put on the stack, the appropriate player gets priority. This process also occurs during the cleanup step (see rule 514), except that if no state-based actions are performed as the result of the step’s first check and no triggered abilities are waiting to be put on the stack, then no player gets priority and the step ends.
+    - [X] 704.2. State-based actions are checked throughout the game and are not controlled by any player.
+    - [~] 704.3. Whenever a player would get priority (see rule 117, “Timing and Priority”), the game checks for any of the listed conditions for state-based actions, then performs all applicable state-based actions simultaneously as a single event. If any state-based actions are performed as a result of a check, the check is repeated; otherwise all triggered abilities that are waiting to be put on the stack are put on the stack, then the check is repeated. Once no more state-based actions have been performed as the result of a check and no triggered abilities are waiting to be put on the stack, the appropriate player gets priority. This process also occurs during the cleanup step (see rule 514), except that if no state-based actions are performed as the result of the step’s first check and no triggered abilities are waiting to be put on the stack, then no player gets priority and the step ends.
     - [ ] 704.4. Unlike triggered abilities, state-based actions pay no attention to what happens during the resolution of a spell or ability.
         ```
         Example: A player controls Maro, a creature with the ability “Maro’s power and toughness are each equal to the number of cards in your hand” and casts a spell whose effect is “Discard your hand, then draw seven cards.” Maro will temporarily have toughness 0 in the middle of the spell’s resolution but will be back up to toughness 7 when the spell finishes resolving. Thus Maro will survive when state-based actions are checked. In contrast, an ability that triggers when the player has no cards in hand goes on the stack after the spell resolves, because its trigger event happened during resolution.

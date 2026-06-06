@@ -8,6 +8,24 @@ public class PlayerAsserts(Player player)
         return this;
     }
 
+    public PlayerAsserts Lost()
+    {
+        player.Status.ShouldBe(PlayerStatus.Lost);
+        return this;
+    }
+
+    public PlayerAsserts Won()
+    {
+        player.Status.ShouldBe(PlayerStatus.Won);
+        return this;
+    }
+
+    public PlayerAsserts InGame()
+    {
+        player.Status.ShouldBe(PlayerStatus.InGame);
+        return this;
+    }
+
     public PlayerAsserts AssertLibrary(Action<LibraryAsserts> action)
     {
         action(new(player.Library));

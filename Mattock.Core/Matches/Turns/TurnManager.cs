@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Turns.Phases;
 using Mattock.Core.Matches.Turns.Steps.Beginning;
 using Mattock.Core.Matches.Turns.Steps.Ending;
@@ -12,7 +13,16 @@ public class TurnManager(Match match)
 
     public int NextInTurnOrderIdx(int playerIdx)
     {
-        return (playerIdx + 1) % match.Players.Length;
+        int result = playerIdx;
+        Player player;
+        do
+        {
+            result = (result + 1) % match.Players.Length;
+            player = match.Players[result];
+        }
+        while (!player.IsInGame());
+
+        return result;
     }
 
     public void ResetTurn()
@@ -38,6 +48,7 @@ public class TurnManager(Match match)
 
     public void AdvanceTurn()
     {
+        if (match.AreWinnersDecided()) return;
         // TODO
         ActivePlayerIdx = NextInTurnOrderIdx(ActivePlayerIdx);
     }

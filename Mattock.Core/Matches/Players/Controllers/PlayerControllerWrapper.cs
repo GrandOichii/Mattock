@@ -39,7 +39,7 @@ public abstract class PlayerControllerWrapper(
         return Task.CompletedTask;
     }
 
-    public async Task<ICommand> ChooseCommand(Player player, Actions.ICommand[] options)
+    public async Task<ICommand> ChooseCommand(Player player, ICommand[] options)
     {
         var result = await controller.ChooseCommand(player, options);
         await HandleCommandChoice(result, player, options);

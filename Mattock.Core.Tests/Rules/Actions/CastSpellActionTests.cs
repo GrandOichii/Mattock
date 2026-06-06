@@ -35,7 +35,7 @@ public class CastSpellActionTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -273,7 +273,7 @@ public class CastSpellActionTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             // TODO declare attackers
@@ -332,7 +332,7 @@ public class CastSpellActionTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -574,7 +574,7 @@ public class CastSpellActionTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             // TODO declare attackers
@@ -633,7 +633,7 @@ public class CastSpellActionTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -875,7 +875,7 @@ public class CastSpellActionTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             // TODO declare attackers
@@ -933,7 +933,7 @@ public class CastSpellActionTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -1195,7 +1195,7 @@ public class CastSpellActionTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
             // TODO declare attackers
@@ -1254,7 +1254,7 @@ public class CastSpellActionTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -1295,7 +1295,7 @@ public class CastSpellActionTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => a
@@ -1371,7 +1371,7 @@ public class CastSpellActionTests
             ]
         };
 
-        var p1 = new TestPlayerControllerBuilder("p1")
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
             .ChoosePlayer.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
@@ -1412,7 +1412,7 @@ public class CastSpellActionTests
             .Act.Crash()
             ;
 
-        var p2 = new TestPlayerControllerBuilder("p2")
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => a

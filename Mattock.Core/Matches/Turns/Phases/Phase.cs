@@ -25,6 +25,7 @@ public class Phase
     {
         await DoPreSteps();
         await DoSteps();
+        if (Match.AreWinnersDecided()) return;
         await DoPostSteps();
 
         // 500.5.
@@ -51,6 +52,11 @@ public class Phase
             if (!step.CanBeTaken()) continue;
 
             await step.Do();
+
+            if (Match.AreWinnersDecided())
+            {
+                return;
+            }
         }
     }
 

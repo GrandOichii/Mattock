@@ -12,6 +12,7 @@ public class TestPlayerControllerBuilder
 {
     private string _name;
     private DeckTemplate _deck;
+    private int _teamIdx;
 
     public CommandChoicesBuilder CommandChoices { get; }
     public PlayerChoicesBuilder PlayerChoices { get; }
@@ -20,9 +21,10 @@ public class TestPlayerControllerBuilder
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
     public StoredManaChoicesBuilder StoredManaChoices { get; }
 
-    public TestPlayerControllerBuilder(string name)
+    public TestPlayerControllerBuilder(string name, int teamIdx)
     {
         _name = name;
+        _teamIdx = teamIdx;
         _deck = new()
         {
             MainDeck = []
@@ -55,6 +57,7 @@ public class TestPlayerControllerBuilder
             match,
             _name,
             _deck,
+            _teamIdx,
             CommandChoices.Queue,
             PlayerChoices.Queue,
             StringChoices.Queue,
@@ -167,6 +170,30 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         ));
     }
 
+    public TestPlayerControllerBuilder SetPlayerStatus(int playerIdx, PlayerStatus status, bool silent = false)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                match.Match!.Players[playerIdx].SetStatus(status, silent);
+                return (null, false, true);
+            },
+            true
+        ));
+    }
+
+    public TestPlayerControllerBuilder CheckForWinners()
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                match.Match!.CheckForWinners();
+                return (null, false, true);
+            },
+            true
+        ));
+    }
+
     public TestPlayerControllerBuilder AutoPass()
     {
         return Enqueue((
@@ -216,6 +243,18 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
                 return (PassChoice(options), true, false);
             },
             false
+        ));
+    }
+
+    public TestPlayerControllerBuilder SetLife(int playerIdx, int life)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                match.Match!.Players[playerIdx].Life.Set(life);
+                return (null, false, true);
+            },
+            true
         ));
     }
 

@@ -18,6 +18,7 @@ public class Match
     public MatchConfig Config { get; }
     public Mechanics Mechanics { get; }
     public Player[] Players { get; }
+    private readonly Dictionary<int, Player[]> _teams;
     public Battlefield Battlefield { get; }
     private int _lastCardId;
     public CardZoneChange? ZoneChange { get; private set; }
@@ -28,6 +29,7 @@ public class Match
     public IAction[] Actions { get; }
     public int TurnCounter { get; private set; }
     public List<Card> Cards { get; }
+    private int[]? _winningTeams;
 
     // constructors
 
@@ -49,10 +51,28 @@ public class Match
         _lastCardId = 0;
         TurnCounter = 0;
         Cards = [];
+        _winningTeams = null;
 
+        var nameGroupings = playerSetups.GroupBy(p => p.Name);
+        foreach (var g in nameGroupings)
+        {
+            var c = g.Count();
+            if (c == 1) continue;
+            throw new DuplicatePlayerNameException($"Player name \"{g.Key}\" is repeated {c} times");
+        }
         Players = [.. playerSetups.Select(
             (s, idx) => new Player(this, idx, s)
         )];
+        _teams = playerSetups.Select(s => s.TeamIdx).Distinct().ToDictionary(
+            tIdx => tIdx,
+            tIdx => Players.Where(p => p.GetTeamIdx() == tIdx).ToArray()
+        );
+        if (_teams.Count > config.TeamCount)
+            throw new TooManyTeamsException($"Too many teams were created (actual: {_teams.Count}, max: {config.TeamCount})");
+        foreach (var (tIdx, players) in _teams)
+            if (players.Length > config.MaxTeamSize)
+                throw new TeamTooBigException($"Team with Idx = {tIdx} has too many players (actual: {players.Length}, max: {config.MaxTeamSize})");
+
         Rng = config.RandomMatch
             ? new()
             : new(config.Seed);
@@ -67,9 +87,17 @@ public class Match
         ];
     }
 
+    // methods
+
+    public int[] GetWinningTeams()
+    {
+        if (_winningTeams is null)
+            throw new Exception($"Called {nameof(GetWinningTeams)} while winning teams are not decided");
+        return _winningTeams;
+    }
+
     public Player GetActivePlayer() => Players[TurnManager.ActivePlayerIdx];
 
-    // methods
 
     public async Task Run()
     {
@@ -86,7 +114,7 @@ public class Match
         // Set life totals
         foreach (var player in Players)
         {
-            player.Life.Set(Config.StartingLifeTotal);
+            player.Life.SetRaw(Config.StartingLifeTotal);
         }
 
         // Form player libraries
@@ -113,20 +141,22 @@ public class Match
 
     public async Task TakeTurns()
     {
-        while (!GameEnded())
+        while (!AreWinnersDecided())
         {
             ++TurnCounter;
             
             for (
                 TurnManager.ResetTurn();
-                !TurnManager.IsTurnEnded();
+                !TurnManager.IsTurnEnded() && !AreWinnersDecided();
                 TurnManager.AdvancePhase()
             )
             {
                 var phase = TurnManager.GetCurrentPhase();
 
                 await phase.Do();
+                if (AreWinnersDecided()) return;
             }
+
 
             TurnManager.ResetTurn();
             TurnManager.AdvanceTurn();
@@ -143,7 +173,7 @@ public class Match
 
     public async Task CreateAndResolvePriority()
     {
-        while (true)
+        while (!AreWinnersDecided())
         {
             CreatePriority();
 
@@ -151,7 +181,7 @@ public class Match
 
             Priority = null;
 
-            if (Stack.IsEmpty()) break;
+            if (Stack.IsEmpty() || AreWinnersDecided()) break;
 
             await Stack.ResolveTop();
         }
@@ -162,12 +192,6 @@ public class Match
         if (Priority is null)
             throw new Exception($"Called {nameof(ResetPriority)} while no priority is present!");
         Priority.Reset();
-    }
-
-    public bool GameEnded()
-    {
-        // TODO
-        return false;
     }
 
     public async Task TakeMulligans()
@@ -251,4 +275,108 @@ public class Match
             player.ManaPool.Clear();
         }
     }
+
+    public void CheckForWinners()
+    {
+        if (AreWinnersDecided()) return;
+
+        HashSet<int> winningTeams = [];
+        HashSet<int> losingTeams = [];
+        int winningTeam = -1;
+        bool winnerDecided = false;
+
+        foreach (var (tIdx, players) in _teams)
+        {
+            if (players.All(p => p.Status == PlayerStatus.Lost))
+            {
+                losingTeams.Add(tIdx);
+                continue;
+            }
+            winningTeam = tIdx;
+
+            if (players.Any(p => p.Status == PlayerStatus.Won))
+            {
+                winningTeams.Add(tIdx);
+                winnerDecided = true;
+            }
+        }
+
+        if (winnerDecided)
+        {
+            SetWinningTeams([ .. winningTeams ]);
+            return;
+        }
+
+        if (losingTeams.Count == _teams.Count)
+        {
+            SetWinningTeams([]);
+            return;
+        }
+
+        if (losingTeams.Count == _teams.Count - 1)
+        {
+            SetWinningTeams([ winningTeam ]);
+            return;
+        }
+    }
+
+    private void SetWinningTeams(int[] winningTeams)
+    {
+        _winningTeams = winningTeams;
+
+        foreach (var p in Players)
+        {
+            p.SetStatus(
+                _winningTeams.Contains(p.GetTeamIdx())
+                    ? PlayerStatus.Won
+                    : PlayerStatus.Lost
+            );
+        }
+    }
+
+    public bool AreWinnersDecided() => _winningTeams is not null;
+}
+
+/// <summary>
+/// Thrown during construction of class <c>Match</c> if a session with the specified parameters can't be created
+/// </summary>
+[Serializable]
+public class CantStartException : Exception
+{
+    public CantStartException() { }
+    public CantStartException(string message) : base(message) { }
+    public CantStartException(string message, Exception inner) : base(message, inner) { }
+}
+
+/// <summary>
+/// Thrown during construction of class <c>Match</c> if a team has more players than <c>MatchConfig.MaxTeamSize</c>
+/// </summary>
+[Serializable]
+public class TeamTooBigException : CantStartException
+{
+    public TeamTooBigException() { }
+    public TeamTooBigException(string message) : base(message) { }
+    public TeamTooBigException(string message, System.Exception inner) : base(message, inner) { }
+}
+
+/// <summary>
+/// Thrown during construction of class <c>Match</c> if two or more players have duplicate names
+/// </summary>
+[Serializable]
+public class DuplicatePlayerNameException : CantStartException
+{
+    public DuplicatePlayerNameException() { }
+    public DuplicatePlayerNameException(string message) : base(message) { }
+    public DuplicatePlayerNameException(string message, System.Exception inner) : base(message, inner) { }
+}
+
+/// <summary>
+/// Thrown during construction of class <c>Match</c> if the team count is bigger than <c>MatchConfig.TeamCount</c>
+/// </summary>
+[Serializable]
+public class TooManyTeamsException : CantStartException
+{
+    public TooManyTeamsException() { }
+    public TooManyTeamsException(string message) : base(message) { }
+    public TooManyTeamsException(string message, System.Exception inner) : base(message, inner) { }
 }

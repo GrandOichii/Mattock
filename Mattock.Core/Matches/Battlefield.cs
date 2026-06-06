@@ -6,7 +6,7 @@ namespace Mattock.Core.Matches;
 
 public class Battlefield(Match match) : ICardZone
 {
-    public List<Permanent> Permanents { get; } = [];
+    private readonly List<Permanent> _permanents = [];
 
     private int _lastPid = 0;
 
@@ -16,7 +16,7 @@ public class Battlefield(Match match) : ICardZone
     {
         // * type doesn't matter
         var permanent = new Permanent(card);
-        Permanents.Add(permanent);
+        _permanents.Add(permanent);
         return permanent.Pid;
     }
 
@@ -28,8 +28,8 @@ public class Battlefield(Match match) : ICardZone
         throw new NotImplementedException();
     }
 
-    public Permanent? GetPermanentById(string id) => Permanents.SingleOrDefault(p => p.Card.Id == id);
-    public Permanent? GetPermanentByPid(string pid) => Permanents.SingleOrDefault(p => p.Pid == pid);
+    public Permanent? GetPermanentById(string id) => _permanents.SingleOrDefault(p => p.Card.Id == id);
+    public Permanent? GetPermanentByPid(string pid) => _permanents.SingleOrDefault(p => p.Pid == pid);
 
     public async Task MoveCard(Card card, Player controller)
     {
@@ -48,5 +48,11 @@ public class Battlefield(Match match) : ICardZone
     public bool Accepts(Card card)
     {
         return !card.IsSorcery() && !card.IsInstant();
+    }
+
+    public Permanent[] GetPermanents()
+    {
+        // TODO check if any need to be put in graveyard
+        return [ .. _permanents ];
     }
 }

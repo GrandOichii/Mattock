@@ -1,4 +1,3 @@
-using System.Drawing;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Cards.CardZones;
@@ -9,6 +8,13 @@ using Mattock.Core.Setup;
 
 namespace Mattock.Core.Matches.Players;
 
+public enum PlayerStatus
+{
+    InGame,
+    Lost,
+    Won,
+}
+
 public class Player
 {
     // properties
@@ -16,9 +22,10 @@ public class Player
     public Match Match { get; }
     public int Idx { get; }
     public PlayerSetup Setup { get; }
-    private readonly IPlayerController _controller;
+    private readonly SafePlayerControllerWrapper _controller;
     public Life Life { get; }
     public ManaPool ManaPool { get; }
+    public PlayerStatus Status { get; private set; }
 
     public Library Library { get; }
     public Hand Hand { get; }
@@ -48,6 +55,7 @@ public class Player
         Library = new(this);
         Hand = new(this);
         Graveyard = new(this);
+        Status = PlayerStatus.InGame;
 
         _libraryFormed = false;
         DrewFromEmptyLibrary = false;
@@ -61,6 +69,15 @@ public class Player
     }
 
     // methods
+
+    public int GetTeamIdx() => Setup.TeamIdx;
+
+    public void SetStatus(PlayerStatus status, bool silent=false)
+    {
+        Status = status;
+        if (silent) return;
+        Match.CheckForWinners();
+    }
 
     public OwnedCardZone GetZoneByName(string zoneName) => OwnedZoneMap[zoneName];
 
@@ -98,6 +115,8 @@ public class Player
 
     public void Draw(int amount)
     {
+        GameEndSafeguard();
+
         for (; amount > 0; --amount)
         {
             DrawSingle();
@@ -239,6 +258,19 @@ public class Player
         // TODO
     }
 
+    public bool IsInGame() => Status == PlayerStatus.InGame;
+
+    private void GameEndSafeguard()
+    {
+        if (IsInGame()) return;
+
+        throw new Exception($"Code error: tried to prompt a choice from player {GetDisplayName()} while their status is {Status}");
+    }
+
+    public bool IsOpponentFor(Player player) => GetTeamIdx() != player.GetTeamIdx();
+
+    public bool IsTeammateFor(Player player) => GetTeamIdx() == player.GetTeamIdx();
+
     public async Task Update(string msg)
     {
         await _controller.Update(this, msg);
@@ -246,36 +278,42 @@ public class Player
 
     public async Task<ICommand> ChooseCommand(ICommand[] options)
     {
+        GameEndSafeguard();
         await Match.UpdateExcept(this);
         return await _controller.ChooseCommand(this, options);
     }
 
     public async Task<Card> ChooseCard(Card[] options, string hint)
     {
+        GameEndSafeguard();
         await Match.UpdateExcept(this);
         return await _controller.ChooseCard(this, options, hint);
     }
 
     public async Task<string> ChooseString(string[] options, string hint)
     {
+        GameEndSafeguard();
         await Match.UpdateExcept(this);
         return await _controller.ChooseString(this, options, hint);
     }
 
     public async Task<Player> ChoosePlayer(Player[] options, string hint)
     {
+        GameEndSafeguard();
         await Match.UpdateExcept(this);
         return await _controller.ChoosePlayer(this, options, hint);
     }
 
     public async Task<StoredMana> ChooseStoredMana(StoredMana[] options, string hint)
     {
+        GameEndSafeguard();
         await Match.UpdateExcept(this);
         return await _controller.ChooseStoredMana(this, options, hint);
     }
 
     public async Task<CostCollection> ChooseCostCollection(CostCollection[] options, string hint)
     {
+        GameEndSafeguard();
         if (options.Length == 0)
             throw new Exception($"Provided empty options for {nameof(ChooseCostCollection)} (hint: {hint})");
         if (options.Length == 1)

@@ -10,7 +10,8 @@ public class StateBasedActionsManager
         Match = match;
 
         StateBasedActions = [
-            
+            new ZeroLifeSBA(),
+            new DrawFromEmptyLibrarySBA(),
         ];
     }
 
@@ -20,6 +21,7 @@ public class StateBasedActionsManager
         foreach (var act in StateBasedActions)
             if (act.Apply(Match))
                 result = true;
+        if (Match.AreWinnersDecided()) return false;
         return result;
     }
 
@@ -35,6 +37,9 @@ public class StateBasedActionsManager
         {
             repeat = ApplyOnce();
         }
+
+        if (Match.AreWinnersDecided()) return;
+        // TODO triggers
         
         ApplyOnce();
     }
