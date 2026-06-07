@@ -134,6 +134,7 @@ public class DrawStepTests
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .InitialHandSize(0)
+                .NoMaxHandSize()
                 .Build(),
             [ 
                 p1, 

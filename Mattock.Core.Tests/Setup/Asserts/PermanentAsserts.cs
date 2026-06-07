@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Cards;
 
 namespace Mattock.Core.Tests.Setup.Asserts;

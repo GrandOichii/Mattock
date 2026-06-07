@@ -21,6 +21,7 @@ public class CastSpellCommand(Player player, Card card) : ICommand
     public async Task Do()
     {
         await player.Cast(card);
+        player.Match.ResetPriority(player.Idx);
     }
 
     public string ToCommandString() => $"{CastSpellAction.ActionWord} {card.Id}";

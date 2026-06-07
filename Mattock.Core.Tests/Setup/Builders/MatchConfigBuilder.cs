@@ -19,6 +19,18 @@ public class MatchConfigBuilder
         return this;
     }
 
+    public MatchConfigBuilder MaxHandSize(int size)
+    {
+        _result.MaxHandSize = size;
+        return this;
+    }
+
+    public MatchConfigBuilder NoMaxHandSize()
+    {
+        _result.MaxHandSize = null;
+        return this;
+    }
+
     public MatchConfigBuilder TeamCount(int v)
     {
         _result.TeamCount = v;

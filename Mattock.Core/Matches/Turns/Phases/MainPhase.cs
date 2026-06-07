@@ -16,6 +16,6 @@ public class MainPhase : Phase
 
     public async override Task DoPostSteps()
     {
-        await Match.CreateAndResolvePriority();
+        while (await Match.CreateAndResolvePriority());
     }
 }

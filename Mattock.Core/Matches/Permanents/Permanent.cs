@@ -1,8 +1,8 @@
-using System.Reflection.Metadata.Ecma335;
+using Mattock.Core.Matches.Permanents.Statuses;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 
-namespace Mattock.Core.Matches;
+namespace Mattock.Core.Matches.Permanents;
 
 public class Permanent
 {
@@ -11,7 +11,10 @@ public class Permanent
     public Card Card { get; }
     public Player? Controller { get; private set; }
 
-    private bool _tapped;
+    public PermanentStatus Tapped { get; }
+    public PermanentStatus Flipped { get; }
+    public PermanentStatus FaceUp { get; }
+    public PermanentStatus PhasedIn { get; }
 
     public Permanent(Card card)
     {
@@ -19,7 +22,11 @@ public class Permanent
         Match = card.Match;
         Card = card;
         Controller = null;
-        _tapped = false;
+
+        Tapped = new(PermanentStatusType.Tapped, false);
+        Flipped = new(PermanentStatusType.Flipped, false);
+        FaceUp = new(PermanentStatusType.FaceUp, true);
+        PhasedIn = new(PermanentStatusType.PhasedIn, true);
     }
 
     public string GetDisplayName() => $"[{Pid}]";
@@ -43,9 +50,9 @@ public class Permanent
         return Controller!.Idx == playerIdx;
     }
 
-    public bool IsUntapped() => !_tapped;
+    public bool IsUntapped() => !Tapped.Value;
 
-    public bool IsTapped() => _tapped;
+    public bool IsTapped() => Tapped.Value;
 
     public bool HasName(string name)
     {

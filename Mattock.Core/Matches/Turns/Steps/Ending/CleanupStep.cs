@@ -12,13 +12,18 @@ public class CleanupStep : Step
     {
     }
 
-    public override Task DoPrePriority()
+    public override async Task DoPrePriority()
     {
         // 514.1. Discard to max hand size
         var player = Match.GetActivePlayer();
         var maxHandSize = player.GetMaxHandSize();
-        if (maxHandSize is not null && player.Hand.GetCount() > maxHandSize)
+        if (maxHandSize is not null)
         {
+            while (player.Hand.GetCount() > maxHandSize)
+            {
+                var card = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size");
+                player.Discard([card]);
+            }
             // TODO
         }
 
@@ -30,7 +35,6 @@ public class CleanupStep : Step
 
         // 514.3a State-based actions
         Match.StateBasedActions.Apply();
-        return Task.CompletedTask;
     }
 
     

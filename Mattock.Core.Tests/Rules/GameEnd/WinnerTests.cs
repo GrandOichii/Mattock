@@ -134,6 +134,7 @@ public class WinnerTests
         ),
     ];
 
+    [Trait("Rules", "104.2c,104.3g,104.4a,104.4d,104.4g")]
     [Theory]
     [MemberData(nameof(WinnersDecided_Data))]
     public async Task WinnersDecided((int, PlayerStatus)[] players, int[] expectedWinningTeams, int[] expectedWinningIndicies)
@@ -305,6 +306,7 @@ public class WinnerTests
         ),
     ];
 
+    [Trait("Rules", "104.2c,104.3g,104.4a,104.4d,104.4g")]
     [Theory]
     [MemberData(nameof(NoWinnersDecided_Data))]
     public async Task NoWinnersDecided((int, PlayerStatus)[] players)

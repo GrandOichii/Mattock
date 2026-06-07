@@ -2,7 +2,7 @@ using Mattock.Core.Matches.Objects;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 
-namespace Mattock.Core.Matches;
+namespace Mattock.Core.Matches.Permanents;
 
 public class Battlefield(Match match) : ICardZone
 {

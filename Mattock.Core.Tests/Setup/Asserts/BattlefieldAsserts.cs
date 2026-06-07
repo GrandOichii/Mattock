@@ -1,3 +1,5 @@
+using Mattock.Core.Matches.Permanents;
+
 namespace Mattock.Core.Tests.Setup.Asserts;
 
 public class BattlefieldAsserts(Battlefield battlefield)

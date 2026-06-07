@@ -6,17 +6,17 @@ namespace Mattock.Core.Tests.Rules.Actions;
 
 public class CastSpellActionTests
 {
-    public static IEnumerable<object[]> CastableTypesAll_Data => 
-        CardTypes.Castable.Select(t => new object[] { t });
+    public static IEnumerable<TheoryDataRow<string>> CastableTypesAll_Data => 
+        CardTypes.Castable.Select(t => new TheoryDataRow<string>(t));
 
-    public static IEnumerable<object[]> CastableTypes_SorcerySpeed_Data => 
-        CardTypes.Castable.Where(t => t != CardTypes.Instant).Select(t => new object[] { t });
+    public static IEnumerable<TheoryDataRow<string>> CastableTypes_SorcerySpeed_Data => 
+        CardTypes.Castable.Where(t => t != CardTypes.Instant).Select(t => new TheoryDataRow<string>(t));
 
-    public static IEnumerable<object[]> PermanentSpellTypes_Data => 
-        CardTypes.Permanents.Where(t => t != CardTypes.Land).Select(t => new object[] { t });
+    public static IEnumerable<TheoryDataRow<string>> PermanentSpellTypes_Data => 
+        CardTypes.Permanents.Where(t => t != CardTypes.Land).Select(t => new TheoryDataRow<string>(t));
 
-    public static IEnumerable<object[]> NonPermanentSpellTypes_Data => 
-        [ [ CardTypes.Sorcery ], [ CardTypes.Instant ] ];
+    public static IEnumerable<TheoryDataRow<string>> NonPermanentSpellTypes_Data => 
+        [ new(CardTypes.Sorcery), new(CardTypes.Instant) ];
 
     [Trait("Rules", "202.1b")]
     [Theory]
@@ -1399,6 +1399,14 @@ public class CastSpellActionTests
                 )
             )
             .Act.Pass() // pass priority after spell
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .CurrentPhase(PhaseType.PrecombatMain)
+                    .AssertStack(sa => sa
+                        .IsEmpty()
+                    )
+                )
+            )
             .Act.Pass() // pass from empty stack
             .Act.Assert(a => a
                 .AssertMatch(ma => ma
@@ -1423,6 +1431,14 @@ public class CastSpellActionTests
                 )
             )
             .Act.Pass() // pass priority after spell
+            .Act.Assert(a => a
+                .AssertMatch(ma => ma
+                    .CurrentPhase(PhaseType.PrecombatMain)
+                    .AssertStack(sa => sa
+                        .IsEmpty()
+                    )
+                )
+            )
             .Act.AutoPass()
             ;
 

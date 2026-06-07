@@ -271,6 +271,20 @@ public class Player
 
     public bool IsTeammateFor(Player player) => GetTeamIdx() == player.GetTeamIdx();
 
+    public void Discard(Card[] cards)
+    {
+        // TODO
+
+        foreach (var card in cards)
+        {
+            Match.MoveCard(
+                card,
+                Graveyard,
+                CardZoneChangeType.Top // TODO
+            );
+        }
+    }
+
     public async Task Update(string msg)
     {
         await _controller.Update(this, msg);

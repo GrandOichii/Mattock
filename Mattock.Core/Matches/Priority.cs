@@ -9,32 +9,29 @@ public class Priority
     public int InitialPlayerIdx { get; private set; }
     public int NextPlayerIdx { get; private set; }
     public int PriorityPlayerIdx { get; private set; }
+    public bool Done { get; private set; }
 
     public Priority(Match match)
     {
         Match = match;
 
-        InitialPlayerIdx = match.TurnManager.ActivePlayerIdx;
-        Reset();
+        Reset(match.TurnManager.ActivePlayerIdx);
     }
 
-    public void Reset()
+    public void Reset(int initialPlayerIdx)
     {
-        PriorityPlayerIdx = InitialPlayerIdx;
+        InitialPlayerIdx = initialPlayerIdx;
+        PriorityPlayerIdx = initialPlayerIdx;
         CalculateNext();
+        Done = false;
     }
 
     public async Task Resolve()
     {
-        // TODO make this better
-        while(NextPlayerIdx != InitialPlayerIdx && !Match.AreWinnersDecided())
+        while (!Done && !Match.AreWinnersDecided())
         {
             await ProcessPriority(Match.Players[PriorityPlayerIdx]);
         }
-
-        if (Match.AreWinnersDecided()) return;
-        
-        await ProcessPriority(Match.Players[PriorityPlayerIdx]);
     }
 
     private async Task ProcessPriority(Player player)
@@ -63,6 +60,7 @@ public class Priority
     private void CalculateCurrent()
     {
         PriorityPlayerIdx = NextPlayerIdx;
+        Done = PriorityPlayerIdx == InitialPlayerIdx;
     }
 
     private void CalculateNext()

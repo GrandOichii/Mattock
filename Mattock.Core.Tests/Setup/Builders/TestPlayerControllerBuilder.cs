@@ -1,10 +1,8 @@
 using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Players.Actions;
+using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Turns.Phases;
-using Mattock.Core.Matches.Turns.Steps;
-using Mattock.Core.Setup.Templates;
-using Mattock.Core.Tests.Setup.Asserts;
 
 namespace Mattock.Core.Tests.Setup.Builders;
 
@@ -349,6 +347,13 @@ public class StringChoicesBuilder(TestPlayerControllerBuilder builder)
 public class CardChoicesBuilder(TestPlayerControllerBuilder builder) 
     : ChoicesBuilder<TestPlayerController.CardChoice>(builder)
 {
+    public TestPlayerControllerBuilder NTimes(int n, Action<int, CardChoicesBuilder> action)
+    {
+        for (int i = 0; i < n; ++i)
+            action(i, this);
+        return _builder;
+    }
+
     public TestPlayerControllerBuilder First()
     {
         return Enqueue(async (player, options, hint) =>
@@ -363,6 +368,24 @@ public class CardChoicesBuilder(TestPlayerControllerBuilder builder)
         {
             return (options.First(c => c.HasName(name)), true);
         });
+    }
+
+    public TestPlayerControllerBuilder Assert(Action<Asserts> action)
+    {
+        return Enqueue(async (player, options, hint) =>
+        {
+            action(new(player, options, hint));
+            return (null, false);
+        });
+    }
+    
+    public class Asserts(Player player, Card[] options, string hint)
+    {
+        public Asserts OptionsCount(int v)
+        {
+            options.Length.ShouldBe(v);
+            return this;
+        }
     }
 }
 

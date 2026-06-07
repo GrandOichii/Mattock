@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
@@ -171,9 +172,11 @@ public class Match
         Priority = new(this);
     }
 
-    public async Task CreateAndResolvePriority()
+    public async Task<bool> CreateAndResolvePriority()
     {
-        while (!AreWinnersDecided())
+        var effectsResolved = false;
+        
+        do
         {
             CreatePriority();
 
@@ -184,14 +187,18 @@ public class Match
             if (Stack.IsEmpty() || AreWinnersDecided()) break;
 
             await Stack.ResolveTop();
+            effectsResolved = true;
         }
+        while (!AreWinnersDecided() && !Stack.IsEmpty());
+
+        return effectsResolved;
     }
 
-    public void ResetPriority()
+    public void ResetPriority(int playerIdx)
     {
         if (Priority is null)
             throw new Exception($"Called {nameof(ResetPriority)} while no priority is present!");
-        Priority.Reset();
+        Priority.Reset(playerIdx);
     }
 
     public async Task TakeMulligans()
