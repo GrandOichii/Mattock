@@ -51,7 +51,8 @@ public class TeamValidationTests
             new()
             {
                 Mulligan = null
-            }
+            },
+            CoreLoader.Load("../../../../core")
         );
 
         // Assert
@@ -94,7 +95,8 @@ public class TeamValidationTests
             new()
             {
                 Mulligan = null
-            }
+            },
+            CoreLoader.Load("../../../../core")
         );
 
         // Assert
@@ -129,7 +131,8 @@ public class TeamValidationTests
             new()
             {
                 Mulligan = null
-            }
+            },
+            CoreLoader.Load("../../../../core")
         );
 
         // Assert

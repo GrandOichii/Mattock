@@ -1,0 +1,8 @@
+# Card
+(Effect)> Spell
+
+# Effect
+<(Effect) Effect
+(Act)> Act
+.. (Target)
+# 

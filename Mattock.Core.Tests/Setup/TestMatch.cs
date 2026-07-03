@@ -1,3 +1,4 @@
+using System.Text;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Tests.Setup.Asserts;
 
@@ -8,11 +9,13 @@ public class TestMatch : Match
     public TestMatch(
         MatchConfig config,
         PlayerSetup[] setups,
-        Mechanics mechanics
+        Mechanics mechanics,
+        string setupScript
     ) : base(
         config, 
         setups, 
-        mechanics
+        mechanics,
+        setupScript
     )
     {
     }
@@ -54,11 +57,13 @@ public class TestMatchWrapper
     public async Task Run()
     {
         // var core = File.ReadAllText("../../../../core.lua");
+        var coreScript = CoreLoader.Load("../../../../core");
 
         Match = new TestMatch(
             Config,
             [ .. Players.Select(p => p.GetPlayerSetup() )],
-            Mechanics
+            Mechanics,
+            coreScript
         );
 
         foreach (var act in PreLaunchActions)

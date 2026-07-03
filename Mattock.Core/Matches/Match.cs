@@ -9,6 +9,7 @@ using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
 using Mattock.Core.Matches.Turns;
 using Mattock.Core.Setup;
+using NLua;
 
 namespace Mattock.Core.Matches;
 
@@ -16,6 +17,7 @@ public class Match
 {
     // properties
     public Random Rng { get; }
+    public Lua LState { get; }
     public MatchConfig Config { get; }
     public Mechanics Mechanics { get; }
     public Player[] Players { get; }
@@ -37,7 +39,8 @@ public class Match
     public Match(
         MatchConfig config,
         PlayerSetup[] playerSetups,
-        Mechanics mechanics
+        Mechanics mechanics,
+        string setupScript
     )
     {
         Config = config;
@@ -53,6 +56,9 @@ public class Match
         TurnCounter = 0;
         Cards = [];
         _winningTeams = null;
+
+        LState = new();
+        LState.DoString(setupScript);
 
         var nameGroupings = playerSetups.GroupBy(p => p.Name);
         foreach (var g in nameGroupings)
