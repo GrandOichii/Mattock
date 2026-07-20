@@ -21,8 +21,8 @@ public class CleanupStep : Step
         {
             while (player.Hand.GetCount() > maxHandSize)
             {
-                var card = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size");
-                player.Discard([card]);
+                var card = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size", false);
+                player.Discard([card!]);
             }
             // TODO
         }

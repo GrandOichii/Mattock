@@ -9,10 +9,27 @@ public class DeclareAttackersStep : Step
     {
     }
 
-    public override Task DoPrePriority()
+    public override async Task DoPrePriority()
     {
+        var active = Match.GetActivePlayer();
+
+        // declare attacking creatures
+
+        var available = active.GetAvailableAttackDeclarations();
+        var declarations = await active.ChooseAttackDeclarations(available);
+
+        // check that there are no overlapping declarations
+        foreach (var d in declarations)
+        {
+            var conflict = declarations.FirstOrDefault(
+                cd => d != cd && d.ConflictsWith(d)
+            );
+            if (conflict is null) continue;
+
+            throw new Exception($"Chosen attack declarations conflict with each other: {d.GetDisplayName()} and {conflict.GetDisplayName()}");
+        }
+
         // TODO
-        return Task.CompletedTask;
     }
 
     
@@ -23,5 +40,4 @@ public class DeclareAttackersStep : Step
     }
 
     public override bool CanBeTaken() => true;
-
 }

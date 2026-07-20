@@ -14,7 +14,12 @@ public class UntapStep : Step
 
     public override Task DoPrePriority()
     {
-        // TODO
+        var active = Match.GetActivePlayer();
+        foreach (var p in Match.Battlefield.GetPermanentsControlledBy(active))
+        {
+            p.HasSummoningSickness = false;
+            // TODO untap
+        }
 
         return Task.CompletedTask;
     }

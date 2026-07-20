@@ -67,4 +67,10 @@ public class MatchConfigBuilder
         _result.ManaPoolEmptiesAtEndOfEachStep = false;
         return this;
     }
+
+    public MatchConfigBuilder DisableSummoningSickness()
+    {
+        _result.SummoningSickness = false;
+        return this;
+    }
 }

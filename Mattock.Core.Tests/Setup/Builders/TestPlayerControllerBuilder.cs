@@ -83,7 +83,7 @@ public class PlayerChoicesBuilder(TestPlayerControllerBuilder builder)
 {
     public TestPlayerControllerBuilder WithIdx(int idx)
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return (options.Single(p => p.Idx == idx), true);
         });
@@ -329,7 +329,7 @@ public class StringChoicesBuilder(TestPlayerControllerBuilder builder)
 {
     public TestPlayerControllerBuilder Yes()
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return ("Yes", true);
         });
@@ -337,7 +337,7 @@ public class StringChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder No()
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return ("No", true);
         });
@@ -356,7 +356,7 @@ public class CardChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder First()
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return (options[0], true);
         });
@@ -364,7 +364,7 @@ public class CardChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder FirstWithName(string name)
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return (options.First(c => c.HasName(name)), true);
         });
@@ -372,7 +372,7 @@ public class CardChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             action(new(player, options, hint));
             return (null, false);
@@ -407,7 +407,7 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder First()
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return (options.First(), true);
         });
@@ -415,7 +415,7 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder FirstOfType(ManaType type)
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             return (options.First(o => o.Type == type), true);
         });
@@ -423,7 +423,7 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
-        return Enqueue(async (player, options, hint) =>
+        return Enqueue(async (player, options, hint, allowNone) =>
         {
             action(new(player, options, hint));
             return (null, false);

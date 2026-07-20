@@ -19,11 +19,11 @@ public class TestPlayerController(
 ) : IPlayerController
 {
     public delegate Task<(ICommand?, bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
-    public delegate Task<(Player?, bool)> PlayerChoice(Player player, Player[] options, string hint);
-    public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint);
-    public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint);
-    public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint);
-    public delegate Task<(StoredMana?, bool)> StoredManaChoice(Player player, StoredMana[] options, string hint);
+    public delegate Task<(Player?, bool)> PlayerChoice(Player player, Player[] options, string hint, bool allowNone);
+    public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
+    public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
+    public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
+    public delegate Task<(StoredMana?, bool)> StoredManaChoice(Player player, StoredMana[] options, string hint, bool allowNone);
 
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
@@ -87,7 +87,8 @@ public class TestPlayerController(
         Player player,
         TResult[] options,
         string hint,
-        Func<TDelegate, Player, TResult[], string, Task<(TResult?, bool)>> getter,
+        bool allowNone,
+        Func<TDelegate, Player, TResult[], string, bool, Task<(TResult?, bool)>> getter,
         Queue<TDelegate> queue,
         string methodName
     )
@@ -95,7 +96,7 @@ public class TestPlayerController(
         while (queue.Count > 0)
         {
             var choice = queue.Dequeue();
-            var (result, isResult) = await getter(choice, player, options, hint);
+            var (result, isResult) = await getter(choice, player, options, hint, allowNone);
             if (!isResult) continue;
             if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
@@ -104,61 +105,66 @@ public class TestPlayerController(
         throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
     }
 
-    public async Task<Player> ChoosePlayer(Player player, Player[] options, string hint)
+    public async Task<Player?> ChoosePlayer(Player player, Player[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
             options,
             hint,
-            (d, p, o, h) => d(p, o, h),
+            allowNone,
+            (d, p, o, h, a) => d(p, o, h, a),
             playerChoices,
             nameof(ChoosePlayer)
         );
     }
 
-    public async Task<string> ChooseString(Player player, string[] options, string hint)
+    public async Task<string?> ChooseString(Player player, string[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
             options,
             hint,
-            (d, p, o, h) => d(p, o, h),
+            allowNone,
+            (d, p, o, h, a) => d(p, o, h, a),
             stringChoices,
             nameof(ChooseString)
         );
     }
 
-    public async Task<Card> ChooseCard(Player player, Card[] options, string hint)
+    public async Task<Card?> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
             options,
             hint,
-            (d, p, o, h) => d(p, o, h),
+            allowNone,
+            (d, p, o, h, a) => d(p, o, h, a),
             cardChoices,
             nameof(ChooseCard)
         );
     }
 
-    public async Task<CostCollection> ChooseCostCollection(Player player, CostCollection[] options, string hint)
+    public async Task<CostCollection?> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
             options,
             hint,
-            (d, p, o, h) => d(p, o, h),
+            allowNone,
+            (d, p, o, h, a) => d(p, o, h, a),
             costCollectionChoices,
             nameof(ChooseCostCollection)
         );
     }
 
-    public async Task<StoredMana> ChooseStoredMana(Player player, StoredMana[] options, string hint)
+    public async Task<StoredMana?> ChooseStoredMana(Player player, StoredMana[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
             options,
             hint,
-            (d, p, o, h) => d(p, o, h),
+            allowNone,
+            (d, p, o, h, a) => d(p, o, h, a),
             storedManaChoices,
             nameof(ChooseStoredMana)
         );

@@ -18,10 +18,10 @@ public class LondonMulliganRule(
 
         for (; target > 0; --target)
         {
-            var choice = await player.ChooseCard([.. player.Hand.Cards], $"Choose a card to up on the bottom of your library ({target} left)");
+            var choice = await player.ChooseCard([.. player.Hand.Cards], $"Choose a card to up on the bottom of your library ({target} left)", false);
 
             player.Match.MoveCard(
-                choice,
+                choice!,
                 player.Library,
                 CardZoneChangeType.Bottom
             );

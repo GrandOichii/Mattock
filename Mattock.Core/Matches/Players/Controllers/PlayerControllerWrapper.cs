@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Costs;
@@ -11,13 +12,13 @@ public abstract class PlayerControllerWrapper(
 ) : IPlayerController
 {
     public abstract Task HandleCommandChoice(ICommand choice, Player player, ICommand[] choices);
-    public abstract Task HandlePlayerChoice(Player choice, Player player, Player[] choices, string hint);
-    public abstract Task HandleStringChoice(string choice, Player player, string[] choices, string hint);
-    public abstract Task HandleCardChoice(Card choice, Player player, Card[] choices, string hint);
-    public abstract Task HandleCostCollectionChoice(CostCollection choice, Player player, CostCollection[] choices, string hint);
-    public abstract Task HandleStoredManaChoice(StoredMana choice, Player player, StoredMana[] choices, string hint);
+    public abstract Task HandlePlayerChoice(Player? choice, Player player, Player[] choices, string hint);
+    public abstract Task HandleStringChoice(string? choice, Player player, string[] choices, string hint);
+    public abstract Task HandleCardChoice(Card? choice, Player player, Card[] choices, string hint);
+    public abstract Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] choices, string hint);
+    public abstract Task HandleStoredManaChoice(StoredMana? choice, Player player, StoredMana[] choices, string hint);
 
-    // public void AddEvent(Event e)
+    // public void AddEvent(Event , allowNonee)
     // {
     //     controller.AddEvent(e);
     // }
@@ -47,42 +48,42 @@ public abstract class PlayerControllerWrapper(
         return result;
     }
 
-    public async Task<Card> ChooseCard(Player player, Card[] options, string hint)
+    public async Task<Card?> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
     {
-        var result = await controller.ChooseCard(player, options, hint);
+        var result = await controller.ChooseCard(player, options, hint, allowNone);
         await HandleCardChoice(result, player, options, hint);
 
         return result;
     }
 
-    public async Task<Player> ChoosePlayer(Player player, Player[] options, string hint)
+    public async Task<Player?> ChoosePlayer(Player player, Player[] options, string hint, bool allowNone)
     {
-        var result = await controller.ChoosePlayer(player, options, hint);
+        var result = await controller.ChoosePlayer(player, options, hint, allowNone);
         await HandlePlayerChoice(result, player, options, hint);
 
         return result;
     }
 
-    public async Task<string> ChooseString(Player player, string[] options, string hint)
+    public async Task<string?> ChooseString(Player player, string[] options, string hint, bool allowNone)
     {
-        var result = await controller.ChooseString(player, options, hint);
+        var result = await controller.ChooseString(player, options, hint, allowNone);
         await HandleStringChoice(result, player, options, hint);
 
         return result;
     }
     
 
-    public async Task<CostCollection> ChooseCostCollection(Player player, CostCollection[] options, string hint)
+    public async Task<CostCollection?> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
     {
-        var result = await controller.ChooseCostCollection(player, options, hint);
+        var result = await controller.ChooseCostCollection(player, options, hint, allowNone);
         await HandleCostCollectionChoice(result, player, options, hint);
 
         return result;
     }
     
-    public async Task<StoredMana> ChooseStoredMana(Player player, StoredMana[] options, string hint)
+    public async Task<StoredMana?> ChooseStoredMana(Player player, StoredMana[] options, string hint, bool allowNone)
     {
-        var result = await controller.ChooseStoredMana(player, options, hint);
+        var result = await controller.ChooseStoredMana(player, options, hint, allowNone);
         await HandleStoredManaChoice(result, player, options, hint);
 
         return result;
@@ -93,4 +94,8 @@ public abstract class PlayerControllerWrapper(
         return controller.Update(player, stateMsg);
     }
 
+    public Task<AttackDeclaration[]> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
+    {
+        return controller.ChooseAttackDeclarations(player, options);
+    }
 }

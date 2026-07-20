@@ -55,4 +55,9 @@ public class Battlefield(Match match) : ICardZone
         // TODO check if any need to be put in graveyard
         return [ .. _permanents ];
     }
+
+    public Permanent[] GetPermanentsControlledBy(Player player)
+    {
+        return [.. _permanents.Where(p => p.Controller == player)];
+    }
 }

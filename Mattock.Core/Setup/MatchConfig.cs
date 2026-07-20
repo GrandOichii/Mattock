@@ -16,6 +16,8 @@ public class MatchConfig
     public required int MaxLandsPerTurn { get; set; }
     public required bool ManaPoolEmptiesAtEndOfEachPhase { get; set; }
     public required bool ManaPoolEmptiesAtEndOfEachStep { get; set; }
+    public required bool SummoningSickness { get; set; }
+
     public required int TeamCount { get; set; }
     public required int MaxTeamSize { get; set; }
 
@@ -35,6 +37,7 @@ public class MatchConfig
         MaxLandsPerTurn = 1,
         ManaPoolEmptiesAtEndOfEachPhase = true,
         ManaPoolEmptiesAtEndOfEachStep = true,
+        SummoningSickness = true,
         TeamCount = 4,
         MaxTeamSize = 1,
     };
@@ -55,6 +58,7 @@ public class MatchConfig
         MaxLandsPerTurn = config.MaxLandsPerTurn,
         ManaPoolEmptiesAtEndOfEachPhase = config.ManaPoolEmptiesAtEndOfEachPhase,
         ManaPoolEmptiesAtEndOfEachStep = config.ManaPoolEmptiesAtEndOfEachStep,
+        SummoningSickness = config.SummoningSickness,
         TeamCount = config.TeamCount,
         MaxTeamSize = config.MaxTeamSize,
     };

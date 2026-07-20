@@ -1,3 +1,6 @@
+using Mattock.Core.Matches.Combat;
+using Mattock.Core.Matches.Combat.AttackDeclarations;
+using Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
 using Mattock.Core.Matches.Permanents.Statuses;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
@@ -16,6 +19,8 @@ public class Permanent
     public PermanentStatus FaceUp { get; }
     public PermanentStatus PhasedIn { get; }
 
+    public bool HasSummoningSickness { get; set; }
+
     public Permanent(Card card)
     {
         Pid = card.Match.Battlefield.GeneratePid();
@@ -27,6 +32,8 @@ public class Permanent
         Flipped = new(PermanentStatusType.Flipped, false);
         FaceUp = new(PermanentStatusType.FaceUp, true);
         PhasedIn = new(PermanentStatusType.PhasedIn, true);
+
+        HasSummoningSickness = true;
     }
 
     public string GetDisplayName() => $"[{Pid}]";
@@ -58,5 +65,37 @@ public class Permanent
     {
         // TODO 
         return Card.HasName(name);
+    }
+
+    public AttackDeclaration[] GetAvailableAttackDeclarations()
+    {
+        if (IsTapped())
+        {
+            // TODO some effects change this
+            return [];
+        }
+
+        List<AttackDeclaration> result = [];
+
+        // players
+        foreach (var player in Match.Players)
+        {
+            if (player == Controller) continue;
+
+            // TODO checks for whether can attack or not
+            result.Add(new()
+            {
+                Attacker = this,
+                Target = new PlayerAttackDeclarationTarget()
+                {
+                    Target = player
+                }
+            });
+        }
+
+        // TODO planeswalkers
+        // TODO battles
+
+        return [.. result];
     }
 }
