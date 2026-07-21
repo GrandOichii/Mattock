@@ -1,14 +1,11 @@
-
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Combat;
 
-public class BeginningOfCombatStep : Step
+public class BeginningOfCombatStep(
+    Phase phase
+) : Step(phase, StepType.BeginningOfCombat, true)
 {
-    public BeginningOfCombatStep(Phase phase) : base(phase, StepType.BeginningOfCombat, true)
-    {
-    }
-
     public override Task DoPrePriority()
     {
         // TODO

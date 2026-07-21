@@ -21,7 +21,8 @@ public class MatchAsserts(TestMatchWrapper match)
         bool checkStringChoices = true,
         bool checkCardChoices = true,
         bool checkCostCollectionChoices = true,
-        bool checkStoredManaChoices = true
+        bool checkStoredManaChoices = true,
+        bool checkAttackDeclarationsChoices = true
     )
     {
         foreach (var player in match.Players)
@@ -32,7 +33,8 @@ public class MatchAsserts(TestMatchWrapper match)
                 checkStringChoices,
                 checkCardChoices,
                 checkCostCollectionChoices,
-                checkStoredManaChoices
+                checkStoredManaChoices,
+                checkAttackDeclarationsChoices
             );        
         }
         return this;

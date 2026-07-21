@@ -18,6 +18,7 @@ public class TestPlayerControllerBuilder
     public CardChoicesBuilder CardChoices { get; }
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
     public StoredManaChoicesBuilder StoredManaChoices { get; }
+    public AttackDeclarationsChoicesBuilder AttackDeclarationsChoices { get; }
 
     public TestPlayerControllerBuilder(string name, int teamIdx)
     {
@@ -34,6 +35,7 @@ public class TestPlayerControllerBuilder
         CardChoices = new(this);
         CostCollectionChoices = new(this);
         StoredManaChoices = new(this);
+        AttackDeclarationsChoices = new(this);
     }
 
     public PlayerChoicesBuilder ChoosePlayer => PlayerChoices;
@@ -61,7 +63,8 @@ public class TestPlayerControllerBuilder
             StringChoices.Queue,
             CardChoices.Queue,
             CostCollectionChoices.Queue,
-            StoredManaChoices.Queue
+            StoredManaChoices.Queue,
+            AttackDeclarationsChoices.Queue
         );
     }
 }
@@ -440,3 +443,8 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
     }
 }
 
+public class AttackDeclarationsChoicesBuilder(TestPlayerControllerBuilder builder)
+    : ChoicesBuilder<TestPlayerController.AttackDeclarationsChoice>(builder)
+{
+    
+}

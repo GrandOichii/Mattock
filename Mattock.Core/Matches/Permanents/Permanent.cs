@@ -1,4 +1,3 @@
-using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
 using Mattock.Core.Matches.Permanents.Statuses;
@@ -19,7 +18,11 @@ public class Permanent
     public PermanentStatus FaceUp { get; }
     public PermanentStatus PhasedIn { get; }
 
+    public Dictionary<PermanentStatusType, PermanentStatus> StatusMap { get; }
+
     public bool HasSummoningSickness { get; set; }
+
+    public IAttackDeclarationTarget? AttackTarget { get; private set; }
 
     public Permanent(Card card)
     {
@@ -27,14 +30,27 @@ public class Permanent
         Match = card.Match;
         Card = card;
         Controller = null;
+        AttackTarget = null;
 
         Tapped = new(PermanentStatusType.Tapped, false);
         Flipped = new(PermanentStatusType.Flipped, false);
         FaceUp = new(PermanentStatusType.FaceUp, true);
         PhasedIn = new(PermanentStatusType.PhasedIn, true);
 
+        StatusMap = new()
+        {
+            { Tapped.Type, Tapped },
+            { Flipped.Type, Flipped },
+            { FaceUp.Type, FaceUp },
+            { PhasedIn.Type, PhasedIn },
+        };
+
         HasSummoningSickness = true;
     }
+
+    public bool IsAttacking() => AttackTarget is not null;
+
+    public PermanentStatus GetStatus(PermanentStatusType type) => StatusMap[type];
 
     public string GetDisplayName() => $"[{Pid}]";
 
@@ -69,11 +85,16 @@ public class Permanent
 
     public AttackDeclaration[] GetAvailableAttackDeclarations()
     {
+        if (!HasType(CardTypes.Creature))
+            return [];
         if (IsTapped())
         {
             // TODO some effects change this
             return [];
         }
+
+        // TODO haste
+        if (HasSummoningSickness) return [];
 
         List<AttackDeclaration> result = [];
 
@@ -97,5 +118,22 @@ public class Permanent
         // TODO battles
 
         return [.. result];
+    }
+
+    public void SetAttackTarget(IAttackDeclarationTarget target)
+    {
+        // TODO
+        AttackTarget = target;
+    }
+
+    public void RemoveAttackTarget()
+    {
+        AttackTarget = null;
+    }
+
+    public Task RemoveFromCombat()
+    {
+        RemoveAttackTarget();
+        return Task.CompletedTask;
     }
 }

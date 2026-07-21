@@ -10,15 +10,14 @@ public class AttackDeclaration
 
     public bool ConflictsWith(AttackDeclaration other)
     {
-        if (Attacker == other.Attacker) return true;
-        
-        // TODO 
-        return false;
+        if (Attacker == other.Attacker) 
+            return true;
+
+        return Target.ConflictsWith(other.Target);
     }
 
     public string GetDisplayName()
     {
-        // TODO
         return $"{Attacker.GetDisplayName()} -> {Target.GetDisplayName()}";
     }
 }

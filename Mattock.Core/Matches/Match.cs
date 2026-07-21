@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Actions;
@@ -26,6 +27,7 @@ public class Match
     private int _lastCardId;
     public CardZoneChange? ZoneChange { get; private set; }
     public TheStack Stack { get; }
+    public MatchEvents Events { get; }
     public Priority? Priority { get; private set; }
     public TurnManager TurnManager { get; }
     public StateBasedActionsManager StateBasedActions { get; }
@@ -49,6 +51,7 @@ public class Match
         ZoneChange = null;
         Priority = null;
         Stack = new(this);
+        Events = new(this);
         Battlefield = new(this);
         TurnManager = new(this);
         StateBasedActions = new(this);
@@ -348,6 +351,12 @@ public class Match
     }
 
     public bool AreWinnersDecided() => _winningTeams is not null;
+
+
+    public async Task ProcessEvent(IEvent e)
+    {
+        await e.Do(this);
+    }
 }
 
 /// <summary>

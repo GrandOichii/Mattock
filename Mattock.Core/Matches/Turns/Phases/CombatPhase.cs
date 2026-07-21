@@ -9,8 +9,8 @@ public class CombatPhase : Phase
     {
         Steps.Add(new BeginningOfCombatStep(this));
         Steps.Add(new DeclareAttackersStep(this));
-
-        // TODO declare blockers step
+        Steps.Add(new DeclareBlockersStep(this));
+        
         // TODO combat damage steps
 
         Steps.Add(new EndOfCombatStep(this));

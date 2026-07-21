@@ -60,4 +60,9 @@ public class Battlefield(Match match) : ICardZone
     {
         return [.. _permanents.Where(p => p.Controller == player)];
     }
+
+    public Permanent[] GetAttackingPermanents()
+    {
+        return [ .. _permanents.Where(p => p.IsAttacking()) ];
+    }
 }

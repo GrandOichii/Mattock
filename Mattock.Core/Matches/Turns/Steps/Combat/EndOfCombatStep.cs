@@ -3,12 +3,10 @@ using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Combat;
 
-public class EndOfCombatStep : Step
+public class EndOfCombatStep(
+    Phase phase
+) : Step(phase, StepType.EndOfCombat, true)
 {
-    public EndOfCombatStep(Phase phase) : base(phase, StepType.EndOfCombat, true)
-    {
-    }
-
     public override Task DoPrePriority()
     {
         // TODO
@@ -16,10 +14,9 @@ public class EndOfCombatStep : Step
     }
 
     
-    public override Task DoPostPriority()
+    public override async Task DoPostPriority()
     {
-        // TODO
-        return Task.CompletedTask;
+        await Match.Events.RemoveAllFromCombat();
     }
 
     public override bool CanBeTaken() => true;
