@@ -94,7 +94,7 @@ public class Permanent
         }
 
         // TODO haste
-        if (HasSummoningSickness) return [];
+        if (HasSummoningSickness && Match.Config.SummoningSickness) return [];
 
         List<AttackDeclaration> result = [];
 

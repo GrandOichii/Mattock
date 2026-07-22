@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
@@ -44,6 +45,7 @@ public class TestPlayerControllerBuilder
     public CostCollectionChoicesBuilder ChooseCostCollection => CostCollectionChoices;
     public StoredManaChoicesBuilder ChooseMana => StoredManaChoices;
     public CommandChoicesBuilder Act => CommandChoices;
+    public AttackDeclarationsChoicesBuilder DeclareAttack => AttackDeclarationsChoices; 
 
     public TestPlayerControllerBuilder SetDeck(DeckTemplate deck)
     {
@@ -446,5 +448,31 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 public class AttackDeclarationsChoicesBuilder(TestPlayerControllerBuilder builder)
     : ChoicesBuilder<TestPlayerController.AttackDeclarationsChoice>(builder)
 {
-    
+    public TestPlayerControllerBuilder Assert(Action<Asserts> action)
+    {
+        return Enqueue(async (player, options) =>
+        {
+            action(new(player, options));
+            return (null, false);
+        });
+    }
+
+    public class Asserts(Player player, AttackDeclaration[] options)
+    {
+        public Asserts OptionsCount(int v)
+        {
+            options.Length.ShouldBe(v);
+            return this;
+        }
+
+        public Asserts CanAttackPlayer(int idx)
+        {
+            var target = player.Match.Players[idx];
+            options.Any(o => o
+                .Target.GetTarget() == target
+            ).ShouldBeTrue();
+
+            return this;
+        }
+    }
 }

@@ -1,6 +1,3 @@
-
-using Mattock.Core.Matches.Turns.Phases;
-
 namespace Mattock.Core.Tests.Rules.TurnStructure.Steps;
 
 public class DrawStepTests

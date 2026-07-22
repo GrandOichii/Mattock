@@ -279,7 +279,6 @@ public class CastSpellActionTests
             // TODO declare attackers
             ;
 
-        // Act
         var match = new TestMatchWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
@@ -291,6 +290,7 @@ public class CastSpellActionTests
         );
         match.RemoveMulligans();
 
+        // Act
         await match.Run();
 
         // Assert

@@ -61,14 +61,14 @@ public class MatchConfigBuilder
         return this;
     }
     
-    public MatchConfigBuilder DisableManaPoolEmptying()
+    public MatchConfigBuilder NoManaPoolEmptying()
     {
         _result.ManaPoolEmptiesAtEndOfEachPhase = false;
         _result.ManaPoolEmptiesAtEndOfEachStep = false;
         return this;
     }
 
-    public MatchConfigBuilder DisableSummoningSickness()
+    public MatchConfigBuilder NoSummoningSickness()
     {
         _result.SummoningSickness = false;
         return this;

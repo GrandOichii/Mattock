@@ -98,7 +98,7 @@ public class ManaCostTests
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
                 .FirstPlayerNoDrawIfSingleOpponent(false)
-                .DisableManaPoolEmptying()
+                .NoManaPoolEmptying()
                 .Build(),
             [ p1, p2 ]
         );
@@ -255,7 +255,7 @@ public class ManaCostTests
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
                 .FirstPlayerNoDrawIfSingleOpponent(false)
-                .DisableManaPoolEmptying()
+                .NoManaPoolEmptying()
                 .Build(),
             [ p1, p2 ]
         );
