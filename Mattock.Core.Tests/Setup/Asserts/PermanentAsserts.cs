@@ -35,4 +35,18 @@ public class PermanentAsserts(Permanent permanent)
         permanent.IsTapped().ShouldBeTrue();
         return this;
     }
+
+    public PermanentAsserts IsNotAttacking()
+    {
+        permanent.IsAttacking().ShouldBeFalse();
+        return this;
+    }
+
+    public PermanentAsserts IsAttackingPlayer(int idx)
+    {
+        var player = permanent.Match.Players[idx];
+        permanent.AttackTarget.ShouldNotBeNull();
+        permanent.AttackTarget.GetTarget().ShouldBe(player);
+        return this;
+    }
 }

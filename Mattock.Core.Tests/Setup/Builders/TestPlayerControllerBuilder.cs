@@ -1,9 +1,3 @@
-using Mattock.Core.Matches.Combat.AttackDeclarations;
-using Mattock.Core.Matches.Mana;
-using Mattock.Core.Matches.Players.Actions;
-using Mattock.Core.Matches.Players.Cards;
-using Mattock.Core.Matches.Players.Mana;
-using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Tests.Setup.Builders;
 
@@ -20,6 +14,7 @@ public class TestPlayerControllerBuilder
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
     public StoredManaChoicesBuilder StoredManaChoices { get; }
     public AttackDeclarationsChoicesBuilder AttackDeclarationsChoices { get; }
+    public BlockDeclarationsChoicesBuilder BlockDeclarationsChoices { get; }
 
     public TestPlayerControllerBuilder(string name, int teamIdx)
     {
@@ -37,6 +32,7 @@ public class TestPlayerControllerBuilder
         CostCollectionChoices = new(this);
         StoredManaChoices = new(this);
         AttackDeclarationsChoices = new(this);
+        BlockDeclarationsChoices = new(this);
     }
 
     public PlayerChoicesBuilder ChoosePlayer => PlayerChoices;
@@ -46,6 +42,7 @@ public class TestPlayerControllerBuilder
     public StoredManaChoicesBuilder ChooseMana => StoredManaChoices;
     public CommandChoicesBuilder Act => CommandChoices;
     public AttackDeclarationsChoicesBuilder DeclareAttack => AttackDeclarationsChoices; 
+    public BlockDeclarationsChoicesBuilder DeclareBlock => BlockDeclarationsChoices; 
 
     public TestPlayerControllerBuilder SetDeck(DeckTemplate deck)
     {
@@ -66,7 +63,8 @@ public class TestPlayerControllerBuilder
             CardChoices.Queue,
             CostCollectionChoices.Queue,
             StoredManaChoices.Queue,
-            AttackDeclarationsChoices.Queue
+            AttackDeclarationsChoices.Queue,
+            BlockDeclarationsChoices.Queue
         );
     }
 }
@@ -203,6 +201,20 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
             async (match, player, options) =>
             {
                 return (PassChoice(options), true, false);
+            },
+            false
+        ));
+    }
+
+    public TestPlayerControllerBuilder AutoPassUntilStackEmpty()
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                if (match.Match!.Stack.IsEmpty())
+                    return (PassChoice(options), true, false);
+
+                return (null, false, true);
             },
             false
         ));
@@ -448,6 +460,35 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 public class AttackDeclarationsChoicesBuilder(TestPlayerControllerBuilder builder)
     : ChoicesBuilder<TestPlayerController.AttackDeclarationsChoice>(builder)
 {
+    public TestPlayerControllerBuilder Skip()
+    {
+        return Enqueue(async (player, options) =>
+        {
+            return ([], true);
+        });
+    }
+
+    private List<Func<AttackDeclaration[], AttackDeclaration>> _attackQueue = [];
+
+    public AttackDeclarationsChoicesBuilder Player(string name, int idx)
+    {
+        _attackQueue.Add(options => options.Single(o => 
+            o.Attacker.HasName(name) &&
+            o.Target.GetTarget() == o.Attacker.Match.Players[idx]
+        ));
+        return this;
+    }
+
+    public TestPlayerControllerBuilder Done()
+    {
+        Func<AttackDeclaration[], AttackDeclaration>[] attacks = [.. _attackQueue];
+        return Enqueue(async (player, options) =>
+        {
+            AttackDeclaration[] result = [.. attacks.Select(a => a(options))];
+            return (result, true);
+        });
+    }
+    
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
         return Enqueue(async (player, options) =>
@@ -472,6 +513,67 @@ public class AttackDeclarationsChoicesBuilder(TestPlayerControllerBuilder builde
                 .Target.GetTarget() == target
             ).ShouldBeTrue();
 
+            return this;
+        }
+
+        public Asserts CanAttackPlayer(string name, int idx)
+        {
+            var target = player.Match.Players[idx];
+            options.Any(o => 
+                o.Target.GetTarget() == target &&
+                o.Attacker.HasName(name) 
+            ).ShouldBeTrue();
+
+            return this;
+        }
+    }
+}
+
+public class BlockDeclarationsChoicesBuilder(TestPlayerControllerBuilder builder)
+    : ChoicesBuilder<TestPlayerController.BlockDeclarationsChoice>(builder)
+{
+    private List<Func<BlockDeclaration[], BlockDeclaration>> _blockQueue = [];
+
+    public BlockDeclarationsChoicesBuilder Block(string attackerName, string blockerName)
+    {
+        _blockQueue.Add(options => options.Single(o => 
+            o.Blocker.HasName(blockerName) &&
+            o.Attackers.Length == 1 &&
+            o.Attackers[0].HasName(attackerName)
+        ));
+        return this;
+    }
+
+    public TestPlayerControllerBuilder Done()
+    {
+        Func<BlockDeclaration[], BlockDeclaration>[] Blocks = [.. _blockQueue];
+        return Enqueue(async (player, options) =>
+        {
+            BlockDeclaration[] result = [.. Blocks.Select(a => a(options))];
+            return (result, true);
+        });
+    }
+
+    public TestPlayerControllerBuilder Assert(Action<Asserts> action)
+    {
+        return Enqueue(async (player, options) =>
+        {
+            action(new(player, options));
+            return (null, false);
+        });
+    }
+    
+    public class Asserts(Player player, BlockDeclaration[] options)
+    {
+        public Asserts OptionsCount(int v)
+        {
+            options.Length.ShouldBe(v);
+            return this;
+        }
+
+        public Asserts CanBlock(string name)
+        {
+            options.Any(o => o.Attackers.Any(a => a.HasName(name))).ShouldBeTrue();
             return this;
         }
     }

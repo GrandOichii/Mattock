@@ -1,4 +1,6 @@
+using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Cards.CardZones;
@@ -458,6 +460,23 @@ public class Player
     }
 
     /// <summary>
+    /// Get the available block declarations for the combat step
+    /// </summary>
+    /// <returns>Available block declarations</returns>
+    public BlockDeclaration[] GetAvailableBlockDeclarations()
+    {
+        Permanent[] attackers = [.. Match
+            .Battlefield
+            .GetAttackingPermanents(this)];
+
+        return [.. Match
+            .Battlefield
+            .GetPermanents()
+            .SelectMany(p => p.GetAvailableBlockDeclarations(this, attackers))
+        ];
+    }
+
+    /// <summary>
     /// Update the player controller with the actual game state
     /// </summary>
     /// <param name="msg">State message</param>
@@ -545,5 +564,16 @@ public class Player
         var result = await _controller.ChooseAttackDeclarations(this, options);
 
         return result;        
+    }
+
+    public async Task<BlockDeclaration[]> ChooseBlockDeclarations(BlockDeclaration[] options)
+    {
+        GameEndSafeguard();
+
+        if (options.Length == 0)
+            throw new Exception($"Provided empty options for {nameof(ChooseBlockDeclarations)}"); // TODO type
+        var result = await _controller.ChooseBlockDeclarations(this, options);
+
+        return result;
     }
 }

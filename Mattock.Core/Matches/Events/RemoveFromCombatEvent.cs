@@ -5,7 +5,7 @@ public class RemoveFromCombatEvent(
 {
     public async Task Do(Match match)
     {
-        foreach (var permanent in match.Battlefield.GetPermanents())
+        foreach (var permanent in match.Battlefield.GetInCombatPermanents())
         {
             await permanent.RemoveFromCombat();
         }

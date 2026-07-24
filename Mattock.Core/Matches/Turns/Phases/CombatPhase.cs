@@ -10,6 +10,7 @@ public class CombatPhase : Phase
         Steps.Add(new BeginningOfCombatStep(this));
         Steps.Add(new DeclareAttackersStep(this));
         Steps.Add(new DeclareBlockersStep(this));
+        Steps.Add(new CombatDamageStep(this));
         
         // TODO combat damage steps
 

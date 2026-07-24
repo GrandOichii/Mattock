@@ -357,6 +357,19 @@ public class Match
     {
         await e.Do(this);
     }
+
+    public Player[] GetPlayersInAPNAP()
+    {
+        List<int> result = [ TurnManager.ActivePlayerIdx ];
+        while (true)
+        {
+            var next = TurnManager.NextInTurnOrderIdx(result.Last());
+            if (next == result.First()) break;
+            result.Add(next);
+        }
+
+        return [.. result.Select(idx => Players[idx])];
+    }
 }
 
 /// <summary>

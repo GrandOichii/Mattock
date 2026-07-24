@@ -22,7 +22,8 @@ public class MatchAsserts(TestMatchWrapper match)
         bool checkCardChoices = true,
         bool checkCostCollectionChoices = true,
         bool checkStoredManaChoices = true,
-        bool checkAttackDeclarationsChoices = true
+        bool checkAttackDeclarationsChoices = true,
+        bool checkBlockDeclarationsChoices = true
     )
     {
         foreach (var player in match.Players)
@@ -34,7 +35,8 @@ public class MatchAsserts(TestMatchWrapper match)
                 checkCardChoices,
                 checkCostCollectionChoices,
                 checkStoredManaChoices,
-                checkAttackDeclarationsChoices
+                checkAttackDeclarationsChoices,
+                checkBlockDeclarationsChoices
             );        
         }
         return this;
@@ -48,6 +50,12 @@ public class MatchAsserts(TestMatchWrapper match)
             ExceptionDispatchInfo.Capture(match.Exception).Throw();
         }
 
+        return this;
+    }
+
+    public MatchAsserts TurnNumber(int v)
+    {
+        match.Match!.TurnCounter.ShouldBe(v);
         return this;
     }
 

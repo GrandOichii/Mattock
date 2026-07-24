@@ -1,8 +1,11 @@
+using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
 using Mattock.Core.Matches.Permanents.Statuses;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Turns.Steps.Combat;
+using Mattock.Core.Utility;
 
 namespace Mattock.Core.Matches.Permanents;
 
@@ -24,6 +27,8 @@ public class Permanent
 
     public IAttackDeclarationTarget? AttackTarget { get; private set; }
 
+    public List<Permanent> Blocking { get; }
+
     public Permanent(Card card)
     {
         Pid = card.Match.Battlefield.GeneratePid();
@@ -31,6 +36,7 @@ public class Permanent
         Card = card;
         Controller = null;
         AttackTarget = null;
+        Blocking = [];
 
         Tapped = new(PermanentStatusType.Tapped, false);
         Flipped = new(PermanentStatusType.Flipped, false);
@@ -49,6 +55,10 @@ public class Permanent
     }
 
     public bool IsAttacking() => AttackTarget is not null;
+
+    public bool IsBlocking() => Blocking.Count > 0;
+
+    public bool IsInCombat() => IsAttacking() || IsBlocking();
 
     public PermanentStatus GetStatus(PermanentStatusType type) => StatusMap[type];
 
@@ -131,9 +141,49 @@ public class Permanent
         AttackTarget = null;
     }
 
+    public void RemoveBlocking()
+    {
+        Blocking.Clear();
+    }
+
     public Task RemoveFromCombat()
     {
         RemoveAttackTarget();
+        RemoveBlocking();
         return Task.CompletedTask;
+    }
+
+    public BlockDeclaration[] GetAvailableBlockDeclarations(Player forPlayer, Permanent[] attackers)
+    {
+        if (Controller != forPlayer) return [];
+
+        // TODO calculate
+        int maxBlocks = 1;
+
+        Permanent[] blockable = [.. attackers
+            .Where(a => 
+                a.CanBeBlockedBy(this) && 
+                CanBlock(a)
+            )
+        ];
+
+        return [.. Common
+            .GetCombinations(blockable, maxBlocks)
+            .Select(g =>
+                new BlockDeclaration(this, g)
+            )
+        ];
+    }
+
+    public bool CanBlock(Permanent other)
+    {
+        // TODO
+        return true;
+    }
+
+    public bool CanBeBlockedBy(Permanent other)
+    {
+        // TODO
+        return true;
     }
 }

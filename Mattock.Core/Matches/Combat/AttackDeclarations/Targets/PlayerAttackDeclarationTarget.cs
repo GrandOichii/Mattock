@@ -1,3 +1,4 @@
+using System.Security;
 using Mattock.Core.Matches.Players;
 
 namespace Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
@@ -17,4 +18,6 @@ public class PlayerAttackDeclarationTarget : IAttackDeclarationTarget
     {
         return false;
     }
+
+    public bool BelongsTo(Player player) => Target == player;
 }

@@ -17,9 +17,18 @@ public class DeclareBlockersStep(
         return Task.CompletedTask;
     }
 
-    public override Task DoPrePriority()
+    public override async Task DoPrePriority()
     {
-        // TODO
-        return Task.CompletedTask;
+        // declare blockers
+        var players = Match.GetPlayersInAPNAP();
+        foreach (var player in players)
+        {
+            var available = player.GetAvailableBlockDeclarations();
+            if (available.Length == 0) continue;
+
+            // TODO
+            var chosen = await player.ChooseBlockDeclarations(available);
+            throw new NotImplementedException();           
+        }
     }
 }

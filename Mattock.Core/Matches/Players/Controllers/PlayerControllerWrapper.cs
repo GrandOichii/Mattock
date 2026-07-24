@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
@@ -96,6 +97,17 @@ public abstract class PlayerControllerWrapper(
 
     public Task<AttackDeclaration[]> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
     {
-        return controller.ChooseAttackDeclarations(player, options);
+        var result = controller.ChooseAttackDeclarations(player, options);
+        // TODO handle
+
+        return result;
+    }
+
+    public Task<BlockDeclaration[]> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
+    {
+        var result = controller.ChooseBlockDeclarations(player, options);
+        // TODO handle
+
+        return result;
     }
 }

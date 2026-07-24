@@ -1,8 +1,4 @@
-using Mattock.Core.Matches.Combat.AttackDeclarations;
-using Mattock.Core.Matches.Players.Actions;
-using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Costs;
-using Mattock.Core.Matches.Players.Mana;
 
 namespace Mattock.Core.Tests.Setup;
 
@@ -17,7 +13,8 @@ public class TestPlayerController(
     Queue<TestPlayerController.CardChoice> cardChoices,
     Queue<TestPlayerController.CostCollectionChoice> costCollectionChoices,
     Queue<TestPlayerController.StoredManaChoice> storedManaChoices,
-    Queue<TestPlayerController.AttackDeclarationsChoice> attackDeclarationsChoices
+    Queue<TestPlayerController.AttackDeclarationsChoice> attackDeclarationsChoices,
+    Queue<TestPlayerController.BlockDeclarationsChoice> blockDeclarationsChoices
 ) : IPlayerController
 {
     public delegate Task<(ICommand?, bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
@@ -27,6 +24,7 @@ public class TestPlayerController(
     public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
     public delegate Task<(StoredMana?, bool)> StoredManaChoice(Player player, StoredMana[] options, string hint, bool allowNone);
     public delegate Task<(AttackDeclaration[]?, bool)> AttackDeclarationsChoice(Player player, AttackDeclaration[] options);
+    public delegate Task<(BlockDeclaration[]?, bool)> BlockDeclarationsChoice(Player player, BlockDeclaration[] options);
 
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
@@ -35,7 +33,8 @@ public class TestPlayerController(
         bool checkCardChoices,
         bool checkCostCollectionChoices,
         bool checkStoredManaChoices,
-        bool checkAttackDeclarationChoices
+        bool checkAttackDeclarationChoices,
+        bool checkBlockDeclarationChoices
     )
     {
         if (checkPlayerChoices)
@@ -55,6 +54,9 @@ public class TestPlayerController(
 
         if (checkAttackDeclarationChoices)
             attackDeclarationsChoices.Count.ShouldBe(0, $"{nameof(AttackDeclarationsChoice)} queue of player {name} is not empty (size: {attackDeclarationsChoices.Count})");
+
+        if (checkBlockDeclarationChoices)
+            blockDeclarationsChoices.Count.ShouldBe(0, $"{nameof(BlockDeclarationsChoice)} queue of player {name} is not empty (size: {attackDeclarationsChoices.Count})");
 
         if (checkCommandChoices)
         {
@@ -191,6 +193,20 @@ public class TestPlayerController(
         }
 
         throw new Exception($"No choices left in queue for {nameof(ChooseAttackDeclarations)} of player {player.GetDisplayName()}");
+    }
+
+    public async Task<BlockDeclaration[]> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
+    {
+        while (blockDeclarationsChoices.Count > 0)
+        {
+            var choice = blockDeclarationsChoices.Dequeue();
+            var (result, isResult) = await choice(player, options);
+            if (!isResult) continue;
+            if (result is null) throw new Exception($"Provided null choice for {nameof(ChooseBlockDeclarations)} of player {player.GetDisplayName()}");
+            return result;
+        }
+
+        throw new Exception($"No choices left in queue for {nameof(ChooseBlockDeclarations)} of player {player.GetDisplayName()}");
     }
 }
 

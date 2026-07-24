@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
@@ -16,4 +17,5 @@ public interface IPlayerController
     Task<CostCollection?> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone);
     Task<StoredMana?> ChooseStoredMana(Player player, StoredMana[] options, string hint, bool allowNone);
     Task<AttackDeclaration[]> ChooseAttackDeclarations(Player player, AttackDeclaration[] options);
+    Task<BlockDeclaration[]> ChooseBlockDeclarations(Player player, BlockDeclaration[] options);
 }
