@@ -147,6 +147,10 @@ public class Permanent
 
     public BlockDeclaration[] GetAvailableBlockDeclarations(Player forPlayer, Permanent[] attackers)
     {
+        if (!HasType(CardTypes.Creature)) return [];
+
+        if (HasType(CardTypes.Battle)) return [];
+        
         if (Controller != forPlayer) return [];
 
         // TODO some effects change this

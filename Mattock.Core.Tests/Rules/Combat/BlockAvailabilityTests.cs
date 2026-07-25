@@ -192,4 +192,89 @@ public class BlockAvailabilityTests
             )
         );
     }
+
+    public static IEnumerable<TheoryDataRow<string>> CantBlock_NonCreature_Data => [ 
+        new(CardTypes.Enchantment),
+        new(CardTypes.Artifact),
+        new(CardTypes.Planeswalker),
+        // TODO Battle
+    ]; 
+
+    [Theory]
+    [MemberData(nameof(CantBlock_NonCreature_Data))]
+    public async Task CantBlock_NotACreature(string type)
+    {
+        // Arrange
+        var config = new MatchConfigBuilder()
+            .NoSummoningSickness()
+            .FirstPlayerIdx(0)
+            .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+            .Build();
+
+        var nonblocker = new DeckCardTemplateBuilder("nonblocker")
+            .ZeroCost()
+            .AddType(type)
+            .Build();
+
+        var attacker = new DeckCardTemplateBuilder("attacker")
+            .ZeroCost()
+            .AddType(CardTypes.Creature)
+            .Build();
+
+        var deck1 = new DeckTemplate()
+        {
+            MainDeck = [ nonblocker ]
+        };
+
+        var deck2 = new DeckTemplate()
+        {
+            MainDeck = [ attacker ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck1)
+            .ChoosePlayer.WithIdx(0)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(nonblocker.Card.Name)
+            .Act.AutoPassToStep(StepType.DeclareBlockers)
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck2)
+            .Act.AutoPassToTurn(2)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(attacker.Card.Name)
+            .Act.AutoPassToStep(StepType.DeclareAttackers)
+            .DeclareAttack
+                .Player(attacker.Card.Name, 0)
+                .Done()
+            .Act.AutoPass()
+        ;
+
+        var match = new TestMatchWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertBattlefield(ab => ab
+                .AssertPermanent(attacker.Card.Name, ap => ap
+                    .IsTapped()
+                )
+                .AssertPermanent(nonblocker.Card.Name, ap => ap
+                    .IsUntapped()
+                )
+            )
+        );
+    }
+
+    // TODO add check for Creatures that are also Battles (they can't block)
 }
