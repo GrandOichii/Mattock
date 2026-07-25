@@ -63,7 +63,8 @@ public class Battlefield(Match match) : ICardZone
 
     public Permanent[] GetInCombatPermanents()
     {
-        return [ .. _permanents.Where(p => p.IsInCombat()) ];
+        // TODO sus
+        return [ .. _permanents.Where(p => p.IsAttacking()) ];
     }
 
     public Permanent[] GetAttackingPermanents()
@@ -74,8 +75,8 @@ public class Battlefield(Match match) : ICardZone
     public Permanent[] GetAttackingPermanents(Player player)
     {
         return [ .. _permanents.Where(p => 
-            p.AttackTarget is not null && 
-            p.AttackTarget.BelongsTo(player))
+            p.CombatState is not null && 
+            p.CombatState.AttackTarget.BelongsTo(player))
         ];
     }
 }

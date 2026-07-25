@@ -4,7 +4,6 @@ using Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
 using Mattock.Core.Matches.Permanents.Statuses;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
-using Mattock.Core.Matches.Turns.Steps.Combat;
 using Mattock.Core.Utility;
 
 namespace Mattock.Core.Matches.Permanents;
@@ -25,9 +24,7 @@ public class Permanent
 
     public bool HasSummoningSickness { get; set; }
 
-    public IAttackDeclarationTarget? AttackTarget { get; private set; }
-
-    public List<Permanent> Blocking { get; }
+    public CombatState? CombatState { get; private set; }
 
     public Permanent(Card card)
     {
@@ -35,8 +32,7 @@ public class Permanent
         Match = card.Match;
         Card = card;
         Controller = null;
-        AttackTarget = null;
-        Blocking = [];
+        CombatState = null;
 
         Tapped = new(PermanentStatusType.Tapped, false);
         Flipped = new(PermanentStatusType.Flipped, false);
@@ -54,11 +50,7 @@ public class Permanent
         HasSummoningSickness = true;
     }
 
-    public bool IsAttacking() => AttackTarget is not null;
-
-    public bool IsBlocking() => Blocking.Count > 0;
-
-    public bool IsInCombat() => IsAttacking() || IsBlocking();
+    public bool IsAttacking() => CombatState is not null;
 
     public PermanentStatus GetStatus(PermanentStatusType type) => StatusMap[type];
 
@@ -133,29 +125,32 @@ public class Permanent
     public void SetAttackTarget(IAttackDeclarationTarget target)
     {
         // TODO
-        AttackTarget = target;
+        if (CombatState is not null)
+            throw new Exception($"Called {SetAttackTarget} on a permanent with a non-null {nameof(CombatState)}"); // TODO type 
+
+        CombatState = new(this, target);
     }
 
-    public void RemoveAttackTarget()
+    public void AddBlocker(Permanent permanent)
     {
-        AttackTarget = null;
-    }
+        if (CombatState is null)
+            throw new Exception($"Called {AddBlocker} on a permanent with a null {nameof(CombatState)}"); // TODO type 
 
-    public void RemoveBlocking()
-    {
-        Blocking.Clear();
+        CombatState.AddBlocker(permanent);
     }
 
     public Task RemoveFromCombat()
     {
-        RemoveAttackTarget();
-        RemoveBlocking();
+        CombatState = null;
         return Task.CompletedTask;
     }
 
     public BlockDeclaration[] GetAvailableBlockDeclarations(Player forPlayer, Permanent[] attackers)
     {
         if (Controller != forPlayer) return [];
+
+        // TODO some effects change this
+        if (IsTapped()) return [];
 
         // TODO calculate
         int maxBlocks = 1;

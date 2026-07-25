@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
@@ -40,6 +41,15 @@ public class MatchEvents(
         await _match.ProcessEvent(e);
     }
 
+    public async Task DeclareBlockers(BlockDeclaration[] declarations)
+    {
+        BlockDeclarationEvent e = new(
+            declarations
+        );
+
+        await _match.ProcessEvent(e);
+    }
+
     public async Task RemoveAllFromCombat()
     {
         RemoveFromCombatEvent e = new(
@@ -48,4 +58,5 @@ public class MatchEvents(
 
         await _match.ProcessEvent(e);
     }
+
 }

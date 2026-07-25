@@ -211,7 +211,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         return Enqueue((
             async (match, player, options) =>
             {
-                if (match.Match!.Stack.IsEmpty())
+                if (!match.Match!.Stack.IsEmpty())
                     return (PassChoice(options), true, false);
 
                 return (null, false, true);
@@ -267,6 +267,19 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
             async (match, player, options) =>
             {
                 match.Match!.Players[playerIdx].Life.Set(life);
+                return (null, false, true);
+            },
+            true
+        ));
+    }
+
+    public TestPlayerControllerBuilder Tap(string name)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                var permanent = match.Match!.Battlefield.GetPermanents().Single(p => p.HasName(name));
+                permanent.Tapped.Set(true);
                 return (null, false, true);
             },
             true
@@ -537,7 +550,7 @@ public class BlockDeclarationsChoicesBuilder(TestPlayerControllerBuilder builder
     public BlockDeclarationsChoicesBuilder Block(string attackerName, string blockerName)
     {
         _blockQueue.Add(options => options.Single(o => 
-            o.Blocker.HasName(blockerName) &&
+            o.Blocker.HasName(blockerName) && // ! ????
             o.Attackers.Length == 1 &&
             o.Attackers[0].HasName(attackerName)
         ));
@@ -571,9 +584,13 @@ public class BlockDeclarationsChoicesBuilder(TestPlayerControllerBuilder builder
             return this;
         }
 
-        public Asserts CanBlock(string name)
+        public Asserts CanBlock(string attackerName, string blockerName)
         {
-            options.Any(o => o.Attackers.Any(a => a.HasName(name))).ShouldBeTrue();
+            options.Any(o => 
+                o.Attackers.Any(a => a.HasName(attackerName)) &&
+                o.Blocker.HasName(blockerName)
+            ).ShouldBeTrue();
+            
             return this;
         }
     }

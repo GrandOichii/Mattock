@@ -45,8 +45,8 @@ public class PermanentAsserts(Permanent permanent)
     public PermanentAsserts IsAttackingPlayer(int idx)
     {
         var player = permanent.Match.Players[idx];
-        permanent.AttackTarget.ShouldNotBeNull();
-        permanent.AttackTarget.GetTarget().ShouldBe(player);
+        permanent.CombatState.ShouldNotBeNull();
+        permanent.CombatState.AttackTarget.GetTarget().ShouldBe(player);
         return this;
     }
 }

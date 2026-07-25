@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Combat;
@@ -21,14 +22,16 @@ public class DeclareBlockersStep(
     {
         // declare blockers
         var players = Match.GetPlayersInAPNAP();
+        List<BlockDeclaration> declarations = [];
         foreach (var player in players)
         {
             var available = player.GetAvailableBlockDeclarations();
             if (available.Length == 0) continue;
 
-            // TODO
             var chosen = await player.ChooseBlockDeclarations(available);
-            throw new NotImplementedException();           
+            declarations.AddRange(chosen);
         }
+        
+        await Match.Events.DeclareBlockers([.. declarations]);
     }
 }

@@ -10,4 +10,12 @@ public class BlockDeclaration(
     public Permanent Blocker { get; } = blocker;
 
     public Permanent[] Attackers { get; } = attackers;
+
+    public void Apply()
+    {
+        foreach (var attacker in Attackers)
+        {
+            attacker.AddBlocker(Blocker);
+        }
+    }
 }
