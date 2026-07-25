@@ -10,7 +10,7 @@ public class BlockDeclarationEvent(
     {
         foreach (var dec in _declarations)
         {
-            
+            dec.Apply();
         }
 
         // TODO trigger     

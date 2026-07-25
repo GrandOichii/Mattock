@@ -49,4 +49,50 @@ public class PermanentAsserts(Permanent permanent)
         permanent.CombatState.AttackTarget.GetTarget().ShouldBe(player);
         return this;
     }
+
+    public PermanentAsserts IsBlocking()
+    {
+        var match = permanent.Match;
+        match.Battlefield.GetPermanents().Any(p => 
+            p.CombatState is not null &&
+            p.CombatState.BlockedBy.Contains(permanent)
+        ).ShouldBeTrue();
+
+        return this;
+    }
+
+    public PermanentAsserts IsNotBlocking()
+    {
+        var match = permanent.Match;
+        match.Battlefield.GetPermanents().Any(p => 
+            p.CombatState is not null &&
+            p.CombatState.BlockedBy.Contains(permanent)
+        ).ShouldBeFalse();
+
+        return this;
+    }
+
+    public PermanentAsserts IsBlocking(string attackerName)
+    {
+        var match = permanent.Match;
+        match.Battlefield.GetPermanents().Any(p => 
+            p.HasName(attackerName) &&
+            p.CombatState is not null &&
+            p.CombatState.BlockedBy.Contains(permanent)
+        ).ShouldBeTrue();
+
+        return this;
+    }
+
+    public PermanentAsserts IsNotBlocking(string attackerName)
+    {
+        var match = permanent.Match;
+        match.Battlefield.GetPermanents().Any(p => 
+            p.HasName(attackerName) &&
+            p.CombatState is not null &&
+            p.CombatState.BlockedBy.Contains(permanent)
+        ).ShouldBeFalse();
+
+        return this;
+    }
 }
