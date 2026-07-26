@@ -16,7 +16,16 @@ public class MatchConfig
     public required int MaxLandsPerTurn { get; set; }
     public required bool ManaPoolEmptiesAtEndOfEachPhase { get; set; }
     public required bool ManaPoolEmptiesAtEndOfEachStep { get; set; }
+
+    /// <summary>
+    /// Creatures can't attack or use tap abilities until the next turn of their controller
+    /// </summary>
     public required bool SummoningSickness { get; set; }
+
+    /// <summary>
+    /// Baseline amount of creatures a creature can block in combat
+    /// </summary>
+    public required int BaselineBlockCount { get; set; }
 
     public required int TeamCount { get; set; }
     public required int MaxTeamSize { get; set; }
@@ -40,6 +49,7 @@ public class MatchConfig
         SummoningSickness = true,
         TeamCount = 4,
         MaxTeamSize = 1,
+        BaselineBlockCount = 1,
     };
 
     public static MatchConfig Copy(MatchConfig config) => new()
@@ -61,5 +71,6 @@ public class MatchConfig
         SummoningSickness = config.SummoningSickness,
         TeamCount = config.TeamCount,
         MaxTeamSize = config.MaxTeamSize,
+        BaselineBlockCount = config.BaselineBlockCount,
     };
 }

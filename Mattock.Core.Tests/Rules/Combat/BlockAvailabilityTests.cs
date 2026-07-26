@@ -98,6 +98,114 @@ public class BlockAvailabilityTests
         );
     }
 
+    /// <summary>
+    /// Two blockers with baseline block count = 2 should be able to both block 2 attacking creatures
+    /// </summary>
+    [Fact]
+    public async Task CanBlock_BothAttacking_BaselineBlockCount2()
+    {
+        // Arrange
+        var config = new MatchConfigBuilder()
+            .NoSummoningSickness()
+            .FirstPlayerIdx(0)
+            .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+            .BaselineBlockCount(2)
+            .Build();
+
+        var blocker1 = new DeckCardTemplateBuilder("blocker1")
+            .ZeroCost()
+            .AddType(CardTypes.Creature)
+            .Build();
+
+        var blocker2 = new DeckCardTemplateBuilder("blocker2")
+            .ZeroCost()
+            .AddType(CardTypes.Creature)
+            .Build();
+
+        var attacker1 = new DeckCardTemplateBuilder("attacker1")
+            .ZeroCost()
+            .AddType(CardTypes.Creature)
+            .Build();
+
+        var attacker2 = new DeckCardTemplateBuilder("attacker2")
+            .ZeroCost()
+            .AddType(CardTypes.Creature)
+            .Build();
+        
+        var deck1 = new DeckTemplate()
+        {
+            MainDeck = [ blocker1, blocker2 ]
+        };
+
+        var deck2 = new DeckTemplate()
+        {
+            MainDeck = [ attacker1, attacker2 ]
+        };
+
+         var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck1)
+            .ChoosePlayer.WithIdx(0)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(blocker1.Card.Name)
+            .Act.AutoPassUntilStackEmpty()
+            .Act.CastSpellWithName(blocker2.Card.Name)
+            .Act.AutoPassToStep(StepType.DeclareAttackers)
+            .DeclareAttack.Skip()
+            .Act.AutoPassToStep(StepType.DeclareBlockers)
+            .DeclareBlock.Assert(ab => ab
+                .OptionsCount(2)
+                .CanBlock(attacker1.Card.Name, blocker1.Card.Name)
+                .CanBlock(attacker2.Card.Name, blocker1.Card.Name)
+                .CanBlock(attacker1.Card.Name, blocker2.Card.Name)
+                .CanBlock(attacker2.Card.Name, blocker2.Card.Name)
+            )
+            .DeclareBlock
+                .Done()
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck2)
+            .Act.AutoPassToTurn(2)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(attacker1.Card.Name)
+            .Act.AutoPassUntilStackEmpty()
+            .Act.CastSpellWithName(attacker2.Card.Name)
+            .Act.AutoPassToStep(StepType.DeclareAttackers)
+            .DeclareAttack
+                .Player(attacker1.Card.Name, 0)
+                .Player(attacker2.Card.Name, 0)
+                .Done()
+            .Act.AutoPass()
+        ;
+
+        var match = new TestMatchWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertBattlefield(ab => ab
+                .AssertPermanent(attacker1.Card.Name, ap => ap
+                    .IsTapped()
+                )
+                .AssertPermanent(attacker2.Card.Name, ap => ap
+                    .IsTapped()
+                )
+                .AssertPermanent(blocker1.Card.Name, ap => ap
+                    .IsUntapped()
+                )
+            )
+        );
+    }
+
     [Fact]
     public async Task CantBlock_Tapped()
     {

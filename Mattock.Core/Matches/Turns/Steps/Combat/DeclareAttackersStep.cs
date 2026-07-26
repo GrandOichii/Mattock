@@ -25,7 +25,7 @@ public class DeclareAttackersStep(
         foreach (var d in declarations)
         {
             var conflict = declarations.FirstOrDefault(
-                cd => d != cd && d.ConflictsWith(d)
+                cd => d != cd && d.ConflictsWith(cd)
             );
             attackers.Add(d.Attacker);
             if (conflict is null) continue;

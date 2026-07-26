@@ -157,7 +157,7 @@ public class Permanent
         if (IsTapped()) return [];
 
         // TODO calculate
-        int maxBlocks = 1;
+        int maxBlocks = Match.Config.BaselineBlockCount;
 
         Permanent[] blockable = [.. attackers
             .Where(a => 

@@ -1,3 +1,5 @@
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+
 namespace Mattock.Core.Tests.Setup.Builders;
 
 public class MatchConfigBuilder
@@ -71,6 +73,12 @@ public class MatchConfigBuilder
     public MatchConfigBuilder NoSummoningSickness()
     {
         _result.SummoningSickness = false;
+        return this;
+    }
+
+    public MatchConfigBuilder BaselineBlockCount(int v)
+    {
+        _result.BaselineBlockCount = v;
         return this;
     }
 }
