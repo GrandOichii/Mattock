@@ -1,17 +1,18 @@
 New = {}
 
 function New:Card()
-    local builder = {}
+    local builder = {
+        spellEffects = {},
+    }
 
     function builder:Build()
-        -- TODO
         return {
-
+            SpellEffects = builder.spellEffects,
         }
     end
 
     function builder:SpellEffect(effect)
-        -- TODO
+        builder.spellEffects[#builder.spellEffects+1] = effect
         return builder
     end
 
@@ -19,17 +20,19 @@ function New:Card()
 end
 
 function New:Effect(text)
-    local builder = {}
+    local builder = {
+        effects = {}
+    }
 
     function builder:Build()
-        -- TODO
         return {
-
+            Text = text,
+            Effects = builder.effects,
         }
     end
 
     function builder:Effect(e)
-        -- TODO
+        builder.effects[#builder.effects+1] = e
         return builder
     end
 

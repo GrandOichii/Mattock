@@ -6,6 +6,7 @@ using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
+using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
 using Mattock.Core.Matches.Turns;
@@ -42,7 +43,7 @@ public class Match
         MatchConfig config,
         PlayerSetup[] playerSetups,
         Mechanics mechanics,
-        string setupScript
+        string[] setupScripts
     )
     {
         Config = config;
@@ -61,7 +62,12 @@ public class Match
         _winningTeams = null;
 
         LState = new();
-        LState.DoString(setupScript);
+        foreach (var setupScript in setupScripts)
+        {
+            LState.DoString(setupScript);
+        }
+
+        var _ = new MatchScripts(this);
 
         var nameGroupings = playerSetups.GroupBy(p => p.Name);
         foreach (var g in nameGroupings)

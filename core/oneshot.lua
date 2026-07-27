@@ -2,8 +2,12 @@ OneShot = {}
 
 
 function OneShot:Draw(manyPlayers, number)
-    -- TODO
-    return {}
+    return function ()
+        local players = manyPlayers()
+        local amount = number()
+
+        DrawCards(players, amount)
+    end
 end
 
 function OneShot:GainLife(manyPlayers, number)

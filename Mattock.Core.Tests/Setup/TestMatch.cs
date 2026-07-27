@@ -10,12 +10,12 @@ public class TestMatch : Match
         MatchConfig config,
         PlayerSetup[] setups,
         Mechanics mechanics,
-        string setupScript
+        string[] setupScripts
     ) : base(
         config, 
         setups, 
         mechanics,
-        setupScript
+        setupScripts
     )
     {
     }

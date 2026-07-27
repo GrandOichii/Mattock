@@ -315,11 +315,9 @@ public class Player
     /// <returns>Castable cards</returns>
     public Card[] GetCastableCards()
     {
-        return [
-            .. Match.Cards.Where(c => 
-                c.CanBeCast(this)
-            )
-        ];
+        return [.. Match.Cards.Where(c => 
+            c.CanBeCast(this)
+        )];
     }
 
     /// <summary>

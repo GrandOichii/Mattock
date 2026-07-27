@@ -2,6 +2,13 @@ namespace Mattock.Core.Tests.Setup.Builders;
 
 public class DeckCardTemplateBuilder(string? cardName = null)
 {
+    public static readonly string DEFAULT_SCRIPT = """
+    function _Create()
+        return New:Card()
+            :Build()
+    end
+    """;
+
     public readonly DeckCardTemplate _result = new()
     {
         Amount = 1,
@@ -14,11 +21,12 @@ public class DeckCardTemplateBuilder(string? cardName = null)
             Subtypes = [],
             Supertypes = [],
             Types = [],
-            Loyalty = 0,
+            Loyalty = "",
             ManaCosts = [],
             Power = "",
             Toughness = "",
             TextBox = "",
+            Script = DEFAULT_SCRIPT
         }
     };
     private static int _lastCardId = 0;
