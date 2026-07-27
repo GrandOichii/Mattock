@@ -168,6 +168,7 @@ public class CombatStateTests
         var attacker = new DeckCardTemplateBuilder("attacker")
             .ZeroCost()
             .AddType(CardTypes.Creature)
+            .Power("0")
             .Build();
         
         var deck = new DeckTemplate()
@@ -284,6 +285,7 @@ public class CombatStateTests
 
         var attacker = new DeckCardTemplateBuilder("attacker")
             .ZeroCost()
+            .Power("0")
             .AddType(CardTypes.Creature)
             .Build();
 

@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
+using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Microsoft.VisualBasic;
@@ -59,4 +60,21 @@ public class MatchEvents(
         await _match.ProcessEvent(e);
     }
 
+    public async Task ProcessDamage(DamageAssignment[] assignments)
+    {
+        ProcessDamageEvent e = new(
+            assignments
+        );
+
+        await _match.ProcessEvent(e);
+    }
+
+    public async Task DrawCards(CardDraw[] draws)
+    {
+        CardDrawEvent e = new(
+            draws
+        );
+
+        await _match.ProcessEvent(e);
+    }
 }

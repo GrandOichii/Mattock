@@ -19,10 +19,11 @@ public class DrawStep : Step
             Match.Players.Length > 2;
     }
 
-    public override Task DoPrePriority()
+    public override async Task DoPrePriority()
     {
-        Match.GetActivePlayer().Draw(Match.Config.DrawStepDrawAmount);
-        return Task.CompletedTask;
+        await Match.Events.DrawCards([
+            new(Match.GetActivePlayer(), Match.Config.DrawStepDrawAmount)
+        ]);
     }
 
     public override Task DoPostPriority()

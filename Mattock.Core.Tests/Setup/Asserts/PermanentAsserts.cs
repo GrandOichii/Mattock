@@ -95,4 +95,16 @@ public class PermanentAsserts(Permanent permanent)
 
         return this;
     }
+
+    public PermanentAsserts HasMarkedDamage(int amount)
+    {
+        permanent.MarkedDamage.ShouldBe(amount);
+        return this;
+    }
+
+    public PermanentAsserts HasNoMarkedDamage()
+    {
+        permanent.MarkedDamage.ShouldBe(0);
+        return this;
+    }
 }

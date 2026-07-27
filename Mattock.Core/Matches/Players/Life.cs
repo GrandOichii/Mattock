@@ -14,4 +14,10 @@ public class Life(Player player)
         // TODO
         SetRaw(v);
     }
+
+    public void DealDamage(int damage)
+    {
+        // TODO
+        Current -= damage;
+    }
 }

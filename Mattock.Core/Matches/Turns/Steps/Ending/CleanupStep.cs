@@ -28,7 +28,10 @@ public class CleanupStep : Step
         }
 
         // 514.2. Remove all marked damage
-        // TODO
+        foreach (var permanent in Match.Battlefield.GetPermanents())
+        {
+            permanent.RemoveMarkedDamage();
+        }
 
         // 514.3. Priority (if any effects on the stack)
         // TODO

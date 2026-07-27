@@ -26,6 +26,8 @@ public class Permanent
 
     public CombatState? CombatState { get; private set; }
 
+    public int MarkedDamage { get; private set; }
+
     public Permanent(Card card)
     {
         Pid = card.Match.Battlefield.GeneratePid();
@@ -89,6 +91,7 @@ public class Permanent
     {
         if (!HasType(CardTypes.Creature))
             return [];
+            
         if (IsTapped())
         {
             // TODO some effects change this
@@ -124,7 +127,6 @@ public class Permanent
 
     public void SetAttackTarget(IAttackDeclarationTarget target)
     {
-        // TODO
         if (CombatState is not null)
             throw new Exception($"Called {SetAttackTarget} on a permanent with a non-null {nameof(CombatState)}"); // TODO type 
 
@@ -184,5 +186,27 @@ public class Permanent
     {
         // TODO
         return true;
+    }
+
+    public int GetPower()
+    {
+        // TODO
+        if (string.IsNullOrEmpty(Card.Template.Power))
+            throw new Exception($"Tried to get power of {GetDisplayName()}, which has no power"); // TODO type
+        
+        if (!int.TryParse(Card.Template.Power, out var result))
+            throw new NotImplementedException("Non-int power is not implemented yet");
+
+        return result;
+    }
+
+    public void DealDamage(int amount)
+    {
+        MarkedDamage += amount;
+    }
+
+    public void RemoveMarkedDamage()
+    {
+        MarkedDamage = 0;
     }
 }

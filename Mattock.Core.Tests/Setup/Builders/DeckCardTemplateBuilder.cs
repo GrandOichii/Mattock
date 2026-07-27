@@ -43,6 +43,26 @@ public class DeckCardTemplateBuilder(string? cardName = null)
         return this;
     }
 
+    public DeckCardTemplateBuilder Power(string power)
+    {
+        _result.Card.Power = power;
+        return this;
+    }
+
+    public DeckCardTemplateBuilder StatLine(string statline)
+    {
+        var stats = statline.Split("/");
+        _result.Card.Power = stats[0];
+        _result.Card.Toughness = stats[1];
+        return this;
+    }
+
+    public DeckCardTemplateBuilder Toughness(string toughness)
+    {
+        _result.Card.Toughness = toughness;
+        return this;
+    }
+
     public DeckCardTemplateBuilder AddManaCost(ManaCost cost)
     {
         _result.Card.ManaCosts = [ .. _result.Card.ManaCosts, cost];
