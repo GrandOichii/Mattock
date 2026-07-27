@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Divination",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 2
+        },
+        {
+            "Type": 1,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        1
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Draw 2 cards.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}
