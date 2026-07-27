@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Planar Cleansing",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 3
+        },
+        {
+            "Type": 0,
+            "Amount": 3
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Destroy all nonland permanents.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Pyroclasm",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 3,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        3
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Pyroclasm deals 2 damage to each creature.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

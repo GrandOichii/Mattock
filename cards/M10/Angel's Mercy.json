@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Angel's Mercy",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 2
+        },
+        {
+            "Type": 0,
+            "Amount": 2
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Instant" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "You gain 7 life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

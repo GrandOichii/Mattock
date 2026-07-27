@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Bountiful Harvest",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 4
+        },
+        {
+            "Type": 4,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        4
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "You gain 1 life for each land you control.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}
