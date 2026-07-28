@@ -2,9 +2,9 @@ OneShot = {}
 
 
 function OneShot:Draw(manyPlayers, number)
-    return function ()
-        local players = manyPlayers()
-        local amount = number()
+    return function (ctx)
+        local players = manyPlayers(ctx)
+        local amount = number(ctx)
 
         DrawCards(players, amount)
     end

@@ -1,6 +1,7 @@
 Number = {}
 
 function Number:Const(const)
-    -- TODO
-    return {}
+    return function (ctx)
+        return const
+    end
 end

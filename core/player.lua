@@ -1,7 +1,7 @@
 Player = {}
 
 function Player:You()
-    -- TODO
-    
-    return {}
+    return function (ctx)
+        return ctx.Data.Owner
+    end
 end

@@ -327,42 +327,7 @@ public class Player
     /// <exception cref="Exception">TODO</exception>
     public async Task Cast(Card card)
     {
-        // 601.2a Move the card onto the stack
-        var effect = Match.Stack.Create(card, this);
-        // TODO
-
-        // 601.2b Modal spells
-        // TODO
-
-        // 601.2c Choose targets
-        // TODO
-        
-        // 601.2d Announce divisions
-        // TODO
-
-        // 601.2e Check if the spell can be legally cast (733)
-        // TODO
-
-        // 601.2f Determine the spell cost
-        var costVariations = card.GetCostCollections(this);
-        if (costVariations.Count != new HashSet<string>(costVariations.Select(c => c.Text)).Count)
-        {
-            throw new Exception($"Computed cost variations with duplicate texts (texts: {string.Join(", ", costVariations.Select(c => $"\"{c.Text}\""))})");
-        }
-        var choice = await ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
-
-        // 601.2g Activate mana abilities to pay for costs
-        // TODO
-
-        // 601.2h Pay the cost
-        await PayCost(card, choice);
-        // TODO
-
-        // 601.2i Modify characteristics
-        // TODO
-
-        // Triggers
-        // TODO
+        await Match.Events.CastSpell(this, card);
     }
 
     // TODO remove the Card, costs can be payed for many other things

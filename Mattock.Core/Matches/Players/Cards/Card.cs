@@ -1,5 +1,9 @@
 using Mattock.Core.Matches.Players.Costs;
+using Mattock.Core.Matches.Scripting;
+using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Setup.Templates;
+using Mattock.Core.Utility;
+using NLua;
 
 namespace Mattock.Core.Matches.Players.Cards;
 
@@ -11,6 +15,8 @@ public class Card
     public CardTemplate Template { get; }
     public ICardZone? Zone { get; private set; }
 
+    public Effect[] SpellEffects { get; }
+
     public Card(Player owner, CardTemplate template)
     {
         Match = owner.Match;
@@ -19,6 +25,33 @@ public class Card
         Zone = null;
 
         Id = Match.GenerateCardId(this);
+
+        LuaTable data;
+        try
+        {
+            Match.LState.DoString(template.Script);
+            var creationFunc = LuaCommon.GetGlobalF(Match.LState, "_Create");
+            var returned = creationFunc.Call();
+            data = LuaCommon.GetReturnAs<LuaTable>(returned);
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Failed to run card creation function in card {Template.Name}", e); // TODO type
+        }
+
+        #region Spell effects
+
+        try
+        {
+            var spellEffectsTable = LuaCommon.Get<LuaTable>(data, "SpellEffects");
+            var arr = LuaCommon.ParseTable<LuaTable>(spellEffectsTable);
+            SpellEffects = [.. arr.Select(t => new Effect(t))];
+        } catch (Exception e)
+        {
+            throw new Exception($"Failed to get spell effects for card {template.Name}", e); // TODO type
+        }
+
+        #endregion
     }
 
     public string GetShortName()
@@ -107,5 +140,13 @@ public class Card
         // TODO alternative costs
 
         return result;
+    }
+
+    public async Task ResolveSpellEffects(EffectContext ctx)
+    {
+        foreach (var spellEffect in SpellEffects)
+        {
+            spellEffect.Do(ctx);
+        }
     }
 }

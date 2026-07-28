@@ -1,5 +1,8 @@
 using System.Linq.Expressions;
 using System.Reflection;
+using Mattock.Core.Matches.Events;
+using Mattock.Core.Matches.Players;
+using Mattock.Core.Utility;
 using NLua;
 
 namespace Mattock.Core.Matches.Scripting;
@@ -34,6 +37,17 @@ public class MatchScripts
     [LuaCommand]
     public void DrawCards(LuaTable playerTable, int amount)
     {
-        // TODO
+        var players = LuaCommon.ParseTable<Player>(playerTable);
+
+        Match.Events.DrawCards([..
+            players.Select(p => new CardDraw(p, amount))
+        ]).Wait();
+    }
+
+    [LuaCommand]
+    public LuaTable GetPlayersInAPNAP()
+    {
+        var result = Match.GetPlayersInAPNAP();
+        return LuaCommon.CreateTable(Match.LState, result);
     }
 }

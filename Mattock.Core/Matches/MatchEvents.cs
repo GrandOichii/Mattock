@@ -3,6 +3,8 @@ using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
+using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Players.Cards;
 using Microsoft.VisualBasic;
 
 namespace Mattock.Core.Matches;
@@ -73,6 +75,16 @@ public class MatchEvents(
     {
         CardDrawEvent e = new(
             draws
+        );
+
+        await _match.ProcessEvent(e);
+    }
+
+    public async Task CastSpell(Player player, Card card)
+    {
+        SpellCastEvent e = new(
+            player,
+            card
         );
 
         await _match.ProcessEvent(e);

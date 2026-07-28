@@ -1,18 +1,15 @@
-
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Scripting.Context;
+using Mattock.Core.Matches.Scripting.Context.Data;
 
 namespace Mattock.Core.Matches.Stack.Resolvers;
 
-public class SpellResolver : IStackEffectResolver
+public class SpellResolver(
+    Card card
+) : IStackEffectResolver
 {
-    public Match Match { get; }
-    public Card Card { get; }
-
-    public SpellResolver(Card card)
-    {
-        Match = card.Match;
-        Card = card;
-    }
+    public Match Match { get; } = card.Match;
+    public Card Card { get; } = card;
 
     public async Task Resolve(StackEffect effect)
     {
@@ -50,6 +47,13 @@ public class SpellResolver : IStackEffectResolver
             return;
         }
 
+        EffectContext ctx = new(
+            new SpellEffectContextData(
+                effect.Controller!,
+                Card
+            )
+        );
+
         // 608.2a Intervening "if" clause (603.4)
         // TODO
 
@@ -57,6 +61,8 @@ public class SpellResolver : IStackEffectResolver
         // TODO
 
         // 608.2c Execute effects
+        await Card.ResolveSpellEffects(ctx);
+
         // TODO
 
         // 607.2d ???
