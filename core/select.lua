@@ -1,6 +1,6 @@
 Select = {}
 
-function Select:Players()
+function Select:_(allGetter)
     local select = {
         filters = {}
     }
@@ -10,19 +10,9 @@ function Select:Players()
         return select
     end
 
-    function select:You()
-        return select:Only(Player:You())
-    end
-
-    function select:Only(player)
-        return select:_Filter(function (ctx, p)
-            return p == player(ctx)
-        end)
-    end
-
     function select:Many()
         return function (ctx)
-            local all = GetPlayersInAPNAP()
+            local all = allGetter()
 
             local filterFunc = function (item)
                 for _, filter in ipairs(select.filters) do
@@ -44,37 +34,59 @@ function Select:Players()
         end
     end
 
+    function select:Count()
+        return function (ctx)
+            local result = select:Many()(ctx)
+            return #result
+        end
+    end
+
+    return select
+end
+
+function Select:Players()
+    local select = Select:_(GetPlayersInAPNAP)
+
+    function select:You()
+        return select:Only(Player:You())
+    end
+
+    function select:Only(player)
+        return select:_Filter(function (ctx, p)
+            return p == player(ctx)
+        end)
+    end
+
     return select
 end
 
 function Select:Permanents()
-    local select = {}
+    local select = Select:_(GetPermanents)
 
     function select:NotOfType(type)
-        -- TODO
-        return select
+        return select:_Filter(function (ctx, permanent)
+            -- TODO
+            return false
+        end)
     end
 
     function select:OfTypes(...)
         local types = {...}
 
-        -- TODO
-        return select
-    end
-
-    function select:Many()
-        -- TODO
-        return {}
+        return select:_Filter(function (ctx, permanent)
+            for _, type in ipairs(types) do
+                if PermanentHasType(permanent, type) then
+                    return true
+                end
+            end
+            return false
+        end)
     end
 
     function select:ControlledBy(player)
-        -- TODO
-        return {}
-    end
-
-    function select:Count()
-        -- TODO
-        return -1
+        return select:_Filter(function (ctx, permanent)
+            return GetPermanentController(permanent) == player(ctx)
+        end)
     end
 
     return select

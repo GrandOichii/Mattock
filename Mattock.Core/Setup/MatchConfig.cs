@@ -13,7 +13,7 @@ public class MatchConfig
     public required int DrawStepDrawAmount { get; set; }
     public required bool FirstPlayerNoDrawIfSingleOpponent { get; set; }
     public required int? MaxHandSize { get; set; }
-    public required int MaxLandsPerTurn { get; set; }
+    public required int? MaxLandsPerTurn { get; set; }
     public required bool ManaPoolEmptiesAtEndOfEachPhase { get; set; }
     public required bool ManaPoolEmptiesAtEndOfEachStep { get; set; }
 

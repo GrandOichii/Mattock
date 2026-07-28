@@ -11,8 +11,12 @@ function OneShot:Draw(manyPlayers, number)
 end
 
 function OneShot:GainLife(manyPlayers, number)
-    -- TODO
-    return {}
+    return function (ctx)
+        local players = manyPlayers(ctx)
+        local amount = number(ctx)
+
+        GainLife(players, amount)
+    end
 end
 
 function OneShot:Destroy(manyPermanents)

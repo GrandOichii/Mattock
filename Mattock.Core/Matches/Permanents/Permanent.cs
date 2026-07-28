@@ -13,7 +13,6 @@ public class Permanent
     public string Pid { get; }
     public Match Match { get; }
     public Card Card { get; }
-    public Player? Controller { get; private set; }
 
     public PermanentStatus Tapped { get; }
     public PermanentStatus Flipped { get; }
@@ -28,12 +27,14 @@ public class Permanent
 
     public int MarkedDamage { get; private set; }
 
+    private Player _controller;
+
     public Permanent(Card card)
     {
         Pid = card.Match.Battlefield.GeneratePid();
         Match = card.Match;
         Card = card;
-        Controller = null;
+        _controller = null!;
         CombatState = null;
 
         Tapped = new(PermanentStatusType.Tapped, false);
@@ -62,7 +63,7 @@ public class Permanent
 
     public void SetController(Player controller)
     {
-        Controller = controller;
+        _controller = controller;
     }
 
     public bool HasType(string type)
@@ -74,7 +75,7 @@ public class Permanent
     public bool IsControlledBy(int playerIdx)
     {
         // TODO?
-        return Controller!.Idx == playerIdx;
+        return _controller.Idx == playerIdx;
     }
 
     public bool IsUntapped() => !Tapped.Value;
@@ -106,7 +107,7 @@ public class Permanent
         // players
         foreach (var player in Match.Players)
         {
-            if (player == Controller) continue;
+            if (player == _controller) continue;
 
             // TODO checks for whether can attack or not
             result.Add(new()
@@ -153,7 +154,7 @@ public class Permanent
 
         if (HasType(CardTypes.Battle)) return [];
         
-        if (Controller != forPlayer) return [];
+        if (_controller != forPlayer) return [];
 
         // TODO some effects change this
         if (IsTapped()) return [];
@@ -208,5 +209,10 @@ public class Permanent
     public void RemoveMarkedDamage()
     {
         MarkedDamage = 0;
+    }
+
+    public Player GetController()
+    {
+        return _controller;
     }
 }

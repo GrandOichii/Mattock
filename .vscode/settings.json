@@ -1,6 +1,10 @@
 {
     "Lua.diagnostics.globals": [
         "DrawCards",
-        "GetPlayersInAPNAP"
+        "GetPlayersInAPNAP",
+        "GainLife",
+        "GetPermanents",
+        "GetPermanentController",
+        "PermanentHasType"
     ]
 }

@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Mattock.Core.Matches.Events;
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Utility;
 using NLua;
@@ -45,9 +46,38 @@ public class MatchScripts
     }
 
     [LuaCommand]
+    public void GainLife(LuaTable playerTable, int amount)
+    {
+        var players = LuaCommon.ParseTable<Player>(playerTable);
+
+        Match.Events.GainLife([..
+            players.Select(p => new LifeGain(p, amount))
+        ]).Wait();
+    }
+
+    [LuaCommand]
     public LuaTable GetPlayersInAPNAP()
     {
         var result = Match.GetPlayersInAPNAP();
         return LuaCommon.CreateTable(Match.LState, result);
+    }
+
+    [LuaCommand]
+    public LuaTable GetPermanents()
+    {
+        var result = Match.Battlefield.GetPermanents();
+        return LuaCommon.CreateTable(Match.LState, result);
+    }
+
+    [LuaCommand]
+    public Player GetPermanentController(Permanent permanent)
+    {
+        return permanent.GetController();
+    } 
+
+    [LuaCommand]
+    public bool PermanentHasType(Permanent permanent, string type)
+    {
+        return permanent.HasType(type);
     }
 }

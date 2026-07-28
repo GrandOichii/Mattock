@@ -80,6 +80,16 @@ public class MatchEvents(
         await _match.ProcessEvent(e);
     }
 
+    public async Task GainLife(LifeGain[] gains)
+    {
+        LifeGainEvent e = new(
+            gains
+        );
+
+        await _match.ProcessEvent(e);
+    }
+
+
     public async Task CastSpell(Player player, Card card)
     {
         SpellCastEvent e = new(
@@ -89,4 +99,5 @@ public class MatchEvents(
 
         await _match.ProcessEvent(e);
     }
+
 }

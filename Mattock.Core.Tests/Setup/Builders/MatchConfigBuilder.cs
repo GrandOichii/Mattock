@@ -81,4 +81,10 @@ public class MatchConfigBuilder
         _result.BaselineBlockCount = v;
         return this;
     }
+
+    public MatchConfigBuilder NoMaxLandsPerTurn()
+    {
+        _result.MaxLandsPerTurn = null;
+        return this;
+    }
 }

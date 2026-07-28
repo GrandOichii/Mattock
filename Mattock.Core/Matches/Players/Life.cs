@@ -20,4 +20,10 @@ public class Life(Player player)
         // TODO
         Current -= damage;
     }
+
+    public void Gain(int amount)
+    {
+        // TODO
+        Current += amount;
+    }
 }

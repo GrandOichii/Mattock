@@ -58,7 +58,7 @@ public class Battlefield(Match match) : ICardZone
 
     public Permanent[] GetPermanentsControlledBy(Player player)
     {
-        return [.. _permanents.Where(p => p.Controller == player)];
+        return [.. _permanents.Where(p => p.GetController() == player)];
     }
 
     public Permanent[] GetInCombatPermanents()
