@@ -1,6 +1,8 @@
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
+using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Stack.Resolvers;
 
@@ -16,11 +18,7 @@ public class SpellResolver(
         if (Card.IsPermanentType())
         {
             // 608.3a if no targets, Move from stack onto the battlefield
-            var pid = Match.MoveCard(
-                Card,
-                Match.Battlefield,
-                CardZoneChangeType.Bottom
-            );
+            var pid = await Match.PutOntoTheBattlefield(card, effect.Controller);
             if (pid is null) 
                 return;
             var permanent = Match.Battlefield.GetPermanentByPid(pid)
@@ -47,13 +45,6 @@ public class SpellResolver(
             return;
         }
 
-        EffectContext ctx = new(
-            new SpellEffectContextData(
-                effect.Controller!,
-                Card
-            )
-        );
-
         // 608.2a Intervening "if" clause (603.4)
         // TODO
 
@@ -61,7 +52,7 @@ public class SpellResolver(
         // TODO
 
         // 608.2c Execute effects
-        await Card.ResolveSpellEffects(ctx);
+        await Card.ResolveSpellEffects(effect.Ctx);
 
         // TODO
 
@@ -95,8 +86,8 @@ public class SpellResolver(
         // 608.2n Move from stack to owner's graveyard
         Match.MoveCard(
             Card,
-            Match.Players[Card.OwnerIdx].Graveyard,
-            CardZoneChangeType.Top
+            CardZoneChangeType.Top,
+            Match.Players[Card.OwnerIdx].Graveyard.GetCardZoneChanger()
         );
 
         // 608.2p Triggers

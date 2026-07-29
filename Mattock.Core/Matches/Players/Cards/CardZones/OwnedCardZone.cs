@@ -1,3 +1,5 @@
+using Mattock.Core.Matches.Zones;
+
 namespace Mattock.Core.Matches.Players.Cards.CardZones;
 
 public abstract class OwnedCardZone : ICardZone
@@ -42,31 +44,44 @@ public abstract class OwnedCardZone : ICardZone
         throw new Exception($"Failed to remove card {card.GetDisplayName()} from zone \"{GetZoneName()}\" of player {Player.GetDisplayName()}");
     }
 
-    public string Add(Card card, CardZoneChangeType type)
+    public ICardZoneChanger GetCardZoneChanger()
+        => new CardZoneChanger(this);
+
+    class CardZoneChanger(
+        OwnedCardZone zone
+    ) : ICardZoneChanger
     {
-        // * 400.3. If an object would go to any library, graveyard, or hand other than its owner’s, it goes to its owner’s corresponding zone.
-        if (card.OwnerIdx != Player.Idx)
+        public bool Accepts(Card card)
         {
-            var zone = Match.Players[card.OwnerIdx].GetZoneByName(GetZoneName());
-            return zone.Add(card, type);;
+            // TODO
+            return true;
         }
-        
-        switch (type)
+
+        public string Do(Card card, CardZoneChangeType type)
         {
-            case CardZoneChangeType.Bottom:
-                Cards.Add(card);
-                return card.Id;
-            case CardZoneChangeType.Top:
-                Cards.Insert(0, card);
-                return card.Id;
-            default:
-                throw new Exception($"Unrecognized {nameof(CardZoneChangeType)}: {type}");
-        };
+            var match = zone.Player.Match;
 
-    }
+            // * 400.3. If an object would go to any library, graveyard, or hand other than its owner’s, it goes to its owner’s corresponding zone.
+            if (card.OwnerIdx != zone.Player.Idx)
+            {
+                var newZone = match.Players[card.OwnerIdx].GetZoneByName(zone.GetZoneName());
+                return new CardZoneChanger(newZone).Do(card, type);
+            }
+            
+            switch (type)
+            {
+                case CardZoneChangeType.Bottom:
+                    zone.Cards.Add(card);
+                    return card.Id;
+                case CardZoneChangeType.Top:
+                    zone.Cards.Insert(0, card);
+                    return card.Id;
+                default:
+                    throw new Exception($"Unrecognized {nameof(CardZoneChangeType)}: {type}");
+            };
+        }
 
-    public bool Accepts(Card card)
-    {
-        return true;
+        public ICardZone GetTargetZone()
+            => zone;
     }
 }

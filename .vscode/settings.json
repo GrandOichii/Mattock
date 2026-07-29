@@ -5,6 +5,8 @@
         "GainLife",
         "GetPermanents",
         "GetPermanentController",
-        "PermanentHasType"
+        "PermanentHasType",
+        "DiscardCards",
+        "GetTargetDeclarationCollectionItems"
     ]
 }

@@ -3,6 +3,7 @@ using System.Reflection;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Utility;
 using NLua;
 
@@ -46,6 +47,12 @@ public class MatchScripts
     }
 
     [LuaCommand]
+    public void DiscardCards(LuaTable playerTable, int amount, bool random)
+    {
+        // TODO
+    }
+
+    [LuaCommand]
     public void GainLife(LuaTable playerTable, int amount)
     {
         var players = LuaCommon.ParseTable<Player>(playerTable);
@@ -79,5 +86,12 @@ public class MatchScripts
     public bool PermanentHasType(Permanent permanent, string type)
     {
         return permanent.HasType(type);
+    }
+
+    [LuaCommand]
+    public LuaTable GetTargetDeclarationCollectionItems(TargetDeclarationCollection targets, string tgtKey)
+    {
+        var declaration = targets.Get(tgtKey);
+        return LuaCommon.CreateTable(Match.LState, declaration.Items);
     }
 }

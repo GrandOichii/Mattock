@@ -1,5 +1,8 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Scripting.Context;
+using Mattock.Core.Matches.Scripting.Context.Data;
+using Mattock.Core.Matches.Scripting.Targets;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -10,9 +13,16 @@ public class SpellCastEvent(
 {
     public async Task Do(Match match)
     {
+        TargetDeclarationCollection targets = new([]);
+
+        // EffectContext ctx = 
+
         // 601.2a Move the card onto the stack
-        var effect = match.Stack.Create(card, player);
-        // TODO
+        var effect = match.Stack.Create(
+            card,
+            player,
+            targets
+        );
 
         // 601.2b Modal spells
         // TODO

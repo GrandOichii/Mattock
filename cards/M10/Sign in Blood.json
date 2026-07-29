@@ -1,0 +1,25 @@
+{
+    "Script": "",
+    "Name": "Sign in Blood",
+    "ManaCosts": [
+        {
+            "Type": 2,
+            "Amount": 2
+        }
+    ],
+    "ColorIndicator": [
+        2
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Target player draws 2 cards and loses 2 life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

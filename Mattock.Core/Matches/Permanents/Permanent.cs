@@ -29,12 +29,12 @@ public class Permanent
 
     private Player _controller;
 
-    public Permanent(Card card)
+    public Permanent(Card card, Player controller)
     {
         Pid = card.Match.Battlefield.GeneratePid();
         Match = card.Match;
         Card = card;
-        _controller = null!;
+        _controller = controller;
         CombatState = null;
 
         Tapped = new(PermanentStatusType.Tapped, false);
@@ -160,7 +160,7 @@ public class Permanent
         if (IsTapped()) return [];
 
         // TODO calculate
-        int maxBlocks = Match.Config.BaselineBlockCount;
+        int maxBlocks = Match.Config.BaselineBlockCount ?? attackers.Length;
 
         Permanent[] blockable = [.. attackers
             .Where(a => 

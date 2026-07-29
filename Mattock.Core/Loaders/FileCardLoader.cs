@@ -5,9 +5,9 @@ namespace Mattock.Core.Loaders;
 
 public class FileCardLoader : ICardLoader
 {
-    private static readonly string MANIFEST_FILE = "manifest.json";
+    private static readonly string MANIFEST_FILE = "_manifest.json";
 
-    private static readonly string EXPANSION_MANIFEST_FILE = "manifest.json";
+    private static readonly string EXPANSION_MANIFEST_FILE = "_manifest.json";
 
     private Dictionary<string, Dictionary<string, CardTemplate>> _expansionMap;
 

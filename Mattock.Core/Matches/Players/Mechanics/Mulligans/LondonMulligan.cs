@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Mattock.Core.Matches.Players.Cards.CardZones;
+using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Players.Mechanics.Mulligans;
 
@@ -22,8 +24,8 @@ public class LondonMulliganRule(
 
             player.Match.MoveCard(
                 choice!,
-                player.Library,
-                CardZoneChangeType.Bottom
+                CardZoneChangeType.Bottom,
+                player.Library.GetCardZoneChanger()
             );
         }
     }

@@ -1,6 +1,9 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Scripting.Context.Data;
+using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Matches.Stack.Resolvers;
+using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Stack;
 
@@ -19,12 +22,19 @@ public class TheStack(Match match) : ICardZone
 
     public StackEffect? GetStackEffectBySid(string sid) => Effects.SingleOrDefault(e => e.Sid == sid);
 
-    public StackEffect Create(Card card, Player controller)
+    public StackEffect Create(
+        Card card,
+        Player controller,
+        TargetDeclarationCollection targets
+    )
     {
         var sid = Match.MoveCard(
             card,
-            this,
-            CardZoneChangeType.Bottom
+            CardZoneChangeType.Bottom,
+            new SpellCardZoneChanger(
+                controller,
+                targets
+            )
         );
 
         if (sid is null)
@@ -33,8 +43,6 @@ public class TheStack(Match match) : ICardZone
         var result = GetStackEffectBySid(sid);
         if (result is null)
             throw new Exception($"Failed to fetch newly created stack effect with SID = {sid} (cast card {card.GetDisplayName()})");
-
-        result.SetController(controller);
 
         return result;
     }
@@ -47,26 +55,57 @@ public class TheStack(Match match) : ICardZone
         Effects.RemoveAt(idx);
     }
 
-    public string Add(Card card, CardZoneChangeType type)
-    {
-        if (type == CardZoneChangeType.Top)
-            throw new Exception($"Tried to move {card.GetDisplayName()} to the top of the stack");
-            
-        var effect = new StackEffect(this, new SpellResolver(card));
-        // TODO
-        Effects.Add(effect);
-        return effect.Sid;
-    }
-
-    public bool Accepts(Card card)
-    {
-        // TODO
-        return true;
-    }
+    // public string Add(
+    //     Card card,
+    //     CardZoneChangeType type,
+    //     ICardZoneChangeContext ctx
+    // )
+    // {
+    //     return ctx.Do();
+    // }
 
     public async Task ResolveTop()
     {
         var top = Effects.Last();
         await top.Resolve();
+    }
+
+    class SpellCardZoneChanger(
+        Player controller,
+        TargetDeclarationCollection targets
+    ) : ICardZoneChanger
+    {
+        public bool Accepts(Card card)
+        {
+            // TODO
+            return true;
+        }
+
+        public string Do(Card card, CardZoneChangeType type)
+        {
+            var stack = card.Match.Stack;
+
+            if (type == CardZoneChangeType.Top)
+                throw new Exception($"Tried to move {card.GetDisplayName()} to the top of the stack");
+        
+            var effect = new StackEffect(
+                stack,
+                controller,
+                new(
+                    new SpellEffectContextData(
+                        controller,
+                        card
+                    ),
+                    targets
+                ),
+                new SpellResolver(card)
+            );
+
+            card.Match.Stack.Effects.Add(effect);
+            return effect.Sid;
+        }
+
+        public ICardZone GetTargetZone()
+            => controller.Match.Stack;
     }
 }

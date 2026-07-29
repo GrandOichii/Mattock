@@ -25,7 +25,7 @@ public class MatchConfig
     /// <summary>
     /// Baseline amount of creatures a creature can block in combat
     /// </summary>
-    public required int BaselineBlockCount { get; set; }
+    public required int? BaselineBlockCount { get; set; }
 
     public required int TeamCount { get; set; }
     public required int MaxTeamSize { get; set; }

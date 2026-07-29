@@ -91,6 +91,14 @@ public class PlayerChoicesBuilder(TestPlayerControllerBuilder builder)
             return (options.Single(p => p.Idx == idx), true);
         });
     }
+
+    public TestPlayerControllerBuilder Me()
+    {
+        return Enqueue(async (player, options, hint, allowNone) =>
+        {
+            return (player, true);
+        });
+    }
 }
 
 public class CommandChoicesBuilder(TestPlayerControllerBuilder builder) 

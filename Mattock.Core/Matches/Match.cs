@@ -10,6 +10,7 @@ using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
 using Mattock.Core.Matches.Turns;
+using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
 using NLua;
 
@@ -246,11 +247,11 @@ public class Match
 
     public string? MoveCard(
         Card card,
-        ICardZone toZone,
-        CardZoneChangeType type
+        CardZoneChangeType type,
+        ICardZoneChanger changer
     )
     {
-        ZoneChange = new(card, toZone, type);
+        ZoneChange = new(card, type, changer);
 
         // TODO apply all zone change replacement effects
 
@@ -285,9 +286,9 @@ public class Match
         }
     }
 
-    public async Task PutOntoTheBattlefield(Card card, Player controller)
+    public async Task<string?> PutOntoTheBattlefield(Card card, Player controller)
     {
-        await Battlefield.MoveCard(card, controller);
+        return await Battlefield.MoveCard(card, controller);
     }
 
     public void EmptyManaPools()

@@ -7,6 +7,7 @@ using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
 
 namespace Mattock.Core.Matches.Players;
@@ -244,8 +245,8 @@ public class Player
 
         Match.MoveCard(
             card,
-            Hand,
-            CardZoneChangeType.Bottom
+            CardZoneChangeType.Bottom,
+            Hand.GetCardZoneChanger()
         );
     }
 
@@ -258,8 +259,8 @@ public class Player
         {
             Match.MoveCard(
                 last,
-                Library,
-                CardZoneChangeType.Bottom
+                CardZoneChangeType.Bottom,
+                Library.GetCardZoneChanger()
             );
         }
         Library.Shuffle();
@@ -399,8 +400,8 @@ public class Player
         {
             Match.MoveCard(
                 card,
-                Graveyard,
-                CardZoneChangeType.Top // TODO
+                CardZoneChangeType.Top, // TODO
+                Graveyard.GetCardZoneChanger()
             );
         }
     }

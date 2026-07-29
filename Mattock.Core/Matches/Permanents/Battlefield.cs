@@ -1,6 +1,6 @@
-using Mattock.Core.Matches.Objects;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Permanents;
 
@@ -11,14 +11,6 @@ public class Battlefield(Match match) : ICardZone
     private int _lastPid = 0;
 
     public string GeneratePid() => $"p{++_lastPid}";
-
-    public string Add(Card card, CardZoneChangeType type)
-    {
-        // * type doesn't matter
-        var permanent = new Permanent(card);
-        _permanents.Add(permanent);
-        return permanent.Pid;
-    }
 
     public string GetZoneName() => "Battlefield";
 
@@ -31,23 +23,17 @@ public class Battlefield(Match match) : ICardZone
     public Permanent? GetPermanentById(string id) => _permanents.SingleOrDefault(p => p.Card.Id == id);
     public Permanent? GetPermanentByPid(string pid) => _permanents.SingleOrDefault(p => p.Pid == pid);
 
-    public async Task MoveCard(Card card, Player controller)
+    public async Task<string?> MoveCard(Card card, Player controller)
     {
-        match.MoveCard(
+        return match.MoveCard(
             card,
-            this,
-            CardZoneChangeType.Bottom
+            CardZoneChangeType.Bottom,
+            new CardZoneChanger(
+                this,
+                _permanents,
+                controller
+            )
         );
-
-        var permanent = GetPermanentById(card.Id);
-        if (permanent is null) return;
-
-        permanent.SetController(controller);
-    }
-
-    public bool Accepts(Card card)
-    {
-        return !card.IsSorcery() && !card.IsInstant();
     }
 
     public Permanent[] GetPermanents()
@@ -78,5 +64,32 @@ public class Battlefield(Match match) : ICardZone
             p.CombatState is not null && 
             p.CombatState.AttackTarget.BelongsTo(player))
         ];
+    }
+
+    // public ICardZoneChanger GetCardZoneChanger(Player controller)
+    //     => new CardZoneChanger(this, _permanents, controller);
+
+    class CardZoneChanger(
+        Battlefield battlefield,
+        List<Permanent> permanents,
+        Player controller
+    ) : ICardZoneChanger
+    {
+        
+        public bool Accepts(Card card)
+        {
+            return !card.IsSorcery() && !card.IsInstant();
+        }
+
+        public string Do(Card card, CardZoneChangeType type)
+        {
+            // * type doesn't matter
+            var permanent = new Permanent(card, controller);
+            permanents.Add(permanent);
+            return permanent.Pid;
+        }
+
+        public ICardZone GetTargetZone()
+            => battlefield;
     }
 }

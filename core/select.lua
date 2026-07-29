@@ -10,6 +10,18 @@ function Select:_(allGetter)
         return select
     end
 
+    function select:FromTarget(tgtKey)
+        return select:_Filter(function (ctx, item)
+            local targets = GetTargetDeclarationCollectionItems(ctx.Targets, tgtKey)
+            for _, t in ipairs(targets) do
+                if item == t then
+                    return true
+                end
+            end
+            return false
+        end)
+    end
+
     function select:Many()
         return function (ctx)
             local all = allGetter()

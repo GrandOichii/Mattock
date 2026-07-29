@@ -10,12 +10,31 @@ function OneShot:Draw(manyPlayers, number)
     end
 end
 
+function OneShot:Discard(manyPlayers, number, random)
+    return function (ctx)
+        -- TODO use random
+        local players = manyPlayers(ctx)
+        local amount = number(ctx)
+
+        DiscardCards(players, amount, random)
+    end
+end
+
 function OneShot:GainLife(manyPlayers, number)
     return function (ctx)
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 
         GainLife(players, amount)
+    end
+end
+
+function OneShot:LoseLife(manyPlayers, number)
+    return function (ctx)
+        local players = manyPlayers(ctx)
+        local amount = number(ctx)
+
+        -- TODO
     end
 end
 

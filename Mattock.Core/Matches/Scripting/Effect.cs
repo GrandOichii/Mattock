@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Scripting.Context;
+using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Utility;
 using NLua;
 
@@ -8,6 +9,7 @@ public class Effect
 {
     public string Text { get; }
     public EffectPart[] Parts { get; }
+    public Target[] Targets { get; }
 
     public Effect(LuaTable data)
     {
@@ -17,6 +19,11 @@ public class Effect
         var effects = LuaCommon.ParseTable<LuaFunction>(effectsTable);
 
         Parts = [.. effects.Select(f => new EffectPart(f))];
+
+        var targetsTable = LuaCommon.Get<LuaTable>(data, "Targets");
+        var targets = LuaCommon.ParseTable<LuaTable>(targetsTable);
+
+        Targets = [.. targets.Select(t => new Target(t))];
     }
 
     public void Do(EffectContext ctx)
