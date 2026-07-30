@@ -24,7 +24,7 @@ function Target:Player(playersSelect, targetAmount)
             -- TODO
             return {}
         end,
-        EnoughTargets = function ()
+        Check = function ()
             return false
         end
     }
