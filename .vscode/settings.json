@@ -7,6 +7,11 @@
         "GetPermanentController",
         "PermanentHasType",
         "DiscardCards",
-        "GetTargetDeclarationCollectionItems"
+        "GetTargetDeclarationCollectionItems",
+        "ChoosePlayers",
+        "DEBUG",
+        "DEBUGTABLE",
+        "LoseLife",
+        "ChoosePermanents"
     ]
 }

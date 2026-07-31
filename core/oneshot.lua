@@ -34,7 +34,7 @@ function OneShot:LoseLife(manyPlayers, number)
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 
-        -- TODO
+        LoseLife(players, amount)
     end
 end
 

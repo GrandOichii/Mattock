@@ -10,8 +10,17 @@ namespace Mattock.Core.Matches.Players.Controllers;
 public interface IPlayerController
 {
     Task Update(Player player, string? stateMsg = null);
+
     Task<ICommand> ChooseCommand(Player player, ICommand[] options);
-    Task<Player?> ChoosePlayer(Player player, Player[] options, string hint, bool allowNone);
+
+    Task<Player[]> ChoosePlayers(
+        Player player,
+        Player[] options,
+        int min,
+        int max,
+        string hint
+    );
+
     Task<string?> ChooseString(Player player, string[] options, string hint, bool allowNone);
     Task<Card?> ChooseCard(Player player, Card[] options, string hint, bool allowNone);
     Task<CostCollection?> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone);

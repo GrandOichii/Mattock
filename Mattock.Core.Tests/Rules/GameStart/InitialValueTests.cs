@@ -10,7 +10,7 @@ public class InitialValueTests
     {
         // Arrange
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(firstPlayerIdx);
+            .ChoosePlayers.WithIdx(firstPlayerIdx);
 
         var p2 = new TestPlayerControllerBuilder("p2", 1);
 
@@ -81,7 +81,7 @@ public class InitialValueTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .Act.Crash();
 

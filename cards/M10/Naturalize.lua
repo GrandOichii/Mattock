@@ -6,10 +6,12 @@ function _Create()
             New:Effect('Destroy target artifact or enchantment.')
                 :Target(
                     Target:Permanent(
+                        'T1',
                         Select:Permanents()
-                            :OfTypes(CardTypes.Artifact, CardTypes.Enchantment)
-                            :Many(),
-                        Number:Const(1)
+                            :OfTypes(CardTypes.Artifact, CardTypes.Enchantment),
+                        Target.Amount:Exactly(
+                            Number:Const(1)
+                        )
                     )
                 )
                 -- TODO

@@ -34,7 +34,7 @@ public class StateBasedActionTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .Act.AutoPassToStep(skipToStep)            
             .Act.Crash()
@@ -82,7 +82,7 @@ public class StateBasedActionTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .Act.AutoPassToStep(StepType.End)            
             .Act.Pass()

@@ -22,7 +22,7 @@ public class CleanupStepTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
             .Act.AutoPassToStep(StepType.End)

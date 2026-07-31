@@ -15,7 +15,7 @@ public class DrawFromEmptyLibraryTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             // upkeep
             .Act.Pass()

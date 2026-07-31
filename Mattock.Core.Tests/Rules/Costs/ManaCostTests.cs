@@ -76,7 +76,7 @@ public class ManaCostTests
             : a => a.CantCastSpell();
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
             .Act.ForEach(mana, (m, a) => a
@@ -228,7 +228,7 @@ public class ManaCostTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
             .Act.ForEach(mana, (m, a) => a

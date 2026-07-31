@@ -132,7 +132,7 @@ public class ManaPoolTests
         var total = mana.Sum(m => m.amount);
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
             .Act.Assert(a => a
@@ -205,7 +205,7 @@ public class ManaPoolTests
             );
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             // *** turn 1
             // * upkeep 1

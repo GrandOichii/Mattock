@@ -26,7 +26,7 @@ public class CombatStateTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("attacker")
             .Act.AutoPassToTurn(3)
@@ -178,7 +178,7 @@ public class CombatStateTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("attacker")
             .Act.AutoPassToTurn(3)
@@ -306,7 +306,7 @@ public class CombatStateTests
 
          var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck1)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("blocker")
             .Act.AutoPassToStep(StepType.DeclareAttackers)

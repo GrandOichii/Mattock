@@ -17,7 +17,7 @@ public class MatchAsserts(TestMatchWrapper match)
     
     public MatchAsserts NoChoicesLeft(
         bool checkCommandChoices = true,
-        bool checkPlayerChoices = true,
+        bool checkPlayersChoices = true,
         bool checkStringChoices = true,
         bool checkCardChoices = true,
         bool checkCostCollectionChoices = true,
@@ -30,7 +30,7 @@ public class MatchAsserts(TestMatchWrapper match)
         {
             player.AssertNoChoicesLeft(
                 checkCommandChoices,
-                checkPlayerChoices,
+                checkPlayersChoices,
                 checkStringChoices,
                 checkCardChoices,
                 checkCostCollectionChoices,

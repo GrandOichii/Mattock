@@ -13,11 +13,11 @@ public abstract class PlayerControllerWrapper(
 ) : IPlayerController
 {
     public abstract Task HandleCommandChoice(ICommand choice, Player player, ICommand[] choices);
-    public abstract Task HandlePlayerChoice(Player? choice, Player player, Player[] choices, string hint);
-    public abstract Task HandleStringChoice(string? choice, Player player, string[] choices, string hint);
-    public abstract Task HandleCardChoice(Card? choice, Player player, Card[] choices, string hint);
-    public abstract Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] choices, string hint);
-    public abstract Task HandleStoredManaChoice(StoredMana? choice, Player player, StoredMana[] choices, string hint);
+    public abstract Task HandlePlayersChoice(Player[] choices, Player player, Player[] options, int min, int max, string hint);
+    public abstract Task HandleStringChoice(string? choice, Player player, string[] options, string hint);
+    public abstract Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint);
+    public abstract Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] options, string hint);
+    public abstract Task HandleStoredManaChoice(StoredMana? choice, Player player, StoredMana[] options, string hint);
 
     // public void AddEvent(Event , allowNonee)
     // {
@@ -57,10 +57,16 @@ public abstract class PlayerControllerWrapper(
         return result;
     }
 
-    public async Task<Player?> ChoosePlayer(Player player, Player[] options, string hint, bool allowNone)
+    public async Task<Player[]> ChoosePlayers(
+        Player player,
+        Player[] options,
+        int min,
+        int max,
+        string hint
+    )
     {
-        var result = await controller.ChoosePlayer(player, options, hint, allowNone);
-        await HandlePlayerChoice(result, player, options, hint);
+        var result = await controller.ChoosePlayers(player, options, min, max, hint);
+        await HandlePlayersChoice(result, player, options, min, max, hint);
 
         return result;
     }

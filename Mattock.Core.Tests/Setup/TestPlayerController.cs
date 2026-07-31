@@ -8,7 +8,7 @@ public class TestPlayerController(
     DeckTemplate deck,
     int teamIdx,
     Queue<(TestPlayerController.CommandChoice, bool)> commandChoices,
-    Queue<TestPlayerController.PlayerChoice> playerChoices,
+    Queue<TestPlayerController.PlayersChoice> playersChoices,
     Queue<TestPlayerController.StringChoice> stringChoices,
     Queue<TestPlayerController.CardChoice> cardChoices,
     Queue<TestPlayerController.CostCollectionChoice> costCollectionChoices,
@@ -18,7 +18,7 @@ public class TestPlayerController(
 ) : IPlayerController
 {
     public delegate Task<(ICommand?, bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
-    public delegate Task<(Player?, bool)> PlayerChoice(Player player, Player[] options, string hint, bool allowNone);
+    public delegate Task<(Player[], bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
     public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
     public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
     public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
@@ -28,7 +28,7 @@ public class TestPlayerController(
 
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
-        bool checkPlayerChoices,
+        bool checkPlayersChoices,
         bool checkStringChoices,
         bool checkCardChoices,
         bool checkCostCollectionChoices,
@@ -37,8 +37,8 @@ public class TestPlayerController(
         bool checkBlockDeclarationChoices
     )
     {
-        if (checkPlayerChoices)
-            playerChoices.Count.ShouldBe(0, $"{nameof(PlayerChoice)} queue of player {name} is not empty (size: {playerChoices.Count})");
+        if (checkPlayersChoices)
+            playersChoices.Count.ShouldBe(0, $"{nameof(PlayersChoice)} queue of player {name} is not empty (size: {playersChoices.Count})");
 
         if (checkStringChoices)
             stringChoices.Count.ShouldBe(0, $"{nameof(StringChoice)} queue of player {name} is not empty (size: {stringChoices.Count})");
@@ -114,16 +114,40 @@ public class TestPlayerController(
         throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
     }
 
-    public async Task<Player?> ChoosePlayer(Player player, Player[] options, string hint, bool allowNone)
+    public static async Task<TResult[]> Dequeue<TResult, TDelegate>(
+        Player player,
+        TResult[] options,
+        int min,
+        int max,
+        string hint,
+        Func<TDelegate, Player, TResult[], int, int, string, Task<(TResult[], bool)>> getter,
+        Queue<TDelegate> queue,
+        string methodName
+    )
+    {
+        while (queue.Count > 0)
+        {
+            var choice = queue.Dequeue();
+            var (result, isResult) = await getter(choice, player, options, min, max, hint);
+            if (!isResult) continue;
+            if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            return result;
+        }
+
+        throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
+    }
+
+    public async Task<Player[]> ChoosePlayers(Player player, Player[] options, int min, int max, string hint)
     {
         return await Dequeue(
             player,
             options,
+            min,
+            max,
             hint,
-            allowNone,
-            (d, p, o, h, a) => d(p, o, h, a),
-            playerChoices,
-            nameof(ChoosePlayer)
+            (d, p, o, mmin, mmax, h) => d(p, o, mmin, mmax, h),
+            playersChoices,
+            nameof(ChoosePlayers)
         );
     }
 

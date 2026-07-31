@@ -26,4 +26,10 @@ public class Life(Player player)
         // TODO
         Current += amount;
     }
+
+    public void Lose(int amount)
+    {
+        // TODO
+        Current -= amount;
+    }
 }

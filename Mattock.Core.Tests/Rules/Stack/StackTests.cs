@@ -12,7 +12,7 @@ public class StackTests
     {
         // Arrange
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(new DeckTemplate()
             {
                 MainDeck = [

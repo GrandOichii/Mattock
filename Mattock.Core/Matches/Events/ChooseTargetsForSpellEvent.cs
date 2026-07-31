@@ -13,7 +13,8 @@ public class ChooseTargetsForSpellEvent(
 {
     public async Task Do(Match match)
     {
-        var effects = card.GetSpellTargets();
-
+        var targets = card.GetSpellTargets();
+        TargetDeclaration[] declarations = [.. targets.Select(t => t.Get(ctx))];
+        ctx.Targets.AddRange(declarations);
     }
 }

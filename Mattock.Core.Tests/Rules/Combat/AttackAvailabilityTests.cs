@@ -37,7 +37,7 @@ public class AttackAvailabilityTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("p")
             .Act.AutoPassToStep(StepType.DeclareAttackers)
@@ -92,7 +92,7 @@ public class AttackAvailabilityTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("p")
             .Act.AutoPassToStep(StepType.DeclareAttackers)
@@ -148,7 +148,7 @@ public class AttackAvailabilityTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("p")
             .Act.AutoPassToStep(StepType.DeclareAttackers)
@@ -208,7 +208,7 @@ public class AttackAvailabilityTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("p")
             .Act.AutoPassToTurn(3)
@@ -275,7 +275,7 @@ public class AttackAvailabilityTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("p1")
             .Act.AutoPassUntilStackEmpty()

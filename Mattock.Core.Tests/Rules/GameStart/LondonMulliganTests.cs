@@ -19,7 +19,7 @@ public class LondonMulliganTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.No()
             // upkeep
@@ -82,7 +82,7 @@ public class LondonMulliganTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.Yes()
             .ChooseCard.FirstWithName("c2")
@@ -161,7 +161,7 @@ public class LondonMulliganTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.Yes()
             .ChooseCard.FirstWithName("c2")

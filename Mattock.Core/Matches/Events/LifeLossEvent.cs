@@ -3,26 +3,26 @@ using Mattock.Core.Matches.Players;
 
 namespace Mattock.Core.Matches.Events;
 
-public class LifeGain(
+public class LifeLoss(
     Player player,
     int amount
 )
 {
     public void Do()
     {
-        player.Life.Gain(amount);
+        player.Life.Lose(amount);
     }
 }
 
-public class LifeGainEvent(
-    LifeGain[] gains
+public class LifeLossEvent(
+    LifeLoss[] losses
 ) : IEvent
 {
     public Task Do(Match match)
     {
-        foreach (var gain in gains)
+        foreach (var loss in losses)
         {
-            gain.Do();
+            loss.Do();
         }
 
         // TODO trigger

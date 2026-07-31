@@ -63,7 +63,7 @@ public class CombatDamageTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName("attacker")
             .Act.Assert(a => HasLife(1, 20, a))
@@ -174,7 +174,7 @@ public class CombatDamageTests
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck2)
-            .ChoosePlayer.WithIdx(1)
+            .ChoosePlayers.WithIdx(1)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName(blocker.Card.Name)
             .Act.AutoPass()

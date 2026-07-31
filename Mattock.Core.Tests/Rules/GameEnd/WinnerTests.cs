@@ -148,7 +148,7 @@ public class WinnerTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck);
 
         for (int i = 0; i < pCount; ++i)
@@ -320,7 +320,7 @@ public class WinnerTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck);
 
         for (int i = 0; i < pCount; ++i)

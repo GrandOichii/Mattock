@@ -122,11 +122,12 @@ public class Match
 
         // Choose the first active player
         var active = GetActivePlayer();
-        var chosenActivePlayer = await active.ChoosePlayer(
+        var chosenActivePlayers = await active.ChoosePlayers(
             [.. Players ],
+            1, 1,
             "Choose the active player"
         );
-        TurnManager.ActivePlayerIdx = chosenActivePlayer.Idx;
+        TurnManager.ActivePlayerIdx = chosenActivePlayers[0].Idx;
 
         // Set life totals
         foreach (var player in Players)

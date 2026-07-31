@@ -40,7 +40,7 @@ public class BountifulHarvestTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Green, 5)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HasLife(0, 20, a))
@@ -107,7 +107,7 @@ public class BountifulHarvestTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Green, 5)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HasLife(0, 20, a))
@@ -188,7 +188,7 @@ public class BountifulHarvestTests
         ;
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
-            .ChoosePlayer.WithIdx(1)
+            .ChoosePlayers.WithIdx(1)
             .SetDeck(deck)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.PlayLandWithName("land")
@@ -246,7 +246,7 @@ public class BountifulHarvestTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Green, 5)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HasLife(0, 20, a))
@@ -317,7 +317,7 @@ public class BountifulHarvestTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Green, 5)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HasLife(0, 20, a))
@@ -388,7 +388,7 @@ public class BountifulHarvestTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Green, 5)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HasLife(0, 20, a))

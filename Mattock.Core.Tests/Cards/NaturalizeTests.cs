@@ -30,7 +30,7 @@ public class NaturalizeTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Green, 2)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => a

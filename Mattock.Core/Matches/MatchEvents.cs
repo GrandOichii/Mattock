@@ -91,6 +91,14 @@ public class MatchEvents(
         await _match.ProcessEvent(e);
     }
 
+    public async Task LoseLife(LifeLoss[] losses)
+    {
+        LifeLossEvent e = new(
+            losses
+        );
+
+        await _match.ProcessEvent(e);
+    }
 
     public async Task CastSpell(Player player, Card card)
     {

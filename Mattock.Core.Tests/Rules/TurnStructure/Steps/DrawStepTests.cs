@@ -19,7 +19,7 @@ public class DrawStepTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.No()
             // upkeep
@@ -113,7 +113,7 @@ public class DrawStepTests
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.No()
             // upkeep

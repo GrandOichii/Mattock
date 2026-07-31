@@ -48,7 +48,7 @@ public class DivinationTests
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
-            .ChoosePlayer.WithIdx(0)
+            .ChoosePlayers.WithIdx(0)
             .Act.AddMana(ManaType.Blue, 3)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HandCardCount(0, 7, a))

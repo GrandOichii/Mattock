@@ -489,11 +489,14 @@ public class Player
         return result!;
     }
 
-    public async Task<Player> ChoosePlayer(Player[] options, string hint)
+    public async Task<Player[]> ChoosePlayers(Player[] options, int min, int max, string hint)
     {
         GameEndSafeguard();
+        if (max == 0)
+            throw new Exception($"Provided max = 0 for {nameof(ChoosePlayers)}"); // TODO type
+            
         await Match.UpdateExcept(this);
-        var result = await _controller.ChoosePlayer(this, options, hint, false);
+        var result = await _controller.ChoosePlayers(this, options, min, max, hint);
 
         return result!;
     }

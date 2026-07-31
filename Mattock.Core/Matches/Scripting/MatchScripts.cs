@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using Mattock.Core.Matches.Events;
@@ -35,6 +36,20 @@ public class MatchScripts
             }
         }
     }
+    
+    [LuaCommand]
+    public void DEBUG(object o)
+    {
+        Debug.Print(o.ToString());
+        // Match.Logger?.LogDebug(o.ToString());
+    }
+
+    [LuaCommand]
+    public void DEBUGTABLE(LuaTable table)
+    {
+        Debug.Print(table.Keys.Count.ToString());
+        // Match.Logger?.LogDebug(table.Keys.Count.ToString());
+    }
 
     [LuaCommand]
     public void DrawCards(LuaTable playerTable, int amount)
@@ -59,6 +74,16 @@ public class MatchScripts
 
         Match.Events.GainLife([..
             players.Select(p => new LifeGain(p, amount))
+        ]).Wait();
+    }
+
+    [LuaCommand]
+    public void LoseLife(LuaTable playerTable, int amount)
+    {
+        var players = LuaCommon.ParseTable<Player>(playerTable);
+
+        Match.Events.LoseLife([..
+            players.Select(p => new LifeLoss(p, amount))
         ]).Wait();
     }
 
@@ -93,5 +118,15 @@ public class MatchScripts
     {
         var declaration = targets.Get(tgtKey);
         return LuaCommon.CreateTable(Match.LState, declaration.Items);
+    }
+
+    [LuaCommand]
+    public LuaTable ChoosePlayers(Player player, LuaTable optionsTable, int min, int max, string hint)
+    {
+        var options = LuaCommon.ParseTable<Player>(optionsTable);
+        var result = player.ChoosePlayers(options, min, max, hint)
+            .GetAwaiter().GetResult();
+
+        return LuaCommon.CreateTable(Match.LState, result);
     }
 }

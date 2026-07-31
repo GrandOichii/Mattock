@@ -8,7 +8,7 @@ public class TestPlayerControllerBuilder
     private int _teamIdx;
 
     public CommandChoicesBuilder CommandChoices { get; }
-    public PlayerChoicesBuilder PlayerChoices { get; }
+    public PlayersChoicesBuilder PlayersChoices { get; }
     public StringChoicesBuilder StringChoices { get; }
     public CardChoicesBuilder CardChoices { get; }
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
@@ -26,7 +26,7 @@ public class TestPlayerControllerBuilder
         };
 
         CommandChoices = new(this);
-        PlayerChoices = new(this);
+        PlayersChoices = new(this);
         StringChoices = new(this);
         CardChoices = new(this);
         CostCollectionChoices = new(this);
@@ -35,7 +35,7 @@ public class TestPlayerControllerBuilder
         BlockDeclarationsChoices = new(this);
     }
 
-    public PlayerChoicesBuilder ChoosePlayer => PlayerChoices;
+    public PlayersChoicesBuilder ChoosePlayers => PlayersChoices;
     public StringChoicesBuilder ChooseString => StringChoices;
     public CardChoicesBuilder ChooseCard => CardChoices;
     public CostCollectionChoicesBuilder ChooseCostCollection => CostCollectionChoices;
@@ -58,7 +58,7 @@ public class TestPlayerControllerBuilder
             _deck,
             _teamIdx,
             CommandChoices.Queue,
-            PlayerChoices.Queue,
+            PlayersChoices.Queue,
             StringChoices.Queue,
             CardChoices.Queue,
             CostCollectionChoices.Queue,
@@ -81,22 +81,22 @@ public abstract class ChoicesBuilder<TDelegate>(TestPlayerControllerBuilder buil
     }
 }
 
-public class PlayerChoicesBuilder(TestPlayerControllerBuilder builder) 
-    : ChoicesBuilder<TestPlayerController.PlayerChoice>(builder)
+public class PlayersChoicesBuilder(TestPlayerControllerBuilder builder) 
+    : ChoicesBuilder<TestPlayerController.PlayersChoice>(builder)
 {
     public TestPlayerControllerBuilder WithIdx(int idx)
     {
-        return Enqueue(async (player, options, hint, allowNone) =>
+        return Enqueue(async (player, options, min, max, hint) =>
         {
-            return (options.Single(p => p.Idx == idx), true);
+            return ([options.Single(p => p.Idx == idx)], true);
         });
     }
 
     public TestPlayerControllerBuilder Me()
     {
-        return Enqueue(async (player, options, hint, allowNone) =>
+        return Enqueue(async (player, options, min, max, hint) =>
         {
-            return (player, true);
+            return ([player], true);
         });
     }
 }
