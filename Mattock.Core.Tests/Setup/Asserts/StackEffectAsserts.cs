@@ -7,7 +7,7 @@ public class StackEffectAsserts(StackEffect effect)
 {
     public StackEffectAsserts HasController(int idx)
     {
-        effect.Controller!.Idx.ShouldBe(idx);
+        effect.Ctx.Controller.Idx.ShouldBe(idx);
         return this;
     }
 

@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Scripting;
+using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Scripting.Targets;
@@ -19,6 +20,9 @@ public class Card
     public ICardZone? Zone { get; private set; }
 
     public Effect[] SpellEffects { get; }
+
+    public ActivatedAbilityTemplate[] ActivatedAbilityTemplates { get; }
+    public ActivatedAbility[] ActivatedAbilities { get; }
 
     public Card(Player owner, CardTemplate template)
     {
@@ -49,6 +53,23 @@ public class Card
             var spellEffectsTable = LuaCommon.Get<LuaTable>(data, "SpellEffects");
             var arr = LuaCommon.ParseTable<LuaTable>(spellEffectsTable);
             SpellEffects = [.. arr.Select(t => new Effect(t))];
+        } catch (Exception e)
+        {
+            throw new Exception($"Failed to get spell effects for card {template.Name}", e); // TODO type
+        }
+
+        #endregion
+
+        #region Activated abilities
+
+        try
+        {
+            var aaTable = LuaCommon.Get<LuaTable>(data, "ActivatedAbilities");
+            var arr = LuaCommon.ParseTable<LuaTable>(aaTable);
+            ActivatedAbilityTemplates = [.. arr.Select(t => new ActivatedAbilityTemplate(t))];
+
+            // TODO might have to move this somewhere
+            ActivatedAbilities = [.. ActivatedAbilityTemplates.Select(t => new ActivatedAbility(Match, t, this))];
         } catch (Exception e)
         {
             throw new Exception($"Failed to get spell effects for card {template.Name}", e); // TODO type
@@ -90,7 +111,7 @@ public class Card
 
     public bool IsPermanentType() => CardTypes.Permanents.Any(HasType);
 
-    public List<ManaCost> GetManaCosts(Player player)
+    public ManaCost[] GetManaCosts(Player player)
     {
         // TODO
         return [ .. Template.ManaCosts ];
@@ -112,8 +133,17 @@ public class Card
         if (!CardTypes.Castable.Any(HasType))
             return false;
 
+        var ctx = new EffectContext(
+            player,
+            new SpellEffectContextData(
+                // player,
+                // this
+            ),
+            new([])
+        );
+
         var costVariations = GetCostCollections(player);
-        if (costVariations.All(c => !c.CanBePayed(player)))
+        if (costVariations.All(c => !c.CanBePayed(ctx)))
             return false;
 
         // TODO this is very basic, change later
@@ -122,11 +152,6 @@ public class Card
 
         if (Zone != player.Hand)
             return false;
-
-        var ctx = new EffectContext(
-            new SpellEffectContextData(player, this),
-            new([])
-        );
 
         var targets = GetSpellTargets();
         if (!targets.All(t => t.CanTarget(ctx)))
@@ -145,14 +170,14 @@ public class Card
         List<CostCollection> result = [];
 
         var manaCosts = GetManaCosts(player);
-        if (manaCosts.Count > 0)
+        if (manaCosts.Length > 0)
         {
             // TODO additional costs
-            result.Add(new()
-            {
-                Text = "Default", // TODO rename
-                ManaCosts = [ .. manaCosts ]
-            });
+
+            result.Add(new(
+                "Default",
+                [new ManaCostsCollection(manaCosts)]
+            ));
         }
         // TODO alternative costs
 
@@ -165,5 +190,16 @@ public class Card
         {
             spellEffect.Do(ctx);
         }
+    }
+
+    public ActivatedAbility[] GetActivatedAbilitiesFor(Player player)
+    {
+        return [.. GetActivatedAbilities().Where(a => a.CanBeActivated(player))];
+    }
+
+    public ActivatedAbility[] GetActivatedAbilities()
+    {
+        // TODO
+        return ActivatedAbilities;
     }
 }

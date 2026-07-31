@@ -91,7 +91,6 @@ public class TheStack(Match match) : ICardZone
         
             var effect = new StackEffect(
                 stack,
-                controller,
                 ctx,
                 new SpellResolver(card)
             );

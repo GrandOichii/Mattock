@@ -1,5 +1,3 @@
-
-
 using Mattock.Core.Matches.Players.Cards;
 
 namespace Mattock.Core.Matches.Players.Actions;

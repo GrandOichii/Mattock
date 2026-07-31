@@ -66,6 +66,12 @@ public class Battlefield(Match match) : ICardZone
         ];
     }
 
+    public bool Contains(Card card)
+    {
+        return _permanents.SingleOrDefault(p => p.Card == card) is not null;
+    }
+
+
     // public ICardZoneChanger GetCardZoneChanger(Player controller)
     //     => new CardZoneChanger(this, _permanents, controller);
 
@@ -92,4 +98,5 @@ public class Battlefield(Match match) : ICardZone
         public ICardZone GetTargetZone()
             => battlefield;
     }
+
 }

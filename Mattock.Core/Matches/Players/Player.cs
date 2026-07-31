@@ -7,6 +7,7 @@ using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
 
@@ -331,34 +332,6 @@ public class Player
         await Match.Events.CastSpell(this, card);
     }
 
-    // TODO remove the Card, costs can be payed for many other things
-    // TODO docs
-    public async Task PayCost(Card card, CostCollection cost)
-    {
-        // mana
-        var manaCosts = cost.GetManaCosts();
-        while (manaCosts.Count > 0)
-        {
-            var manaCost = manaCosts.Dequeue();
-            for (int i = 0; i < manaCost.Amount; ++i)
-            {
-                var candidates = ManaPool.GetCandidates(manaCost.Type);
-                if (candidates.Count == 0)
-                {
-                    var postFix = manaCost.Type is null
-                        ? "generic type"
-                        : $"type {manaCost.Type}";
-                    throw new Exception($"Code error: failed to find stored mana candidates to pay for mana cost of {postFix}");
-                }
-                var choice = await ChooseStoredMana([.. candidates], $"Pay for card {card.GetDisplayName()}");
-                ManaPool.Remove(choice);
-            }
-        }
-
-        // other
-        // TODO
-    }
-
     /// <summary>
     /// Is the player still in game
     /// </summary>
@@ -438,6 +411,12 @@ public class Player
             .GetPermanents()
             .SelectMany(p => p.GetAvailableBlockDeclarations(this, attackers))
         ];
+    }
+
+    public ActivatedAbility[] GetActivatableAbilities()
+    {
+        var cards = Match.GetCards();
+        return [.. cards.SelectMany(c => c.GetActivatedAbilitiesFor(this))];
     }
 
     /// <summary>

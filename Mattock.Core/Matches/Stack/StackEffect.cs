@@ -7,7 +7,6 @@ namespace Mattock.Core.Matches.Stack;
 
 public class StackEffect(
     TheStack stack,
-    Player controller,
     EffectContext ctx,
     IStackEffectResolver resolver
 )
@@ -15,13 +14,7 @@ public class StackEffect(
     public Match Match { get; } = stack.Match;
     public string Sid { get; } = stack.GenerateSid();
     public IStackEffectResolver Resolver { get; } = resolver;
-    public Player Controller { get; private set; } = controller;
     public EffectContext Ctx { get; } = ctx;
-
-    public void SetController(Player player)
-    {
-        Controller = player;
-    }
 
     public async Task Resolve()
     {

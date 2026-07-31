@@ -16,9 +16,10 @@ public class SpellCastEvent(
         TargetDeclarationCollection targets = new([]);
 
         EffectContext ctx = new(
+            player,
             new SpellEffectContextData(
-                player,
-                card
+                // player,
+                // card
             ),
             targets
         );
@@ -57,8 +58,7 @@ public class SpellCastEvent(
         // TODO
 
         // 601.2h Pay the cost
-        await player.PayCost(card, choice);
-        // TODO
+        await choice.Pay(ctx);
 
         // 601.2i Modify characteristics
         // TODO

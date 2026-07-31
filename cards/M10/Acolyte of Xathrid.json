@@ -1,0 +1,25 @@
+{
+    "Script": "",
+    "Name": "Acolyte of Xathrid",
+    "ManaCosts": [
+        {
+            "Type": 2,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        1
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Human", "Cleric" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "{1}{B}, {T}: Target player loses 1 life.",
+    "Power": "0",
+    "Toughness": "1",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

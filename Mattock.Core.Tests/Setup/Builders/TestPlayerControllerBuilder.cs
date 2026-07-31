@@ -344,6 +344,15 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
             return this;
         }
 
+        
+        public Asserts CanActivate()
+        {
+            options.Any(a => a.ToCommandString().StartsWith(ActivateActivatedAbilityAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} should be able to activate abilities"
+            );
+            return this;
+        }
+
         public Asserts CantPlayLand()
         {
             options.All(a => !a.ToCommandString().StartsWith(PlayLandSpecialAction.ActionWord)).ShouldBeTrue(
@@ -356,6 +365,14 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         {
             options.All(a => !a.ToCommandString().StartsWith(CastSpellAction.ActionWord)).ShouldBeTrue(
                 $"Player {player.GetDisplayName()} shouldn't be able to cast spells"
+            );
+            return this;
+        }
+
+        public Asserts CantActivate()
+        {
+            options.All(a => !a.ToCommandString().StartsWith(ActivateActivatedAbilityAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} shouldn't be able to activate abilities"
             );
             return this;
         }

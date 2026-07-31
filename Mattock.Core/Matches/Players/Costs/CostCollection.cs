@@ -1,39 +1,26 @@
 using Mattock.Core.Matches.Mana;
+using Mattock.Core.Matches.Scripting.Context;
 
 namespace Mattock.Core.Matches.Players.Costs;
 
-public class CostCollection
+public class CostCollection(
+    string text,
+    ICost[] costs
+)
 {
-    public required string Text { get; init; }
-    public required ManaCost[] ManaCosts { get; init; }
-    // TODO
+    public string Text { get; } = text;
+    public ICost[] Costs { get; } = [.. costs];
 
-    public bool CanBePayed(Player player)
+    public bool CanBePayed(EffectContext ctx)
     {
-        // TODO some mana restricts what it can be used for
-        List<ManaType?> manaTypes = [
-            ManaType.White,
-            ManaType.Blue,
-            ManaType.Black,
-            ManaType.Red,
-            ManaType.Green,
-            ManaType.Colorless,
-            null,
-        ];
-        var store = player.ManaPool.CreateStore();
-
-        // colored mana
-        foreach (var manaType in manaTypes)
-        {
-            var costs = ManaCosts.Where(c => c.Type == manaType);
-            if (!costs.All(store.CanPayFor))
-                return false;
-        }
-        return true;
+        return costs.All(c => c.CanPay(ctx));
     }
 
-    public Queue<ManaCost> GetManaCosts() => new(ManaCosts.Select(c => new ManaCost() {
-        Amount = c.Amount,
-        Type = c.Type
-    }));
+    public async Task Pay(EffectContext ctx)
+    {
+        foreach (var cost in costs)
+        {
+            await cost.Pay(ctx);
+        }
+    }
 }

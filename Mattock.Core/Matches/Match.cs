@@ -7,6 +7,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Matches.Scripting;
+using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
 using Mattock.Core.Matches.Turns;
@@ -27,6 +28,7 @@ public class Match
     private readonly Dictionary<int, Player[]> _teams;
     public Battlefield Battlefield { get; }
     private int _lastCardId;
+    private int _lastAAId;
     public CardZoneChange? ZoneChange { get; private set; }
     public TheStack Stack { get; }
     public MatchEvents Events { get; }
@@ -58,6 +60,7 @@ public class Match
         TurnManager = new(this);
         StateBasedActions = new(this);
         _lastCardId = 0;
+        _lastAAId = 0;
         TurnCounter = 0;
         Cards = [];
         _winningTeams = null;
@@ -101,6 +104,7 @@ public class Match
             new PassAction(),
             new PlayLandSpecialAction(),
             new CastSpellAction(),
+            new ActivateActivatedAbilityAction(),
         ];
     }
 
@@ -239,12 +243,19 @@ public class Match
         }
     }
 
+    public string GenerateActivatedAbilityId()
+    {
+        return $"aa{++_lastAAId}";
+    }
+
     public string GenerateCardId(Card card) {
         Cards.Add(card);
         return $"c{++_lastCardId}";
     }
 
     public Card GetCardById(string id) => Cards.Single(c => c.Id == id);
+
+    public Card[] GetCards() => [.. Cards];
 
     public string? MoveCard(
         Card card,
