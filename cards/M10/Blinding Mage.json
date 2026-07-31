@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Blinding Mage",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 0,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Human", "Wizard" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "{W}, {T}: Tap target creature.",
+    "Power": "1",
+    "Toughness": "2",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

@@ -38,6 +38,14 @@ function OneShot:LoseLife(manyPlayers, number)
     end
 end
 
+function OneShot:TapPermanents(manyPermanents)
+    return function (ctx)
+        local permanents = manyPermanents(ctx)
+
+        TapPermanents(permanents)
+    end
+end
+
 function OneShot:Destroy(manyPermanents)
     -- TODO
     return {}

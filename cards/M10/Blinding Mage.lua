@@ -1,14 +1,11 @@
--- {1}{B}, {T}: Target player loses 1 life.
+-- {W}, {T}: Tap target creature.
 
 function _Create()
     return New:Card()
         :ActivatedAbility(
-            New:ActivatedAbility('{1}{B}, {T}: Target player loses 1 life.')
+            New:ActivatedAbility('{W}, {T}: Tap target creature.')
                 :ManaCost(
-                    Mana:Generic(
-                        Number:Const(1)
-                    ),
-                    Mana:Black(
+                    Mana:White(
                         Number:Const(1)
                     )
                 )
@@ -16,22 +13,22 @@ function _Create()
                     Cost:SelfTap()
                 )
                 :Effect(
-                    New:Effect('Target player loses 1 life.')
+                    New:Effect('Tap target creature.')
                         :Target(
-                            Target:Player(
+                            Target:Permanent(
                                 'T1',
-                                Select:Players(),
+                                Select:Permanents()
+                                    :OfTypes(CardTypes.Creature),
                                 Target.Amount:Exactly(
                                     Number:Const(1)
                                 )
                             )
                         )
                         :Effect(
-                            OneShot:LoseLife(
-                                Select:Players()
+                            OneShot:TapPermanents(
+                                Select:Permanents()
                                     :FromTarget('T1')
-                                    :Many(),
-                                Number:Const(1)
+                                    :Many()
                             )
                         )
                         :Build()
