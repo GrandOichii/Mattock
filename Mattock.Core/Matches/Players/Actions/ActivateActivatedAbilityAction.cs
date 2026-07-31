@@ -21,8 +21,8 @@ public class ActivateActivatedAbilityCommand(
 {
     public async Task Do()
     {
-        // await player.Cast(card);
-        // player.Match.ResetPriority(player.Idx);
+        await player.Activate(aa);
+        player.Match.ResetPriority(player.Idx);
     }
 
     public string ToCommandString()

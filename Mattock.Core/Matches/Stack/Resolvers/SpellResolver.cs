@@ -10,18 +10,18 @@ public class SpellResolver(
     Card card
 ) : IStackEffectResolver
 {
-    public Match Match { get; } = card.Match;
     public Card Card { get; } = card;
 
     public async Task Resolve(StackEffect effect)
     {
+        var match = Card.Match;
         if (Card.IsPermanentType())
         {
             // 608.3a if no targets, Move from stack onto the battlefield
-            var pid = await Match.PutOntoTheBattlefield(card, effect.Ctx.Controller);
+            var pid = await match.PutOntoTheBattlefield(Card, effect.Ctx.Controller);
             if (pid is null) 
                 return;
-            var permanent = Match.Battlefield.GetPermanentByPid(pid)
+            var permanent = match.Battlefield.GetPermanentByPid(pid)
                 ?? throw new Exception($"Failed to fetch newly created permanent with PID = {pid} (card: {Card.GetDisplayName()})");
             permanent.SetController(effect.Ctx.Controller!);
 
@@ -84,10 +84,10 @@ public class SpellResolver(
         // TODO
 
         // 608.2n Move from stack to owner's graveyard
-        Match.MoveCard(
+        match.MoveCard(
             Card,
             CardZoneChangeType.Top,
-            Match.Players[Card.OwnerIdx].Graveyard.GetCardZoneChanger()
+            match.Players[Card.OwnerIdx].Graveyard.GetCardZoneChanger()
         );
 
         // 608.2p Triggers

@@ -25,7 +25,6 @@ public class TheStack(Match match) : ICardZone
 
     public StackEffect Create(
         Card card,
-        Player controller,
         EffectContext ctx
     )
     {
@@ -33,7 +32,7 @@ public class TheStack(Match match) : ICardZone
             card,
             CardZoneChangeType.Bottom,
             new SpellCardZoneChanger(
-                controller,
+                ctx.Controller,
                 ctx
             )
         );
@@ -46,6 +45,21 @@ public class TheStack(Match match) : ICardZone
             throw new Exception($"Failed to fetch newly created stack effect with SID = {sid} (cast card {card.GetDisplayName()})");
 
         return result;
+    }
+
+    public StackEffect Create(
+        EffectContext ctx,
+        IStackEffectResolver resolver
+    )
+    {
+        var effect = new StackEffect(
+            this,
+            ctx,
+            resolver
+        );
+
+        Effects.Add(effect);
+        return effect;
     }
 
     public string GetZoneName() => "TheStack";
@@ -69,6 +83,8 @@ public class TheStack(Match match) : ICardZone
     {
         var top = Effects.Last();
         await top.Resolve();
+
+        Effects.Remove(top);
     }
 
     class SpellCardZoneChanger(

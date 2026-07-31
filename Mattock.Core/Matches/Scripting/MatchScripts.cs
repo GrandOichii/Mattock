@@ -4,7 +4,9 @@ using System.Reflection;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Scripting.Targets;
+using Mattock.Core.Setup;
 using Mattock.Core.Utility;
 using NLua;
 
@@ -128,5 +130,37 @@ public class MatchScripts
             .GetAwaiter().GetResult();
 
         return LuaCommon.CreateTable(Match.LState, result);
+    }
+
+    [LuaCommand]
+    public Permanent? GetPermanentById(string id)
+    {
+        return Match.Battlefield.GetPermanentById(id);
+    }
+
+    [LuaCommand]
+    public bool PermanentIsTapped(Permanent permanent)
+    {
+        return permanent.IsTapped();
+    }
+
+    [LuaCommand]
+    public MatchConfig GetConfig()
+    {
+        return Match.Config;
+    }
+
+    [LuaCommand]
+    public bool PermanentIsSummoningSick(Permanent permanent)
+    {
+        return permanent.HasSummoningSickness;
+    }
+
+    [LuaCommand]
+    public void TapPermanents(LuaTable arrTable)
+    {
+        Permanent[] permanents = LuaCommon.ParseTable<Permanent>(arrTable);
+        Match.Events.TapPermanents(permanents)
+            .Wait();
     }
 }

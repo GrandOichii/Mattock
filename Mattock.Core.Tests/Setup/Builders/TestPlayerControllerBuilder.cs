@@ -1,4 +1,6 @@
 
+using Mattock.Core.Matches.Scripting.Activated;
+
 namespace Mattock.Core.Tests.Setup.Builders;
 
 public class TestPlayerControllerBuilder
@@ -162,6 +164,23 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
                 var card = player.GetCastableCards().First(c => c.HasName(name));
                 var command = new CastSpellCommand(player, card);
                 return (command, true, true);
+            },
+            true
+        ));
+    }
+
+    public TestPlayerControllerBuilder Activate(string permanentName, int abilityIdx = 0)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                ActivatedAbility[] arr = [.. player
+                    .GetActivatableAbilities()
+                    .Where(a => a.Card.HasName(permanentName))];
+
+                var command = new ActivateActivatedAbilityCommand(player, arr[abilityIdx]);
+                return (command, true, true);
+
             },
             true
         ));

@@ -27,7 +27,6 @@ public class SpellCastEvent(
         // 601.2a Move the card onto the stack
         var effect = match.Stack.Create(
             card,
-            player,
             ctx
         );
 
@@ -35,7 +34,7 @@ public class SpellCastEvent(
         // TODO
 
         // 601.2c Choose targets
-        await match.Events.ChooseTargetsForSpell(player, card, ctx);
+        await match.Events.ChooseTargetsForSpell(card, ctx);
 
         // var 
         // TODO
@@ -61,9 +60,6 @@ public class SpellCastEvent(
         await choice.Pay(ctx);
 
         // 601.2i Modify characteristics
-        // TODO
-
-        // Triggers
         // TODO
     }
 }

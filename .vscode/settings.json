@@ -12,6 +12,11 @@
         "DEBUG",
         "DEBUGTABLE",
         "LoseLife",
-        "ChoosePermanents"
+        "ChoosePermanents",
+        "PermanentIsTapped",
+        "GetPermanentById",
+        "GetConfig",
+        "PermanentIsSummoningSick",
+        "TapPermanents"
     ]
 }

@@ -8,8 +8,8 @@ namespace Mattock.Core.Matches.Scripting.Context.Data;
 
 public class AbilityActivationContextData(
     // Player owner,
-    // ActivatedAbility ability
+    ActivatedAbility ability
 ) : IEffectContextData
 {
-    // public Player Owner { get; } = owner;
+    public Card Object { get; } = ability.Card;
 }

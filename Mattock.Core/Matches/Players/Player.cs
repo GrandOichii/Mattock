@@ -332,6 +332,11 @@ public class Player
         await Match.Events.CastSpell(this, card);
     }
 
+    public async Task Activate(ActivatedAbility aa)
+    {
+        await Match.Events.ActivateAbility(this, aa);
+    }
+
     /// <summary>
     /// Is the player still in game
     /// </summary>

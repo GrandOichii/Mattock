@@ -1,7 +1,9 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
+using Mattock.Core.Matches.Scripting.Targets;
 
 namespace Mattock.Core.Matches.Scripting.Activated;
 
@@ -31,19 +33,29 @@ public class ActivatedAbility(
         EffectContext ctx = new(
             by,
             new AbilityActivationContextData(
-                
+                this
             ),
             new([])
         );
 
+        return GetCostCollection(ctx).CanBePayed(ctx);
+    }
+
+    public CostCollection GetCostCollection(EffectContext ctx)
+    {
         ManaCostsCollection manaCost = new([.. ManaCosts.Select(c => c.ToManaCost(ctx))]);
 
-        if (!manaCost.CanPay(ctx))
-            return false;
-
-        if (!Costs.All(c => c.CanPay(ctx)))
-            return false;
-
-        return true;
+        return new(
+            "TODO", [
+                manaCost,
+                .. Costs
+            ]
+        );
     }
+
+    public Target[] GetTargets()
+    {
+        return [.. Effects.SelectMany(e => e.Targets)];
+    }
+
 }

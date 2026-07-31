@@ -5,6 +5,7 @@ using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Targets;
 using Microsoft.VisualBasic;
@@ -110,12 +111,31 @@ public class MatchEvents(
         await _match.ProcessEvent(e);
     }
 
-    public async Task ChooseTargetsForSpell(Player player, Card card, EffectContext ctx)
+    public async Task ChooseTargetsForSpell(Card card, EffectContext ctx)
     {
         ChooseTargetsForSpellEvent e = new(
-            player,
             card,
             ctx
+        );
+
+        await _match.ProcessEvent(e);
+    }
+
+    public async Task ChooseTargetsForActivatedAbility(ActivatedAbility aa, EffectContext ctx)
+    {
+        ChooseTargetsForActivatedAbilityEvent e = new(
+            aa,
+            ctx
+        );
+
+        await _match.ProcessEvent(e);
+    }
+
+    public async Task ActivateAbility(Player player, ActivatedAbility aa)
+    {
+        ActivateAbilityEvent e = new(
+            player,
+            aa
         );
 
         await _match.ProcessEvent(e);

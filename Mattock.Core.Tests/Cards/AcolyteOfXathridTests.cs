@@ -236,6 +236,75 @@ public class AcolyteOfXathridTests
             .Act.Assert(a => a
                 .CanActivate()
             )
+            .Act.Assert(a => HasLife(0, 20, a))
+            .Act.Assert(a => HasLife(1, 20, a))
+            .Act.Activate(card.Name)
+            .ChoosePlayers.Me()
+            .StoredManaChoices.NTimes(2, smc => smc.First())
+            .Act.Assert(a => HasLife(0, 20, a))
+            .Act.Assert(a => HasLife(1, 20, a))
+            .Act.AutoPassUntilStackEmpty()
+            .Act.Assert(a => HasLife(0, 19, a))
+            .Act.Assert(a => HasLife(1, 20, a))
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPass();
+
+        var match = new TestMatchWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertPlayer(0, ap => ap
+                .HasLife(19)
+            )
+            .AssertPlayer(1, ap => ap
+                .HasLife(20)
+            )
+        );
+    }
+
+    [Fact]
+    public async Task CantActivate_NotFromBattlefield()
+    {
+        // Arrange
+        var loader = new FileCardLoader("../../../../cards");
+
+        var card = loader.Load("M10:Acolyte of Xathrid");
+        
+        var config = new MatchConfigBuilder()
+            .FirstPlayerIdx(0)
+            .NoManaPoolEmptying()
+            .NoSummoningSickness()
+            .Build();
+        
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [ new() {
+                Amount = 60,
+                Card = card,
+            } ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck)
+            .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.Black, 3)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.Assert(a => a
+                .CantActivate()
+            )
             .Act.Crash()
         ;
 
@@ -265,6 +334,73 @@ public class AcolyteOfXathridTests
         );
     }
 
-    // TODO check that opponent cant activate opposing activated abilities
-    // TODO check that cant activate from graveyard, library, exile and hand
+    [Fact]
+    public async Task CantActivate_OppAbility()
+    {
+        // Arrange
+        var loader = new FileCardLoader("../../../../cards");
+
+        var card = loader.Load("M10:Acolyte of Xathrid");
+        
+        var config = new MatchConfigBuilder()
+            .FirstPlayerIdx(0)
+            .NoManaPoolEmptying()
+            .NoSummoningSickness()
+            .Build();
+        
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [ new() {
+                Amount = 60,
+                Card = card,
+            } ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck)
+            .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.Black, 3)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(card.Name)
+            .StoredManaChoices.First()
+            .Act.AutoPassUntilStackEmpty()
+            .Act.Assert(a => a
+                .CanActivate()
+            )
+            .Act.AutoPass()
+            .DeclareAttack.Done()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPassToTurn(2)
+            .Act.AddMana(ManaType.Black, 2)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.Assert(a => a
+                .CantActivate()
+            )
+            .Act.Crash()
+        ;
+
+        var match = new TestMatchWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertPlayer(0, ap => ap
+                .HasLife(20)
+            )
+            .AssertPlayer(1, ap => ap
+                .HasLife(20)
+            )
+        );
+    }
 }
