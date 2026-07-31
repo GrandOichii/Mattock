@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Matches.Stack.Resolvers;
@@ -25,7 +26,7 @@ public class TheStack(Match match) : ICardZone
     public StackEffect Create(
         Card card,
         Player controller,
-        TargetDeclarationCollection targets
+        EffectContext ctx
     )
     {
         var sid = Match.MoveCard(
@@ -33,7 +34,7 @@ public class TheStack(Match match) : ICardZone
             CardZoneChangeType.Bottom,
             new SpellCardZoneChanger(
                 controller,
-                targets
+                ctx
             )
         );
 
@@ -72,7 +73,7 @@ public class TheStack(Match match) : ICardZone
 
     class SpellCardZoneChanger(
         Player controller,
-        TargetDeclarationCollection targets
+        EffectContext ctx
     ) : ICardZoneChanger
     {
         public bool Accepts(Card card)
@@ -91,13 +92,7 @@ public class TheStack(Match match) : ICardZone
             var effect = new StackEffect(
                 stack,
                 controller,
-                new(
-                    new SpellEffectContextData(
-                        controller,
-                        card
-                    ),
-                    targets
-                ),
+                ctx,
                 new SpellResolver(card)
             );
 

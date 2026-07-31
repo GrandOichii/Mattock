@@ -6,7 +6,7 @@ function _Create()
             New:Effect('Target player draws 2 cards and loses 2 life.')
                 :Target(
                     Target:Player(
-                        Select:Players(),
+                        Select:Players():Many(),
                         Target.Amount:Const(
                             Number:Const(1)
                         )

@@ -15,19 +15,28 @@ public class SpellCastEvent(
     {
         TargetDeclarationCollection targets = new([]);
 
-        // EffectContext ctx = 
+        EffectContext ctx = new(
+            new SpellEffectContextData(
+                player,
+                card
+            ),
+            targets
+        );
 
         // 601.2a Move the card onto the stack
         var effect = match.Stack.Create(
             card,
             player,
-            targets
+            ctx
         );
 
         // 601.2b Modal spells
         // TODO
 
         // 601.2c Choose targets
+        await match.Events.ChooseTargetsForSpell(player, card, ctx);
+
+        // var 
         // TODO
         
         // 601.2d Announce divisions

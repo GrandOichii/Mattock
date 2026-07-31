@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Utility;
 using NLua;
 
@@ -14,5 +15,19 @@ public class Target
         CheckFunc = LuaCommon.Get<LuaFunction>(table, "Check");
     }
 
-    
+    public bool CanTarget(EffectContext ctx)
+    {
+        var returned = CheckFunc.Call(ctx);
+        return LuaCommon.GetReturnAsBool(returned);
+    }
+
+    public TargetDeclaration Get(EffectContext ctx)
+    {
+        var returned = GetFunc.Call(ctx);
+        var table = LuaCommon.GetReturnAs<LuaTable>(returned);
+        var key = LuaCommon.Get<string>(table, "Key");
+        var list = LuaCommon.Get<LuaTable>(table, "Items");
+
+        return new(key, LuaCommon.ParseTable<object>(list));
+    }
 }

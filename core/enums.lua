@@ -1,5 +1,15 @@
 CardTypes = {
-    Land = 'Land',
+    Artifact = 'Artifact',
     Creature = 'Creature',
-    -- TODO
+    Enchantment = 'Enchantment',
+    Instant = 'Instant',
+    Land = 'Land',
+    Planeswalker = 'Planeswalker',
+    Sorcery = 'Sorcery',
+    Kindred = 'Kindred',
+    Dungeon = 'Dungeon',
+    Battle = 'Battle',
+    Phenomenon = 'Phenomenon',
+    Vanguard = 'Vanguard',
+    Conspiracy = 'Conspiracy',
 }

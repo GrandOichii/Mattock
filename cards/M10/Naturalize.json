@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Naturalize",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 4,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        4
+    ],
+
+    "Types": [ "Instant" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Destroy target artifact or enchantment.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

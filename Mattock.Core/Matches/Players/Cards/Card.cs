@@ -1,6 +1,8 @@
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Context;
+using Mattock.Core.Matches.Scripting.Context.Data;
+using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup.Templates;
 using Mattock.Core.Utility;
@@ -121,7 +123,21 @@ public class Card
         if (Zone != player.Hand)
             return false;
 
+        var ctx = new EffectContext(
+            new SpellEffectContextData(player, this),
+            new([])
+        );
+
+        var targets = GetSpellTargets();
+        if (!targets.All(t => t.CanTarget(ctx)))
+            return false;
+
         return true;
+    }
+
+    public Target[] GetSpellTargets()
+    {
+        return [.. SpellEffects.SelectMany(e => e.Targets)];
     }
 
     public List<CostCollection> GetCostCollections(Player player)
