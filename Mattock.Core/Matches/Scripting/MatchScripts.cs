@@ -133,6 +133,16 @@ public class MatchScripts
     }
 
     [LuaCommand]
+    public LuaTable ChoosePermanents(Player player, LuaTable optionsTable, int min, int max, string hint)
+    {
+        var options = LuaCommon.ParseTable<Permanent>(optionsTable);
+        var result = player.ChoosePermanents(options, min, max, hint)
+            .GetAwaiter().GetResult();
+
+        return LuaCommon.CreateTable(Match.LState, result);
+    }
+
+    [LuaCommand]
     public Permanent? GetPermanentById(string id)
     {
         return Match.Battlefield.GetPermanentById(id);

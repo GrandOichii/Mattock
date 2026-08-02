@@ -36,6 +36,12 @@ public class PermanentAsserts(Permanent permanent)
         return this;
     }
 
+    public PermanentAsserts CheckTapped(bool expected)
+    {
+        permanent.IsTapped().ShouldBe(expected);
+        return this;
+    }
+
     public PermanentAsserts IsNotAttacking()
     {
         permanent.IsAttacking().ShouldBeFalse();

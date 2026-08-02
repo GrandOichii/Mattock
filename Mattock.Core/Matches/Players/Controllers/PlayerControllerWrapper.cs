@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Costs;
@@ -14,6 +15,7 @@ public abstract class PlayerControllerWrapper(
 {
     public abstract Task HandleCommandChoice(ICommand choice, Player player, ICommand[] choices);
     public abstract Task HandlePlayersChoice(Player[] choices, Player player, Player[] options, int min, int max, string hint);
+    public abstract Task HandlePermanentsChoice(Permanent[] choices, Player player, Permanent[] options, int min, int max, string hint);
     public abstract Task HandleStringChoice(string? choice, Player player, string[] options, string hint);
     public abstract Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint);
     public abstract Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] options, string hint);
@@ -67,6 +69,20 @@ public abstract class PlayerControllerWrapper(
     {
         var result = await controller.ChoosePlayers(player, options, min, max, hint);
         await HandlePlayersChoice(result, player, options, min, max, hint);
+
+        return result;
+    }
+
+    public async Task<Permanent[]> ChoosePermanents(
+        Player player,
+        Permanent[] options,
+        int min,
+        int max,
+        string hint
+    )
+    {
+        var result = await controller.ChoosePermanents(player, options, min, max, hint);
+        await HandlePermanentsChoice(result, player, options, min, max, hint);
 
         return result;
     }

@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Costs;
 
 namespace Mattock.Core.Tests.Setup;
@@ -9,6 +10,7 @@ public class TestPlayerController(
     int teamIdx,
     Queue<(TestPlayerController.CommandChoice, bool)> commandChoices,
     Queue<TestPlayerController.PlayersChoice> playersChoices,
+    Queue<TestPlayerController.PermanentsChoice> permanentsChoices,
     Queue<TestPlayerController.StringChoice> stringChoices,
     Queue<TestPlayerController.CardChoice> cardChoices,
     Queue<TestPlayerController.CostCollectionChoice> costCollectionChoices,
@@ -19,6 +21,7 @@ public class TestPlayerController(
 {
     public delegate Task<(ICommand?, bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
     public delegate Task<(Player[], bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
+    public delegate Task<(Permanent[], bool)> PermanentsChoice(Player player, Permanent[] options, int min, int max, string hint);
     public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
     public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
     public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
@@ -29,6 +32,7 @@ public class TestPlayerController(
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
         bool checkPlayersChoices,
+        bool checkPermanentsChoices,
         bool checkStringChoices,
         bool checkCardChoices,
         bool checkCostCollectionChoices,
@@ -39,6 +43,9 @@ public class TestPlayerController(
     {
         if (checkPlayersChoices)
             playersChoices.Count.ShouldBe(0, $"{nameof(PlayersChoice)} queue of player {name} is not empty (size: {playersChoices.Count})");
+
+        if (checkPermanentsChoices)
+            permanentsChoices.Count.ShouldBe(0, $"{nameof(PermanentsChoice)} queue of player {name} is not empty (size: {permanentsChoices.Count})");
 
         if (checkStringChoices)
             stringChoices.Count.ShouldBe(0, $"{nameof(StringChoice)} queue of player {name} is not empty (size: {stringChoices.Count})");
@@ -148,6 +155,20 @@ public class TestPlayerController(
             (d, p, o, mmin, mmax, h) => d(p, o, mmin, mmax, h),
             playersChoices,
             nameof(ChoosePlayers)
+        );
+    }
+
+    public async Task<Permanent[]> ChoosePermanents(Player player, Permanent[] options, int min, int max, string hint)
+    {
+        return await Dequeue(
+            player,
+            options,
+            min,
+            max,
+            hint,
+            (d, p, o, mmin, mmax, h) => d(p, o, mmin, mmax, h),
+            permanentsChoices,
+            nameof(ChoosePermanents)
         );
     }
 

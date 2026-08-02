@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Costs;
@@ -16,6 +17,14 @@ public interface IPlayerController
     Task<Player[]> ChoosePlayers(
         Player player,
         Player[] options,
+        int min,
+        int max,
+        string hint
+    );
+
+    Task<Permanent[]> ChoosePermanents(
+        Player player,
+        Permanent[] options,
         int min,
         int max,
         string hint

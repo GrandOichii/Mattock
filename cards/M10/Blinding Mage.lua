@@ -1,5 +1,7 @@
 -- {W}, {T}: Tap target creature.
 
+-- TODO add tests
+
 function _Create()
     return New:Card()
         :ActivatedAbility(

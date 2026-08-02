@@ -485,6 +485,18 @@ public class Player
         return result!;
     }
 
+    public async Task<Permanent[]> ChoosePermanents(Permanent[] options, int min, int max, string hint)
+    {
+        GameEndSafeguard();
+        if (max == 0)
+            throw new Exception($"Provided max = 0 for {nameof(ChoosePermanents)}"); // TODO type
+            
+        await Match.UpdateExcept(this);
+        var result = await _controller.ChoosePermanents(this, options, min, max, hint);
+
+        return result!;
+    }
+
     public async Task<StoredMana> ChooseStoredMana(StoredMana[] options, string hint)
     {
         GameEndSafeguard();

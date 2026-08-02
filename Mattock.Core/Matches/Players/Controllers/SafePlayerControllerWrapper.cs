@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Costs;
@@ -50,6 +51,19 @@ public class SafePlayerControllerWrapper(IPlayerController controller)
         Player[] badChoices = [.. choices.Where(c => !options.Contains(c))];
         if (badChoices.Length > 0)
             throw new Exception($"Controller chose players {string.Join(", ", badChoices.Select(c => c.GetDisplayName()))} for {nameof(ChoosePlayers)}, which are not in options (options: {string.Join(", ", options.Select(c => c.GetDisplayName()))})");
+        return Task.CompletedTask;
+    }
+
+    public override Task HandlePermanentsChoice(Permanent[] choices, Player player, Permanent[] options, int min, int max, string hint)
+    {
+        if (choices.Length < min)
+            throw new Exception($"Controller chose {choices.Length} permanents for {nameof(ChoosePermanents)}, while min = {min}");
+        if (max != -1 && choices.Length > max)
+            throw new Exception($"Controller chose {choices.Length} permanents for {nameof(ChoosePermanents)}, while max = {max}");
+        
+        Permanent[] badChoices = [.. choices.Where(c => !options.Contains(c))];
+        if (badChoices.Length > 0)
+            throw new Exception($"Controller chose permanents {string.Join(", ", badChoices.Select(c => c.GetDisplayName()))} for {nameof(ChoosePermanents)}, which are not in options (options: {string.Join(", ", options.Select(c => c.GetDisplayName()))})");
         return Task.CompletedTask;
     }
 

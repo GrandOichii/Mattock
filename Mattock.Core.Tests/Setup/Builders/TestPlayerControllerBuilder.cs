@@ -1,4 +1,5 @@
 
+using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Tests.Setup.Builders;
@@ -11,6 +12,7 @@ public class TestPlayerControllerBuilder
 
     public CommandChoicesBuilder CommandChoices { get; }
     public PlayersChoicesBuilder PlayersChoices { get; }
+    public PermanentsChoicesBuilder PermanentsChoices { get; }
     public StringChoicesBuilder StringChoices { get; }
     public CardChoicesBuilder CardChoices { get; }
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
@@ -29,6 +31,7 @@ public class TestPlayerControllerBuilder
 
         CommandChoices = new(this);
         PlayersChoices = new(this);
+        PermanentsChoices = new(this);
         StringChoices = new(this);
         CardChoices = new(this);
         CostCollectionChoices = new(this);
@@ -38,6 +41,7 @@ public class TestPlayerControllerBuilder
     }
 
     public PlayersChoicesBuilder ChoosePlayers => PlayersChoices;
+    public PermanentsChoicesBuilder ChoosePermanents => PermanentsChoices;
     public StringChoicesBuilder ChooseString => StringChoices;
     public CardChoicesBuilder ChooseCard => CardChoices;
     public CostCollectionChoicesBuilder ChooseCostCollection => CostCollectionChoices;
@@ -61,6 +65,7 @@ public class TestPlayerControllerBuilder
             _teamIdx,
             CommandChoices.Queue,
             PlayersChoices.Queue,
+            PermanentsChoices.Queue,
             StringChoices.Queue,
             CardChoices.Queue,
             CostCollectionChoices.Queue,
@@ -101,6 +106,37 @@ public class PlayersChoicesBuilder(TestPlayerControllerBuilder builder)
             return ([player], true);
         });
     }
+}
+
+public class PermanentsChoicesBuilder(TestPlayerControllerBuilder builder) 
+    : ChoicesBuilder<TestPlayerController.PermanentsChoice>(builder)
+{
+    public TestPlayerControllerBuilder WithName(string name)
+    {
+        return Enqueue(async (player, options, min, max, hint) =>
+        {
+            return ([options.Single(p => p.HasName(name))], true);
+        });
+    }
+
+    public TestPlayerControllerBuilder Assert(Action<Asserts> action)
+    {
+        return Enqueue(async (player, options, min, max, hint) =>
+        {
+            action(new(player, options, min, max, hint));
+            return ([], false);
+        });
+    }
+    
+    public class Asserts(Player player, Permanent[] options, int min, int max, string hint)
+    {
+        public Asserts OptionsCount(int v)
+        {
+            options.Length.ShouldBe(v);
+            return this;
+        }
+    }
+
 }
 
 public class CommandChoicesBuilder(TestPlayerControllerBuilder builder) 
