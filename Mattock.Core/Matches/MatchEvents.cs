@@ -5,6 +5,7 @@ using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Targets;
@@ -133,9 +134,19 @@ public class MatchEvents(
 
     public async Task ActivateAbility(Player player, ActivatedAbility aa)
     {
-        ActivateAbilityEvent e = new(
-            player,
-            aa
+        IEvent e = aa.IsManaAbility()
+            ? new ActivateManaAbilityEvent(player, aa)
+            : new ActivateAbilityEvent(player, aa)
+        ;
+        
+        await _match.ProcessEvent(e);
+    }
+
+    public async Task AddMana(Player[] players, ManaAmount[] mana)
+    {
+        AddGenericManaEvent e = new(
+            players,
+            mana
         );
 
         await _match.ProcessEvent(e);

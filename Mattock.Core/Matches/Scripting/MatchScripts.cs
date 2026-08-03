@@ -1,20 +1,19 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
-using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Damage.Sources;
 using Mattock.Core.Matches.Damage.Targets;
 using Mattock.Core.Matches.Events;
+using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
-using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Setup;
 using Mattock.Core.Utility;
 using NLua;
 
 namespace Mattock.Core.Matches.Scripting;
-
 
 /// <summary>
 /// Marks the method as a Lua function
@@ -193,6 +192,20 @@ public class MatchScripts
             ));
         }
         Match.Events.ProcessDamage([.. damages])
+            .Wait();
+    }
+
+    [LuaCommand]
+    public void AddMana(LuaTable playersTable, LuaTable manaTable)
+    {
+        var players = LuaCommon.ParseTable<Player>(playersTable);
+        var arr = LuaCommon.ParseTable<LuaTable>(manaTable);
+        ManaAmount[] mana = [.. arr.Select(i => new ManaAmount(
+            (ManaType)LuaCommon.GetInt(i, "Type"),
+            LuaCommon.GetInt(i, "Amount")
+        ))];
+
+        Match.Events.AddMana(players, mana)
             .Wait();
     }
 }

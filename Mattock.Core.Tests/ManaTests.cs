@@ -5,12 +5,12 @@ namespace Mattock.Core.Tests;
 
 public class ManaTests
 {
-    private static void TestFormatted(string formatted, List<Mana> expected)
+    private static void TestFormatted(string formatted, List<ManaAmount> expected)
     {
         // Arrange
 
         // Act
-        var mana = Mana.FromFormatted(formatted);
+        var mana = ManaAmount.FromFormatted(formatted);
 
         // Assert
         mana.ShouldBeEquivalentTo(expected);
@@ -20,10 +20,7 @@ public class ManaTests
     public void Formatted_W()
     {
         TestFormatted("{W}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.White
-            }
+            new(ManaType.White, 1)
         ]);
     }
 
@@ -31,10 +28,7 @@ public class ManaTests
     public void Formatted_U()
     {
         TestFormatted("{U}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.Blue
-            }
+            new(ManaType.Blue, 1)
         ]);
     }
 
@@ -42,10 +36,7 @@ public class ManaTests
     public void Formatted_B()
     {
         TestFormatted("{B}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.Black
-            }
+            new(ManaType.Black, 1)
         ]);
     }
 
@@ -53,10 +44,7 @@ public class ManaTests
     public void Formatted_R()
     {
         TestFormatted("{R}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.Red
-            }
+            new(ManaType.Red, 1)
         ]);
     }
 
@@ -64,10 +52,7 @@ public class ManaTests
     public void Formatted_G()
     {
         TestFormatted("{G}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.Green
-            }
+            new(ManaType.Green, 1)
         ]);
     }
 
@@ -75,10 +60,7 @@ public class ManaTests
     public void Formatted_C()
     {
         TestFormatted("{C}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.Colorless
-            }
+            new(ManaType.Colorless, 1)
         ]);
     }
 
@@ -86,26 +68,11 @@ public class ManaTests
     public void Formatted_WUBRG()
     {
         TestFormatted("{W}{U}{B}{R}{G}", [
-            new() {
-                Amount = 1,
-                Type = ManaType.White
-            },
-            new() {
-                Amount = 1,
-                Type = ManaType.Blue
-            },
-            new() {
-                Amount = 1,
-                Type = ManaType.Black
-            },
-            new() {
-                Amount = 1,
-                Type = ManaType.Red
-            },
-            new() {
-                Amount = 1,
-                Type = ManaType.Green
-            },
+            new(ManaType.White, 1),
+            new(ManaType.Blue, 1),
+            new(ManaType.Black, 1),
+            new(ManaType.Red, 1),
+            new(ManaType.Green, 1),
         ]);
     }
 
@@ -116,11 +83,7 @@ public class ManaTests
     [InlineData(10)]
     public void Formatted_MultipleSame(int amount)
     {
-        var mana = new Mana()
-        {
-            Type = ManaType.White,
-            Amount = amount,
-        };
+        var mana = new ManaAmount(ManaType.White, amount);
         TestFormatted(
             string.Concat(Enumerable.Repeat("{W}", amount)),
             [ mana ]
@@ -135,10 +98,7 @@ public class ManaTests
     [InlineData(10)]
     public void Formatted_Generic(int amount)
     {
-        var mana = new Mana() {
-            Type = null,
-            Amount = amount,
-        };
+        var mana = new ManaAmount(null, amount);
         TestFormatted(
             $"{{{amount}}}",
             [ mana ]

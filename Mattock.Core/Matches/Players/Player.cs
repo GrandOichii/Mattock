@@ -421,7 +421,13 @@ public class Player
     public ActivatedAbility[] GetActivatableAbilities()
     {
         var cards = Match.GetCards();
-        return [.. cards.SelectMany(c => c.GetActivatedAbilitiesFor(this))];
+        return [.. cards.SelectMany(c => c.GetActivatableAbilitiesFor(this))];
+    }
+
+    public ActivatedAbility[] GetActivatableManaAbilities()
+    {
+        var cards = Match.GetCards();
+        return [.. cards.SelectMany(c => c.GetActivatableManaAbilitiesFor(this))];
     }
 
     /// <summary>
@@ -500,6 +506,9 @@ public class Player
     public async Task<StoredMana> ChooseStoredMana(StoredMana[] options, string hint)
     {
         GameEndSafeguard();
+        
+        // TODO player can activate mana abilities here
+
         await Match.UpdateExcept(this);
         var result = await _controller.ChooseStoredMana(this, options, hint, false)!;
 

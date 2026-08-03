@@ -214,7 +214,24 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
                     .GetActivatableAbilities()
                     .Where(a => a.Card.HasName(permanentName))];
 
-                var command = new ActivateActivatedAbilityCommand(player, arr[abilityIdx]);
+                var command = new ActivateAbilityCommand(player, arr[abilityIdx]);
+                return (command, true, true);
+
+            },
+            true
+        ));
+    }
+
+    public TestPlayerControllerBuilder ActivateMana(string permanentName, int abilityIdx = 0)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                ActivatedAbility[] arr = [.. player
+                    .GetActivatableManaAbilities()
+                    .Where(a => a.Card.HasName(permanentName))];
+
+                var command = new ActivateManaAbilityCommand(player, arr[abilityIdx]);
                 return (command, true, true);
 
             },
@@ -402,7 +419,15 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         
         public Asserts CanActivate()
         {
-            options.Any(a => a.ToCommandString().StartsWith(ActivateActivatedAbilityAction.ActionWord)).ShouldBeTrue(
+            options.Any(a => a.ToCommandString().StartsWith(ActivateAbilityAction.ActionWord)).ShouldBeTrue(
+                $"Player {player.GetDisplayName()} should be able to activate abilities"
+            );
+            return this;
+        }
+
+        public Asserts CanActivateMana()
+        {
+            options.Any(a => a.ToCommandString().StartsWith(ActivateManaAbilityAction.ActionWord)).ShouldBeTrue(
                 $"Player {player.GetDisplayName()} should be able to activate abilities"
             );
             return this;
@@ -426,7 +451,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
 
         public Asserts CantActivate()
         {
-            options.All(a => !a.ToCommandString().StartsWith(ActivateActivatedAbilityAction.ActionWord)).ShouldBeTrue(
+            options.All(a => !a.ToCommandString().StartsWith(ActivateAbilityAction.ActionWord)).ShouldBeTrue(
                 $"Player {player.GetDisplayName()} shouldn't be able to activate abilities"
             );
             return this;

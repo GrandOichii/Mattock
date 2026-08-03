@@ -18,6 +18,7 @@
         "GetConfig",
         "PermanentIsSummoningSick",
         "TapPermanents",
-        "DealDamageToPermanents"
+        "DealDamageToPermanents",
+        "AddMana"
     ]
 }

@@ -1,18 +1,20 @@
 using System.Text.RegularExpressions;
 using Mattock.Core.Matches.Mana;
-using Microsoft.VisualBasic;
 
 namespace Mattock.Core.Matches.Players.Mana;
 
-public partial class Mana
+public partial class ManaAmount(
+    ManaType? type,
+    int amount
+)
 {
-    public required ManaType? Type { get; init; }
-    public required int Amount { get; init; }
+    public ManaType? Type { get; init; } = type;
+    public int Amount { get; init; } = amount;
 
-    public static List<Mana> FromFormatted(string formatted)
+    public static List<ManaAmount> FromFormatted(string formatted)
     {
         var pattern = ManaSymbolPattern();
-        Dictionary<string, Mana> map = [];
+        Dictionary<string, ManaAmount> map = [];
         Dictionary<string, int> amounts = [];
 
         var matches = pattern.Matches(formatted);
@@ -38,27 +40,17 @@ public partial class Mana
             }
 
             var type = TypeFromSymbol(v);
-            map[m.Value] = new()
-            {
-                Amount = 0,
-                Type = type
-            };
+            map[m.Value] = new(type, 0);
             amounts[m.Value] = 1;
         }
 
         return [
             .. hasGeneric 
-                ? new Mana[] { 
-                    new() {
-                        Amount = generic,
-                        Type = null
-                    }
+                ? new ManaAmount[] { 
+                    new(null, generic)
                 }
                 : [],
-            .. map.Select(pair => new Mana() {
-                Amount = amounts[pair.Key],
-                Type = pair.Value.Type
-            })  
+            .. map.Select(pair => new ManaAmount(pair.Value.Type, amounts[pair.Key]))  
         ];
 
         // return result;

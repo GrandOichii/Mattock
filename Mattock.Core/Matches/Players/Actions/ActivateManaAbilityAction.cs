@@ -2,19 +2,19 @@ using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Matches.Players.Actions;
 
-public class ActivateActivatedAbilityAction : IAction
+public class ActivateManaAbilityAction : IAction
 {
-    public static readonly string ActionWord = "Activate";
+    public static readonly string ActionWord = "ActivateMana";
 
     public List<ICommand> GetAvailable(Player player)
     {
-        var available = player.GetActivatableAbilities();
+        var available = player.GetActivatableManaAbilities();
 
-        return [.. available.Select(a => new ActivateActivatedAbilityCommand(player, a))];
+        return [.. available.Select(a => new ActivateManaAbilityCommand(player, a))];
     }
 }
 
-public class ActivateActivatedAbilityCommand(
+public class ActivateManaAbilityCommand(
     Player player,
     ActivatedAbility aa
 ) : ICommand
@@ -26,5 +26,5 @@ public class ActivateActivatedAbilityCommand(
     }
 
     public string ToCommandString()
-        => $"{ActivateActivatedAbilityAction.ActionWord} {aa.Id}";
+        => $"{ActivateManaAbilityAction.ActionWord} {aa.Id}";
 }

@@ -50,6 +50,8 @@ public class ManaCostsCollection(
                         : $"type {manaCost.Type}";
                     throw new Exception($"Code error: failed to find stored mana candidates to pay for mana cost of {postFix}");
                 }
+
+                
                 var choice = await player.ChooseStoredMana([.. candidates], $"Pay cost"); // TODO better hint
                 player.ManaPool.Remove(choice);
             }

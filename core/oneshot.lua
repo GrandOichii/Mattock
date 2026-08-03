@@ -65,3 +65,22 @@ function OneShot:DealDamageToPermanents(manyPermanents, number)
         DealDamageToPermanents(damage)
     end
 end
+
+function OneShot:AddMana(manyPlayers, ...)
+    local mana = {...}
+
+    return function (ctx)
+        local players = manyPlayers(ctx)
+        local newMana = {}
+        for _, m in ipairs(mana) do
+            assert(m.Type ~= -1, 'Provided generic mana for OneShot:AddMana')
+
+            newMana[#newMana+1] = {
+                Type = m.Type,
+                Amount = m.GetAmount(ctx)
+            }
+        end
+
+        AddMana(players, newMana)
+    end
+end

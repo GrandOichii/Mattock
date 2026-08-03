@@ -31,3 +31,7 @@ function Mana:Green(number)
     return Mana:_(ManaTypes.Green, number)
 end
 
+function Mana:Colorless(number)
+    return Mana:_(ManaTypes.Colorless, number)
+end
+

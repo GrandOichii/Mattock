@@ -192,9 +192,14 @@ public class Card
         }
     }
 
-    public ActivatedAbility[] GetActivatedAbilitiesFor(Player player)
+    public ActivatedAbility[] GetActivatableAbilitiesFor(Player player)
     {
-        return [.. GetActivatedAbilities().Where(a => a.CanBeActivated(player))];
+        return [.. GetActivatedAbilities().Where(a => !a.IsManaAbility() && a.CanBeActivated(player))];
+    }
+
+    public ActivatedAbility[] GetActivatableManaAbilitiesFor(Player player)
+    {
+        return [.. GetActivatedAbilities().Where(a => a.IsManaAbility() && a.CanBeActivated(player))];
     }
 
     public ActivatedAbility[] GetActivatedAbilities()

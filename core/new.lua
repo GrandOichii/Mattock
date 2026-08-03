@@ -30,6 +30,7 @@ function New:Effect(text)
     local builder = {
         effects = {},
         targets = {},
+        canProduceMana = false,
     }
 
     function builder:Build()
@@ -37,7 +38,13 @@ function New:Effect(text)
             Text = text,
             Effects = builder.effects,
             Targets = builder.targets,
+            CanProduceMana = builder.canProduceMana,
         }
+    end
+
+    function builder:CanProduceMana()
+        builder.canProduceMana = true
+        return builder
     end
 
     function builder:Effect(e)

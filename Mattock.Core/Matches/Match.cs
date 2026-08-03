@@ -104,7 +104,8 @@ public class Match
             new PassAction(),
             new PlayLandSpecialAction(),
             new CastSpellAction(),
-            new ActivateActivatedAbilityAction(),
+            new ActivateAbilityAction(),
+            new ActivateManaAbilityAction(),
         ];
     }
 

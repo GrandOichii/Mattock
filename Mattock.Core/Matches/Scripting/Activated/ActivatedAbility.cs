@@ -58,4 +58,16 @@ public class ActivatedAbility(
         return [.. Effects.SelectMany(e => e.Targets)];
     }
 
+    public bool IsManaAbility()
+    {
+        if (GetTargets().Length > 0) 
+            return false;
+
+        // TODO check that is not a loyalty ability
+
+        // TODO check every effect. if any of them produce mana, return true
+        
+        return Effects.Any(e => e.CanProduceMana);
+    }
+
 }

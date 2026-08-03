@@ -21,7 +21,7 @@ function Cost:SelfTap()
             if permanent == nil then
                 return false
             end
-            if PermanentIsSummoningSick(permanent) and config.SummoningSickness then
+            if PermanentHasType(permanent, CardTypes.Creature) and PermanentIsSummoningSick(permanent) and config.SummoningSickness then
                 return false
             end
             return not PermanentIsTapped(permanent)

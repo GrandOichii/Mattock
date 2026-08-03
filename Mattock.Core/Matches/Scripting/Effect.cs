@@ -10,10 +10,13 @@ public class Effect
     public string Text { get; }
     public EffectPart[] Parts { get; }
     public Target[] Targets { get; }
+    public bool CanProduceMana { get; }
+
 
     public Effect(LuaTable data)
     {
         Text = LuaCommon.Get<string>(data, "Text");
+        CanProduceMana = LuaCommon.GetBool(data, "CanProduceMana");
 
         var effectsTable = LuaCommon.Get<LuaTable>(data, "Effects");
         var effects = LuaCommon.ParseTable<LuaFunction>(effectsTable);

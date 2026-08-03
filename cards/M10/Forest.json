@@ -1,0 +1,20 @@
+{
+    "Script": "",
+    "Name": "Forest",
+    "ManaCosts": [
+    ],
+    "ColorIndicator": [
+    ],
+
+    "Types": [ "Land" ],
+    "Subtypes": [ "Forest" ],
+    "Supertypes": [ "Basic" ],
+    
+    "TextBox": "{T}: Add {G}.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

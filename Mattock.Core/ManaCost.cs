@@ -10,7 +10,7 @@ public class ManaCost
 
     public static ManaCost[] FromFormattedCost(string cost)
     {
-        var mana = Mana.FromFormatted(cost);
+        var mana = ManaAmount.FromFormatted(cost);
         return [
             .. mana.Select(m => new ManaCost() {
                 Amount = m.Amount,

@@ -15,4 +15,10 @@ public class ManaPoolAsserts(ManaPool manaPool)
         manaPool.GetTotal().ShouldBe(v);
         return this;
     }
+
+    public ManaPoolAsserts HasColoredMana(ManaType t, int v)
+    {
+        manaPool.Mana.Count(m => m.Type == t).ShouldBe(v);
+        return this;
+    }
 }
