@@ -18,4 +18,13 @@ public class ManaCost
             })
         ];
     }
+
+    public ManaCost Copy()
+    {
+        return new()
+        {
+            Type = Type,
+            Amount = Amount
+        };
+    }
 }

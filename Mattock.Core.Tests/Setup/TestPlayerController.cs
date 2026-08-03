@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Permanents;
+using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
 
 namespace Mattock.Core.Tests.Setup;
@@ -14,7 +15,7 @@ public class TestPlayerController(
     Queue<TestPlayerController.StringChoice> stringChoices,
     Queue<TestPlayerController.CardChoice> cardChoices,
     Queue<TestPlayerController.CostCollectionChoice> costCollectionChoices,
-    Queue<TestPlayerController.StoredManaChoice> storedManaChoices,
+    Queue<TestPlayerController.ManaPaymentChoice> manaPaymentChoices,
     Queue<TestPlayerController.AttackDeclarationsChoice> attackDeclarationsChoices,
     Queue<TestPlayerController.BlockDeclarationsChoice> blockDeclarationsChoices
 ) : IPlayerController
@@ -25,7 +26,7 @@ public class TestPlayerController(
     public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
     public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
     public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
-    public delegate Task<(StoredMana?, bool)> StoredManaChoice(Player player, StoredMana[] options, string hint, bool allowNone);
+    public delegate Task<(IManaPaymentChoice, bool)> ManaPaymentChoice(Player player, IManaPaymentChoice[] options, string hint);
     public delegate Task<(AttackDeclaration[]?, bool)> AttackDeclarationsChoice(Player player, AttackDeclaration[] options);
     public delegate Task<(BlockDeclaration[]?, bool)> BlockDeclarationsChoice(Player player, BlockDeclaration[] options);
 
@@ -36,7 +37,7 @@ public class TestPlayerController(
         bool checkStringChoices,
         bool checkCardChoices,
         bool checkCostCollectionChoices,
-        bool checkStoredManaChoices,
+        bool checkManaPaymentChoices,
         bool checkAttackDeclarationChoices,
         bool checkBlockDeclarationChoices
     )
@@ -56,8 +57,8 @@ public class TestPlayerController(
         if (checkCostCollectionChoices)
             costCollectionChoices.Count.ShouldBe(0, $"{nameof(CostCollectionChoice)} queue of player {name} is not empty (size: {costCollectionChoices.Count})");
 
-        if (checkStoredManaChoices)
-            storedManaChoices.Count.ShouldBe(0, $"{nameof(StoredManaChoice)} queue of player {name} is not empty (size: {storedManaChoices.Count})");
+        if (checkManaPaymentChoices)
+            manaPaymentChoices.Count.ShouldBe(0, $"{nameof(ManaPaymentChoice)} queue of player {name} is not empty (size: {manaPaymentChoices.Count})");
 
         if (checkAttackDeclarationChoices)
             attackDeclarationsChoices.Count.ShouldBe(0, $"{nameof(AttackDeclarationsChoice)} queue of player {name} is not empty (size: {attackDeclarationsChoices.Count})");
@@ -113,6 +114,27 @@ public class TestPlayerController(
         {
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, hint, allowNone);
+            if (!isResult) continue;
+            if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            return result;
+        }
+
+        throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
+    }
+
+    public static async Task<TResult> Dequeue<TResult, TDelegate>(
+        Player player,
+        TResult[] options,
+        string hint,
+        Func<TDelegate, Player, TResult[], string, Task<(TResult, bool)>> getter,
+        Queue<TDelegate> queue,
+        string methodName
+    )
+    {
+        while (queue.Count > 0)
+        {
+            var choice = queue.Dequeue();
+            var (result, isResult) = await getter(choice, player, options, hint);
             if (!isResult) continue;
             if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
@@ -211,16 +233,15 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<StoredMana?> ChooseStoredMana(Player player, StoredMana[] options, string hint, bool allowNone)
+    public async Task<IManaPaymentChoice> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
     {
         return await Dequeue(
             player,
             options,
             hint,
-            allowNone,
-            (d, p, o, h, a) => d(p, o, h, a),
-            storedManaChoices,
-            nameof(ChooseStoredMana)
+            (d, p, o, h) => d(p, o, h),
+            manaPaymentChoices,
+            nameof(ChooseManaPayment)
         );
     }
 

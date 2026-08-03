@@ -5,6 +5,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Controllers;
+using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Scripting.Activated;
@@ -503,16 +504,14 @@ public class Player
         return result!;
     }
 
-    public async Task<StoredMana> ChooseStoredMana(StoredMana[] options, string hint)
+    public async Task<IManaPaymentChoice> ChooseManaPayment(IManaPaymentChoice[] options, string hint)
     {
         GameEndSafeguard();
-        
-        // TODO player can activate mana abilities here
 
         await Match.UpdateExcept(this);
-        var result = await _controller.ChooseStoredMana(this, options, hint, false)!;
+        var result = await _controller.ChooseManaPayment(this, options, hint);
 
-        return result!;
+        return result;
     }
 
     public async Task<CostCollection> ChooseCostCollection(CostCollection[] options, string hint)

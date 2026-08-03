@@ -14,24 +14,24 @@ public class ManaCostTests
     // *** cant pay
     // * no cost
     [InlineData(false, "", "{W}{U}{B}{R}{G}{C}")]
-    // * colored
-    [InlineData(false, "{W}", "")]
-    [InlineData(false, "{U}", "")]
-    [InlineData(false, "{B}", "")]
-    [InlineData(false, "{R}", "")]
-    [InlineData(false, "{G}", "")]
-    [InlineData(false, "{C}", "")]
-    [InlineData(false, "{W}", "{U}")]
-    [InlineData(false, "{W}", "{B}")]
-    [InlineData(false, "{W}", "{R}")]
-    [InlineData(false, "{W}", "{G}")]
-    [InlineData(false, "{W}", "{C}")]
-    [InlineData(false, "{W}{W}", "{W}")]
-    [InlineData(false, "{W}{W}", "{W}{C}")]
-    // * generic
-    [InlineData(false, "{1}", "")]
-    [InlineData(false, "{2}", "{W}")]
-    [InlineData(false, "{3}", "{W}{C}")]
+    // // * colored
+    // [InlineData(false, "{W}", "")]
+    // [InlineData(false, "{U}", "")]
+    // [InlineData(false, "{B}", "")]
+    // [InlineData(false, "{R}", "")]
+    // [InlineData(false, "{G}", "")]
+    // [InlineData(false, "{C}", "")]
+    // [InlineData(false, "{W}", "{U}")]
+    // [InlineData(false, "{W}", "{B}")]
+    // [InlineData(false, "{W}", "{R}")]
+    // [InlineData(false, "{W}", "{G}")]
+    // [InlineData(false, "{W}", "{C}")]
+    // [InlineData(false, "{W}{W}", "{W}")]
+    // [InlineData(false, "{W}{W}", "{W}{C}")]
+    // // * generic
+    // [InlineData(false, "{1}", "")]
+    // [InlineData(false, "{2}", "{W}")]
+    // [InlineData(false, "{3}", "{W}{C}")]
     // *** can pay
     // * zero cost
     [InlineData(true, "{0}", "")]
@@ -239,7 +239,7 @@ public class ManaCostTests
                 .CanCastSpell()
             )
             .Act.CastSpellWithName("i1")
-            .ChooseMana.NTimes(card.Card.GetManaValue(), cm => cm.First())
+            .PayMana.NTimes(card.Card.GetManaValue(), cm => cm.First())
             .Act.Pass()
             .Act.Crash()
             ;

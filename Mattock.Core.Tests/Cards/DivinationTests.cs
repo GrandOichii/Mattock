@@ -53,7 +53,7 @@ public class DivinationTests
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HandCardCount(0, 7, a))
             .Act.CastSpellWithName(card.Name)
-            .StoredManaChoices.NTimes(3, smc => smc.First())
+            .ManaPaymentChoices.NTimes(3, smc => smc.First())
             .Act.Assert(a => HandCardCount(0, 6, a))
             .Act.AutoPassUntilStackEmpty()
             .Act.Assert(a => HandCardCount(0, 8, a))

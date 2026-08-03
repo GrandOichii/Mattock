@@ -1,6 +1,7 @@
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
 
@@ -33,11 +34,11 @@ public class SafePlayerControllerWrapper(IPlayerController controller)
         return Task.CompletedTask;
     }
     
-    public override Task HandleStoredManaChoice(StoredMana? choice, Player player, StoredMana[] options, string hint)
+    public override Task HandleManaPaymentChoice(IManaPaymentChoice? choice, Player player, IManaPaymentChoice[] options, string hint)
     {
         if (choice is null) return Task.CompletedTask;
         if (!options.Contains(choice))
-            throw new Exception($"Controller chose stored mana {choice.Type} for {nameof(ChooseStoredMana)}, which is not one of the options (options: {string.Join(", ", options)})");
+            throw new Exception($"Controller chose mana payment {choice} for {nameof(ChooseManaPayment)}, which is not one of the options (options: {string.Join(", ", options.Select(o => o.ToDisplayString()))})");
         return Task.CompletedTask;
     }
 

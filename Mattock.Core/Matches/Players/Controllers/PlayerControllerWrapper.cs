@@ -3,8 +3,10 @@ using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Matches.Players.Controllers;
 
@@ -19,7 +21,13 @@ public abstract class PlayerControllerWrapper(
     public abstract Task HandleStringChoice(string? choice, Player player, string[] options, string hint);
     public abstract Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint);
     public abstract Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] options, string hint);
-    public abstract Task HandleStoredManaChoice(StoredMana? choice, Player player, StoredMana[] options, string hint);
+    
+    public abstract Task HandleManaPaymentChoice(
+        IManaPaymentChoice choice,
+        Player player,
+        IManaPaymentChoice[] options,
+        string hint
+    );
 
     // public void AddEvent(Event , allowNonee)
     // {
@@ -104,10 +112,10 @@ public abstract class PlayerControllerWrapper(
         return result;
     }
     
-    public async Task<StoredMana?> ChooseStoredMana(Player player, StoredMana[] options, string hint, bool allowNone)
+    public async Task<IManaPaymentChoice> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
     {
-        var result = await controller.ChooseStoredMana(player, options, hint, allowNone);
-        await HandleStoredManaChoice(result, player, options, hint);
+        var result = await controller.ChooseManaPayment(player, options, hint);
+        await HandleManaPaymentChoice(result, player, options, hint);
 
         return result;
     }

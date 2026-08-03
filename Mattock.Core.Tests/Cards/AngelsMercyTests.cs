@@ -44,7 +44,7 @@ public class AngelsMercyTests
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => HasLife(0, 20, a))
             .Act.CastSpellWithName(card.Name)
-            .StoredManaChoices.NTimes(4, smc => smc.First())
+            .ManaPaymentChoices.NTimes(4, smc => smc.First())
             .Act.Assert(a => HasLife(0, 20, a))
             .Act.AutoPassUntilStackEmpty()
             .Act.Assert(a => HasLife(0, 27, a))

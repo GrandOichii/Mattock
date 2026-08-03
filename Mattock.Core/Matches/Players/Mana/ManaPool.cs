@@ -31,7 +31,7 @@ public class ManaPool(Player player)
 
     public ManaStore CreateStore() => new(this);
 
-    public List<StoredMana> GetCandidates(ManaType? type)
+    public StoredMana[] GetCandidates(ManaType? type)
     {
         return type is null
             ? [ .. Mana ]

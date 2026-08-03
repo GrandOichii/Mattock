@@ -85,7 +85,7 @@ public class PyroclasmTests
             .Act.Assert(a => HasNoDamage("c2", a))
             .Act.Assert(a => HasNoDamage("c3", a))
             .Act.CastSpellWithName(card.Name)
-            .StoredManaChoices.NTimes(2, smc => smc.First())
+            .ManaPaymentChoices.NTimes(2, smc => smc.First())
             .Act.Assert(a => HasNoDamage("c1", a))
             .Act.Assert(a => HasNoDamage("c2", a))
             .Act.Assert(a => HasNoDamage("c3", a))

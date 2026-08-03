@@ -1,5 +1,6 @@
 
 using Mattock.Core.Matches.Permanents;
+using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Tests.Setup.Builders;
@@ -16,7 +17,7 @@ public class TestPlayerControllerBuilder
     public StringChoicesBuilder StringChoices { get; }
     public CardChoicesBuilder CardChoices { get; }
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
-    public StoredManaChoicesBuilder StoredManaChoices { get; }
+    public ManaPaymentChoicesBuilder ManaPaymentChoices { get; }
     public AttackDeclarationsChoicesBuilder AttackDeclarationsChoices { get; }
     public BlockDeclarationsChoicesBuilder BlockDeclarationsChoices { get; }
 
@@ -35,7 +36,7 @@ public class TestPlayerControllerBuilder
         StringChoices = new(this);
         CardChoices = new(this);
         CostCollectionChoices = new(this);
-        StoredManaChoices = new(this);
+        ManaPaymentChoices = new(this);
         AttackDeclarationsChoices = new(this);
         BlockDeclarationsChoices = new(this);
     }
@@ -45,7 +46,7 @@ public class TestPlayerControllerBuilder
     public StringChoicesBuilder ChooseString => StringChoices;
     public CardChoicesBuilder ChooseCard => CardChoices;
     public CostCollectionChoicesBuilder ChooseCostCollection => CostCollectionChoices;
-    public StoredManaChoicesBuilder ChooseMana => StoredManaChoices;
+    public ManaPaymentChoicesBuilder PayMana => ManaPaymentChoices;
     public CommandChoicesBuilder Act => CommandChoices;
     public AttackDeclarationsChoicesBuilder DeclareAttack => AttackDeclarationsChoices; 
     public BlockDeclarationsChoicesBuilder DeclareBlock => BlockDeclarationsChoices; 
@@ -69,7 +70,7 @@ public class TestPlayerControllerBuilder
             StringChoices.Queue,
             CardChoices.Queue,
             CostCollectionChoices.Queue,
-            StoredManaChoices.Queue,
+            ManaPaymentChoices.Queue,
             AttackDeclarationsChoices.Queue,
             BlockDeclarationsChoices.Queue
         );
@@ -530,10 +531,10 @@ public class CostCollectionChoicesBuilder(TestPlayerControllerBuilder builder)
     
 }
 
-public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
-    : ChoicesBuilder<TestPlayerController.StoredManaChoice>(builder)
+public class ManaPaymentChoicesBuilder(TestPlayerControllerBuilder builder)
+    : ChoicesBuilder<TestPlayerController.ManaPaymentChoice>(builder)
 {
-    public TestPlayerControllerBuilder NTimes(int n, Action<StoredManaChoicesBuilder> action)
+    public TestPlayerControllerBuilder NTimes(int n, Action<ManaPaymentChoicesBuilder> action)
     {
         for (int i = 0; i < n; ++i)
             action(this);
@@ -542,7 +543,7 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder First()
     {
-        return Enqueue(async (player, options, hint, allowNone) =>
+        return Enqueue(async (player, options, hint) =>
         {
             return (options.First(), true);
         });
@@ -550,23 +551,48 @@ public class StoredManaChoicesBuilder(TestPlayerControllerBuilder builder)
 
     public TestPlayerControllerBuilder FirstOfType(ManaType type)
     {
-        return Enqueue(async (player, options, hint, allowNone) =>
+        return Enqueue(async (player, options, hint) =>
         {
-            return (options.First(o => o.Type == type), true);
+            return (options.First(o => o is StoredManaPaymentChoice m && m.Mana.Type == type), true);
         });
     }
 
+    public TestPlayerControllerBuilder ActivateFirst()
+    {
+        return Enqueue(async (player, options, hint) =>
+        {
+            return (options.First(o => o is ManaAbilityManaPaymentChoice), true);
+        });
+    }
+
+    public TestPlayerControllerBuilder FirstStored()
+    {
+        return Enqueue(async (player, options, hint) =>
+        {
+            return (options.First(o => o is StoredManaPaymentChoice), true);
+        });
+    }
+
+
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
-        return Enqueue(async (player, options, hint, allowNone) =>
+        return Enqueue(async (player, options, hint) =>
         {
             action(new(player, options, hint));
-            return (null, false);
+            return (null!, false);
         });
     }
     
-    public class Asserts(Player player, StoredMana[] options, string hint)
+    public class Asserts(Player player, IManaPaymentChoice[] options, string hint)
     {
+        public Asserts NonNull()
+        {
+            player.ShouldNotBeNull();
+            options.ShouldNotBeNull();
+            hint.ShouldNotBeNull();
+            return this;
+        }
+
         public Asserts OptionsCount(int v)
         {
             options.Length.ShouldBe(v);

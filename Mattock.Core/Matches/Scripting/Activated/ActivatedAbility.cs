@@ -70,4 +70,6 @@ public class ActivatedAbility(
         return Effects.Any(e => e.CanProduceMana);
     }
 
+    
+
 }

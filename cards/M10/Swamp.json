@@ -1,0 +1,20 @@
+{
+    "Script": "",
+    "Name": "Swamp",
+    "ManaCosts": [
+    ],
+    "ColorIndicator": [
+    ],
+
+    "Types": [ "Land" ],
+    "Subtypes": [ "Swamp" ],
+    "Supertypes": [ "Basic" ],
+    
+    "TextBox": "{T}: Add {B}.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}
