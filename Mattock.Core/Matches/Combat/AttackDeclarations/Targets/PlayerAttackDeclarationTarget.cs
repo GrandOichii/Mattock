@@ -1,5 +1,6 @@
 using System.Security;
 using Mattock.Core.Matches.Damage;
+using Mattock.Core.Matches.Damage.Targets;
 using Mattock.Core.Matches.Players;
 
 namespace Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
@@ -22,6 +23,6 @@ public class PlayerAttackDeclarationTarget : IAttackDeclarationTarget
 
     public bool BelongsTo(Player player) => Target == player;
 
-    public IDamageAssignmentTarget? GetDamageAssignmentTarget()
-        => new PlayerDamageAssignmentTarget(Target);
+    public IDamageTarget? GetDamageAssignmentTarget()
+        => new PlayerDamageTarget(Target);
 }

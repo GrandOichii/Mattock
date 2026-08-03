@@ -52,6 +52,16 @@ function OneShot:Destroy(manyPermanents)
 end
 
 function OneShot:DealDamageToPermanents(manyPermanents, number)
-    -- TODO
-    return {}
+    return function (ctx)
+        local permanents = manyPermanents(ctx)
+        local amount = number(ctx)
+        local damage = {}
+        for _, p in ipairs(permanents) do
+            damage[#damage+1] = {
+                Permanent = p,
+                Amount = amount
+            }
+        end
+        DealDamageToPermanents(damage)
+    end
 end

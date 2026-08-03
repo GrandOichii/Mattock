@@ -1,4 +1,6 @@
 using Mattock.Core.Matches.Damage;
+using Mattock.Core.Matches.Damage.Sources;
+using Mattock.Core.Matches.Damage.Targets;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Turns.Phases;
 
@@ -29,11 +31,11 @@ public class CombatDamageStep(
         await Match.Events.ProcessDamage(assignments);
     }
 
-    private async Task<DamageAssignment[]> AssignDamage()
+    private async Task<Damage.Damage[]> AssignDamage()
     {
         var attackers = Match.Battlefield.GetAttackingPermanents();
-        
-        List<DamageAssignment> result = [];
+
+        List<Damage.Damage> result = [];
         Dictionary<Permanent, List<Permanent>> blockMap = [];
         foreach (var attacker in attackers)
         {
@@ -46,7 +48,13 @@ public class CombatDamageStep(
             {
                 var target = cs.AttackTarget.GetDamageAssignmentTarget();
                 if (target is not null)
-                    result.Add(new(attacker, target));
+                {
+                    result.Add(new(
+                        new CombatDamageSource(attacker),
+                        target)
+                    );
+                    
+                }
                 continue;
             }
 
@@ -56,8 +64,8 @@ public class CombatDamageStep(
             if (blockers.Count == 1)
             {
                 result.Add(new(
-                    attacker,
-                    new PermanentDamageAssignmentTarget(blockers[0])
+                    new CombatDamageSource(attacker),
+                    new PermanentDamageTarget(blockers[0])
                 ));
             }
 
@@ -81,8 +89,8 @@ public class CombatDamageStep(
                 if (blocked.Count == 1)
                 {
                     result.Add(new(
-                        blocker,
-                        new PermanentDamageAssignmentTarget(blocked[0])
+                        new CombatDamageSource(blocker),
+                        new PermanentDamageTarget(blocked[0])
                     ));
                     continue;
                 }

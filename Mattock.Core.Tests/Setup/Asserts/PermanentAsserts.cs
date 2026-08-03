@@ -104,7 +104,7 @@ public class PermanentAsserts(Permanent permanent)
 
     public PermanentAsserts HasMarkedDamage(int amount)
     {
-        permanent.MarkedDamage.ShouldBe(amount);
+        permanent.MarkedDamage.ShouldBe(amount, $"Permanent {permanent.GetDisplayName()} should have {amount} marked damage, but had {permanent.MarkedDamage}");
         return this;
     }
 

@@ -3,7 +3,7 @@ using Mattock.Core.Matches.Damage;
 namespace Mattock.Core.Matches.Events;
 
 public class ProcessDamageEvent(
-    DamageAssignment[] assignments
+    Damage.Damage[] assignments
 ) : IEvent
 {
     public Task Do(Match match)

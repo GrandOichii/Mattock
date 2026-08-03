@@ -1,11 +1,10 @@
 using Mattock.Core.Matches.Permanents;
-using Mattock.Core.Matches.Players;
 
-namespace Mattock.Core.Matches.Damage;
+namespace Mattock.Core.Matches.Damage.Targets;
 
-public class PermanentDamageAssignmentTarget(
+public class PermanentDamageTarget(
     Permanent permanent
-) : IDamageAssignmentTarget
+) : IDamageTarget
 {
     public void ProcessDamage(int damage)
     {

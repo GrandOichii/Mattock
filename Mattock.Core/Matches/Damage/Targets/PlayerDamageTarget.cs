@@ -1,10 +1,10 @@
 using Mattock.Core.Matches.Players;
 
-namespace Mattock.Core.Matches.Damage;
+namespace Mattock.Core.Matches.Damage.Targets;
 
-public class PlayerDamageAssignmentTarget(
+public class PlayerDamageTarget(
     Player player
-) : IDamageAssignmentTarget
+) : IDamageTarget
 {
     public void ProcessDamage(int damage)
     {

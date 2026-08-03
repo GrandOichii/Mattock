@@ -1,6 +1,9 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
+using Mattock.Core.Matches.Damage;
+using Mattock.Core.Matches.Damage.Sources;
+using Mattock.Core.Matches.Damage.Targets;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
@@ -171,6 +174,25 @@ public class MatchScripts
     {
         Permanent[] permanents = LuaCommon.ParseTable<Permanent>(arrTable);
         Match.Events.TapPermanents(permanents)
+            .Wait();
+    }
+
+    [LuaCommand]
+    public void DealDamageToPermanents(LuaTable damageTable)
+    {
+        var arr = LuaCommon.ParseTable<LuaTable>(damageTable);
+        List<Damage.Damage> damages = [];
+        foreach (var item in arr)
+        {
+            var permanent = LuaCommon.Get<Permanent>(item, "Permanent");
+            var amount = LuaCommon.GetInt(item, "Amount");
+
+            damages.Add(new(
+                new TODODamageSource(amount),
+                new PermanentDamageTarget(permanent)
+            ));
+        }
+        Match.Events.ProcessDamage([.. damages])
             .Wait();
     }
 }

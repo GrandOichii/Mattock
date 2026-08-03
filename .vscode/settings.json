@@ -17,6 +17,7 @@
         "GetPermanentById",
         "GetConfig",
         "PermanentIsSummoningSick",
-        "TapPermanents"
+        "TapPermanents",
+        "DealDamageToPermanents"
     ]
 }

@@ -65,7 +65,7 @@ public class MatchEvents(
         await _match.ProcessEvent(e);
     }
 
-    public async Task ProcessDamage(DamageAssignment[] assignments)
+    public async Task ProcessDamage(Damage.Damage[] assignments)
     {
         ProcessDamageEvent e = new(
             assignments
