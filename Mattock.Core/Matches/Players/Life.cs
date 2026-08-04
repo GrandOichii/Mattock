@@ -1,6 +1,8 @@
 namespace Mattock.Core.Matches.Players;
 
-public class Life(Player player)
+public class Life(
+    Player player
+)
 {
     public int Current { get; private set; }
 

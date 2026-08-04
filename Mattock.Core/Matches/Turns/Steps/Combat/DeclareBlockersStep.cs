@@ -28,7 +28,10 @@ public class DeclareBlockersStep(
             var available = player.GetAvailableBlockDeclarations();
             if (available.Length == 0) continue;
 
-            var chosen = await player.ChooseBlockDeclarations(available);
+            var (chosen, rollback) = await player.ChooseBlockDeclarations(available);
+            if (rollback is not null)
+                throw new UnhandledRollbackException(player, rollback);
+
             declarations.AddRange(chosen);
         }
         

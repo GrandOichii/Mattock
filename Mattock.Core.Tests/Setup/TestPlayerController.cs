@@ -1,6 +1,7 @@
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Tests.Setup;
 
@@ -20,15 +21,15 @@ public class TestPlayerController(
     Queue<TestPlayerController.BlockDeclarationsChoice> blockDeclarationsChoices
 ) : IPlayerController
 {
-    public delegate Task<(ICommand?, bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
-    public delegate Task<(Player[], bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
-    public delegate Task<(Permanent[], bool)> PermanentsChoice(Player player, Permanent[] options, int min, int max, string hint);
-    public delegate Task<(string?, bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
-    public delegate Task<(Card?, bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
-    public delegate Task<(CostCollection?, bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
-    public delegate Task<(IManaPaymentChoice, bool)> ManaPaymentChoice(Player player, IManaPaymentChoice[] options, string hint);
-    public delegate Task<(AttackDeclaration[]?, bool)> AttackDeclarationsChoice(Player player, AttackDeclaration[] options);
-    public delegate Task<(BlockDeclaration[]?, bool)> BlockDeclarationsChoice(Player player, BlockDeclaration[] options);
+    public delegate Task<((ICommand?, RollbackRequest?), bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
+    public delegate Task<((Player[], RollbackRequest?), bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
+    public delegate Task<((Permanent[], RollbackRequest?), bool)> PermanentsChoice(Player player, Permanent[] options, int min, int max, string hint);
+    public delegate Task<((string?, RollbackRequest?), bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
+    public delegate Task<((Card?, RollbackRequest?), bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
+    public delegate Task<((CostCollection?, RollbackRequest?), bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
+    public delegate Task<((IManaPaymentChoice, RollbackRequest?), bool)> ManaPaymentChoice(Player player, IManaPaymentChoice[] options, string hint);
+    public delegate Task<((AttackDeclaration[]?, RollbackRequest?), bool)> AttackDeclarationsChoice(Player player, AttackDeclaration[] options);
+    public delegate Task<((BlockDeclaration[]?, RollbackRequest?), bool)> BlockDeclarationsChoice(Player player, BlockDeclaration[] options);
 
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
@@ -84,7 +85,7 @@ public class TestPlayerController(
         };
     }
 
-    public async Task<ICommand> ChooseCommand(Player player, ICommand[] options)
+    public async Task<(ICommand, RollbackRequest?)> ChooseCommand(Player player, ICommand[] options)
     {
         while (commandChoices.Count > 0)
         {
@@ -93,19 +94,19 @@ public class TestPlayerController(
             if (removeFromQueue)
                 commandChoices.Dequeue();
             if (!isResult) continue;
-            if (result is null) throw new Exception($"Provided null choice for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
-            return result;
+            if (result.Item1 is null) throw new Exception($"Provided null choice for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
+            return result!; // TODO sus
         }
 
         throw new Exception($"No choices left in queue for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
     }
 
-    public static async Task<TResult> Dequeue<TResult, TDelegate>(
+    public static async Task<(TResult, RollbackRequest?)> Dequeue<TResult, TDelegate>(
         Player player,
         TResult[] options,
         string hint,
         bool allowNone,
-        Func<TDelegate, Player, TResult[], string, bool, Task<(TResult?, bool)>> getter,
+        Func<TDelegate, Player, TResult[], string, bool, Task<((TResult?, RollbackRequest?), bool)>> getter,
         Queue<TDelegate> queue,
         string methodName
     )
@@ -115,18 +116,38 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, hint, allowNone);
             if (!isResult) continue;
-            if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
-            return result;
+            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            return result!;
         }
 
         throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
     }
 
-    public static async Task<TResult> Dequeue<TResult, TDelegate>(
+    public static async Task<(TResult[], RollbackRequest?)> Dequeue<TResult, TDelegate>(
+        Player player,
+        TResult[] options,
+        Func<TDelegate, Player, TResult[], Task<((TResult[]?, RollbackRequest?), bool)>> getter,
+        Queue<TDelegate> queue,
+        string methodName
+    )
+    {
+        while (queue.Count > 0)
+        {
+            var choice = queue.Dequeue();
+            var (result, isResult) = await getter(choice, player, options);
+            if (!isResult) continue;
+            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            return result!;
+        }
+
+        throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()}");
+    }
+
+    public static async Task<(TResult, RollbackRequest?)> Dequeue<TResult, TDelegate>(
         Player player,
         TResult[] options,
         string hint,
-        Func<TDelegate, Player, TResult[], string, Task<(TResult, bool)>> getter,
+        Func<TDelegate, Player, TResult[], string, Task<((TResult, RollbackRequest?), bool)>> getter,
         Queue<TDelegate> queue,
         string methodName
     )
@@ -136,20 +157,20 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, hint);
             if (!isResult) continue;
-            if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
         }
 
         throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
     }
 
-    public static async Task<TResult[]> Dequeue<TResult, TDelegate>(
+    public static async Task<(TResult[], RollbackRequest?)> Dequeue<TResult, TDelegate>(
         Player player,
         TResult[] options,
         int min,
         int max,
         string hint,
-        Func<TDelegate, Player, TResult[], int, int, string, Task<(TResult[], bool)>> getter,
+        Func<TDelegate, Player, TResult[], int, int, string, Task<((TResult[], RollbackRequest?), bool)>> getter,
         Queue<TDelegate> queue,
         string methodName
     )
@@ -159,14 +180,14 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, min, max, hint);
             if (!isResult) continue;
-            if (result is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
         }
 
         throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
     }
 
-    public async Task<Player[]> ChoosePlayers(Player player, Player[] options, int min, int max, string hint)
+    public async Task<(Player[], RollbackRequest?)> ChoosePlayers(Player player, Player[] options, int min, int max, string hint)
     {
         return await Dequeue(
             player,
@@ -180,7 +201,7 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<Permanent[]> ChoosePermanents(Player player, Permanent[] options, int min, int max, string hint)
+    public async Task<(Permanent[], RollbackRequest?)> ChoosePermanents(Player player, Permanent[] options, int min, int max, string hint)
     {
         return await Dequeue(
             player,
@@ -194,7 +215,7 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<string?> ChooseString(Player player, string[] options, string hint, bool allowNone)
+    public async Task<(string?, RollbackRequest?)> ChooseString(Player player, string[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
@@ -207,7 +228,7 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<Card?> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
+    public async Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
@@ -220,7 +241,7 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<CostCollection?> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
+    public async Task<(CostCollection?, RollbackRequest?)> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
     {
         return await Dequeue(
             player,
@@ -233,7 +254,7 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<IManaPaymentChoice> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
+    public async Task<(IManaPaymentChoice, RollbackRequest?)> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
     {
         return await Dequeue(
             player,
@@ -247,32 +268,32 @@ public class TestPlayerController(
 
     public Task Update(Player player, string? msg) => Task.CompletedTask;
 
-    public async Task<AttackDeclaration[]> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
+    public async Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
     {
-        while (attackDeclarationsChoices.Count > 0)
-        {
-            var choice = attackDeclarationsChoices.Dequeue();
-            var (result, isResult) = await choice(player, options);
-            if (!isResult) continue;
-            if (result is null) throw new Exception($"Provided null choice for {nameof(ChooseAttackDeclarations)} of player {player.GetDisplayName()}");
-            return result;
-        }
-
-        throw new Exception($"No choices left in queue for {nameof(ChooseAttackDeclarations)} of player {player.GetDisplayName()}");
+        return await Dequeue(
+            player,
+            options,
+            (d, p, o) => d(p, o),
+            attackDeclarationsChoices,
+            nameof(ChooseAttackDeclarations)
+        );
     }
 
-    public async Task<BlockDeclaration[]> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
+    public async Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
     {
-        while (blockDeclarationsChoices.Count > 0)
-        {
-            var choice = blockDeclarationsChoices.Dequeue();
-            var (result, isResult) = await choice(player, options);
-            if (!isResult) continue;
-            if (result is null) throw new Exception($"Provided null choice for {nameof(ChooseBlockDeclarations)} of player {player.GetDisplayName()}");
-            return result;
-        }
+        return await Dequeue(
+            player,
+            options,
+            (d, p, o) => d(p, o),
+            blockDeclarationsChoices,
+            nameof(ChooseBlockDeclarations)
+        );
+    }
 
-        throw new Exception($"No choices left in queue for {nameof(ChooseBlockDeclarations)} of player {player.GetDisplayName()}");
+    public Task<bool> ApproveRollback(Player player, string hint)
+    {
+        // TODO
+        return Task.FromResult(true);
     }
 }
 

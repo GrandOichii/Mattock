@@ -18,7 +18,9 @@ public class DeclareAttackersStep(
         var available = active.GetAvailableAttackDeclarations();
         if (available.Length == 0) return;
         
-        var declarations = await active.ChooseAttackDeclarations(available);
+        var (declarations, rollback) = await active.ChooseAttackDeclarations(available);
+        if (rollback is not null)
+            throw new UnhandledRollbackException(active, rollback);
 
         // check that there are no overlapping declarations
         List<Permanent> attackers = [];

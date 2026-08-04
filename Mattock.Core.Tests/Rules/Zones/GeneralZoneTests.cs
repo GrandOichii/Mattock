@@ -43,7 +43,7 @@ public class GeneralZoneTests
                             CardZoneChangeType.Bottom,
                             player.Graveyard.GetCardZoneChanger()
                         );
-                        return (null, false, true);
+                        return ((null, null), false, true);
                     },
                     true
                 )
@@ -134,7 +134,7 @@ public class GeneralZoneTests
                             CardZoneChangeType.Bottom,
                             player.Hand.GetCardZoneChanger()
                         );
-                        return (null, false, true);
+                        return ((null, null), false, true);
                     },
                     true
                 )
@@ -225,7 +225,7 @@ public class GeneralZoneTests
                             CardZoneChangeType.Bottom,
                             player.Library.GetCardZoneChanger()
                         );
-                        return (null, false, true);
+                        return ((null, null), false, true);
                     },
                     true
                 )
@@ -315,7 +315,7 @@ public class GeneralZoneTests
                     {
                         var opp = match.Match!.Players[1];
                         await match.Match!.PutOntoTheBattlefield(opp.Library.GetLast()!, opp);
-                        return (null, false, true);
+                        return ((null, null), false, true);
                     },
                     true
                 )

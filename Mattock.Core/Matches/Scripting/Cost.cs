@@ -24,9 +24,11 @@ public class Cost : ICost
         return LuaCommon.GetReturnAsBool(returned);
     }
 
-    public Task Pay(EffectContext ctx)
+    public Task<bool> Pay(EffectContext ctx)
     {
         PayFunc.Call(ctx);
-        return Task.CompletedTask;
+
+        // TODO
+        return Task.FromResult(false);
     }
 }

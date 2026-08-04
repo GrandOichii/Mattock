@@ -127,11 +127,13 @@ public class Match
 
         // Choose the first active player
         var active = GetActivePlayer();
-        var chosenActivePlayers = await active.ChoosePlayers(
+        var (chosenActivePlayers, rollback) = await active.ChoosePlayers(
             [.. Players ],
             1, 1,
             "Choose the active player"
         );
+        if (rollback is not null)
+            throw new Exception($"Player {active.GetDisplayName()} requested a rollback while choosing the first player");
         TurnManager.ActivePlayerIdx = chosenActivePlayers[0].Idx;
 
         // Set life totals
@@ -233,7 +235,9 @@ public class Match
             foreach (var f in mulliganFrames)
             {
                 if (!f.WillTakeMulligan) continue;
-                var resp = await f.Player.ChooseString([ "Yes", "No" ], "Mulligan?");
+                var (resp, rollback) = await f.Player.ChooseString([ "Yes", "No" ], "Mulligan?");
+                if (rollback is not null)
+                    throw new Exception($"Player requested rollback while deciding to mulligan"); // TODO type
                 f.WillTakeMulligan = resp == "Yes";
             }
 
@@ -390,48 +394,4 @@ public class Match
 
         return [.. result.Select(idx => Players[idx])];
     }
-}
-
-/// <summary>
-/// Thrown during construction of class <c>Match</c> if a session with the specified parameters can't be created
-/// </summary>
-[Serializable]
-public class CantStartException : Exception
-{
-    public CantStartException() { }
-    public CantStartException(string message) : base(message) { }
-    public CantStartException(string message, Exception inner) : base(message, inner) { }
-}
-
-/// <summary>
-/// Thrown during construction of class <c>Match</c> if a team has more players than <c>MatchConfig.MaxTeamSize</c>
-/// </summary>
-[Serializable]
-public class TeamTooBigException : CantStartException
-{
-    public TeamTooBigException() { }
-    public TeamTooBigException(string message) : base(message) { }
-    public TeamTooBigException(string message, System.Exception inner) : base(message, inner) { }
-}
-
-/// <summary>
-/// Thrown during construction of class <c>Match</c> if two or more players have duplicate names
-/// </summary>
-[Serializable]
-public class DuplicatePlayerNameException : CantStartException
-{
-    public DuplicatePlayerNameException() { }
-    public DuplicatePlayerNameException(string message) : base(message) { }
-    public DuplicatePlayerNameException(string message, System.Exception inner) : base(message, inner) { }
-}
-
-/// <summary>
-/// Thrown during construction of class <c>Match</c> if the team count is bigger than <c>MatchConfig.TeamCount</c>
-/// </summary>
-[Serializable]
-public class TooManyTeamsException : CantStartException
-{
-    public TooManyTeamsException() { }
-    public TooManyTeamsException(string message) : base(message) { }
-    public TooManyTeamsException(string message, System.Exception inner) : base(message, inner) { }
 }

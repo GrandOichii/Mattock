@@ -51,7 +51,9 @@ public class SpellCastEvent(
         {
             throw new Exception($"Computed cost variations with duplicate texts (texts: {string.Join(", ", costVariations.Select(c => $"\"{c.Text}\""))})");
         }
-        var choice = await player.ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
+        var (choice, rollback) = await player.ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
+        if (rollback is not null)
+            throw new UnhandledRollbackException(player, rollback);
 
         // 601.2g Activate mana abilities to pay for costs
         // TODO

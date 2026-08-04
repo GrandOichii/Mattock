@@ -1,3 +1,4 @@
+using System.Security;
 using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Permanents;
@@ -6,6 +7,7 @@ using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Matches.Players.Controllers;
@@ -51,23 +53,23 @@ public abstract class PlayerControllerWrapper(
         return Task.CompletedTask;
     }
 
-    public async Task<ICommand> ChooseCommand(Player player, ICommand[] options)
+    public async Task<(ICommand, RollbackRequest?)> ChooseCommand(Player player, ICommand[] options)
     {
         var result = await controller.ChooseCommand(player, options);
-        await HandleCommandChoice(result, player, options);
+        await HandleCommandChoice(result.Item1, player, options);
 
         return result;
     }
 
-    public async Task<Card?> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
+    public async Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
     {
         var result = await controller.ChooseCard(player, options, hint, allowNone);
-        await HandleCardChoice(result, player, options, hint);
+        await HandleCardChoice(result.Item1, player, options, hint);
 
         return result;
     }
 
-    public async Task<Player[]> ChoosePlayers(
+    public async Task<(Player[], RollbackRequest?)> ChoosePlayers(
         Player player,
         Player[] options,
         int min,
@@ -76,12 +78,12 @@ public abstract class PlayerControllerWrapper(
     )
     {
         var result = await controller.ChoosePlayers(player, options, min, max, hint);
-        await HandlePlayersChoice(result, player, options, min, max, hint);
+        await HandlePlayersChoice(result.Item1, player, options, min, max, hint);
 
         return result;
     }
 
-    public async Task<Permanent[]> ChoosePermanents(
+    public async Task<(Permanent[], RollbackRequest?)> ChoosePermanents(
         Player player,
         Permanent[] options,
         int min,
@@ -90,32 +92,32 @@ public abstract class PlayerControllerWrapper(
     )
     {
         var result = await controller.ChoosePermanents(player, options, min, max, hint);
-        await HandlePermanentsChoice(result, player, options, min, max, hint);
+        await HandlePermanentsChoice(result.Item1, player, options, min, max, hint);
 
         return result;
     }
 
-    public async Task<string?> ChooseString(Player player, string[] options, string hint, bool allowNone)
+    public async Task<(string?, RollbackRequest?)> ChooseString(Player player, string[] options, string hint, bool allowNone)
     {
         var result = await controller.ChooseString(player, options, hint, allowNone);
-        await HandleStringChoice(result, player, options, hint);
+        await HandleStringChoice(result.Item1, player, options, hint);
 
         return result;
     }
     
 
-    public async Task<CostCollection?> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
+    public async Task<(CostCollection?, RollbackRequest?)> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
     {
         var result = await controller.ChooseCostCollection(player, options, hint, allowNone);
-        await HandleCostCollectionChoice(result, player, options, hint);
+        await HandleCostCollectionChoice(result.Item1, player, options, hint);
 
         return result;
     }
     
-    public async Task<IManaPaymentChoice> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
+    public async Task<(IManaPaymentChoice, RollbackRequest?)> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
     {
         var result = await controller.ChooseManaPayment(player, options, hint);
-        await HandleManaPaymentChoice(result, player, options, hint);
+        await HandleManaPaymentChoice(result.Item1, player, options, hint);
 
         return result;
     }
@@ -125,7 +127,7 @@ public abstract class PlayerControllerWrapper(
         return controller.Update(player, stateMsg);
     }
 
-    public Task<AttackDeclaration[]> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
+    public Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
     {
         var result = controller.ChooseAttackDeclarations(player, options);
         // TODO handle
@@ -133,11 +135,16 @@ public abstract class PlayerControllerWrapper(
         return result;
     }
 
-    public Task<BlockDeclaration[]> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
+    public Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
     {
         var result = controller.ChooseBlockDeclarations(player, options);
         // TODO handle
 
         return result;
+    }
+
+    public async Task<bool> ApproveRollback(Player player, string hint)
+    {
+        return await controller.ApproveRollback(player, hint);
     }
 }

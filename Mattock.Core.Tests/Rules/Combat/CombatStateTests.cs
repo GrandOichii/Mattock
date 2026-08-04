@@ -1,3 +1,5 @@
+using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
+
 namespace Mattock.Core.Tests.Rules.Combat;
 
 /// <summary>

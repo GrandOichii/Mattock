@@ -8,6 +8,7 @@ using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
@@ -272,7 +273,7 @@ public class Player
     /// Prompt the controller for a command
     /// </summary>
     /// <returns>Command</returns>
-    public async Task<ICommand> PromptCommand()
+    public async Task<(ICommand, RollbackRequest?)> PromptCommand()
     {
         List<ICommand> available = Match.GetAvailableCommands(this);
 
@@ -440,29 +441,43 @@ public class Player
         await _controller.Update(this, msg);
     }
 
+    private async Task<(T, RollbackRequest?)> RollbackApproveLoop<T>(Func<Task<(T, RollbackRequest?)>> responseRequester)
+    {
+        GameEndSafeguard();
+        await Match.UpdateExcept(this);
+
+        // TODO restore
+        // while (true)
+        // {
+        //     var (result, rollback) = await responseRequester;
+        //     if (rollback is not null)
+        //     {
+        //         var approvedRollback = await rollback.IsApprovedByAll(this);
+        //         if (!approvedRollback)
+        //         {
+        //             // TODO log
+        //             continue;
+        //         }
+        //         return (result, rollback);
+        //     }
+        // }
+        return await responseRequester();
+    }
+
     /// <summary>
     /// Choose a command
     /// </summary>
     /// <param name="options">Available commands</param>
     /// <returns>Chosen command</returns>
-    public async Task<ICommand> ChooseCommand(ICommand[] options)
+    public async Task<(ICommand, RollbackRequest?)> ChooseCommand(ICommand[] options)
     {
-        GameEndSafeguard();
-        await Match.UpdateExcept(this);
-        return await _controller.ChooseCommand(this, options);
+        return await RollbackApproveLoop(() => _controller.ChooseCommand(this, options));
     }
 
     // TODO docs
-    public async Task<Card?> ChooseCard(Card[] options, string hint, bool allowNone)
+    public async Task<(Card?, RollbackRequest?)> ChooseCard(Card[] options, string hint, bool allowNone)
     {
-        GameEndSafeguard();
-        await Match.UpdateExcept(this);
-        var result = await _controller.ChooseCard(this, options, hint, allowNone);
-
-        if (result is null && !allowNone)
-            throw new Exception($"Controller provided null card for {nameof(ChooseCard)} where {nameof(allowNone)} = false"); // TODO type
-
-        return result;
+        return await RollbackApproveLoop(() => _controller.ChooseCard(this, options, hint, allowNone));
     }
 
     /// <summary>
@@ -471,80 +486,61 @@ public class Player
     /// <param name="options"></param>
     /// <param name="hint"></param>
     /// <returns></returns>
-    public async Task<string> ChooseString(string[] options, string hint)
+    public async Task<(string, RollbackRequest?)> ChooseString(string[] options, string hint)
     {
-        GameEndSafeguard();
-        await Match.UpdateExcept(this);
-        var result = await _controller.ChooseString(this, options, hint, false);
-
-        return result!;
+        var (result, rollback) = await RollbackApproveLoop(() => _controller.ChooseString(this, options, hint, false));
+        return (result!, rollback);
     }
 
-    public async Task<Player[]> ChoosePlayers(Player[] options, int min, int max, string hint)
+    public async Task<(Player[], RollbackRequest?)> ChoosePlayers(Player[] options, int min, int max, string hint)
     {
-        GameEndSafeguard();
         if (max == 0)
             throw new Exception($"Provided max = 0 for {nameof(ChoosePlayers)}"); // TODO type
-            
-        await Match.UpdateExcept(this);
-        var result = await _controller.ChoosePlayers(this, options, min, max, hint);
 
-        return result!;
+        return await RollbackApproveLoop(() => _controller.ChoosePlayers(this, options, min, max, hint));
     }
 
-    public async Task<Permanent[]> ChoosePermanents(Permanent[] options, int min, int max, string hint)
+    public async Task<(Permanent[], RollbackRequest?)> ChoosePermanents(Permanent[] options, int min, int max, string hint)
     {
-        GameEndSafeguard();
         if (max == 0)
             throw new Exception($"Provided max = 0 for {nameof(ChoosePermanents)}"); // TODO type
-            
-        await Match.UpdateExcept(this);
-        var result = await _controller.ChoosePermanents(this, options, min, max, hint);
 
-        return result!;
+        return await RollbackApproveLoop(() => _controller.ChoosePermanents(this, options, min, max, hint));
     }
 
-    public async Task<IManaPaymentChoice> ChooseManaPayment(IManaPaymentChoice[] options, string hint)
+    public async Task<(IManaPaymentChoice, RollbackRequest?)> ChooseManaPayment(IManaPaymentChoice[] options, string hint)
     {
-        GameEndSafeguard();
-
-        await Match.UpdateExcept(this);
-        var result = await _controller.ChooseManaPayment(this, options, hint);
-
-        return result;
+        return await RollbackApproveLoop(() => _controller.ChooseManaPayment(this, options, hint));
     }
 
-    public async Task<CostCollection> ChooseCostCollection(CostCollection[] options, string hint)
+    public async Task<(CostCollection, RollbackRequest?)> ChooseCostCollection(CostCollection[] options, string hint)
     {
-        GameEndSafeguard();
         if (options.Length == 0)
             throw new Exception($"Provided empty options for {nameof(ChooseCostCollection)} (hint: {hint})");
         if (options.Length == 1)
-            return options[0];
-
-        var result = await _controller.ChooseCostCollection(this, options, hint, false);
-
-        return result!;
+            return (options[0], null);
+        var (result, rollback) = await RollbackApproveLoop(() => _controller.ChooseCostCollection(this, options, hint, false));
+        return (result!, rollback);
     }
 
-    public async Task<AttackDeclaration[]> ChooseAttackDeclarations(AttackDeclaration[] options)
+    public async Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(AttackDeclaration[] options)
     {
-        GameEndSafeguard();
         if (options.Length == 0)
             throw new Exception($"Provided empty options for {nameof(ChooseAttackDeclarations)}");
-        var result = await _controller.ChooseAttackDeclarations(this, options);
-
-        return result;        
+        return await RollbackApproveLoop(() => _controller.ChooseAttackDeclarations(this, options));
     }
 
-    public async Task<BlockDeclaration[]> ChooseBlockDeclarations(BlockDeclaration[] options)
+    public async Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(BlockDeclaration[] options)
+    {
+        if (options.Length == 0)
+            throw new Exception($"Provided empty options for {nameof(ChooseBlockDeclarations)}"); // TODO type
+        return await RollbackApproveLoop(() => _controller.ChooseBlockDeclarations(this, options));
+    }
+
+    public async Task<bool> ApproveRollback(string hint)
     {
         GameEndSafeguard();
 
-        if (options.Length == 0)
-            throw new Exception($"Provided empty options for {nameof(ChooseBlockDeclarations)}"); // TODO type
-        var result = await _controller.ChooseBlockDeclarations(this, options);
-
-        return result;
+        return await _controller.ApproveRollback(this, hint);
     }
 }

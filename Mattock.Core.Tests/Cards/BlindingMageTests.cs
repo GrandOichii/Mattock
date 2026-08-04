@@ -1,4 +1,5 @@
 using Mattock.Core.Loaders;
+using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
 namespace Mattock.Core.Tests.Cards;
 
@@ -7,7 +8,7 @@ namespace Mattock.Core.Tests.Cards;
 /// </summary>
 public class BlindingMageTests
 {
-    public static void CheckTapped(string name, bool expected, CommandChoicesBuilder.Asserts a)
+    private static void CheckTapped(string name, bool expected, CommandChoicesBuilder.Asserts a)
     {
         a.AssertMatch(am => am
             .AssertBattlefield(ab => ab
@@ -17,6 +18,7 @@ public class BlindingMageTests
             )
         );
     }
+    
     [Fact]
     public async Task CantActivate_Tapped()
     {

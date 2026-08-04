@@ -21,7 +21,9 @@ public class CleanupStep : Step
         {
             while (player.Hand.GetCount() > maxHandSize)
             {
-                var card = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size", false);
+                var (card, rollback) = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size", false);
+                if (rollback is not null)
+                    throw new UnhandledRollbackException(player, rollback);
                 player.Discard([card!]);
             }
             // TODO

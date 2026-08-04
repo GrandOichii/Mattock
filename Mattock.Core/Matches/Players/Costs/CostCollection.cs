@@ -1,4 +1,3 @@
-using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Scripting.Context;
 
 namespace Mattock.Core.Matches.Players.Costs;
@@ -16,11 +15,13 @@ public class CostCollection(
         return costs.All(c => c.CanPay(ctx));
     }
 
-    public async Task Pay(EffectContext ctx)
+    public async Task<bool> Pay(EffectContext ctx)
     {
         foreach (var cost in costs)
         {
-            await cost.Pay(ctx);
+            var rollbackRequested = await cost.Pay(ctx);
+            if (rollbackRequested) return true;
         }
+        return false;
     }
 }

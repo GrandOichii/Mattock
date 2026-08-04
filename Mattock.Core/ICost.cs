@@ -3,8 +3,16 @@ using Mattock.Core.Matches.Scripting.Context;
 
 namespace Mattock.Core;
 
+// TODO docs
 public interface ICost
 {
+    // TODO docs
     bool CanPay(EffectContext ctx);
-    Task Pay(EffectContext ctx);
+
+    /// <summary>
+    /// Pay for the cost
+    /// </summary>
+    /// <param name="ctx">Effect context</param>
+    /// <returns>true if a rollback was requested, otherwise false</returns>
+    Task<bool> Pay(EffectContext ctx);
 }

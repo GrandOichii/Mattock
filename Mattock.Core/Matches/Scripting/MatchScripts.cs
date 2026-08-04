@@ -8,6 +8,7 @@ using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Setup;
 using Mattock.Core.Utility;
@@ -39,6 +40,15 @@ public class MatchScripts
                 ), this);
             }
         }
+    }
+
+    private LuaTable CreateResponseTable<T>((T[], RollbackRequest?) response)
+    {
+        return LuaCommon.CreateTable(Match.LState, new()
+        {
+            { "Response", LuaCommon.CreateTable(Match.LState, response.Item1) },
+            { "Rollback", response.Item2 },
+        });
     }
     
     [LuaCommand]
@@ -131,7 +141,7 @@ public class MatchScripts
         var result = player.ChoosePlayers(options, min, max, hint)
             .GetAwaiter().GetResult();
 
-        return LuaCommon.CreateTable(Match.LState, result);
+        return CreateResponseTable(result);
     }
 
     [LuaCommand]
@@ -141,7 +151,7 @@ public class MatchScripts
         var result = player.ChoosePermanents(options, min, max, hint)
             .GetAwaiter().GetResult();
 
-        return LuaCommon.CreateTable(Match.LState, result);
+        return CreateResponseTable(result);
     }
 
     [LuaCommand]

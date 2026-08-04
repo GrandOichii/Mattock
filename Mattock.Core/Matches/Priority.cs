@@ -46,7 +46,12 @@ public class Priority
         {
             return;
         }
-        var command = await player.PromptCommand();
+        var (command, rollback) = await player.PromptCommand();
+        if (rollback is not null)
+        {
+            throw new Exception($"Approved rollback request from player {player.GetDisplayName()} to snapshot with id = {rollback.RequestedSnapshotId}");
+            return;
+        }
         await command.Do();
     }
 

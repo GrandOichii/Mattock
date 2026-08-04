@@ -1,3 +1,4 @@
+using Mattock.Core.Matches;
 using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Mana;
@@ -35,7 +36,7 @@ public class ManaCostsCollection(
         // return true;
     }
 
-    public async Task Pay(EffectContext ctx)
+    public async Task<bool> Pay(EffectContext ctx)
     {
         var player = ctx.Controller;
 
@@ -43,24 +44,25 @@ public class ManaCostsCollection(
         while (!costs.PayedFor())
         {
             var types = costs.GetUnpayedTypes();
-            StoredMana[] candidates = [.. types.SelectMany(t => player.ManaPool.GetCandidates(t)).Distinct()];
+            StoredMana[] candidates = [.. types.SelectMany(player.ManaPool.GetCandidates).Distinct()];
 
             var abilities = player.GetActivatableManaAbilities();
 
             IManaPaymentChoice[] options = [
                 .. candidates.Select(c => new StoredManaPaymentChoice(c, player.ManaPool)),
                 .. abilities.Select(a => new ManaAbilityManaPaymentChoice(player, a))
-                // TODO add option for rollback
             ];
 
-            // if (options.Length == 0)
-            // {
-            //     throw new Exception($"Code error: failed to find stored mana candidates to pay for mana cost"); // TODO type + better msg
-            // }
-            
-            var choice = await player.ChooseManaPayment(options, $"Pay cost"); // TODO better hint
+            // TODO throw in options.length == 0
+
+            var (choice, rollback) = await player.ChooseManaPayment(options, $"Pay cost"); // TODO better hint
+            if (rollback is not null)
+                throw new UnhandledRollbackException(player, rollback);
             await choice.Process(costs);
         }
+
+        // TODO
+        return false;
     }
 
     private ManaPayment GetManaPayment() => new([.. manaCosts.Select(c => new ManaCost() {

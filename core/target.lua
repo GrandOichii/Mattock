@@ -59,15 +59,22 @@ function Target:_(tgtKey, itemsSelect, targetAmount, chooserFunc, hint)
             local items = itemsSelect:Many()(ctx)
             local player = Player:You()(ctx)
 
+            local chosen = chooserFunc(
+                player,
+                items,
+                targetAmount:Min(ctx),
+                targetAmount:Max(ctx),
+                hint
+            )
+
+            if chosen.Rollback ~= nil then
+                -- TODO
+                error('Unhandled rollback in Target:_')
+            end
+
             return {
                 Key = tgtKey,
-                Items = chooserFunc(
-                    player,
-                    items,
-                    targetAmount:Min(ctx),
-                    targetAmount:Max(ctx),
-                    hint
-                )
+                Items = chosen.Response
             }
         end,
         Check = function (ctx)
