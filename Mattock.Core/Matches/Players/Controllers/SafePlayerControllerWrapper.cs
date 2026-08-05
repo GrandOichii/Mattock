@@ -3,7 +3,6 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
-using Mattock.Core.Matches.Players.Mana;
 
 namespace Mattock.Core.Matches.Players.Controllers;
 

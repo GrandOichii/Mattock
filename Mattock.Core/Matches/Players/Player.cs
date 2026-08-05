@@ -449,7 +449,7 @@ public class Player
         // TODO restore
         // while (true)
         // {
-        //     var (result, rollback) = await responseRequester;
+        //     var (result, rollback) = await responseRequester();
         //     if (rollback is not null)
         //     {
         //         var approvedRollback = await rollback.IsApprovedByAll(this);
