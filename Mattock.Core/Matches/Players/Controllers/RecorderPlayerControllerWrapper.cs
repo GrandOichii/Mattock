@@ -7,18 +7,6 @@ using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Players.Controllers;
 
-public class PlayerResponsesRecord
-{
-    public List<string?> CardChoices { get; } = [];
-    public List<string> CommandChoices { get; } = [];
-    public List<string?> CostCollectionChoices { get; } = [];
-    public List<string> ManaPaymentChoices { get; } = [];
-
-    public List<string[]> PermanentsChoices { get; } = [];
-    public List<int[]> PlayersChoices { get; } = [];
-    public List<string?> StringChoices { get; } = [];
-}
-
 public class RecorderPlayerControllerWrapper(IPlayerController controller)
     : PlayerControllerWrapper(controller)
 {
