@@ -3,24 +3,24 @@ namespace Mattock.Core.Matches.Players.Controllers;
 
 public class PlayerResponsesRecord
 {
-    public List<string?> CardChoices { get; init; } = [];
-    public List<string> CommandChoices { get; init; } = [];
-    public List<string?> CostCollectionChoices { get; init; } = [];
-    public List<string> ManaPaymentChoices { get; init; } = [];
+    public Queue<string?> CardChoices { get; init; } = [];
+    public Queue<string> CommandChoices { get; init; } = [];
+    public Queue<string?> CostCollectionChoices { get; init; } = [];
+    public Queue<string> ManaPaymentChoices { get; init; } = [];
 
-    public List<string[]> PermanentsChoices { get; init; } = [];
-    public List<int[]> PlayersChoices { get; init; } = [];
-    public List<string?> StringChoices { get; init; } = [];
+    public Queue<string[]> PermanentsChoices { get; init; } = [];
+    public Queue<int[]> PlayersChoices { get; init; } = [];
+    public Queue<string?> StringChoices { get; init; } = [];
 
     public PlayerResponsesRecord Clone()
         => new()
         {
-            CardChoices = [.. CardChoices],
-            CommandChoices = [.. CommandChoices],
-            CostCollectionChoices = [.. CostCollectionChoices],
-            ManaPaymentChoices = [.. ManaPaymentChoices],
-            PermanentsChoices = [.. PermanentsChoices],
-            PlayersChoices = [.. PlayersChoices],
-            StringChoices = [.. StringChoices],
+            CardChoices = new([.. CardChoices]),
+            CommandChoices = new([.. CommandChoices]),
+            CostCollectionChoices = new([.. CostCollectionChoices]),
+            ManaPaymentChoices = new([.. ManaPaymentChoices]),
+            PermanentsChoices = new([.. PermanentsChoices]),
+            PlayersChoices = new([.. PlayersChoices]),
+            StringChoices = new([.. StringChoices]),
         };
 }
