@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
@@ -7,7 +5,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Matches.Scripting;
-using Mattock.Core.Matches.Scripting.Activated;
+using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
 using Mattock.Core.Matches.Turns;
@@ -39,6 +37,7 @@ public class Match
     public int TurnCounter { get; private set; }
     public List<Card> Cards { get; }
     private int[]? _winningTeams;
+    public SnapshotsManager Snapshots { get; }
 
     // constructors
 
@@ -58,6 +57,7 @@ public class Match
         Events = new(this);
         Battlefield = new(this);
         TurnManager = new(this);
+        Snapshots = new(this);
         StateBasedActions = new(this);
         _lastCardId = 0;
         _lastAAId = 0;
@@ -393,5 +393,10 @@ public class Match
         }
 
         return [.. result.Select(idx => Players[idx])];
+    }
+
+    public async Task LoadSnapshot(Snapshot s)
+    {
+        throw new NotImplementedException();
     }
 }
