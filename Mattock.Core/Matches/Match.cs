@@ -18,7 +18,7 @@ namespace Mattock.Core.Matches;
 public class Match
 {
     // properties
-    public Random Rng { get; }
+    public Rng Rng { get; }
     public Lua LState { get; }
     public MatchConfig Config { get; }
     public Mechanics Mechanics { get; }
@@ -94,7 +94,7 @@ public class Match
                 throw new TeamTooBigException($"Team with Idx = {tIdx} has too many players (actual: {players.Length}, max: {config.MaxTeamSize})");
 
         Rng = config.RandomMatch
-            ? new()
+            ? new(new Random().Next())
             : new(config.Seed);
         TurnManager.ActivePlayerIdx = config.RandomFirstPlayer
             ? Rng.Next() % Players.Length
