@@ -16,6 +16,7 @@ using NLua;
 namespace Mattock.Core.Matches;
 
 public class Match
+    : IHasSnapshot<Match.Snapshot>
 {
     // properties
     public Rng Rng { get; }
@@ -376,7 +377,6 @@ public class Match
 
     public bool AreWinnersDecided() => _winningTeams is not null;
 
-
     public async Task ProcessEvent(IEvent e)
     {
         await e.Do(this);
@@ -398,5 +398,15 @@ public class Match
     public async Task LoadSnapshot(Snapshot s)
     {
         throw new NotImplementedException();
+    }
+
+    public Snapshot GetSnapshot()
+    {
+        throw new NotImplementedException();
+    }
+
+    public class Snapshot
+    {
+        // TODO
     }
 }

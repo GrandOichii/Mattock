@@ -1,8 +1,10 @@
+using Mattock.Core.Matches.Snapshots;
+
 namespace Mattock.Core.Matches;
 
 public class Rng(
     int seed
-)
+) : IHasSnapshot<Rng.Snapshot>
 {
     private readonly Random _r = new(seed);
     private int _c = 0;
