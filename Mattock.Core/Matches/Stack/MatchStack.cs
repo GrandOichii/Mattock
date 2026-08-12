@@ -3,12 +3,15 @@ using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Scripting.Targets;
+using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack.Resolvers;
 using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Stack;
 
-public class TheStack(Match match) : ICardZone
+public class MatchStack(
+    Match match
+) : ICardZone, IHasSnapshot<MatchStack.Snapshot>
 {
     public Match Match = match;
     private int _lastId = 0;
@@ -87,6 +90,11 @@ public class TheStack(Match match) : ICardZone
         Effects.Remove(top);
     }
 
+    public Snapshot GetSnapshot()
+    {
+        throw new NotImplementedException();
+    }
+
     class SpellCardZoneChanger(
         Player controller,
         EffectContext ctx
@@ -117,5 +125,10 @@ public class TheStack(Match match) : ICardZone
 
         public ICardZone GetTargetZone()
             => controller.Match.Stack;
+    }
+
+    public class Snapshot
+    {
+        // TODO
     }
 }

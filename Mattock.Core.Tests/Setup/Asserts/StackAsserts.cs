@@ -2,7 +2,7 @@ using Mattock.Core.Matches.Stack;
 
 namespace Mattock.Core.Tests.Setup.Asserts;
 
-public class StackAsserts(TheStack stack)
+public class StackAsserts(MatchStack stack)
 {
     public StackAsserts IsEmpty()
     {

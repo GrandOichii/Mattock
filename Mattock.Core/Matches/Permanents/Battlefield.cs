@@ -1,10 +1,13 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Permanents;
 
-public class Battlefield(Match match) : ICardZone
+public class Battlefield(
+    Match match
+) : ICardZone, IHasSnapshot<Battlefield.Snapshot>
 {
     private readonly List<Permanent> _permanents = [];
 
@@ -71,6 +74,11 @@ public class Battlefield(Match match) : ICardZone
         return _permanents.SingleOrDefault(p => p.Card == card) is not null;
     }
 
+    public Snapshot GetSnapshot()
+    {
+        throw new NotImplementedException();
+    }
+
 
     // public ICardZoneChanger GetCardZoneChanger(Player controller)
     //     => new CardZoneChanger(this, _permanents, controller);
@@ -99,4 +107,8 @@ public class Battlefield(Match match) : ICardZone
             => battlefield;
     }
 
+    public class Snapshot
+    {
+        // TODO
+    }
 }

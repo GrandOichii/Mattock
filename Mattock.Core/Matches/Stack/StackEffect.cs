@@ -6,7 +6,7 @@ using Mattock.Core.Matches.Stack.Resolvers;
 namespace Mattock.Core.Matches.Stack;
 
 public class StackEffect(
-    TheStack stack,
+    MatchStack stack,
     EffectContext ctx,
     IStackEffectResolver resolver
 )

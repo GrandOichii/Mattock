@@ -1,11 +1,14 @@
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Turns.Phases;
 using Mattock.Core.Matches.Turns.Steps.Beginning;
 using Mattock.Core.Matches.Turns.Steps.Ending;
 
 namespace Mattock.Core.Matches.Turns;
 
-public class TurnManager(Match match)
+public class TurnManager(
+    Match match
+) : IHasSnapshot<TurnManager.Snapshot>
 {
     public int ActivePlayerIdx { get; set; } = -1;
     public List<Phase> Phases { get; } = [];
@@ -64,4 +67,14 @@ public class TurnManager(Match match)
     }
 
     public Phase GetCurrentPhase() => Phases[CurrentPhaseIdx];
+
+    public Snapshot GetSnapshot()
+    {
+        throw new NotImplementedException();
+    }
+
+    public class Snapshot
+    {
+        // TODO
+    }
 }

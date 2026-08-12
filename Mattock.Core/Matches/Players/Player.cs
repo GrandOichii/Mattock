@@ -10,6 +10,7 @@ using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
+using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
 
@@ -40,6 +41,7 @@ public enum PlayerStatus
 /// One of the match players
 /// </summary>
 public class Player
+    : IHasSnapshot<Player.Snapshot>
 {
     /// <summary>
     /// Parent match
@@ -542,5 +544,16 @@ public class Player
         GameEndSafeguard();
 
         return await _controller.ApproveRollback(this, hint);
+    }
+
+    public Snapshot GetSnapshot()
+    {
+        throw new NotImplementedException();
+    }
+
+    public class Snapshot
+    {
+        // TODO
+        
     }
 }

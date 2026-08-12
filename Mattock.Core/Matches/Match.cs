@@ -20,22 +20,23 @@ public class Match
 {
     // properties
     public Rng Rng { get; }
+    public Player[] Players { get; }
+    public Battlefield Battlefield { get; }
+    public MatchStack Stack { get; }
+    public TurnManager TurnManager { get; }
+    public int TurnCounter { get; private set; }
+
     public Lua LState { get; }
     public MatchConfig Config { get; }
     public Mechanics Mechanics { get; }
-    public Player[] Players { get; }
     private readonly Dictionary<int, Player[]> _teams;
-    public Battlefield Battlefield { get; }
     private int _lastCardId;
     private int _lastAAId;
     public CardZoneChange? ZoneChange { get; private set; }
-    public TheStack Stack { get; }
     public MatchEvents Events { get; }
     public Priority? Priority { get; private set; }
-    public TurnManager TurnManager { get; }
     public StateBasedActionsManager StateBasedActions { get; }
     public IAction[] Actions { get; }
-    public int TurnCounter { get; private set; }
     public List<Card> Cards { get; }
     private int[]? _winningTeams;
     public SnapshotsManager Snapshots { get; }
@@ -402,11 +403,25 @@ public class Match
 
     public Snapshot GetSnapshot()
     {
-        throw new NotImplementedException();
+        return new()
+        {
+            Rng = Rng.GetSnapshot(),
+            Battlefield = Battlefield.GetSnapshot(),
+            Stack = Stack.GetSnapshot(),
+            TurnManager = TurnManager.GetSnapshot(),
+            Players = [.. Players.Select(p => p.GetSnapshot())],
+
+            TurnCounter = TurnCounter,
+        };
     }
 
     public class Snapshot
     {
-        // TODO
+        public required Rng.Snapshot Rng { get; init; }
+        public required Player.Snapshot[] Players { get; init; }
+        public required Battlefield.Snapshot Battlefield { get; init; }
+        public required MatchStack.Snapshot Stack { get; init; }
+        public required TurnManager.Snapshot TurnManager { get; init; }
+        public required int TurnCounter { get; init; }
     }
 }
