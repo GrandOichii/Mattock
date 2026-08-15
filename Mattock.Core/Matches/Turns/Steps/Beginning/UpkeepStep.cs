@@ -2,16 +2,10 @@ using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Beginning;
 
-public class UpkeepStep : Step
+public class UpkeepStep(
+    Phase phase
+) : Step(phase, StepType.Upkeep, true)
 {
-    public UpkeepStep(Phase phase) : base(
-        phase,
-        StepType.Upkeep,
-        true    
-    )
-    {
-    }
-
     public override Task DoPrePriority()
     {
         // TODO

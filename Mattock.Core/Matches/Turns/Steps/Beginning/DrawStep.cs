@@ -2,16 +2,10 @@ using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Beginning;
 
-public class DrawStep : Step
+public class DrawStep(
+    Phase phase
+): Step(phase, StepType.Draw, true)
 {
-    public DrawStep(Phase phase) : base(
-        phase,
-        StepType.Draw,
-        true
-    )
-    {
-    }
-
     public override bool CanBeTaken()
     {
         return Match.TurnCounter > 1 ||

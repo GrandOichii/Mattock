@@ -70,11 +70,19 @@ public class TurnManager(
 
     public Snapshot GetSnapshot()
     {
-        throw new NotImplementedException();
+        return new()
+        {
+            ActivePlayerIdx = ActivePlayerIdx,
+            CurrentPhaseIdx = CurrentPhaseIdx,
+            Phases = [.. Phases.Select(p => p.GetSnapshot())]
+        };
     }
 
     public class Snapshot
     {
+        public required int ActivePlayerIdx { get; init; }
+        public required int CurrentPhaseIdx { get; init; }
+        public required List<Phase.Snapshot> Phases { get; init; }
         // TODO
     }
 }

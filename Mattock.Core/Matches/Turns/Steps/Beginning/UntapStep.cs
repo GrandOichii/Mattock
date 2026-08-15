@@ -2,16 +2,11 @@ using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Beginning;
 
-public class UntapStep : Step
+public class UntapStep(
+    Phase phase
+) : Step(
+phase, StepType.Untap, false)
 {
-    public UntapStep(Phase phase) : base(
-        phase,
-        StepType.Untap, 
-        false
-    )
-    {
-    }
-
     public override Task DoPrePriority()
     {
         var active = Match.GetActivePlayer();

@@ -4,20 +4,16 @@ namespace Mattock.Core.Matches.Turns.Steps;
 
 // TODO add 500.5.
 
-public abstract class Step
+public abstract class Step(
+    Phase phase,
+    StepType type,
+    bool activePlayerReceivesPriority
+)
 {
-    public Match Match { get; }
-    public Phase Phase { get; }
-    public StepType Type { get; }
-    public bool ActivePlayerReceivesPriority { get; }
-
-    public Step(Phase phase, StepType type, bool activePlayerReceivesPriority)
-    {
-        Phase = phase;
-        Match = phase.Match;
-        Type = type;
-        ActivePlayerReceivesPriority = activePlayerReceivesPriority;
-    }
+    public Match Match { get; } = phase.Match;
+    public Phase Phase { get; } = phase;
+    public StepType Type { get; } = type;
+    public bool ActivePlayerReceivesPriority { get; } = activePlayerReceivesPriority;
 
     public abstract bool CanBeTaken();
     public abstract Task DoPrePriority();

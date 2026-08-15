@@ -2,16 +2,10 @@ using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Ending;
 
-public class CleanupStep : Step
+public class CleanupStep(
+    Phase phase
+) : Step(phase, StepType.Cleanup, false)
 {
-    public CleanupStep(Phase phase) : base(
-        phase, 
-        StepType.Cleanup, 
-        false
-    )
-    {
-    }
-
     public override async Task DoPrePriority()
     {
         // 514.1. Discard to max hand size
