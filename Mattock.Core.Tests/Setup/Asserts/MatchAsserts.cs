@@ -122,4 +122,10 @@ public class MatchAsserts(TestMatchWrapper match)
         action(new(match.Match!.Stack));
         return this;
     }
+
+    public MatchAsserts AssertSnapshots(Action<SnapshotsAsserts> action)
+    {
+        action(new(match.Match!.Snapshots));
+        return this;
+    }
 }

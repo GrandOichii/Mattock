@@ -170,6 +170,7 @@ public class Match
     {
         while (!AreWinnersDecided())
         {
+            Snapshots.CreateSnapshot($"turn-{TurnCounter}");
             ++TurnCounter;
             
             for (
