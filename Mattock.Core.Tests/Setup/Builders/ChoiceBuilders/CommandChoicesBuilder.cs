@@ -234,6 +234,21 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         ));
     }
 
+    public TestPlayerControllerBuilder Rollback(string id)
+    {
+        return Enqueue((
+            async (match, player, options) =>
+            {
+                return (
+                    (null, new() { RequestedSnapshotId = id} ),
+                    true,
+                    true
+                );
+            },
+            true
+        ));
+    }
+
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
         return Enqueue((

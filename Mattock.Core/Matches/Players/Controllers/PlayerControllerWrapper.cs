@@ -56,7 +56,8 @@ public abstract class PlayerControllerWrapper(
     public async Task<(ICommand, RollbackRequest?)> ChooseCommand(Player player, ICommand[] options)
     {
         var result = await controller.ChooseCommand(player, options);
-        await HandleCommandChoice(result.Item1, player, options);
+        if (result.Item2 is null)
+            await HandleCommandChoice(result.Item1, player, options);
 
         return result;
     }
@@ -64,7 +65,8 @@ public abstract class PlayerControllerWrapper(
     public async Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
     {
         var result = await controller.ChooseCard(player, options, hint, allowNone);
-        await HandleCardChoice(result.Item1, player, options, hint);
+        if (result.Item2 is null)
+            await HandleCardChoice(result.Item1, player, options, hint);
 
         return result;
     }
@@ -78,7 +80,8 @@ public abstract class PlayerControllerWrapper(
     )
     {
         var result = await controller.ChoosePlayers(player, options, min, max, hint);
-        await HandlePlayersChoice(result.Item1, player, options, min, max, hint);
+        if (result.Item2 is null)
+            await HandlePlayersChoice(result.Item1, player, options, min, max, hint);
 
         return result;
     }
@@ -92,7 +95,8 @@ public abstract class PlayerControllerWrapper(
     )
     {
         var result = await controller.ChoosePermanents(player, options, min, max, hint);
-        await HandlePermanentsChoice(result.Item1, player, options, min, max, hint);
+        if (result.Item2 is null)
+            await HandlePermanentsChoice(result.Item1, player, options, min, max, hint);
 
         return result;
     }
@@ -100,7 +104,8 @@ public abstract class PlayerControllerWrapper(
     public async Task<(string?, RollbackRequest?)> ChooseString(Player player, string[] options, string hint, bool allowNone)
     {
         var result = await controller.ChooseString(player, options, hint, allowNone);
-        await HandleStringChoice(result.Item1, player, options, hint);
+        if (result.Item2 is null)
+            await HandleStringChoice(result.Item1, player, options, hint);
 
         return result;
     }
@@ -109,7 +114,8 @@ public abstract class PlayerControllerWrapper(
     public async Task<(CostCollection?, RollbackRequest?)> ChooseCostCollection(Player player, CostCollection[] options, string hint, bool allowNone)
     {
         var result = await controller.ChooseCostCollection(player, options, hint, allowNone);
-        await HandleCostCollectionChoice(result.Item1, player, options, hint);
+        if (result.Item2 is null)
+            await HandleCostCollectionChoice(result.Item1, player, options, hint);
 
         return result;
     }
@@ -117,7 +123,8 @@ public abstract class PlayerControllerWrapper(
     public async Task<(IManaPaymentChoice, RollbackRequest?)> ChooseManaPayment(Player player, IManaPaymentChoice[] options, string hint)
     {
         var result = await controller.ChooseManaPayment(player, options, hint);
-        await HandleManaPaymentChoice(result.Item1, player, options, hint);
+        if (result.Item2 is null)
+            await HandleManaPaymentChoice(result.Item1, player, options, hint);
 
         return result;
     }
@@ -130,6 +137,8 @@ public abstract class PlayerControllerWrapper(
     public Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
     {
         var result = controller.ChooseAttackDeclarations(player, options);
+
+        // if (result.Item2 is null)
         // TODO handle
 
         return result;
@@ -138,6 +147,8 @@ public abstract class PlayerControllerWrapper(
     public Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
     {
         var result = controller.ChooseBlockDeclarations(player, options);
+        
+        // if (result.Item2 is null)
         // TODO handle
 
         return result;

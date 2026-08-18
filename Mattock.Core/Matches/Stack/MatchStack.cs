@@ -71,15 +71,6 @@ public class MatchStack(
         Effects.RemoveAt(idx);
     }
 
-    // public string Add(
-    //     Card card,
-    //     CardZoneChangeType type,
-    //     ICardZoneChangeContext ctx
-    // )
-    // {
-    //     return ctx.Do();
-    // }
-
     public async Task ResolveTop()
     {
         var top = Effects.Last();

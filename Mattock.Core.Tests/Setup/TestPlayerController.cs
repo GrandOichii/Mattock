@@ -94,7 +94,7 @@ public class TestPlayerController(
             if (removeFromQueue)
                 commandChoices.Dequeue();
             if (!isResult) continue;
-            if (result.Item1 is null) throw new Exception($"Provided null choice for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
+            // if (result.Item1 is null) throw new Exception($"Provided null choice for {nameof(ChooseCommand)} of player {player.GetDisplayName()}");
             return result!; // TODO sus
         }
 
@@ -116,7 +116,7 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, hint, allowNone);
             if (!isResult) continue;
-            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            // if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result!;
         }
 
@@ -136,7 +136,7 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options);
             if (!isResult) continue;
-            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            // if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result!;
         }
 
@@ -157,7 +157,7 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, hint);
             if (!isResult) continue;
-            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            // if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
         }
 
@@ -180,7 +180,7 @@ public class TestPlayerController(
             var choice = queue.Dequeue();
             var (result, isResult) = await getter(choice, player, options, min, max, hint);
             if (!isResult) continue;
-            if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
+            // if (result.Item1 is null) throw new Exception($"Provided null choice for {methodName} of player {player.GetDisplayName()}");
             return result;
         }
 

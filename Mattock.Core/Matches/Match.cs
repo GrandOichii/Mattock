@@ -4,6 +4,7 @@ using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack;
@@ -41,6 +42,8 @@ public class Match
     private int _lastCardId;
     private int _lastAAId;
 
+    private RollbackRequest? _queuedRollbackRequest;
+
     // constructors
 
     public Match(
@@ -55,6 +58,7 @@ public class Match
 
         ZoneChange = null;
         Priority = null;
+        _queuedRollbackRequest = null;
         Stack = new(this);
         Events = new(this);
         Battlefield = new(this);
@@ -170,8 +174,8 @@ public class Match
     {
         while (!ShouldHalt())
         {
-            Snapshots.CreateSnapshot($"turn-{TurnCounter}");
             ++TurnCounter;
+            Snapshots.CreateSnapshot($"turn-{TurnCounter}");
             
             for (
                 TurnManager.ResetTurn();
@@ -377,7 +381,7 @@ public class Match
         }
     }
 
-    public bool ShouldHalt() => _winningTeams is not null;
+    public bool ShouldHalt() => _winningTeams is not null || _queuedRollbackRequest is not null;
 
     public async Task ProcessEvent(IEvent e)
     {
