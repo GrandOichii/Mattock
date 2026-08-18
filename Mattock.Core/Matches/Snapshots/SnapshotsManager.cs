@@ -13,6 +13,10 @@ public class SnapshotsManager(
 
         Snapshot snap = new(id, match.GetSnapshot());
         Snapshots.Add(snap);
+
+        while (Snapshots.Count > match.Config.SnapshotMemory)
+            Snapshots.Remove(Snapshots[0]);
+            
         return snap;
     }
 }

@@ -28,7 +28,7 @@ public class Priority
 
     public async Task Resolve()
     {
-        while (!Done && !Match.AreWinnersDecided())
+        while (!Done && !Match.ShouldHalt())
         {
             await ProcessPriority(Match.Players[PriorityPlayerIdx]);
         }
@@ -42,7 +42,7 @@ public class Priority
             Advance();
             return;
         }
-        if (Match.AreWinnersDecided())
+        if (Match.ShouldHalt())
         {
             return;
         }
@@ -57,7 +57,7 @@ public class Priority
 
     public void Advance()
     {
-        if (Match.AreWinnersDecided()) return;
+        if (Match.ShouldHalt()) return;
         CalculateCurrent();
         CalculateNext();
     }

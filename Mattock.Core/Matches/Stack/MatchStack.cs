@@ -1,8 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Scripting.Context;
-using Mattock.Core.Matches.Scripting.Context.Data;
-using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack.Resolvers;
 using Mattock.Core.Matches.Zones;
@@ -91,6 +89,14 @@ public class MatchStack(
     }
 
     public Snapshot GetSnapshot()
+    {
+        return new()
+        {
+            // TODO
+        };
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
     {
         throw new NotImplementedException();
     }

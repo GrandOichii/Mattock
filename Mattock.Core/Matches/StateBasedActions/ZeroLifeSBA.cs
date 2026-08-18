@@ -15,7 +15,7 @@ public class ZeroLifeSBA : IStateBasedAction
 
             player.SetStatus(PlayerStatus.Lost);
         }
-        match.AreWinnersDecided();
+        match.ShouldHalt();
         return result;
     }
 }

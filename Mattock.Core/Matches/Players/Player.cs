@@ -548,6 +548,14 @@ public class Player
 
     public Snapshot GetSnapshot()
     {
+        return new()
+        {
+            // TODO
+        };
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
+    {
         throw new NotImplementedException();
     }
 

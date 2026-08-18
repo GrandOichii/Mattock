@@ -28,31 +28,41 @@ public class TurnManager(
         return result;
     }
 
+    public Phase CreatePhase(PhaseType type)
+    {
+        return type switch
+        {
+            PhaseType.Beginning => new BeginningPhase(match),
+            PhaseType.PrecombatMain => new MainPhase(match, true),
+            PhaseType.Combat => new CombatPhase(match),
+            PhaseType.PostcombatMain => new MainPhase(match, false),
+            PhaseType.Ending => new EndingPhase(match),
+            _ => throw new Exception($"Unrecognized phase type: {type}") // TODO type
+        };
+    }
+
     public void ResetTurn()
     {
         Phases.Clear();
         CurrentPhaseIdx = 0;
 
-        var beginningPhase = new Phase(match, PhaseType.Beginning, []);
-        beginningPhase.Steps.Add(new UntapStep(beginningPhase));
-        beginningPhase.Steps.Add(new UpkeepStep(beginningPhase));
-        beginningPhase.Steps.Add(new DrawStep(beginningPhase));
-
-        Phases.Add(beginningPhase);
-        Phases.Add(new MainPhase(match, true));
-        Phases.Add(new CombatPhase(match));
-        Phases.Add(new MainPhase(match, false));
-
-        var endingPhase = new Phase(match, PhaseType.Ending, []);
-        endingPhase.Steps.Add(new EndStep(endingPhase));
-        endingPhase.Steps.Add(new CleanupStep(endingPhase));
-        Phases.Add(endingPhase);
+        PhaseType[] phases = [
+            PhaseType.Beginning,
+            PhaseType.PrecombatMain,
+            PhaseType.Combat,
+            PhaseType.PostcombatMain,
+            PhaseType.Ending,
+        ];
+        foreach (var type in phases)
+            Phases.Add(CreatePhase(type));
     }
 
     public void AdvanceTurn()
     {
-        if (match.AreWinnersDecided()) return;
-        // TODO
+        if (match.ShouldHalt()) return;
+
+        // TODO implement extra turns
+
         ActivePlayerIdx = NextInTurnOrderIdx(ActivePlayerIdx);
     }
 
@@ -78,11 +88,23 @@ public class TurnManager(
         };
     }
 
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+        ActivePlayerIdx = snapshot.ActivePlayerIdx;
+        CurrentPhaseIdx = snapshot.CurrentPhaseIdx;
+
+        Phases.Clear();
+        foreach (var phase in snapshot.Phases)
+        {
+            var p = CreatePhase(phase.Type);
+            p.LoadSnapshot(phase);
+        }
+    }
+
     public class Snapshot
     {
         public required int ActivePlayerIdx { get; init; }
         public required int CurrentPhaseIdx { get; init; }
         public required List<Phase.Snapshot> Phases { get; init; }
-        // TODO
     }
 }

@@ -30,8 +30,6 @@ public class Match
     public MatchConfig Config { get; }
     public Mechanics Mechanics { get; }
     private readonly Dictionary<int, Player[]> _teams;
-    private int _lastCardId;
-    private int _lastAAId;
     public CardZoneChange? ZoneChange { get; private set; }
     public MatchEvents Events { get; }
     public Priority? Priority { get; private set; }
@@ -40,6 +38,8 @@ public class Match
     public List<Card> Cards { get; }
     private int[]? _winningTeams;
     public SnapshotsManager Snapshots { get; }
+    private int _lastCardId;
+    private int _lastAAId;
 
     // constructors
 
@@ -168,21 +168,21 @@ public class Match
 
     public async Task TakeTurns()
     {
-        while (!AreWinnersDecided())
+        while (!ShouldHalt())
         {
             Snapshots.CreateSnapshot($"turn-{TurnCounter}");
             ++TurnCounter;
             
             for (
                 TurnManager.ResetTurn();
-                !TurnManager.IsTurnEnded() && !AreWinnersDecided();
+                !TurnManager.IsTurnEnded() && !ShouldHalt();
                 TurnManager.AdvancePhase()
             )
             {
                 var phase = TurnManager.GetCurrentPhase();
 
                 await phase.Do();
-                if (AreWinnersDecided()) return;
+                if (ShouldHalt()) return;
             }
 
 
@@ -211,12 +211,12 @@ public class Match
 
             Priority = null;
 
-            if (Stack.IsEmpty() || AreWinnersDecided()) break;
+            if (Stack.IsEmpty() || ShouldHalt()) break;
 
             await Stack.ResolveTop();
             effectsResolved = true;
         }
-        while (!AreWinnersDecided() && !Stack.IsEmpty());
+        while (!ShouldHalt() && !Stack.IsEmpty());
 
         return effectsResolved;
     }
@@ -321,7 +321,7 @@ public class Match
 
     public void CheckForWinners()
     {
-        if (AreWinnersDecided()) return;
+        if (ShouldHalt()) return;
 
         HashSet<int> winningTeams = [];
         HashSet<int> losingTeams = [];
@@ -377,7 +377,7 @@ public class Match
         }
     }
 
-    public bool AreWinnersDecided() => _winningTeams is not null;
+    public bool ShouldHalt() => _winningTeams is not null;
 
     public async Task ProcessEvent(IEvent e)
     {
@@ -397,11 +397,6 @@ public class Match
         return [.. result.Select(idx => Players[idx])];
     }
 
-    public async Task LoadSnapshot(Snapshot s)
-    {
-        throw new NotImplementedException();
-    }
-
     public Snapshot GetSnapshot()
     {
         return new()
@@ -413,7 +408,21 @@ public class Match
             Players = [.. Players.Select(p => p.GetSnapshot())],
 
             TurnCounter = TurnCounter,
+            LastAAId = _lastAAId,
+            LastCardId = _lastCardId,
         };
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+        Rng.LoadSnapshot(snapshot.Rng);
+
+        for (int i = 0; i < snapshot.Players.Length; ++i)
+            Players[i].LoadSnapshot(snapshot.Players[i]);
+        
+        Battlefield.LoadSnapshot(snapshot.Battlefield);
+        Stack.LoadSnapshot(snapshot.Stack);
+        TurnManager.LoadSnapshot(snapshot.TurnManager);
     }
 
     public class Snapshot
@@ -424,5 +433,7 @@ public class Match
         public required MatchStack.Snapshot Stack { get; init; }
         public required TurnManager.Snapshot TurnManager { get; init; }
         public required int TurnCounter { get; init; }
+        public required int LastCardId { get; init; }
+        public required int LastAAId { get; init; }
     }
 }

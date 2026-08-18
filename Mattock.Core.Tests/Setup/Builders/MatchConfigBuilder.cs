@@ -45,6 +45,12 @@ public class MatchConfigBuilder
         return this;
     }
 
+    public MatchConfigBuilder SnapshotMemory(int v)
+    {
+        _result.SnapshotMemory = v;
+        return this;
+    }
+
     public MatchConfigBuilder GameLossIfRequiredToDrawFromEmptyLibrary(bool v)
     {
         _result.GameLossIfRequiredToDrawFromEmptyLibrary = v;

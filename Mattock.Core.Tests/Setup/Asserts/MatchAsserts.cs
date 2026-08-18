@@ -107,7 +107,7 @@ public class MatchAsserts(TestMatchWrapper match)
 
     public MatchAsserts NoWinnersDecided()
     {
-        match.Match!.AreWinnersDecided().ShouldBeFalse();
+        match.Match!.ShouldHalt().ShouldBeFalse();
         return this;
     }
 

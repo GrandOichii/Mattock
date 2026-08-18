@@ -76,12 +76,16 @@ public class Battlefield(
 
     public Snapshot GetSnapshot()
     {
-        throw new NotImplementedException();
+        return new()
+        {
+            // TODO
+        };
     }
 
-
-    // public ICardZoneChanger GetCardZoneChanger(Player controller)
-    //     => new CardZoneChanger(this, _permanents, controller);
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+        throw new NotImplementedException();
+    }
 
     class CardZoneChanger(
         Battlefield battlefield,

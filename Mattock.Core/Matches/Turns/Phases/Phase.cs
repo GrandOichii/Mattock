@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Turns.Steps;
 
@@ -22,7 +23,7 @@ public class Phase(
     {
         await DoPreSteps();
         await DoSteps();
-        if (Match.AreWinnersDecided()) return;
+        if (Match.ShouldHalt()) return;
         await DoPostSteps();
 
         // 500.5.
@@ -50,7 +51,7 @@ public class Phase(
 
             await step.Do();
 
-            if (Match.AreWinnersDecided())
+            if (Match.ShouldHalt())
             {
                 return;
             }
@@ -66,6 +67,11 @@ public class Phase(
             CurrentStepIdx = CurrentStepIdx,
             Type = Type,
         };
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+        CurrentStepIdx = snapshot.CurrentStepIdx;
     }
 
     public class Snapshot

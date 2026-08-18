@@ -21,7 +21,7 @@ public class StateBasedActionsManager
         foreach (var act in StateBasedActions)
             if (act.Apply(Match))
                 result = true;
-        if (Match.AreWinnersDecided()) return false;
+        if (Match.ShouldHalt()) return false;
         return result;
     }
 
@@ -38,7 +38,7 @@ public class StateBasedActionsManager
             repeat = ApplyOnce();
         }
 
-        if (Match.AreWinnersDecided()) return;
+        if (Match.ShouldHalt()) return;
         // TODO triggers
         
         ApplyOnce();

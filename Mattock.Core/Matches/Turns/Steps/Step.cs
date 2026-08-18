@@ -28,7 +28,7 @@ public abstract class Step(
 
             await Match.CreateAndResolvePriority();
         }
-        if (Match.AreWinnersDecided()) return;
+        if (Match.ShouldHalt()) return;
 
         await DoPostPriority();
 

@@ -18,6 +18,11 @@ public class MatchConfig
     public required bool ManaPoolEmptiesAtEndOfEachStep { get; set; }
 
     /// <summary>
+    /// Amount of max match snapshots stored
+    /// </summary>
+    public required int SnapshotMemory { get; set; }
+
+    /// <summary>
     /// Creatures can't attack or use tap abilities until the next turn of their controller
     /// </summary>
     public required bool SummoningSickness { get; set; }
@@ -50,6 +55,7 @@ public class MatchConfig
         TeamCount = 4,
         MaxTeamSize = 1,
         BaselineBlockCount = 1,
+        SnapshotMemory = 30,
     };
 
     public static MatchConfig Copy(MatchConfig config) => new()
@@ -72,5 +78,6 @@ public class MatchConfig
         TeamCount = config.TeamCount,
         MaxTeamSize = config.MaxTeamSize,
         BaselineBlockCount = config.BaselineBlockCount,
+        SnapshotMemory = config.SnapshotMemory,
     };
 }

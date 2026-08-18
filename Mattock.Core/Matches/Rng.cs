@@ -6,7 +6,7 @@ public class Rng(
     int seed
 ) : IHasSnapshot<Rng.Snapshot>
 {
-    private readonly Random _r = new(seed);
+    private Random _r = new(seed);
     private int _c = 0;
 
     public int Next()
@@ -26,6 +26,13 @@ public class Rng(
     public void Restore(Snapshot s)
     {
         _c = s.Count;
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+        _r = new(seed);
+        for (int i = 0; i < snapshot.Count; ++i)
+            Next();
     }
 
     public class Snapshot
