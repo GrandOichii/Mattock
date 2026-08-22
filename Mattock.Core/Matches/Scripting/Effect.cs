@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Utility;
@@ -29,14 +30,16 @@ public class Effect
         Targets = [.. targets.Select(t => new Target(t))];
     }
 
-    public void Do(EffectContext ctx)
+    public RollbackRequest? Do(EffectContext ctx)
     {
         try
         {
             foreach (var part in Parts)
             {
                 part.Do(ctx);
+                throw new Exception("Potential rollback request ignored");
             }
+            return null;
         } catch (Exception e)
         {
             throw new Exception($"Failed to execute effect with text \"{Text}\"", e); // TODO type

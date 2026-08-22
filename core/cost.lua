@@ -2,9 +2,9 @@ Cost = {}
 
 function Cost:_(text, payFunc, checkFunc)
     return {
+        Text = text,
         Pay = payFunc,
         Check = checkFunc,
-        Text = text,
     }
 end
 
@@ -13,7 +13,7 @@ function Cost:SelfTap()
         '{T}',
         function (ctx)
             local permanent = GetPermanentById(ctx.Data.Object.Id)
-            TapPermanents({permanent})
+            return TapPermanents({permanent})
         end,
         function (ctx)
             local config = GetConfig()

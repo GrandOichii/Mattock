@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -8,7 +9,7 @@ public class AddGenericManaEvent(
     ManaAmount[] mana
 ) : IEvent
 {
-    public Task Do(Match match)
+    public Task<RollbackRequest?> Do(Match match)
     {
         foreach (var p in players)
         {
@@ -18,6 +19,6 @@ public class AddGenericManaEvent(
             }
         }
 
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

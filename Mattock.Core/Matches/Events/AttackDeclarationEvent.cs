@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Combat.AttackDeclarations.Targets;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -7,7 +8,7 @@ public class AttackDeclarationEvent(
     AttackDeclaration[] _declarations
 ) : IEvent
 {
-    public Task Do(Match match)
+    public Task<RollbackRequest?> Do(Match match)
     {
         foreach (var declaration in _declarations)
         {
@@ -16,6 +17,6 @@ public class AttackDeclarationEvent(
             attacker.SetAttackTarget(declaration.Target);
         }
         
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

@@ -1,5 +1,3 @@
-using Mattock.Core.Matches.Turns.Phases;
-
 namespace Mattock.Core.Tests.Rules.StateBasedActions;
 
 public class DrawFromEmptyLibraryTests
@@ -20,12 +18,12 @@ public class DrawFromEmptyLibraryTests
             // upkeep
             .Act.Pass()
             // upkeep: player gains priority and immediately loses the game
-            ;
+        ;
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .Act.AutoPass()
-            ;
+        ;
 
         // Act
         var match = new TestMatchWrapper(

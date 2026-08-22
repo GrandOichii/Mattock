@@ -1,3 +1,5 @@
+using Mattock.Core.Matches.Rollback;
+
 namespace Mattock.Core.Matches.Players.Actions;
 
 public interface IAction
@@ -9,5 +11,5 @@ public interface IAction
 public interface ICommand
 {
     string ToCommandString();
-    Task Do();
+    Task<RollbackRequest?> Do();
 }

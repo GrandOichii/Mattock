@@ -1,6 +1,8 @@
+using Mattock.Core.Matches.Rollback;
+
 namespace Mattock.Core.Matches.Events;
 
 public interface IEvent
 {
-    Task Do(Match match);
+    Task<RollbackRequest?> Do(Match match);
 }

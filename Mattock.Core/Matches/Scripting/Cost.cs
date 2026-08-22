@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Utility;
 using NLua;
@@ -24,11 +25,14 @@ public class Cost : ICost
         return LuaCommon.GetReturnAsBool(returned);
     }
 
-    public Task<bool> Pay(EffectContext ctx)
+    public Task<RollbackRequest?> Pay(EffectContext ctx)
     {
-        PayFunc.Call(ctx);
+        var returned = PayFunc.Call(ctx);
+        if (returned[0] == null)
+            return Task.FromResult<RollbackRequest?>(null);
 
-        // TODO
-        return Task.FromResult(false);
+        var request = LuaCommon.GetReturnAs<RollbackRequest>(returned);
+
+        return Task.FromResult<RollbackRequest?>(request);
     }
 }

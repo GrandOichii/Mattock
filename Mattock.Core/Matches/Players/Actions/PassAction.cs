@@ -1,5 +1,7 @@
 
 
+using Mattock.Core.Matches.Rollback;
+
 namespace Mattock.Core.Matches.Players.Actions;
 
 public class PassAction : IAction
@@ -14,17 +16,20 @@ public class PassAction : IAction
     }
 }
 
-public class PassCommand(Player player) : ICommand
+public class PassCommand(
+    Player player
+) : ICommand
 {
     public string ToCommandString() => PassAction.ActionWord;
 
-    public Task Do()
+    public Task<RollbackRequest?> Do()
     {
         var p = player.Match.Priority!;
         if (p.PriorityPlayerIdx != player.Idx)
             throw new Exception($"Code error: received pass command from non-priority player {player.GetDisplayName()} (priority player idx: {p.PriorityPlayerIdx})");
 
         p.Advance();
-        return Task.CompletedTask;
+        
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

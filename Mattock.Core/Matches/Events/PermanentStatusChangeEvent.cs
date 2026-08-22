@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Permanents.Statuses;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -9,7 +10,7 @@ public class PermanentStatusChangeEvent(
     bool _changeTo
 ): IEvent
 {
-    public Task Do(Match match)
+    public Task<RollbackRequest?> Do(Match match)
     {
         List<Permanent> changed = [];
         foreach (var p in _permanents)
@@ -21,6 +22,6 @@ public class PermanentStatusChangeEvent(
         }
 
         // TODO trigger
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

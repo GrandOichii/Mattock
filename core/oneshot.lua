@@ -6,7 +6,7 @@ function OneShot:Draw(manyPlayers, number)
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 
-        DrawCards(players, amount)
+        return DrawCards(players, amount)
     end
 end
 
@@ -16,7 +16,7 @@ function OneShot:Discard(manyPlayers, number, random)
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 
-        DiscardCards(players, amount, random)
+        return DiscardCards(players, amount, random)
     end
 end
 
@@ -25,7 +25,7 @@ function OneShot:GainLife(manyPlayers, number)
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 
-        GainLife(players, amount)
+        return GainLife(players, amount)
     end
 end
 
@@ -34,7 +34,7 @@ function OneShot:LoseLife(manyPlayers, number)
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 
-        LoseLife(players, amount)
+        return LoseLife(players, amount)
     end
 end
 
@@ -42,7 +42,7 @@ function OneShot:TapPermanents(manyPermanents)
     return function (ctx)
         local permanents = manyPermanents(ctx)
 
-        TapPermanents(permanents)
+        return TapPermanents(permanents)
     end
 end
 
@@ -62,7 +62,8 @@ function OneShot:DealDamageToPermanents(manyPermanents, number)
                 Amount = amount
             }
         end
-        DealDamageToPermanents(damage)
+
+        return DealDamageToPermanents(damage)
     end
 end
 
@@ -81,6 +82,6 @@ function OneShot:AddMana(manyPlayers, ...)
             }
         end
 
-        AddMana(players, newMana)
+        return AddMana(players, newMana)
     end
 end

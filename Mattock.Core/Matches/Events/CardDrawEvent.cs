@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -18,7 +19,7 @@ public class CardDrawEvent(
     CardDraw[] draws
 ) : IEvent
 {
-    public Task Do(Match match)
+    public Task<RollbackRequest?> Do(Match match)
     {
         foreach (var draw in draws)
         {
@@ -27,6 +28,6 @@ public class CardDrawEvent(
 
         // TODO trigger
         
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

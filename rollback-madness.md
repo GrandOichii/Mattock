@@ -1,0 +1,104 @@
+## Player prompts that lead to rollback requests
+
+- ChooseCommand:
+    - Priority.cs: Priority::ProcessPriority
+- ChooseCard:
+    - LondonMulligan.cs
+    - CleanupStep.cs
+- ChooseString:
+    - Match.cs: Match::TakeMulligans
+- ChoosePlayers:
+    - Match.cs: Match::Run - mulligans
+    - MatchScripts.cs: MatchScripts::ChoosePlayers -> *.lua
+- ChoosePermanents:
+    - MatchScripts.cs: MatchScripts::ChoosePermanents -> *.lua
+
+
+- ChooseManaPayment:
+    - ManaCostsCollection.cs: ManaCostsCollection::Pay
+- ChooseCostCollection:
+    - SpellCastEvent.cs: SpellCastEvent::Do
+- ChooseAttackDeclarations:
+    - DeclareAttackersStep.cs: DeclareAttackersStep::DoPrePriority
+- ChooseBlockDeclarations:
+    - DeclareBlockersStep.cs: DeclareBlockersStep::DoPrePriority
+
+## Methods that return instantly if rollback is requested
+
+- __ChooseCommand__
+    - [X] Priority::ProcessPriority
+        - [X] Priority::Resolve
+            - [X] Match::CreateAndResolvePriority
+                - [X] MainPhase::DoPostSteps
+                    - [X] Phase::Do
+                - [X] Step::Do
+                    - [X] Phase::DoSteps
+                        - [X] Phase::Do
+                            - [X] Match::TakeTurns
+                                - [ ] Match::Run
+- __ChooseCard__
+    - [X] CleanupStep::DoPrePriority
+        - [X] Step::Do
+- __ChooseString__
+- __ChoosePlayers__
+    - [ ] 
+- __ChoosePermanents__
+    - [ ]
+- __ChooseManaPayment__
+    - [X] ManaCostsCollection::Pay
+        - [X] CostCollection::Pay
+            - [X] ActivateAbilityEvent::Do
+                - [X] Match::ProcessEvent
+                    - [X] MatchEvents::TapPermanents
+                        - [X] MatchScripts::TapPermanents
+                            - [ ] *.lua
+                        - [X] DeclareAttackersStep::DoPrePriority
+                            - [X] Step::Do
+                    - [X] MatchEvents::UntapPermanents
+                    - [X] MatchEvents::DeclareAttackers
+                        - [X] DeclareAttackersStep::DoPrePriority
+                            - [X] Step::Do
+                    - [X] MatchEvents::DeclareBlockers
+                        - [X] DeclareBlockersStep::DoPrePriority
+                            - [X] Step::Do
+                    - [X] MatchEvents::RemoveAllFromCombat
+                        - [X] EndOfCombatStep::DoPostPriority
+                            - [X] Step::Do
+                    - [X] MatchEvents::ProcessDamage
+                        - [X] MatchScripts::DealDamageToPermanents
+                            - [ ] *.lua
+                        - [X] CombatDamageStep::DoPrePriority
+                            - [X] Step::Do
+                    - [X] MatchEvents::DrawCards
+                        - [X] MatchScripts::DrawCards
+                            - [ ] *.lua
+                        - [X] DrawStep::DoPrePriority
+                            - [X] Step::Do
+                    - [X] MatchEvents::GainLife
+                        - [X] MatchScripts::GainLife
+                            - [ ] *.lua
+                    - [X] MatchEvents::LoseLife
+                        - [X] MatchScripts::LoseLife
+                            - [ ] *.lua
+                    - [X] MatchEvents::CastSpell
+                        - [X] Player::Cast 
+                            - [X] CastSpellCommand::Do
+                                - [X] Priority::ProcessPriority
+                    - [X] MatchEvents::ChooseTargetsForSpell
+                        - [X] SpellCastEvent::Do
+                    - [X] MatchEvents::ChooseTargetsForActivatedAbility
+                        - [X] ActivateAbilityEvent::Do
+                    - [X] MatchEvents::ActivateAbility
+                        - [X] Player::Activate
+                            - [X] ActivateAbilityAction::Do
+                                - [X] Priority::ProcessPriority
+                            - [X] ActivateManaAbilityAction::Do
+                                - [X] Priority::ProcessPriority
+                            - [X] ManaAbilityManaPaymentChoice::Process
+                                - [X] ManaCostsCollection::Pay
+                                    - [X] CostCollection::Pay
+                    - [X] MatchEvents::AddMana
+                        - [X] MatchScripts::AddMana
+                            - [ ] *.lua
+            - [X] ActivateManaAbilityEvent::Do
+            - [X] SpellCastEvent::Do

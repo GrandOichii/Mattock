@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Players.Actions;
 
@@ -40,9 +41,11 @@ public class PlayLandSpecialAction : IAction
     }
 }
 
-public class PlayLandCommand(Card card) : ICommand
+public class PlayLandCommand(
+    Card card
+) : ICommand
 {
-    public async Task Do()
+    public async Task<RollbackRequest?> Do()
     {
         var match = card.Match;
         var player = match.GetActivePlayer();
@@ -51,6 +54,8 @@ public class PlayLandCommand(Card card) : ICommand
             card,
             match.GetActivePlayer()
         );
+
+        return null;
     }
 
     public string ToCommandString() => $"{PlayLandSpecialAction.ActionWord} {card.Id}";

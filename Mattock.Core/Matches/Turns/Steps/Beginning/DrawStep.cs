@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Beginning;
@@ -13,15 +14,15 @@ public class DrawStep(
             Match.Players.Length > 2;
     }
 
-    public override async Task DoPrePriority()
+    public override async Task<RollbackRequest?> DoPrePriority()
     {
-        await Match.Events.DrawCards([
+        return await Match.Events.DrawCards([
             new(Match.GetActivePlayer(), Match.Config.DrawStepDrawAmount)
         ]);
     }
 
-    public override Task DoPostPriority()
+    public override Task<RollbackRequest?> DoPostPriority()
     {
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

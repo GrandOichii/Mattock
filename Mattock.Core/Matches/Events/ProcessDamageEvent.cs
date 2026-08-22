@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Damage;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -6,7 +7,7 @@ public class ProcessDamageEvent(
     Damage.Damage[] assignments
 ) : IEvent
 {
-    public Task Do(Match match)
+    public Task<RollbackRequest?> Do(Match match)
     {
         foreach (var assignment in assignments)
         {
@@ -15,6 +16,6 @@ public class ProcessDamageEvent(
 
         // TODO trigger
         
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

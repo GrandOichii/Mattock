@@ -66,39 +66,40 @@ public class MatchScripts
     }
 
     [LuaCommand]
-    public void DrawCards(LuaTable playerTable, int amount)
+    public RollbackRequest? DrawCards(LuaTable playerTable, int amount)
     {
         var players = LuaCommon.ParseTable<Player>(playerTable);
 
-        Match.Events.DrawCards([..
+        return Match.Events.DrawCards([..
             players.Select(p => new CardDraw(p, amount))
-        ]).Wait();
+        ]).GetAwaiter().GetResult();
     }
 
     [LuaCommand]
-    public void DiscardCards(LuaTable playerTable, int amount, bool random)
+    public RollbackRequest? DiscardCards(LuaTable playerTable, int amount, bool random)
     {
         // TODO
+        throw new NotImplementedException();
     }
 
     [LuaCommand]
-    public void GainLife(LuaTable playerTable, int amount)
+    public RollbackRequest? GainLife(LuaTable playerTable, int amount)
     {
         var players = LuaCommon.ParseTable<Player>(playerTable);
 
-        Match.Events.GainLife([..
+        return Match.Events.GainLife([..
             players.Select(p => new LifeGain(p, amount))
-        ]).Wait();
+        ]).GetAwaiter().GetResult();
     }
 
     [LuaCommand]
-    public void LoseLife(LuaTable playerTable, int amount)
+    public RollbackRequest? LoseLife(LuaTable playerTable, int amount)
     {
         var players = LuaCommon.ParseTable<Player>(playerTable);
 
-        Match.Events.LoseLife([..
+        return Match.Events.LoseLife([..
             players.Select(p => new LifeLoss(p, amount))
-        ]).Wait();
+        ]).GetAwaiter().GetResult();
     }
 
     [LuaCommand]
@@ -179,15 +180,15 @@ public class MatchScripts
     }
 
     [LuaCommand]
-    public void TapPermanents(LuaTable arrTable)
+    public RollbackRequest? TapPermanents(LuaTable arrTable)
     {
         Permanent[] permanents = LuaCommon.ParseTable<Permanent>(arrTable);
-        Match.Events.TapPermanents(permanents)
-            .Wait();
+        return Match.Events.TapPermanents(permanents)
+            .GetAwaiter().GetResult();
     }
 
     [LuaCommand]
-    public void DealDamageToPermanents(LuaTable damageTable)
+    public RollbackRequest? DealDamageToPermanents(LuaTable damageTable)
     {
         var arr = LuaCommon.ParseTable<LuaTable>(damageTable);
         List<Damage.Damage> damages = [];
@@ -201,12 +202,12 @@ public class MatchScripts
                 new PermanentDamageTarget(permanent)
             ));
         }
-        Match.Events.ProcessDamage([.. damages])
-            .Wait();
+        return Match.Events.ProcessDamage([.. damages])
+            .GetAwaiter().GetResult();
     }
 
     [LuaCommand]
-    public void AddMana(LuaTable playersTable, LuaTable manaTable)
+    public RollbackRequest? AddMana(LuaTable playersTable, LuaTable manaTable)
     {
         var players = LuaCommon.ParseTable<Player>(playersTable);
         var arr = LuaCommon.ParseTable<LuaTable>(manaTable);
@@ -215,7 +216,7 @@ public class MatchScripts
             LuaCommon.GetInt(i, "Amount")
         ))];
 
-        Match.Events.AddMana(players, mana)
-            .Wait();
+        return Match.Events.AddMana(players, mana)
+            .GetAwaiter().GetResult();
     }
 }

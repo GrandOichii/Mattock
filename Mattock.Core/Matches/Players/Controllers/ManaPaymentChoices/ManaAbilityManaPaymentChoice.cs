@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
@@ -10,9 +11,9 @@ public class ManaAbilityManaPaymentChoice(
 {
     public ActivatedAbility Ability { get; } = aa;
 
-    public async Task Process(ManaPayment payment)
+    public async Task<RollbackRequest?> Process(ManaPayment payment)
     {
-        await player.Activate(Ability);
+        return await player.Activate(Ability);
     }
 
     public string ToDisplayString()

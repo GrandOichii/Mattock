@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Matches.Players.Actions;
@@ -19,10 +20,14 @@ public class ActivateManaAbilityCommand(
     ActivatedAbility aa
 ) : ICommand
 {
-    public async Task Do()
+    public async Task<RollbackRequest?> Do()
     {
-        await player.Activate(aa);
+        var request = await player.Activate(aa);
+        if (request is not null)
+            return request;
+
         player.Match.ResetPriority(player.Idx);
+        return null;
     }
 
     public string ToCommandString()

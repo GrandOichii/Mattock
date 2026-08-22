@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
@@ -13,7 +14,7 @@ public class ActivateAbilityEvent(
     ActivatedAbility aa
 ) : IEvent
 {
-    public async Task Do(Match match)
+    public async Task<RollbackRequest?> Do(Match match)
     {
         TargetDeclarationCollection targets = new([]);
 
@@ -49,7 +50,9 @@ public class ActivateAbilityEvent(
         // The remainder of the process for activating an ability is identical to the process for casting a spell listed in rules 601.2b–i.
 
         // 601.2c Choose targets
-        await match.Events.ChooseTargetsForActivatedAbility(aa, ctx);
+        var request = await match.Events.ChooseTargetsForActivatedAbility(aa, ctx);
+        if (request is not null)
+            return request;
 
         // var 
         // TODO
@@ -67,9 +70,16 @@ public class ActivateAbilityEvent(
         // TODO
 
         // 601.2h Pay the cost
-        await costs.Pay(ctx);
+        var rollback = await costs.Pay(ctx);
+        if (rollback is not null)
+            return rollback;
+        if (match.ShouldHalt())
+            return null;
+        
 
         // 601.2i Modify characteristics
         // TODO
+
+        return null;
     }
 }

@@ -1,19 +1,14 @@
 namespace Mattock.Core.Matches.StateBasedActions;
 
-public class StateBasedActionsManager
+public class StateBasedActionsManager(
+    Match match
+)
 {
-    public Match Match { get; }
-    public List<IStateBasedAction> StateBasedActions { get; }
-
-    public StateBasedActionsManager(Match match)
-    {
-        Match = match;
-
-        StateBasedActions = [
-            new ZeroLifeSBA(),
-            new DrawFromEmptyLibrarySBA(),
-        ];
-    }
+    public Match Match { get; } = match;
+    public List<IStateBasedAction> StateBasedActions { get; } = [
+        new ZeroLifeSBA(),
+        new DrawFromEmptyLibrarySBA(),
+    ];
 
     private bool ApplyOnce()
     {

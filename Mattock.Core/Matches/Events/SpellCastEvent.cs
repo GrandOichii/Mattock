@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Scripting.Targets;
@@ -11,7 +12,7 @@ public class SpellCastEvent(
     Card card
 ) : IEvent
 {
-    public async Task Do(Match match)
+    public async Task<RollbackRequest?> Do(Match match)
     {
         TargetDeclarationCollection targets = new([]);
 
@@ -34,7 +35,9 @@ public class SpellCastEvent(
         // TODO
 
         // 601.2c Choose targets
-        await match.Events.ChooseTargetsForSpell(card, ctx);
+        var request = await match.Events.ChooseTargetsForSpell(card, ctx);
+        if (request is not null)
+            return request;
 
         // var 
         // TODO
@@ -53,15 +56,19 @@ public class SpellCastEvent(
         }
         var (choice, rollback) = await player.ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
         if (rollback is not null)
-            throw new UnhandledRollbackException(player, rollback);
+            return rollback;
 
         // 601.2g Activate mana abilities to pay for costs
         // TODO
 
         // 601.2h Pay the cost
-        await choice.Pay(ctx);
+        request = await choice.Pay(ctx);
+        if (request is not null)
+            return request;
 
         // 601.2i Modify characteristics
         // TODO
+
+        return null;
     }
 }

@@ -2,6 +2,7 @@ using Mattock.Core.Matches;
 using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 
 namespace Mattock.Core;
@@ -36,7 +37,7 @@ public class ManaCostsCollection(
         // return true;
     }
 
-    public async Task<bool> Pay(EffectContext ctx)
+    public async Task<RollbackRequest?> Pay(EffectContext ctx)
     {
         var player = ctx.Controller;
 
@@ -57,12 +58,17 @@ public class ManaCostsCollection(
 
             var (choice, rollback) = await player.ChooseManaPayment(options, $"Pay cost"); // TODO better hint
             if (rollback is not null)
-                throw new UnhandledRollbackException(player, rollback);
-            await choice.Process(costs);
+                return rollback;
+            if (player.Match.ShouldHalt())
+                return null;
+            
+            rollback = await choice.Process(costs);
+            if (rollback is not null)
+                return rollback;
         }
 
         // TODO
-        return false;
+        return null;
     }
 
     private ManaPayment GetManaPayment() => new([.. manaCosts.Select(c => new ManaCost() {

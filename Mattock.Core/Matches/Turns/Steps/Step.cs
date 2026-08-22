@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps;
@@ -16,21 +17,33 @@ public abstract class Step(
     public bool ActivePlayerReceivesPriority { get; } = activePlayerReceivesPriority;
 
     public abstract bool CanBeTaken();
-    public abstract Task DoPrePriority();
-    public abstract Task DoPostPriority();
+    public abstract Task<RollbackRequest?> DoPrePriority();
+    public abstract Task<RollbackRequest?> DoPostPriority();
 
-    public async Task Do()
+    public async Task<RollbackRequest?> Do()
     {
-        await DoPrePriority();
+        var request = await DoPrePriority();
+        if (request is not null)
+            return request;
+        if (Match.ShouldHalt())
+            return null;
+
         if (ActivePlayerReceivesPriority)
         {
             // TODO? if the stack had resolved effects, does the active player still gain priority?
 
-            await Match.CreateAndResolvePriority();
+            var (_, r) = await Match.CreateAndResolvePriority();
+            if (r is not null)
+                return r;
+            if (Match.ShouldHalt())
+                return null;
         }
-        if (Match.ShouldHalt()) return;
 
-        await DoPostPriority();
+        request = await DoPostPriority();
+        if (request is not null)
+            return request;
+        if (Match.ShouldHalt())
+            return null;
 
         // 500.5.
         if (Match.Config.ManaPoolEmptiesAtEndOfEachStep)
@@ -38,5 +51,7 @@ public abstract class Step(
 
         if (!Match.Stack.IsEmpty())
             throw new Exception($"Code error: the stack was not empty at the end of the step {Type}");
+            
+        return null;
     }
 }

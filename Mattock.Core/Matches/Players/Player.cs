@@ -326,19 +326,14 @@ public class Player
         )];
     }
 
-    /// <summary>
-    /// Cast the card
-    /// </summary>
-    /// <param name="card">Castable card</param>
-    /// <exception cref="Exception">TODO</exception>
-    public async Task Cast(Card card)
+    public async Task<RollbackRequest?> Cast(Card card)
     {
-        await Match.Events.CastSpell(this, card);
+        return await Match.Events.CastSpell(this, card);
     }
 
-    public async Task Activate(ActivatedAbility aa)
+    public async Task<RollbackRequest?> Activate(ActivatedAbility aa)
     {
-        await Match.Events.ActivateAbility(this, aa);
+        return await Match.Events.ActivateAbility(this, aa);
     }
 
     /// <summary>

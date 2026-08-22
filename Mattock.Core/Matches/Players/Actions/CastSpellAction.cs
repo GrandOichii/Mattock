@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Players.Actions;
 
@@ -14,12 +15,19 @@ public class CastSpellAction : IAction
     }
 }
 
-public class CastSpellCommand(Player player, Card card) : ICommand
+public class CastSpellCommand(
+    Player player,
+    Card card
+) : ICommand
 {
-    public async Task Do()
+    public async Task<RollbackRequest?> Do()
     {
-        await player.Cast(card);
+        var request = await player.Cast(card);
+        if (request is not null)
+            return request;
+
         player.Match.ResetPriority(player.Idx);
+        return null;
     }
 
     public string ToCommandString() => $"{CastSpellAction.ActionWord} {card.Id}";

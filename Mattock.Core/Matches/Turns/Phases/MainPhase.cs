@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Steps;
 
 namespace Mattock.Core.Matches.Turns.Phases;
@@ -7,8 +8,16 @@ public class MainPhase(
     bool precombat
 ) : Phase(match, precombat ? PhaseType.PrecombatMain : PhaseType.PostcombatMain, [])
 {
-    public async override Task DoPostSteps()
+    public async override Task<RollbackRequest?> DoPostSteps()
     {
-        while (await Match.CreateAndResolvePriority());
+        bool effectsResolved = true;
+        while (effectsResolved && !Match.ShouldHalt())
+        {
+            RollbackRequest? rollback;
+            (effectsResolved, rollback) = await Match.CreateAndResolvePriority();
+            if (rollback is not null)
+                return rollback;
+        }
+        return null;
     }
 }

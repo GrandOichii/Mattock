@@ -42,8 +42,6 @@ public class Match
     private int _lastCardId;
     private int _lastAAId;
 
-    private RollbackRequest? _queuedRollbackRequest;
-
     // constructors
 
     public Match(
@@ -58,7 +56,6 @@ public class Match
 
         ZoneChange = null;
         Priority = null;
-        _queuedRollbackRequest = null;
         Stack = new(this);
         Events = new(this);
         Battlefield = new(this);
@@ -166,11 +163,21 @@ public class Match
 
         await TakeMulligans();
 
-        // TODO
-        await TakeTurns();
+
+        // do
+        // {
+        //     await TakeTurns();
+            
+            
+        // } while (_queuedRollbackRequest is not null);
+        
+        rollback = await TakeTurns();
+
+        if (rollback is not null)
+            throw new Exception($"rollback is not null after {nameof(TakeTurns)}");
     }
 
-    public async Task TakeTurns()
+    public async Task<RollbackRequest?> TakeTurns()
     {
         while (!ShouldHalt())
         {
@@ -179,16 +186,18 @@ public class Match
             
             for (
                 TurnManager.ResetTurn();
-                !TurnManager.IsTurnEnded() && !ShouldHalt();
+                !TurnManager.IsTurnEnded();
                 TurnManager.AdvancePhase()
             )
             {
                 var phase = TurnManager.GetCurrentPhase();
 
-                await phase.Do();
-                if (ShouldHalt()) return;
+                var request = await phase.Do();
+                if (request is not null)
+                    return request;
+                if (ShouldHalt())
+                    return null;
             }
-
 
             TurnManager.ResetTurn();
             TurnManager.AdvanceTurn();
@@ -196,6 +205,7 @@ public class Match
             foreach (var p in Players)
                 p.ResetTrackers();
         }
+        return null;
     }
 
     public void CreatePriority()
@@ -203,7 +213,7 @@ public class Match
         Priority = new(this);
     }
 
-    public async Task<bool> CreateAndResolvePriority()
+    public async Task<(bool, RollbackRequest?)> CreateAndResolvePriority()
     {
         var effectsResolved = false;
         
@@ -211,7 +221,9 @@ public class Match
         {
             CreatePriority();
 
-            await Priority!.Resolve();
+            var rollback = await Priority!.Resolve();
+            if (rollback is not null)
+                return (effectsResolved, rollback);
 
             Priority = null;
 
@@ -222,7 +234,7 @@ public class Match
         }
         while (!ShouldHalt() && !Stack.IsEmpty());
 
-        return effectsResolved;
+        return (effectsResolved, null);
     }
 
     public void ResetPriority(int playerIdx)
@@ -381,11 +393,11 @@ public class Match
         }
     }
 
-    public bool ShouldHalt() => _winningTeams is not null || _queuedRollbackRequest is not null;
+    public bool ShouldHalt() => _winningTeams is not null;
 
-    public async Task ProcessEvent(IEvent e)
+    public async Task<RollbackRequest?> ProcessEvent(IEvent e)
     {
-        await e.Do(this);
+        return await e.Do(this);
     }
 
     public Player[] GetPlayersInAPNAP()

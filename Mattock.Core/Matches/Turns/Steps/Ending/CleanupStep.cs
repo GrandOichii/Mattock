@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Ending;
@@ -6,7 +7,7 @@ public class CleanupStep(
     Phase phase
 ) : Step(phase, StepType.Cleanup, false)
 {
-    public override async Task DoPrePriority()
+    public override async Task<RollbackRequest?> DoPrePriority()
     {
         // 514.1. Discard to max hand size
         var player = Match.GetActivePlayer();
@@ -17,7 +18,7 @@ public class CleanupStep(
             {
                 var (card, rollback) = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size", false);
                 if (rollback is not null)
-                    throw new UnhandledRollbackException(player, rollback);
+                    return rollback;
                 player.Discard([card!]);
             }
             // TODO
@@ -34,13 +35,15 @@ public class CleanupStep(
 
         // 514.3a State-based actions
         Match.StateBasedActions.Apply();
+
+        return null;
     }
 
     
-    public override Task DoPostPriority()
+    public override Task<RollbackRequest?> DoPostPriority()
     {
         // TODO
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 
     public override bool CanBeTaken() => true;

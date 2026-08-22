@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 
 namespace Mattock.Core.Matches.Players.Costs;
@@ -15,13 +16,17 @@ public class CostCollection(
         return costs.All(c => c.CanPay(ctx));
     }
 
-    public async Task<bool> Pay(EffectContext ctx)
+    public async Task<RollbackRequest?> Pay(EffectContext ctx)
     {
         foreach (var cost in costs)
         {
-            var rollbackRequested = await cost.Pay(ctx);
-            if (rollbackRequested) return true;
+            var request = await cost.Pay(ctx);
+            if (request is not null)
+                return request;
+            if (ctx.Controller.Match.ShouldHalt())
+                return null;
         }
-        return false;
+
+        return null;
     }
 }

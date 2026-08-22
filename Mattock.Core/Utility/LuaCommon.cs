@@ -101,7 +101,7 @@ static class LuaCommon {
     static public T GetReturnAs<T>(object[] returned, int index=0) where T : class? {
         CheckIndex(returned, index);
         var result = returned[index] as T
-            ?? throw new ConvertLuaException("Return value in index " + index + " is not a table")
+            ?? throw new ConvertLuaException($"Return value in index {index} is not of type {typeof(T)}")
         ;
         return result;
     }

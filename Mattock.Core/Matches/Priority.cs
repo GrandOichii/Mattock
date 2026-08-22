@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches;
 
@@ -26,33 +27,37 @@ public class Priority
         Done = false;
     }
 
-    public async Task Resolve()
+    public async Task<RollbackRequest?> Resolve()
     {
         while (!Done && !Match.ShouldHalt())
         {
-            await ProcessPriority(Match.Players[PriorityPlayerIdx]);
+            var request = await ProcessPriority(Match.Players[PriorityPlayerIdx]);
+            if (request is not null)
+                return request;
         }
+        return null;
     }
 
-    private async Task ProcessPriority(Player player)
+    private async Task<RollbackRequest?> ProcessPriority(Player player)
     {
         Match.StateBasedActions.Apply();
         if (player.Status == PlayerStatus.Lost)
         {
             Advance();
-            return;
+            return null;
         }
         if (Match.ShouldHalt())
         {
-            return;
+            return null;
         }
         var (command, rollback) = await player.PromptCommand();
         if (rollback is not null)
-        {
-            throw new Exception($"Approved rollback request from player {player.GetDisplayName()} to snapshot with id = {rollback.RequestedSnapshotId}");
-            return;
-        }
-        await command.Do();
+            return rollback;
+
+        rollback = await command.Do();
+        if (rollback is not null)
+            return rollback;
+        return null;
     }
 
     public void Advance()

@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Combat;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Combat;
@@ -12,13 +13,13 @@ public class DeclareBlockersStep(
         return Match.Battlefield.GetAttackingPermanents().Length > 0;
     }
 
-    public override Task DoPostPriority()
+    public override Task<RollbackRequest?> DoPostPriority()
     {
         // TODO
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 
-    public override async Task DoPrePriority()
+    public override async Task<RollbackRequest?> DoPrePriority()
     {
         // declare blockers
         var players = Match.GetPlayersInAPNAP();
@@ -30,11 +31,14 @@ public class DeclareBlockersStep(
 
             var (chosen, rollback) = await player.ChooseBlockDeclarations(available);
             if (rollback is not null)
-                throw new UnhandledRollbackException(player, rollback);
+                return rollback;
 
             declarations.AddRange(chosen);
         }
         
-        await Match.Events.DeclareBlockers([.. declarations]);
+        var request = await Match.Events.DeclareBlockers([.. declarations]);
+        if (request is not null)
+            return request;
+        return null;
     }
 }

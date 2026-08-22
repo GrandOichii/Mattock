@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
@@ -13,7 +14,7 @@ public class ActivateManaAbilityEvent(
     ActivatedAbility aa
 ) : IEvent
 {
-    public async Task Do(Match match)
+    public async Task<RollbackRequest?> Do(Match match)
     {
         EffectContext ctx = new(
             player,
@@ -60,13 +61,21 @@ public class ActivateManaAbilityEvent(
         // TODO
 
         // 601.2h Pay the cost
-        await costs.Pay(ctx);
+        var request = await costs.Pay(ctx);
+        if (request is not null)
+            return request;
 
         // 601.2i Modify characteristics
         // TODO
 
         // 605.3b
         foreach (var e in aa.Effects)
-            e.Do(ctx);
+        {
+            request = e.Do(ctx);
+            if (request is not null)
+                return request;
+        }
+
+        return null;
     }
 }

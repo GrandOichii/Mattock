@@ -2,6 +2,7 @@ using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Damage.Sources;
 using Mattock.Core.Matches.Damage.Targets;
 using Mattock.Core.Matches.Permanents;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps.Combat;
@@ -15,20 +16,20 @@ public class CombatDamageStep(
         return Match.Battlefield.GetAttackingPermanents().Length > 0;
     }
 
-    public override Task DoPostPriority()
+    public override Task<RollbackRequest?> DoPostPriority()
     {
         // 510.4. (first strike)
         // TODO 
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 
-    public override async Task DoPrePriority()
+    public override async Task<RollbackRequest?> DoPrePriority()
     {
         // 510.1.
         var assignments = await AssignDamage();
 
         // 510.2.
-        await Match.Events.ProcessDamage(assignments);
+        return await Match.Events.ProcessDamage(assignments);
     }
 
     private async Task<Damage.Damage[]> AssignDamage()

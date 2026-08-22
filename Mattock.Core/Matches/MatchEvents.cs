@@ -6,6 +6,7 @@ using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Targets;
@@ -17,7 +18,7 @@ public class MatchEvents(
     Match _match
 )
 {
-    public async Task TapPermanents(Permanent[] permanents)
+    public async Task<RollbackRequest?> TapPermanents(Permanent[] permanents)
     {
         PermanentStatusChangeEvent e = new(
             [.. permanents],
@@ -25,10 +26,10 @@ public class MatchEvents(
             true
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task UntapPermanents(Permanent[] permanents)
+    public async Task<RollbackRequest?> UntapPermanents(Permanent[] permanents)
     {
         PermanentStatusChangeEvent e = new(
             [.. permanents],
@@ -36,119 +37,119 @@ public class MatchEvents(
             false
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task DeclareAttackers(AttackDeclaration[] declarations)
+    public async Task<RollbackRequest?> DeclareAttackers(AttackDeclaration[] declarations)
     {
         AttackDeclarationEvent e = new(
             declarations
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task DeclareBlockers(BlockDeclaration[] declarations)
+    public async Task<RollbackRequest?> DeclareBlockers(BlockDeclaration[] declarations)
     {
         BlockDeclarationEvent e = new(
             declarations
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task RemoveAllFromCombat()
+    public async Task<RollbackRequest?> RemoveAllFromCombat()
     {
         RemoveFromCombatEvent e = new(
             
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task ProcessDamage(Damage.Damage[] assignments)
+    public async Task<RollbackRequest?> ProcessDamage(Damage.Damage[] assignments)
     {
         ProcessDamageEvent e = new(
             assignments
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task DrawCards(CardDraw[] draws)
+    public async Task<RollbackRequest?> DrawCards(CardDraw[] draws)
     {
         CardDrawEvent e = new(
             draws
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task GainLife(LifeGain[] gains)
+    public async Task<RollbackRequest?> GainLife(LifeGain[] gains)
     {
         LifeGainEvent e = new(
             gains
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task LoseLife(LifeLoss[] losses)
+    public async Task<RollbackRequest?> LoseLife(LifeLoss[] losses)
     {
         LifeLossEvent e = new(
             losses
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task CastSpell(Player player, Card card)
+    public async Task<RollbackRequest?> CastSpell(Player player, Card card)
     {
         SpellCastEvent e = new(
             player,
             card
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task ChooseTargetsForSpell(Card card, EffectContext ctx)
+    public async Task<RollbackRequest?> ChooseTargetsForSpell(Card card, EffectContext ctx)
     {
         ChooseTargetsForSpellEvent e = new(
             card,
             ctx
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task ChooseTargetsForActivatedAbility(ActivatedAbility aa, EffectContext ctx)
+    public async Task<RollbackRequest?> ChooseTargetsForActivatedAbility(ActivatedAbility aa, EffectContext ctx)
     {
         ChooseTargetsForActivatedAbilityEvent e = new(
             aa,
             ctx
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task ActivateAbility(Player player, ActivatedAbility aa)
+    public async Task<RollbackRequest?> ActivateAbility(Player player, ActivatedAbility aa)
     {
         IEvent e = aa.IsManaAbility()
             ? new ActivateManaAbilityEvent(player, aa)
             : new ActivateAbilityEvent(player, aa)
         ;
         
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 
-    public async Task AddMana(Player[] players, ManaAmount[] mana)
+    public async Task<RollbackRequest?> AddMana(Player[] players, ManaAmount[] mana)
     {
         AddGenericManaEvent e = new(
             players,
             mana
         );
 
-        await _match.ProcessEvent(e);
+        return await _match.ProcessEvent(e);
     }
 }

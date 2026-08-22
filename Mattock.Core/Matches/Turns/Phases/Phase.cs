@@ -1,4 +1,5 @@
 using System.Security.Cryptography.X509Certificates;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Turns.Steps;
 
@@ -19,29 +20,45 @@ public class Phase(
 
     public bool IsMainPhase() => Type == PhaseType.PrecombatMain || Type == PhaseType.PostcombatMain;
 
-    public async Task Do()
+    public async Task<RollbackRequest?> Do()
     {
-        await DoPreSteps();
-        await DoSteps();
-        if (Match.ShouldHalt()) return;
-        await DoPostSteps();
+        RollbackRequest? rollback = await DoPreSteps();
+        if (rollback is not null)
+            return rollback;
+        if (Match.ShouldHalt())
+            return null;
+
+        rollback = await DoSteps();
+        if (rollback is not null)
+            return rollback;
+        if (Match.ShouldHalt())
+            return null;
+
+        rollback = await DoPostSteps();
+        if (rollback is not null)
+            return rollback;
+        if (Match.ShouldHalt())
+            return null;
 
         // 500.5.
+        // TODO this might be an event
         if (Match.Config.ManaPoolEmptiesAtEndOfEachStep)
             Match.EmptyManaPools();
+
+        return null;
     }
 
-    public virtual Task DoPreSteps()
+    public virtual Task<RollbackRequest?> DoPreSteps()
     {
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 
-    public virtual Task DoPostSteps()
+    public virtual Task<RollbackRequest?> DoPostSteps()
     {
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 
-    public async Task DoSteps()
+    public async Task<RollbackRequest?> DoSteps()
     {
         for (; CurrentStepIdx < Steps.Count; ++CurrentStepIdx)
         {
@@ -49,13 +66,14 @@ public class Phase(
 
             if (!step.CanBeTaken()) continue;
 
-            await step.Do();
+            var request = await step.Do();
 
+            if (request is not null)
+                return request;
             if (Match.ShouldHalt())
-            {
-                return;
-            }
+                return null;
         }
+        return null;
     }
 
     public Step? GetCurrentStep() => CurrentStepIdx >= Steps.Count ? null : Steps[CurrentStepIdx];

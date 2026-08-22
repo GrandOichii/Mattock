@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Mana;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 
@@ -10,12 +11,12 @@ public class StoredManaPaymentChoice(
     public StoredMana Mana { get; } = mana;
     public ManaPool Pool { get; } = pool;
 
-    public Task Process(ManaPayment payment)
+    public Task<RollbackRequest?> Process(ManaPayment payment)
     {
         Pool.Remove(Mana);
         payment.Pay(Mana);
 
-        return Task.CompletedTask;
+        return Task.FromResult<RollbackRequest?>(null);
     }
 
     public string ToDisplayString()
