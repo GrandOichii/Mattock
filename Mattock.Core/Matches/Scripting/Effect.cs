@@ -36,8 +36,9 @@ public class Effect
         {
             foreach (var part in Parts)
             {
-                part.Do(ctx);
-                throw new Exception("Potential rollback request ignored");
+                var request = part.Do(ctx);
+                if (request is not null)
+                    return request;
             }
             return null;
         } catch (Exception e)

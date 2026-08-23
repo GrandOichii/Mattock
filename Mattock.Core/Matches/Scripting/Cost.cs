@@ -28,11 +28,9 @@ public class Cost : ICost
     public Task<RollbackRequest?> Pay(EffectContext ctx)
     {
         var returned = PayFunc.Call(ctx);
-        if (returned[0] == null)
-            return Task.FromResult<RollbackRequest?>(null);
 
-        var request = LuaCommon.GetReturnAs<RollbackRequest>(returned);
-
-        return Task.FromResult<RollbackRequest?>(request);
+        return Task.FromResult(
+            RollbackRequest.FromLuaReturned(returned)
+        );
     }
 }

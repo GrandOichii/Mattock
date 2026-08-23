@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using NLua;
 
@@ -9,8 +10,10 @@ public class EffectPart(
 {
     public LuaFunction Func { get; } = func;
 
-    public void Do(EffectContext ctx)
+    public RollbackRequest? Do(EffectContext ctx)
     {
-        Func.Call(ctx);
+        var returned = Func.Call(ctx);
+
+        return RollbackRequest.FromLuaReturned(returned);
     }
 }

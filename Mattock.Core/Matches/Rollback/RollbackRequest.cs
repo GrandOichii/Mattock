@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Utility;
 
 namespace Mattock.Core.Matches.Rollback;
 
@@ -13,5 +14,13 @@ public class RollbackRequest
         Task<bool>[] approvalTasks = [.. players.Select(p => p.ApproveRollback(hint))]; 
         var results = await Task.WhenAll(approvalTasks);
         return results.All(r => r);
+    }
+
+    public static RollbackRequest? FromLuaReturned(object[] returned)
+    {
+         if (returned[0] == null)
+            return null;
+
+        return LuaCommon.GetReturnAs<RollbackRequest>(returned);
     }
 }
