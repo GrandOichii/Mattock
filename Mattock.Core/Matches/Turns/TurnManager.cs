@@ -7,12 +7,13 @@ using Mattock.Core.Matches.Turns.Steps.Ending;
 namespace Mattock.Core.Matches.Turns;
 
 public class TurnManager(
-    Match match
+    Match _match
 ) : IHasSnapshot<TurnManager.Snapshot>
 {
     public int ActivePlayerIdx { get; set; } = -1;
     public List<Phase> Phases { get; } = [];
     public int CurrentPhaseIdx { get; private set; } = 0;
+    public int TurnCounter { get; set; } = 0;
 
     public int NextInTurnOrderIdx(int playerIdx)
     {
@@ -20,8 +21,8 @@ public class TurnManager(
         Player player;
         do
         {
-            result = (result + 1) % match.Players.Length;
-            player = match.Players[result];
+            result = (result + 1) % _match.Players.Length;
+            player = _match.Players[result];
         }
         while (!player.IsInGame());
 
@@ -32,11 +33,11 @@ public class TurnManager(
     {
         return type switch
         {
-            PhaseType.Beginning => new BeginningPhase(match),
-            PhaseType.PrecombatMain => new MainPhase(match, true),
-            PhaseType.Combat => new CombatPhase(match),
-            PhaseType.PostcombatMain => new MainPhase(match, false),
-            PhaseType.Ending => new EndingPhase(match),
+            PhaseType.Beginning => new BeginningPhase(_match),
+            PhaseType.PrecombatMain => new MainPhase(_match, true),
+            PhaseType.Combat => new CombatPhase(_match),
+            PhaseType.PostcombatMain => new MainPhase(_match, false),
+            PhaseType.Ending => new EndingPhase(_match),
             _ => throw new Exception($"Unrecognized phase type: {type}") // TODO type
         };
     }
@@ -59,7 +60,7 @@ public class TurnManager(
 
     public void AdvanceTurn()
     {
-        if (match.ShouldHalt()) return;
+        if (_match.ShouldHalt()) return;
 
         // TODO implement extra turns
 
@@ -76,35 +77,61 @@ public class TurnManager(
         return CurrentPhaseIdx >= Phases.Count;
     }
 
+    public async Task DoTurn()
+    {
+        ++TurnCounter;
+        ResetTurn();
+        _match.Snapshots.CreateSnapshot($"turn-{TurnCounter}");
+
+        while (!IsTurnEnded())
+        {
+            var phase = GetCurrentPhase();
+
+            var request = await phase.Do();
+            if (request is not null)
+            {
+                var snap = _match.Snapshots.Get(request.RequestedSnapshotId)
+                    ?? throw new Exception($"Requested to rollback to snapshot with unkown id: {request.RequestedSnapshotId}");
+                _match.LoadSnapshot(snap.Snap);
+                continue;
+            }
+            
+            if (_match.ShouldHalt())
+                return;
+
+            AdvancePhase();
+        }
+
+        AdvanceTurn();
+
+        foreach (var p in _match.Players)
+            p.ResetTrackers();
+    }
+
     public Phase GetCurrentPhase() => Phases[CurrentPhaseIdx];
 
     public Snapshot GetSnapshot()
     {
-        return new()
-        {
-            ActivePlayerIdx = ActivePlayerIdx,
-            CurrentPhaseIdx = CurrentPhaseIdx,
-            Phases = [.. Phases.Select(p => p.GetSnapshot())]
-        };
+        var phase = GetCurrentPhase();
+        int? stepIdx = phase.CurrentStepIdx < phase.Steps.Count 
+            ? phase.Steps[phase.CurrentStepIdx].PartIdx 
+            : null;
+
+        return new(
+            TurnCounter,
+            ActivePlayerIdx,
+            CurrentPhaseIdx,
+            phase.CurrentStepIdx,
+            stepIdx
+        );
     }
 
-    public void LoadSnapshot(Snapshot snapshot)
-    {
-        ActivePlayerIdx = snapshot.ActivePlayerIdx;
-        CurrentPhaseIdx = snapshot.CurrentPhaseIdx;
-
-        Phases.Clear();
-        foreach (var phase in snapshot.Phases)
-        {
-            var p = CreatePhase(phase.Type);
-            p.LoadSnapshot(phase);
-        }
-    }
-
-    public class Snapshot
-    {
-        public required int ActivePlayerIdx { get; init; }
-        public required int CurrentPhaseIdx { get; init; }
-        public required List<Phase.Snapshot> Phases { get; init; }
-    }
+    public record Snapshot
+    (
+        int TurnCounter,
+        int ActivePlayerIdx,
+        int CurrentPhaseIdx,
+        int CurrentStepIdx,
+        int? CurrentStepPartIdx
+    );
 }

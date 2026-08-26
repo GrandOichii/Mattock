@@ -17,5 +17,4 @@ public class CombatState(
         BlockedBy.Add(permanent);
         IsBlocked = true;
     }
-    
 }

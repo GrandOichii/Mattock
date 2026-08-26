@@ -5,12 +5,24 @@ namespace Mattock.Core.Matches.Turns.Steps.Ending;
 
 public class CleanupStep(
     Phase phase
-) : Step(phase, StepType.Cleanup, false)
+) : Step(
+    phase,
+    StepType.Cleanup,
+    [
+        new CleanupStepPart(),
+    ]
+)
 {
-    public override async Task<RollbackRequest?> DoPrePriority()
+    public override bool CanBeTaken() => true;
+}
+
+public class CleanupStepPart
+    : IStepPart
+{
+    public async Task<RollbackRequest?> Do(Match match)
     {
         // 514.1. Discard to max hand size
-        var player = Match.GetActivePlayer();
+        var player = match.GetActivePlayer();
         var maxHandSize = player.GetMaxHandSize();
         if (maxHandSize is not null)
         {
@@ -25,7 +37,7 @@ public class CleanupStep(
         }
 
         // 514.2. Remove all marked damage
-        foreach (var permanent in Match.Battlefield.GetPermanents())
+        foreach (var permanent in match.Battlefield.GetPermanents())
         {
             permanent.RemoveMarkedDamage();
         }
@@ -34,18 +46,8 @@ public class CleanupStep(
         // TODO
 
         // 514.3a State-based actions
-        Match.StateBasedActions.Apply();
+        match.StateBasedActions.Apply();
 
         return null;
     }
-
-    
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    public override bool CanBeTaken() => true;
-
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Rollback;
 

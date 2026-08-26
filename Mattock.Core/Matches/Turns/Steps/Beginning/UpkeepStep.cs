@@ -5,21 +5,13 @@ namespace Mattock.Core.Matches.Turns.Steps.Beginning;
 
 public class UpkeepStep(
     Phase phase
-) : Step(phase, StepType.Upkeep, true)
+) : Step(
+    phase,
+    StepType.Upkeep,
+    [
+        new PriorityStepPart(),
+    ]
+)
 {
-    public override Task<RollbackRequest?> DoPrePriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
     public override bool CanBeTaken() => true;
-
 }

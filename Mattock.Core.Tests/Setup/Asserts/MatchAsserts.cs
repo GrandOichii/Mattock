@@ -57,7 +57,7 @@ public class MatchAsserts(TestMatchWrapper match)
 
     public MatchAsserts TurnNumber(int v)
     {
-        match.Match!.TurnCounter.ShouldBe(v);
+        match.Match!.TurnManager.TurnCounter.ShouldBe(v);
         return this;
     }
 

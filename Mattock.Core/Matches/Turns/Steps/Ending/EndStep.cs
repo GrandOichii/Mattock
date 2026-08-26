@@ -6,20 +6,13 @@ namespace Mattock.Core.Matches.Turns.Steps.Ending;
 
 public class EndStep(
     Phase phase
-) : Step(phase, StepType.End, true)
+) : Step(
+    phase,
+    StepType.End,
+    [
+        new PriorityStepPart(),
+    ]
+)
 {
-    public override Task<RollbackRequest?> DoPrePriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
     public override bool CanBeTaken() => true;
 }

@@ -6,23 +6,28 @@ namespace Mattock.Core.Matches.Turns.Steps.Combat;
 
 public class DeclareBlockersStep(
     Phase phase
-) : Step(phase, StepType.DeclareBlockers, true)
+) : Step(
+    phase,
+    StepType.DeclareBlockers,
+    [
+        new DeclareBlockersStepPart(),
+        new PriorityStepPart(),
+    ]
+)
 {
     public override bool CanBeTaken()
     {
         return Match.Battlefield.GetAttackingPermanents().Length > 0;
     }
+}
 
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    public override async Task<RollbackRequest?> DoPrePriority()
+public class DeclareBlockersStepPart
+    : IStepPart
+{
+    public async Task<RollbackRequest?> Do(Match match)
     {
         // declare blockers
-        var players = Match.GetPlayersInAPNAP();
+        var players = match.GetPlayersInAPNAP();
         List<BlockDeclaration> declarations = [];
         foreach (var player in players)
         {
@@ -36,7 +41,7 @@ public class DeclareBlockersStep(
             declarations.AddRange(chosen);
         }
         
-        var request = await Match.Events.DeclareBlockers([.. declarations]);
+        var request = await match.Events.DeclareBlockers([.. declarations]);
         if (request is not null)
             return request;
         return null;

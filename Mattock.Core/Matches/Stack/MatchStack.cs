@@ -9,7 +9,7 @@ namespace Mattock.Core.Matches.Stack;
 
 public class MatchStack(
     Match match
-) : ICardZone, IHasSnapshot<MatchStack.Snapshot>
+) : ICardZone
 {
     public Match Match = match;
     private int _lastId = 0;
@@ -79,19 +79,6 @@ public class MatchStack(
         Effects.Remove(top);
     }
 
-    public Snapshot GetSnapshot()
-    {
-        return new()
-        {
-            // TODO
-        };
-    }
-
-    public void LoadSnapshot(Snapshot snapshot)
-    {
-        throw new NotImplementedException();
-    }
-
     class SpellCardZoneChanger(
         Player controller,
         EffectContext ctx
@@ -122,10 +109,5 @@ public class MatchStack(
 
         public ICardZone GetTargetZone()
             => controller.Match.Stack;
-    }
-
-    public class Snapshot
-    {
-        // TODO
     }
 }

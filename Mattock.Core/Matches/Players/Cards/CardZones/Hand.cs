@@ -1,10 +1,8 @@
 namespace Mattock.Core.Matches.Players.Cards.CardZones;
 
-public class Hand : OwnedCardZone
+public class Hand(
+    Player player
+) : OwnedCardZone(player)
 {
-    public Hand(Player player) : base(player)
-    {
-    }
-
     public override string GetZoneName() => "Hand";
 }

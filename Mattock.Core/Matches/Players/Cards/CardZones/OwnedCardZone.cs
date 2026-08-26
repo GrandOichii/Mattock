@@ -1,21 +1,17 @@
+using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Players.Cards.CardZones;
 
-public abstract class OwnedCardZone : ICardZone
+public abstract class OwnedCardZone(
+    Player player
+) : ICardZone
 {
     public abstract string GetZoneName();
 
-    public Match Match { get; }
-    public Player Player { get; }
-    public List<Card> Cards { get; private set; }
-
-    public OwnedCardZone(Player player)
-    {
-        Match = player.Match;
-        Player = player;
-        Cards = [];
-    }
+    public Match Match { get; } = player.Match;
+    public Player Player { get; } = player;
+    public List<Card> Cards { get; private set; } = [];
 
     public int GetCount() => Cards.Count;
 

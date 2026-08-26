@@ -1,7 +1,4 @@
 using Mattock.Core.Matches.Players.Cards;
-using Mattock.Core.Matches.Players.Cards.CardZones;
-using Mattock.Core.Matches.Scripting.Context;
-using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Stack.Resolvers;
@@ -23,7 +20,6 @@ public class SpellResolver(
                 return;
             var permanent = match.Battlefield.GetPermanentByPid(pid)
                 ?? throw new Exception($"Failed to fetch newly created permanent with PID = {pid} (card: {Card.GetDisplayName()})");
-            permanent.SetController(effect.Ctx.Controller!);
 
             // 608.3b Targets
             // TODO

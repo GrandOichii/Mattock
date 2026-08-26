@@ -61,11 +61,6 @@ public class Permanent
 
     public Player GetOwner() => Match.Players[Card.OwnerIdx];
 
-    public void SetController(Player controller)
-    {
-        _controller = controller;
-    }
-
     public bool HasType(string type)
     {
         // TODO
@@ -75,7 +70,7 @@ public class Permanent
     public bool IsControlledBy(int playerIdx)
     {
         // TODO?
-        return _controller.Idx == playerIdx;
+        return GetController().Idx == playerIdx;
     }
 
     public bool IsUntapped() => !Tapped.Value;
@@ -107,7 +102,7 @@ public class Permanent
         // players
         foreach (var player in Match.Players)
         {
-            if (player == _controller) continue;
+            if (IsControlledBy(player.Idx)) continue;
 
             // TODO checks for whether can attack or not
             result.Add(new()
@@ -154,7 +149,7 @@ public class Permanent
 
         if (HasType(CardTypes.Battle)) return [];
         
-        if (_controller != forPlayer) return [];
+        if (!IsControlledBy(forPlayer.Idx)) return [];
 
         // TODO some effects change this
         if (IsTapped()) return [];
@@ -213,6 +208,7 @@ public class Permanent
 
     public Player GetController()
     {
+        // TODO
         return _controller;
     }
 }

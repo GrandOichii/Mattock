@@ -1,4 +1,3 @@
-using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Damage.Sources;
 using Mattock.Core.Matches.Damage.Targets;
 using Mattock.Core.Matches.Permanents;
@@ -9,32 +8,37 @@ namespace Mattock.Core.Matches.Turns.Steps.Combat;
 
 public class CombatDamageStep(
     Phase phase
-) : Step(phase, StepType.CombatDamage, true)
+) : Step(
+    phase,
+    StepType.CombatDamage,
+    [
+        new CombatDamagePrePriorityStepPart(),
+        new PriorityStepPart(),
+        new CombatDamagePostPriorityStepPart(),
+    ]
+)
 {
     public override bool CanBeTaken()
     {
         return Match.Battlefield.GetAttackingPermanents().Length > 0;
     }
+}
 
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // 510.4. (first strike)
-        // TODO 
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    public override async Task<RollbackRequest?> DoPrePriority()
+public class CombatDamagePrePriorityStepPart
+    : IStepPart
+{
+    public async Task<RollbackRequest?> Do(Match match)
     {
         // 510.1.
-        var assignments = await AssignDamage();
+        var assignments = await AssignDamage(match);
 
         // 510.2.
-        return await Match.Events.ProcessDamage(assignments);
+        return await match.Events.ProcessDamage(assignments);
     }
 
-    private async Task<Damage.Damage[]> AssignDamage()
+    private async Task<Damage.Damage[]> AssignDamage(Match match)
     {
-        var attackers = Match.Battlefield.GetAttackingPermanents();
+        var attackers = match.Battlefield.GetAttackingPermanents();
 
         List<Damage.Damage> result = [];
         Dictionary<Permanent, List<Permanent>> blockMap = [];
@@ -102,5 +106,16 @@ public class CombatDamageStep(
         }
 
         return [.. result];
+    }
+}
+
+public class CombatDamagePostPriorityStepPart
+    : IStepPart
+{
+    public Task<RollbackRequest?> Do(Match match)
+    {
+        // 510.4. (first strike)
+        // TODO 
+        return Task.FromResult<RollbackRequest?>(null);
     }
 }

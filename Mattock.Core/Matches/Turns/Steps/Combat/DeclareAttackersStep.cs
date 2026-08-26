@@ -8,11 +8,24 @@ namespace Mattock.Core.Matches.Turns.Steps.Combat;
 
 public class DeclareAttackersStep(
     Phase phase
-) : Step(phase, StepType.DeclareAttackers, true)
+) : Step(
+    phase,
+    StepType.DeclareAttackers,
+    [
+        new DeclareAttackersStepPart(),
+        new PriorityStepPart(),
+    ]
+)
 {
-    public override async Task<RollbackRequest?> DoPrePriority()
+    public override bool CanBeTaken() => true;
+}
+
+public class DeclareAttackersStepPart
+    : IStepPart
+{
+    public async Task<RollbackRequest?> Do(Match match)
     {
-        var active = Match.GetActivePlayer();
+        var active = match.GetActivePlayer();
 
         // declare attacking creatures
 
@@ -44,7 +57,7 @@ public class DeclareAttackersStep(
         // TODO 508.1e
 
         // tap all attackers
-        var request = await Match.Events.TapPermanents([.. attackers]);
+        var request = await match.Events.TapPermanents([.. attackers]);
         if (request is not null)
             return request;
 
@@ -57,19 +70,11 @@ public class DeclareAttackersStep(
         // TODO 508.1j
 
         // turn creatures into attacking creatures
-        request = await Match.Events.DeclareAttackers(declarations);
+        request = await match.Events.DeclareAttackers(declarations);
         if (request is not null)
             return request;
 
         // TODO 508.1m trigger
         return null;
     }
-    
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    public override bool CanBeTaken() => true;
 }

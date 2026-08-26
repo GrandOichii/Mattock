@@ -1,6 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
 using Mattock.Core.Matches.Rollback;
-using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Turns.Steps;
 
 namespace Mattock.Core.Matches.Turns.Phases;
@@ -11,7 +9,7 @@ public class Phase(
     Match match,
     PhaseType type,
     List<Step> steps
-) : IHasSnapshot<Phase.Snapshot>
+)
 {
     public int CurrentStepIdx { get; private set; } = 0;
     public Match Match { get; } = match;
@@ -22,13 +20,13 @@ public class Phase(
 
     public async Task<RollbackRequest?> Do()
     {
-        RollbackRequest? rollback = await DoPreSteps();
-        if (rollback is not null)
-            return rollback;
-        if (Match.ShouldHalt())
-            return null;
+        // RollbackRequest? rollback = await DoPreSteps();
+        // if (rollback is not null)
+        //     return rollback;
+        // if (Match.ShouldHalt())
+        //     return null;
 
-        rollback = await DoSteps();
+        var rollback = await DoSteps();
         if (rollback is not null)
             return rollback;
         if (Match.ShouldHalt())
@@ -48,10 +46,11 @@ public class Phase(
         return null;
     }
 
-    public virtual Task<RollbackRequest?> DoPreSteps()
-    {
-        return Task.FromResult<RollbackRequest?>(null);
-    }
+    // ! if this needs to be returned, change the structure of a phase into phase parts, same as for the steps - rollback reasons
+    // public virtual Task<RollbackRequest?> DoPreSteps()
+    // {
+    //     return Task.FromResult<RollbackRequest?>(null);
+    // }
 
     public virtual Task<RollbackRequest?> DoPostSteps()
     {
@@ -77,24 +76,4 @@ public class Phase(
     }
 
     public Step? GetCurrentStep() => CurrentStepIdx >= Steps.Count ? null : Steps[CurrentStepIdx];
-
-    public Snapshot GetSnapshot()
-    {
-        return new()
-        {
-            CurrentStepIdx = CurrentStepIdx,
-            Type = Type,
-        };
-    }
-
-    public void LoadSnapshot(Snapshot snapshot)
-    {
-        CurrentStepIdx = snapshot.CurrentStepIdx;
-    }
-
-    public class Snapshot
-    {
-        public required int CurrentStepIdx { get; init; }
-        public required PhaseType Type { get; init; }
-    }
 }

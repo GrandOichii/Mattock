@@ -25,7 +25,10 @@ public class Match
     public Battlefield Battlefield { get; }
     public MatchStack Stack { get; }
     public TurnManager TurnManager { get; }
-    public int TurnCounter { get; private set; }
+    public List<Card> Cards { get; private set; }
+    public Priority? Priority { get; private set; }
+    private int _lastCardId;
+    private int _lastAAId;
 
     public Lua LState { get; }
     public MatchConfig Config { get; }
@@ -33,14 +36,10 @@ public class Match
     private readonly Dictionary<int, Player[]> _teams;
     public CardZoneChange? ZoneChange { get; private set; }
     public MatchEvents Events { get; }
-    public Priority? Priority { get; private set; }
     public StateBasedActionsManager StateBasedActions { get; }
     public IAction[] Actions { get; }
-    public List<Card> Cards { get; }
     private int[]? _winningTeams;
     public SnapshotsManager Snapshots { get; }
-    private int _lastCardId;
-    private int _lastAAId;
 
     // constructors
 
@@ -64,7 +63,6 @@ public class Match
         StateBasedActions = new(this);
         _lastCardId = 0;
         _lastAAId = 0;
-        TurnCounter = 0;
         Cards = [];
         _winningTeams = null;
 
@@ -163,54 +161,15 @@ public class Match
 
         await TakeMulligans();
 
-
-        // do
-        // {
-        //     await TakeTurns();
-            
-            
-        // } while (_queuedRollbackRequest is not null);
-        
-        rollback = await TakeTurns();
-
-        if (rollback is not null)
-            throw new Exception($"rollback is not null after {nameof(TakeTurns)}");
+        await TakeTurns();
     }
 
-    public async Task<RollbackRequest?> TakeTurns()
+    public async Task TakeTurns()
     {
         while (!ShouldHalt())
         {
-            ++TurnCounter;
-            Snapshots.CreateSnapshot($"turn-{TurnCounter}");
-            
-            for (
-                TurnManager.ResetTurn();
-                !TurnManager.IsTurnEnded();
-                TurnManager.AdvancePhase()
-            )
-            {
-                var phase = TurnManager.GetCurrentPhase();
-
-                var request = await phase.Do();
-                if (request is not null)
-                    return request;
-                if (ShouldHalt())
-                    return null;
-            }
-
-            TurnManager.ResetTurn();
-            TurnManager.AdvanceTurn();
-
-            foreach (var p in Players)
-                p.ResetTrackers();
+            await TurnManager.DoTurn();
         }
-        return null;
-    }
-
-    public void CreatePriority()
-    {
-        Priority = new(this);
     }
 
     public async Task<(bool, RollbackRequest?)> CreateAndResolvePriority()
@@ -219,9 +178,9 @@ public class Match
         
         do
         {
-            CreatePriority();
+            Priority ??= new(this);
 
-            var rollback = await Priority!.Resolve();
+            var rollback = await Priority.Resolve();
             if (rollback is not null)
                 return (effectsResolved, rollback);
 
@@ -231,8 +190,9 @@ public class Match
 
             await Stack.ResolveTop();
             effectsResolved = true;
+            Priority = null;
         }
-        while (!ShouldHalt() && !Stack.IsEmpty());
+        while (!Stack.IsEmpty() && !ShouldHalt());
 
         return (effectsResolved, null);
     }
@@ -414,20 +374,10 @@ public class Match
     }
 
     public Snapshot GetSnapshot()
-    {
-        return new()
-        {
-            Rng = Rng.GetSnapshot(),
-            Battlefield = Battlefield.GetSnapshot(),
-            Stack = Stack.GetSnapshot(),
-            TurnManager = TurnManager.GetSnapshot(),
-            Players = [.. Players.Select(p => p.GetSnapshot())],
-
-            TurnCounter = TurnCounter,
-            LastAAId = _lastAAId,
-            LastCardId = _lastCardId,
-        };
-    }
+        => new(
+            Rng.GetSnapshot(),
+            TurnManager.GetSnapshot()
+        );
 
     public void LoadSnapshot(Snapshot snapshot)
     {
@@ -439,17 +389,22 @@ public class Match
         Battlefield.LoadSnapshot(snapshot.Battlefield);
         Stack.LoadSnapshot(snapshot.Stack);
         TurnManager.LoadSnapshot(snapshot.TurnManager);
+        Cards = [.. snapshot.Cards];
+
+        Priority = null;
+        if (snapshot.Priority is not null)
+        {
+            Priority = new(this);
+            Priority.LoadSnapshot(snapshot.Priority);
+        }
+
+        _lastCardId = snapshot.LastCardId;
+        _lastAAId = snapshot.LastAAId;
     }
 
-    public class Snapshot
-    {
-        public required Rng.Snapshot Rng { get; init; }
-        public required Player.Snapshot[] Players { get; init; }
-        public required Battlefield.Snapshot Battlefield { get; init; }
-        public required MatchStack.Snapshot Stack { get; init; }
-        public required TurnManager.Snapshot TurnManager { get; init; }
-        public required int TurnCounter { get; init; }
-        public required int LastCardId { get; init; }
-        public required int LastAAId { get; init; }
-    }
+    public record Snapshot
+    (
+        Rng.Snapshot Rng,
+        TurnManager.Snapshot TurnManager
+    );
 }

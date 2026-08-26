@@ -1,8 +1,11 @@
 using Mattock.Core.Matches.Mana;
+using Mattock.Core.Matches.Snapshots;
 
 namespace Mattock.Core.Matches.Players.Mana;
 
-public class ManaPool(Player player)
+public class ManaPool(
+    Player player
+)
 {
     public List<StoredMana> Mana { get; } = [];
 
@@ -12,14 +15,6 @@ public class ManaPool(Player player)
     {
         for (int i = 0; i < amount; ++i)
             Mana.Add(new(type));
-        // var mana = Mana.SingleOrDefault(m => m.Type == type);
-        // if (mana is null)
-        // {
-        //     mana = new(type, 0);
-        //     Mana.Add(mana);
-        // }
-
-        // mana.Add(amount);
     }
 
     public int GetTotal() => Mana.Count;
@@ -46,14 +41,11 @@ public class ManaPool(Player player)
     }
 }
 
-public class ManaStore
+public class ManaStore(
+    ManaPool manaPool
+)
 {
-    public List<StoredMana> Mana { get; }
-
-    public ManaStore(ManaPool manaPool)
-    {
-        Mana = [ .. manaPool.Mana ];
-    }
+    public List<StoredMana> Mana { get; } = [.. manaPool.Mana];
 
     public bool CanPayFor(ManaCost cost)
     {

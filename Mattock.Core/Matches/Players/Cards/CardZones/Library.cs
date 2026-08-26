@@ -1,10 +1,8 @@
 namespace Mattock.Core.Matches.Players.Cards.CardZones;
 
-public class Library : OwnedCardZone
+public class Library(
+    Player player
+) : OwnedCardZone(player)
 {
-    public Library(Player player) : base(player)
-    {
-    }
-
     public override string GetZoneName() => "Library";
 }

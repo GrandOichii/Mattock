@@ -1,3 +1,5 @@
+using Mattock.Core.Matches.Snapshots;
+
 namespace Mattock.Core.Matches.Players;
 
 public class Life(

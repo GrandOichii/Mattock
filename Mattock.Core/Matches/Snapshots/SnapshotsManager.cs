@@ -19,4 +19,9 @@ public class SnapshotsManager(
             
         return snap;
     }
+
+    public Snapshot? Get(string id)
+    {
+        return Snapshots.SingleOrDefault(s => s.Id == id);
+    }
 }

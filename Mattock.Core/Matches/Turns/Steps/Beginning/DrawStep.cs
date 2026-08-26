@@ -5,24 +5,30 @@ namespace Mattock.Core.Matches.Turns.Steps.Beginning;
 
 public class DrawStep(
     Phase phase
-): Step(phase, StepType.Draw, true)
+): Step(
+    phase,
+    StepType.Draw,
+    [
+        new DrawStepPart(),
+        new PriorityStepPart(),
+    ]
+)
 {
     public override bool CanBeTaken()
     {
-        return Match.TurnCounter > 1 ||
+        return Match.TurnManager.TurnCounter > 1 ||
             !Match.Config.FirstPlayerNoDrawIfSingleOpponent || 
             Match.Players.Length > 2;
     }
+}
 
-    public override async Task<RollbackRequest?> DoPrePriority()
+public class DrawStepPart
+    : IStepPart
+{
+    public async Task<RollbackRequest?> Do(Match match)
     {
-        return await Match.Events.DrawCards([
-            new(Match.GetActivePlayer(), Match.Config.DrawStepDrawAmount)
+        return await match.Events.DrawCards([
+            new(match.GetActivePlayer(), match.Config.DrawStepDrawAmount)
         ]);
-    }
-
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        return Task.FromResult<RollbackRequest?>(null);
     }
 }

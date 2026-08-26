@@ -6,12 +6,23 @@ namespace Mattock.Core.Matches.Turns.Steps.Beginning;
 public class UntapStep(
     Phase phase
 ) : Step(
-phase, StepType.Untap, false)
+    phase,
+    StepType.Untap,
+    [
+        new UntapStepPart(),
+    ]
+)
 {
-    public override Task<RollbackRequest?> DoPrePriority()
+    public override bool CanBeTaken() => true;
+}
+
+public class UntapStepPart
+    : IStepPart
+{
+    public Task<RollbackRequest?> Do(Match match)
     {
-        var active = Match.GetActivePlayer();
-        foreach (var p in Match.Battlefield.GetPermanentsControlledBy(active))
+        var active = match.GetActivePlayer();
+        foreach (var p in match.Battlefield.GetPermanentsControlledBy(active))
         {
             p.HasSummoningSickness = false;
             // TODO untap
@@ -21,13 +32,4 @@ phase, StepType.Untap, false)
 
         return Task.FromResult<RollbackRequest?>(null);
     }
-
-    public override Task<RollbackRequest?> DoPostPriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    public override bool CanBeTaken() => true;
-
 }

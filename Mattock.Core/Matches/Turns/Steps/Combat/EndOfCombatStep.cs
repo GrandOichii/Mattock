@@ -6,19 +6,23 @@ namespace Mattock.Core.Matches.Turns.Steps.Combat;
 
 public class EndOfCombatStep(
     Phase phase
-) : Step(phase, StepType.EndOfCombat, true)
+) : Step(
+    phase,
+    StepType.EndOfCombat,
+    [
+        new PriorityStepPart(),
+        new EndOfCombatStepPart(),
+    ]
+)
 {
-    public override Task<RollbackRequest?> DoPrePriority()
-    {
-        // TODO
-        return Task.FromResult<RollbackRequest?>(null);
-    }
-
-    public override async Task<RollbackRequest?> DoPostPriority()
-    {
-        return await Match.Events.RemoveAllFromCombat();
-    }
-
     public override bool CanBeTaken() => true;
+}
 
+public class EndOfCombatStepPart
+    : IStepPart
+{
+    public async Task<RollbackRequest?> Do(Match match)
+    {
+        return await match.Events.RemoveAllFromCombat();
+    }
 }

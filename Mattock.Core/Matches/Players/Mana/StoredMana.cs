@@ -8,7 +8,7 @@ public class StoredMana(
 )
 {
     public ManaType Type { get; } = type;
-    public string Text { get; set; } = text;
+    public string Text { get; } = text;
 
     public static StoredMana[] FromFormattedMana(string formattedMana)
     {

@@ -201,7 +201,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         return Enqueue((
             async (match, player, options) =>
             {
-                if (match.Match!.TurnCounter == turn)
+                if (match.Match!.TurnManager.TurnCounter == turn)
                     return (RespondNull<ICommand>(), false, true);
                 return (PassChoice(options), true, false);
             },

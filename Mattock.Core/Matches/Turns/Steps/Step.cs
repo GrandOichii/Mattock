@@ -8,42 +8,27 @@ namespace Mattock.Core.Matches.Turns.Steps;
 public abstract class Step(
     Phase phase,
     StepType type,
-    bool activePlayerReceivesPriority
+    IStepPart[] parts
 )
 {
     public Match Match { get; } = phase.Match;
     public Phase Phase { get; } = phase;
     public StepType Type { get; } = type;
-    public bool ActivePlayerReceivesPriority { get; } = activePlayerReceivesPriority;
+    public IStepPart[] Parts { get; } = parts;
+    public int PartIdx { get; set; } = 0;
 
     public abstract bool CanBeTaken();
-    public abstract Task<RollbackRequest?> DoPrePriority();
-    public abstract Task<RollbackRequest?> DoPostPriority();
 
     public async Task<RollbackRequest?> Do()
     {
-        var request = await DoPrePriority();
-        if (request is not null)
-            return request;
-        if (Match.ShouldHalt())
-            return null;
-
-        if (ActivePlayerReceivesPriority)
+        for (; PartIdx < Parts.Length; ++PartIdx)
         {
-            // TODO? if the stack had resolved effects, does the active player still gain priority?
-
-            var (_, r) = await Match.CreateAndResolvePriority();
-            if (r is not null)
-                return r;
+            var request = await Parts[PartIdx].Do(Match);
+            if (request is not null)
+                return request;
             if (Match.ShouldHalt())
                 return null;
         }
-
-        request = await DoPostPriority();
-        if (request is not null)
-            return request;
-        if (Match.ShouldHalt())
-            return null;
 
         // 500.5.
         if (Match.Config.ManaPoolEmptiesAtEndOfEachStep)
