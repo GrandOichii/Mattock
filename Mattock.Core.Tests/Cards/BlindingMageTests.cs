@@ -76,7 +76,7 @@ public class BlindingMageTests
             .Act.AutoPass()
         ;
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -157,7 +157,7 @@ public class BlindingMageTests
             .Act.AutoPass()
         ;
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );

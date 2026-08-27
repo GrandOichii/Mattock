@@ -157,7 +157,7 @@ public class BaseTurnStructureTests
             .SetDeck(deck);
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)

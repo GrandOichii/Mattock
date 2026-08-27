@@ -1,14 +1,12 @@
 using Mattock.Core.Matches.Players;
-using Mattock.Core.Matches.Snapshots;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Turns.Phases;
-using Mattock.Core.Matches.Turns.Steps.Beginning;
-using Mattock.Core.Matches.Turns.Steps.Ending;
 
 namespace Mattock.Core.Matches.Turns;
 
 public class TurnManager(
     Match _match
-) : IHasSnapshot<TurnManager.Snapshot>
+)
 {
     public int ActivePlayerIdx { get; set; } = -1;
     public List<Phase> Phases { get; } = [];
@@ -77,11 +75,11 @@ public class TurnManager(
         return CurrentPhaseIdx >= Phases.Count;
     }
 
-    public async Task DoTurn()
+    public async Task<RollbackRequest?> DoTurn()
     {
         ++TurnCounter;
         ResetTurn();
-        _match.Snapshots.CreateSnapshot($"turn-{TurnCounter}");
+        _match.Session.Snapshots.CreateSnapshot($"turn-{TurnCounter}");
 
         while (!IsTurnEnded())
         {
@@ -90,14 +88,11 @@ public class TurnManager(
             var request = await phase.Do();
             if (request is not null)
             {
-                var snap = _match.Snapshots.Get(request.RequestedSnapshotId)
-                    ?? throw new Exception($"Requested to rollback to snapshot with unkown id: {request.RequestedSnapshotId}");
-                _match.LoadSnapshot(snap.Snap);
-                continue;
+                return request;
             }
             
             if (_match.ShouldHalt())
-                return;
+                return null;
 
             AdvancePhase();
         }
@@ -106,32 +101,9 @@ public class TurnManager(
 
         foreach (var p in _match.Players)
             p.ResetTrackers();
+            
+        return null;
     }
 
     public Phase GetCurrentPhase() => Phases[CurrentPhaseIdx];
-
-    public Snapshot GetSnapshot()
-    {
-        var phase = GetCurrentPhase();
-        int? stepIdx = phase.CurrentStepIdx < phase.Steps.Count 
-            ? phase.Steps[phase.CurrentStepIdx].PartIdx 
-            : null;
-
-        return new(
-            TurnCounter,
-            ActivePlayerIdx,
-            CurrentPhaseIdx,
-            phase.CurrentStepIdx,
-            stepIdx
-        );
-    }
-
-    public record Snapshot
-    (
-        int TurnCounter,
-        int ActivePlayerIdx,
-        int CurrentPhaseIdx,
-        int CurrentStepIdx,
-        int? CurrentStepPartIdx
-    );
 }

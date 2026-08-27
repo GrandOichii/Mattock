@@ -71,7 +71,7 @@ public class SignInBloodTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -140,7 +140,7 @@ public class SignInBloodTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );

@@ -1,10 +1,8 @@
-using Mattock.Core.Matches.Snapshots;
-
 namespace Mattock.Core.Matches;
 
 public class Rng(
     int seed
-) : IHasSnapshot<Rng.Snapshot>
+)
 {
     private Random _r = new(seed);
     private int _c = 0;
@@ -13,30 +11,5 @@ public class Rng(
     {
         ++_c;
         return _r.Next();
-    }
-
-    public Snapshot GetSnapshot()
-    {
-        return new()
-        {
-            Count = _c
-        };
-    }
-
-    public void Restore(Snapshot s)
-    {
-        _c = s.Count;
-    }
-
-    public void LoadSnapshot(Snapshot snapshot)
-    {
-        _r = new(seed);
-        for (int i = 0; i < snapshot.Count; ++i)
-            Next();
-    }
-
-    public class Snapshot
-    {
-        public required int Count { get; init; }
     }
 }

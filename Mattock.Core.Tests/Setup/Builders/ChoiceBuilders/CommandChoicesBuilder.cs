@@ -25,7 +25,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder Crash()
     {
         return Enqueue((
-            async (match, player, options) => throw new IntentionalCrashException(),
+            async (wrapper, player, options) => throw new IntentionalCrashException(),
             false
         ));
     }
@@ -39,7 +39,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder Pass()
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 return (PassChoice(options), true, true);
             },
@@ -50,7 +50,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder PlayLandWithName(string name)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 var land = player.GetPlayableLands().First(c => c.HasName(name));
                 var command = new PlayLandCommand(land);
@@ -63,7 +63,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder CastSpellWithName(string name)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 var card = player.GetCastableCards().First(c => c.HasName(name));
                 var command = new CastSpellCommand(player, card);
@@ -76,7 +76,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder Activate(string permanentName, int abilityIdx = 0)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 ActivatedAbility[] arr = [.. player
                     .GetActivatableAbilities()
@@ -93,7 +93,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder ActivateMana(string permanentName, int abilityIdx = 0)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 ActivatedAbility[] arr = [.. player
                     .GetActivatableManaAbilities()
@@ -110,7 +110,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder AddMana(ManaType type, int amount)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 player.ManaPool.AddGenericMana(type, amount);
                 return (RespondNull<ICommand>(), false, true);
@@ -122,9 +122,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder SetPlayerStatus(int playerIdx, PlayerStatus status, bool silent = false)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                match.Match!.Players[playerIdx].SetStatus(status, silent);
+                wrapper.GetMatch().Players[playerIdx].SetStatus(status, silent);
                 return (RespondNull<ICommand>(), false, true);
             },
             true
@@ -134,9 +134,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder CheckForWinners()
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                match.Match!.CheckForWinners();
+                wrapper.GetMatch().CheckForWinners();
                 return (RespondNull<ICommand>(), false, true);
             },
             true
@@ -146,7 +146,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder AutoPass()
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 return (PassChoice(options), true, false);
             },
@@ -157,9 +157,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder AutoPassUntilStackEmpty()
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                if (!match.Match!.Stack.IsEmpty())
+                if (!wrapper.GetMatch().Stack.IsEmpty())
                     return (PassChoice(options), true, false);
 
                 return (RespondNull<ICommand>(), false, true);
@@ -171,9 +171,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder AutoPassToStep(StepType step)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                var currentStep = match.Match!.TurnManager.GetCurrentPhase().GetCurrentStep();
+                var currentStep = wrapper.GetMatch().TurnManager.GetCurrentPhase().GetCurrentStep();
                 if (currentStep is null || currentStep.Type != step)
                     return (PassChoice(options), true, false);
                 return (RespondNull<ICommand>(), false, true);
@@ -185,9 +185,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder AutoPassToPhase(PhaseType phase)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                var currentPhase = match.Match!.TurnManager.GetCurrentPhase();
+                var currentPhase = wrapper.GetMatch().TurnManager.GetCurrentPhase();
                 if (currentPhase is null || currentPhase.Type != phase)
                     return (PassChoice(options), true, false);
                 return (RespondNull<ICommand>(), false, true);
@@ -199,9 +199,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder AutoPassToTurn(int turn)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                if (match.Match!.TurnManager.TurnCounter == turn)
+                if (wrapper.GetMatch().TurnManager.TurnCounter == turn)
                     return (RespondNull<ICommand>(), false, true);
                 return (PassChoice(options), true, false);
             },
@@ -212,9 +212,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder SetLife(int playerIdx, int life)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                match.Match!.Players[playerIdx].Life.Set(life);
+                wrapper.GetMatch().Players[playerIdx].Life.Set(life);
                 return (RespondNull<ICommand>(), false, true);
             },
             true
@@ -224,9 +224,9 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder Tap(string name)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                var permanent = match.Match!.Battlefield.GetPermanents().Single(p => p.HasName(name));
+                var permanent = wrapper.GetMatch().Battlefield.GetPermanents().Single(p => p.HasName(name));
                 permanent.Tapped.Set(true);
                 return (RespondNull<ICommand>(), false, true);
             },
@@ -237,7 +237,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder Rollback(string id)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
                 return (
                     (null, new() { RequestedSnapshotId = id} ),
@@ -252,20 +252,20 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
         return Enqueue((
-            async (match, player, options) =>
+            async (wrapper, player, options) =>
             {
-                action(new(match, player, options));
+                action(new(wrapper, player, options));
                 return (RespondNull<ICommand>(), false, true);
             },
             true
         ));
     }
 
-    public class Asserts(TestMatchWrapper match, Player player, ICommand[] options)
+    public class Asserts(TestSessionWrapper wrapper, Player player, ICommand[] options)
     {
         public Asserts AssertMatch(Action<MatchAsserts> action)
         {
-            action(new(match));
+            action(new(wrapper));
             return this;
         }
 

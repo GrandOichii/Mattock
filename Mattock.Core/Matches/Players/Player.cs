@@ -61,6 +61,9 @@ public class Player
     /// </summary>
     private readonly SafePlayerControllerWrapper _controller;
 
+    // TODO docs
+    private readonly RecorderPlayerControllerWrapper _recorder;
+
     /// <summary>
     /// Life
     /// </summary>
@@ -122,7 +125,8 @@ public class Player
         Match = match;
         Idx = idx;
         Setup = setup;
-        _controller = new SafePlayerControllerWrapper(setup.Controller);
+        _recorder = new(setup.Controller);
+        _controller = new SafePlayerControllerWrapper(_recorder);
 
         Life = new(this);
         ManaPool = new(this);
@@ -143,6 +147,9 @@ public class Player
     }
 
     // methods
+
+    public PlayerResponsesRecord GetRecord()
+        => _recorder.Record;
 
     /// <summary>
     /// Get the team index

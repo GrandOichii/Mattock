@@ -94,7 +94,7 @@ public class ManaCostTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -251,7 +251,7 @@ public class ManaCostTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)

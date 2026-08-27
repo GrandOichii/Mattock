@@ -17,9 +17,9 @@ using NLua;
 namespace Mattock.Core.Matches;
 
 public class Match
-    : IHasSnapshot<Match.Snapshot>
 {
     // properties
+    public Session Session { get; }
     public Rng Rng { get; }
     public Player[] Players { get; }
     public Battlefield Battlefield { get; }
@@ -39,17 +39,18 @@ public class Match
     public StateBasedActionsManager StateBasedActions { get; }
     public IAction[] Actions { get; }
     private int[]? _winningTeams;
-    public SnapshotsManager Snapshots { get; }
 
     // constructors
 
     public Match(
+        Session session,
         MatchConfig config,
         PlayerSetup[] playerSetups,
         Mechanics mechanics,
         string[] setupScripts
     )
     {
+        Session = session;
         Config = config;
         Mechanics = mechanics;
 
@@ -59,7 +60,6 @@ public class Match
         Events = new(this);
         Battlefield = new(this);
         TurnManager = new(this);
-        Snapshots = new(this);
         StateBasedActions = new(this);
         _lastCardId = 0;
         _lastAAId = 0;
@@ -121,8 +121,7 @@ public class Match
 
     public Player GetActivePlayer() => Players[TurnManager.ActivePlayerIdx];
 
-
-    public async Task Run()
+    public async Task<RollbackRequest?> Run()
     {
         // Game start
 
@@ -161,15 +160,19 @@ public class Match
 
         await TakeMulligans();
 
-        await TakeTurns();
+        return await TakeTurns();
     }
 
-    public async Task TakeTurns()
+    public async Task<RollbackRequest?> TakeTurns()
     {
         while (!ShouldHalt())
         {
-            await TurnManager.DoTurn();
+            var request = await TurnManager.DoTurn();
+            if (request is not null)
+                return request;
         }
+
+        return null;
     }
 
     public async Task<(bool, RollbackRequest?)> CreateAndResolvePriority()
@@ -373,38 +376,35 @@ public class Match
         return [.. result.Select(idx => Players[idx])];
     }
 
-    public Snapshot GetSnapshot()
-        => new(
-            Rng.GetSnapshot(),
-            TurnManager.GetSnapshot()
-        );
-
-    public void LoadSnapshot(Snapshot snapshot)
+    public MatchSnapshot GetSnapshot()
     {
-        Rng.LoadSnapshot(snapshot.Rng);
+        var phase = TurnManager.GetCurrentPhase();
+        int? stepIdx = phase.CurrentStepIdx < phase.Steps.Count 
+            ? phase.Steps[phase.CurrentStepIdx].PartIdx 
+            : null;
 
-        for (int i = 0; i < snapshot.Players.Length; ++i)
-            Players[i].LoadSnapshot(snapshot.Players[i]);
-        
-        Battlefield.LoadSnapshot(snapshot.Battlefield);
-        Stack.LoadSnapshot(snapshot.Stack);
-        TurnManager.LoadSnapshot(snapshot.TurnManager);
-        Cards = [.. snapshot.Cards];
-
-        Priority = null;
-        if (snapshot.Priority is not null)
-        {
-            Priority = new(this);
-            Priority.LoadSnapshot(snapshot.Priority);
-        }
-
-        _lastCardId = snapshot.LastCardId;
-        _lastAAId = snapshot.LastAAId;
+        return new(
+            TurnManager.TurnCounter,
+            TurnManager.ActivePlayerIdx,
+            TurnManager.CurrentPhaseIdx,
+            phase.CurrentStepIdx,
+            stepIdx
+        );
     }
 
-    public record Snapshot
-    (
-        Rng.Snapshot Rng,
-        TurnManager.Snapshot TurnManager
-    );
+    public async Task LoadSnapshot(Snapshot snapshot)
+    {
+        
+        throw new NotImplementedException();
+    }
+
 }
+
+public record MatchSnapshot
+(
+    int TurnCounter,
+    int ActivePlayerIdx,
+    int CurrentPhaseIdx,
+    int CurrentStepIdx,
+    int? CurrentStepPartIdx
+);

@@ -40,7 +40,7 @@ public class TeamValidationTests
         }
 
         // Act
-        var act = () => new Match(
+        var act = () => new Session(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -84,7 +84,7 @@ public class TeamValidationTests
         }
 
         // Act
-        var act = () => new Match(
+        var act = () => new Session(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -109,7 +109,7 @@ public class TeamValidationTests
         // Arrange
 
         // Act
-        var act = () => new Match(
+        var act = () => new Session(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)

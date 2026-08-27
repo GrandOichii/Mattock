@@ -54,7 +54,7 @@ public class TestPlayerControllerBuilder
         return this;
     }
 
-    public TestPlayerController Build(TestMatchWrapper match)
+    public TestPlayerController Build(TestSessionWrapper match)
     {
         return new(
             match,

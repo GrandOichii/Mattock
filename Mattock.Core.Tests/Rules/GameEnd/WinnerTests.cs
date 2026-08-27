@@ -164,7 +164,7 @@ public class WinnerTests
                 .SetDeck(deck);
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .InitialHandSize(0)
@@ -336,7 +336,7 @@ public class WinnerTests
                 .SetDeck(deck);
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .InitialHandSize(0)

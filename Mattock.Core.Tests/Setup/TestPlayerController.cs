@@ -6,7 +6,7 @@ using Mattock.Core.Matches.Rollback;
 namespace Mattock.Core.Tests.Setup;
 
 public class TestPlayerController(
-    TestMatchWrapper match,
+    TestSessionWrapper match,
     string name,
     DeckTemplate deck,
     int teamIdx,
@@ -21,7 +21,7 @@ public class TestPlayerController(
     Queue<TestPlayerController.BlockDeclarationsChoice> blockDeclarationsChoices
 ) : IPlayerController
 {
-    public delegate Task<((ICommand?, RollbackRequest?), bool, bool)> CommandChoice(TestMatchWrapper match, Player player, ICommand[] options);
+    public delegate Task<((ICommand?, RollbackRequest?), bool, bool)> CommandChoice(TestSessionWrapper wrapper, Player player, ICommand[] options);
     public delegate Task<((Player[], RollbackRequest?), bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
     public delegate Task<((Permanent[], RollbackRequest?), bool)> PermanentsChoice(Player player, Permanent[] options, int min, int max, string hint);
     public delegate Task<((string?, RollbackRequest?), bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);

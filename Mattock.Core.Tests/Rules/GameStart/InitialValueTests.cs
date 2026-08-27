@@ -19,7 +19,7 @@ public class InitialValueTests
             : p2).Act.Crash();
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -89,7 +89,7 @@ public class InitialValueTests
             .SetDeck(deck);
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .InitialHandSize(initialHandSize)

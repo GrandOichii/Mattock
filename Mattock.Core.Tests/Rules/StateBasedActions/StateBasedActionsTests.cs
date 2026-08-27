@@ -46,7 +46,7 @@ public class StateBasedActionTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -56,7 +56,7 @@ public class StateBasedActionTests
         );
         var checker = new CheckerSBA();
         match.PreLaunchActions.Add(
-            m => m.StateBasedActions.StateBasedActions.Add(checker)
+            s => s.Match.StateBasedActions.StateBasedActions.Add(checker)
         );
         match.RemoveMulligans();
 
@@ -96,7 +96,7 @@ public class StateBasedActionTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -106,7 +106,7 @@ public class StateBasedActionTests
         );
         var checker = new CheckerSBA();
         match.PreLaunchActions.Add(
-            m => m.StateBasedActions.StateBasedActions.Add(checker)
+            s => s.Match.StateBasedActions.StateBasedActions.Add(checker)
         );
         match.RemoveMulligans();
 

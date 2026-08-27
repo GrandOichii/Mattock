@@ -57,7 +57,7 @@ public class BountifulHarvestTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -125,7 +125,7 @@ public class BountifulHarvestTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -195,7 +195,7 @@ public class BountifulHarvestTests
             .Act.PlayLandWithName("land")
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -265,7 +265,7 @@ public class BountifulHarvestTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -336,7 +336,7 @@ public class BountifulHarvestTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -410,7 +410,7 @@ public class BountifulHarvestTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );

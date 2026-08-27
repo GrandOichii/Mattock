@@ -121,7 +121,7 @@ public class AcolyteOfXathridTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -182,7 +182,7 @@ public class AcolyteOfXathridTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -254,7 +254,7 @@ public class AcolyteOfXathridTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -326,7 +326,7 @@ public class AcolyteOfXathridTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -425,7 +425,7 @@ public class AcolyteOfXathridTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -484,7 +484,7 @@ public class AcolyteOfXathridTests
             .SetDeck(deck)
             .Act.AutoPass();
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );
@@ -554,7 +554,7 @@ public class AcolyteOfXathridTests
             .Act.Crash()
         ;
 
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             config,
             [ p1, p2 ]
         );

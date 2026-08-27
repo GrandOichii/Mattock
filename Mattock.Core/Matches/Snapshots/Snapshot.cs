@@ -4,12 +4,12 @@ namespace Mattock.Core.Matches.Snapshots;
 
 public class Snapshot(
     string id,
+    MatchSnapshot snapshot,
     PlayerResponsesRecord[] playerRecords
-    // Match.Snapshot snapshot
 )
 {
     public string Id { get; } = id;
-    // public Match.Snapshot Snap { get; } = snapshot; 
+    public MatchSnapshot Snap { get; } = snapshot; 
     public PlayerResponsesRecord[] PlayerRecords { get; } = playerRecords;
 
 }

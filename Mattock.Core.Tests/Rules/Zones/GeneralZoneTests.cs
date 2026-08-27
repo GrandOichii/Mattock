@@ -37,8 +37,8 @@ public class GeneralZoneTests
                 (
                     async (match, player, options) =>
                     {
-                        var opp = match.Match!.Players[1];
-                        match.Match!.MoveCard(
+                        var opp = match.GetMatch().Players[1];
+                        match.GetMatch().MoveCard(
                             opp.Library.GetLast()!,
                             CardZoneChangeType.Bottom,
                             player.Graveyard.GetCardZoneChanger()
@@ -57,7 +57,7 @@ public class GeneralZoneTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -128,8 +128,8 @@ public class GeneralZoneTests
                 (
                     async (match, player, options) =>
                     {
-                        var opp = match.Match!.Players[1];
-                        match.Match!.MoveCard(
+                        var opp = match.GetMatch().Players[1];
+                        match.GetMatch().MoveCard(
                             opp.Library.GetLast()!,
                             CardZoneChangeType.Bottom,
                             player.Hand.GetCardZoneChanger()
@@ -148,7 +148,7 @@ public class GeneralZoneTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -219,8 +219,8 @@ public class GeneralZoneTests
                 (
                     async (match, player, options) =>
                     {
-                        var opp = match.Match!.Players[1];
-                        match.Match!.MoveCard(
+                        var opp = match.GetMatch().Players[1];
+                        match.GetMatch().MoveCard(
                             opp.Hand.GetLast()!,
                             CardZoneChangeType.Bottom,
                             player.Library.GetCardZoneChanger()
@@ -239,7 +239,7 @@ public class GeneralZoneTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)
@@ -313,8 +313,8 @@ public class GeneralZoneTests
                 (
                     async (match, player, options) =>
                     {
-                        var opp = match.Match!.Players[1];
-                        await match.Match!.PutOntoTheBattlefield(opp.Library.GetLast()!, opp);
+                        var opp = match.GetMatch().Players[1];
+                        await match.GetMatch().PutOntoTheBattlefield(opp.Library.GetLast()!, opp);
                         return ((null, null), false, true);
                     },
                     true
@@ -329,7 +329,7 @@ public class GeneralZoneTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .GameLossIfRequiredToDrawFromEmptyLibrary(false)

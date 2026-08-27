@@ -51,7 +51,7 @@ public class DrawStepTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .Build(),
@@ -127,7 +127,7 @@ public class DrawStepTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .InitialHandSize(0)

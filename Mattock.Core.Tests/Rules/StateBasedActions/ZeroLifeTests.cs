@@ -29,7 +29,7 @@ public class ZeroLifeTests
             ;
 
         // Act
-        var match = new TestMatchWrapper(
+        var match = new TestSessionWrapper(
             new MatchConfigBuilder()
                 .FirstPlayerIdx(0)
                 .InitialHandSize(0)

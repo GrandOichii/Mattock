@@ -4,26 +4,23 @@ using Mattock.Core.Tests.Setup.Asserts;
 
 namespace Mattock.Core.Tests.Setup;
 
-public class TestMatch : Match
+public class TestSession(
+    MatchConfig config,
+    PlayerSetup[] setups,
+    Mechanics mechanics,
+    string[] setupScripts
+) : Session(
+    config, 
+    setups, 
+    mechanics,
+    setupScripts
+)
 {
-    public TestMatch(
-        MatchConfig config,
-        PlayerSetup[] setups,
-        Mechanics mechanics,
-        string[] setupScripts
-    ) : base(
-        config, 
-        setups, 
-        mechanics,
-        setupScripts
-    )
-    {
-    }
 }
 
-public class TestMatchWrapper
+public class TestSessionWrapper
 {
-    public delegate void PreLaunchAction(Match match);
+    public delegate void PreLaunchAction(Session match);
 
     public MatchConfig Config { get; }
     public Exception? Exception { get; private set; }
@@ -31,18 +28,21 @@ public class TestMatchWrapper
     public Mechanics Mechanics { get; }
     public List<PreLaunchAction> PreLaunchActions { get; }
 
-    public TestMatch? Match { get; private set; }
+    public TestSession? Session { get; private set; }
 
-    public TestMatchWrapper(MatchConfig config, TestPlayerControllerBuilder[] players)
+    public TestSessionWrapper(MatchConfig config, TestPlayerControllerBuilder[] players)
     {
         Config = config;
 
-        Match = null;
+        Session = null;
         Exception = null;
         Players = [.. players.Select(p => p.Build(this))];
         Mechanics = new();
         PreLaunchActions = [];
     }
+
+    public Match GetMatch()
+        => Session!.Match;
 
     public void SetMulligan(IMulliganRule mulligan)
     {
@@ -59,7 +59,7 @@ public class TestMatchWrapper
         // var core = File.ReadAllText("../../../../core.lua");
         var coreScript = CoreLoader.Load("../../../../core");
 
-        Match = new TestMatch(
+        Session = new TestSession(
             Config,
             [ .. Players.Select(p => p.GetPlayerSetup() )],
             Mechanics,
@@ -67,11 +67,11 @@ public class TestMatchWrapper
         );
 
         foreach (var act in PreLaunchActions)
-            act(Match);
+            act(Session);
 
         try
         {
-            await Match.Run();
+            await Session.Run();
         }
         catch (Exception e)
         {
@@ -79,7 +79,7 @@ public class TestMatchWrapper
         }
     }
 
-    public TestMatchWrapper Assert(Action<MatchAsserts> action)
+    public TestSessionWrapper Assert(Action<MatchAsserts> action)
     {
         action(new(this));
         return this;

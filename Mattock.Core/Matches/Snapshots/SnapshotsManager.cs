@@ -1,7 +1,7 @@
 namespace Mattock.Core.Matches.Snapshots;
 
 public class SnapshotsManager(
-    Match match
+    Session session
 )
 {
     public List<Snapshot> Snapshots { get; } = [];
@@ -11,10 +11,14 @@ public class SnapshotsManager(
         if (Snapshots.Any(s => s.Id == id))
             throw new Exception($"Snapshot with Id = {id} already exists"); // TODO type
 
-        Snapshot snap = new(id, match.GetSnapshot());
+        Snapshot snap = new(
+            id,
+            session.GetMatchSnapshot(),
+            [.. session.Match.Players.Select(p => p.GetRecord())]
+        );
         Snapshots.Add(snap);
 
-        while (Snapshots.Count > match.Config.SnapshotMemory)
+        while (Snapshots.Count > session.Config.SnapshotMemory)
             Snapshots.Remove(Snapshots[0]);
             
         return snap;

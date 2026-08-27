@@ -3,7 +3,7 @@ using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Tests.Setup.Asserts;
 
-public class MatchAsserts(TestMatchWrapper match)
+public class MatchAsserts(TestSessionWrapper match)
 {
     public MatchAsserts DidntCrash()
     {
@@ -57,32 +57,32 @@ public class MatchAsserts(TestMatchWrapper match)
 
     public MatchAsserts TurnNumber(int v)
     {
-        match.Match!.TurnManager.TurnCounter.ShouldBe(v);
+        match.GetMatch().TurnManager.TurnCounter.ShouldBe(v);
         return this;
     }
 
     public MatchAsserts ActivePlayerIs(int playerIdx)
     {
-        var m = match.Match!;
+        var m = match.GetMatch();
         m.TurnManager.ActivePlayerIdx.ShouldBe(playerIdx);
         return this;
     }
 
     public MatchAsserts AssertPlayer(int playerIdx, Action<PlayerAsserts> action)
     {
-        action(new(match.Match!.Players[playerIdx]));
+        action(new(match.GetMatch().Players[playerIdx]));
         return this;
     }
 
     public MatchAsserts AssertBattlefield(Action<BattlefieldAsserts> action)
     {
-        action(new(match.Match!.Battlefield));
+        action(new(match.GetMatch().Battlefield));
         return this;
     }
 
     public MatchAsserts MatchPhases(params PhaseType[] phases)
     {
-        var turn = match.Match!.TurnManager;
+        var turn = match.GetMatch().TurnManager;
         turn.Phases.Count.ShouldBe(phases.Length);
 
         for (int i = 0; i < phases.Length; ++i)
@@ -94,38 +94,38 @@ public class MatchAsserts(TestMatchWrapper match)
 
     public MatchAsserts CurrentPhase(PhaseType type)
     {
-        match.Match!.TurnManager.GetCurrentPhase().Type.ShouldBe(type);
+        match.GetMatch().TurnManager.GetCurrentPhase().Type.ShouldBe(type);
         return this;
     }
 
     public MatchAsserts CurrentStep(StepType type)
     {
-        match.Match!.TurnManager.GetCurrentPhase().GetCurrentStep().ShouldNotBeNull();
-        match.Match!.TurnManager.GetCurrentPhase().GetCurrentStep()!.Type.ShouldBe(type);
+        match.GetMatch().TurnManager.GetCurrentPhase().GetCurrentStep().ShouldNotBeNull();
+        match.GetMatch().TurnManager.GetCurrentPhase().GetCurrentStep()!.Type.ShouldBe(type);
         return this;
     }
 
     public MatchAsserts NoWinnersDecided()
     {
-        match.Match!.ShouldHalt().ShouldBeFalse();
+        match.GetMatch().ShouldHalt().ShouldBeFalse();
         return this;
     }
 
     public MatchAsserts WinningTeams(int[] teams)
     {
-        match.Match!.GetWinningTeams().ShouldBeEquivalentTo(teams);
+        match.GetMatch().GetWinningTeams().ShouldBeEquivalentTo(teams);
         return this;
     }
 
     public MatchAsserts AssertStack(Action<StackAsserts> action)
     {
-        action(new(match.Match!.Stack));
+        action(new(match.GetMatch().Stack));
         return this;
     }
 
     public MatchAsserts AssertSnapshots(Action<SnapshotsAsserts> action)
     {
-        action(new(match.Match!.Snapshots));
+        action(new(match.Session!.Snapshots));
         return this;
     }
 }
