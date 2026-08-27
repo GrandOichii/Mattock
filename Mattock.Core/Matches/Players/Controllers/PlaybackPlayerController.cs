@@ -34,7 +34,10 @@ public class PlaybackPlayerController(
     {
         if (!record.CardChoices.TryDequeue(out var id))
         {
-            throw new Exception($"Empty queue for {nameof(ChooseCard)}"); // TODO type
+            return Task.FromResult<(Card?, RollbackRequest?)>((
+                null, 
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
         
         return Task.FromResult<(Card?, RollbackRequest?)>((
@@ -47,7 +50,10 @@ public class PlaybackPlayerController(
     {
         if (!record.CommandChoices.TryDequeue(out var s))
         {
-            throw new Exception($"Empty queue for {nameof(ChooseCommand)}"); // TODO type
+            return Task.FromResult<(ICommand, RollbackRequest?)>((
+                options[0], 
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
 
         return Task.FromResult<(ICommand, RollbackRequest?)>((
@@ -60,7 +66,10 @@ public class PlaybackPlayerController(
     {
         if (!record.CostCollectionChoices.TryDequeue(out var text))
         {
-            throw new Exception($"Empty queue for {nameof(ChooseCostCollection)}"); // TODO type
+            return Task.FromResult<(CostCollection?, RollbackRequest?)>((
+                null,
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
         
         return Task.FromResult<(CostCollection?, RollbackRequest?)>((
@@ -73,7 +82,10 @@ public class PlaybackPlayerController(
     {
         if (!record.ManaPaymentChoices.TryDequeue(out var text))
         {
-            throw new Exception($"Empty queue for {nameof(ChooseManaPayment)}"); // TODO type
+            return Task.FromResult<(IManaPaymentChoice, RollbackRequest?)>((
+                options[0],
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
         
         return Task.FromResult<(IManaPaymentChoice, RollbackRequest?)>((
@@ -86,7 +98,10 @@ public class PlaybackPlayerController(
     {
         if (!record.PermanentsChoices.TryDequeue(out var pids))
         {
-            throw new Exception($"Empty queue for {nameof(ChoosePermanents)}"); // TODO type
+            return Task.FromResult<(Permanent[], RollbackRequest?)>((
+                [],
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
         
         return Task.FromResult<(Permanent[], RollbackRequest?)>((
@@ -99,7 +114,10 @@ public class PlaybackPlayerController(
     {
         if (!record.PlayersChoices.TryDequeue(out var indicies))
         {
-            throw new Exception($"Empty queue for {nameof(ChoosePlayers)}"); // TODO type
+            return Task.FromResult<(Player[], RollbackRequest?)>((
+                [],
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
         
         return Task.FromResult<(Player[], RollbackRequest?)>((
@@ -112,7 +130,10 @@ public class PlaybackPlayerController(
     {
         if (!record.StringChoices.TryDequeue(out var text))
         {
-            throw new Exception($"Empty queue for {nameof(ChooseString)}"); // TODO type
+            return Task.FromResult<(string?, RollbackRequest?)>((
+                null,
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
         }
         
         return Task.FromResult<(string?, RollbackRequest?)>((

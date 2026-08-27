@@ -6,8 +6,9 @@ using Mattock.Core.Matches.Players.Costs;
 
 namespace Mattock.Core.Matches.Players.Controllers;
 
-public class SafePlayerControllerWrapper(IPlayerController controller)
-    : PlayerControllerWrapper(controller)
+public class SafePlayerControllerWrapper(
+    IPlayerController controller
+) : PlayerControllerWrapper(controller)
 {
     public override Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint)
     {

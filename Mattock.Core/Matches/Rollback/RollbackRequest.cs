@@ -5,6 +5,8 @@ namespace Mattock.Core.Matches.Rollback;
 
 public class RollbackRequest
 {
+    public readonly static RollbackRequest PLAYBACK_ROLLBACK = new() { RequestedSnapshotId = "PLAYBACK_ROLLBACK" };
+
     public required string RequestedSnapshotId { get; init; }
 
     public async Task<bool> IsApprovedByAll(Player initiator)
