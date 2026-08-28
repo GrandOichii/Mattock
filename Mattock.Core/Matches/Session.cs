@@ -33,8 +33,8 @@ public class Session
     public Match CreateMatch()
         => new(this, Config, PlayerSetups, Mechanics, SetupScripts);
 
-    public MatchSnapshot GetMatchSnapshot()
-        => Match.GetSnapshot();
+    // public MatchSnapshot GetMatchSnapshot()
+    //     => Match.GetSnapshot();
 
     public async Task Run()
     {
@@ -46,7 +46,7 @@ public class Session
             if (request is null) break;
 
             var snap = Snapshots.Get(request.RequestedSnapshotId)
-                ?? throw new Exception($"Requested to rollback to snapshot with unkown id: {request.RequestedSnapshotId}");
+                ?? throw new MatchException($"Requested to rollback to snapshot with unkown id: {request.RequestedSnapshotId}");
 
             Match = CreateMatch();
             await Match.LoadSnapshot(snap);

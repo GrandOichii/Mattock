@@ -20,6 +20,6 @@ public static class ManaTypeExtensions
         ManaType.Red => "R",
         ManaType.Green => "G",
         ManaType.Colorless => "C",
-        _ => throw new Exception($"Unrecognized mana type: {t}"),
+        _ => throw new CodeErrorException($"Unrecognized mana type: {t}"),
     }) + "}";
 }

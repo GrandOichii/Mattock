@@ -1,3 +1,5 @@
+using Mattock.Core.Matches.Combat;
+using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
@@ -11,40 +13,47 @@ public class RecorderPlayerControllerWrapper(IPlayerController controller)
 {
     public PlayerResponsesRecord Record { get; } = new();
 
+    public override Task HandleAttackDeclarationsChoice(AttackDeclaration[] choices, Player player, AttackDeclaration[] options)
+    {
+        Record.AttackDeclarationsChoices.Enqueue([.. choices.Select(c => c.GetShort())]);
+        return Task.CompletedTask;
+    }
+
+    public override Task HandleBlockDeclarationsChoice(BlockDeclaration[] choices, Player player, BlockDeclaration[] options)
+    {
+        Record.BlockDeclarationsChoices.Enqueue([.. choices.Select(c => c.GetShort())]);
+        return Task.CompletedTask;
+    }
+
     public override Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint)
     {
         Record.CardChoices.Enqueue(choice?.Id);
         return Task.CompletedTask;
     }
-    
 
-    public override Task HandleCommandChoice(ICommand choice, Player player, ICommand[] choices)
+    public override Task HandleCommandChoice(ICommand choice, Player player, ICommand[] options)
     {
         Record.CommandChoices.Enqueue(choice.ToCommandString());
         return Task.CompletedTask;
     }
-    
 
     public override Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] options, string hint)
     {
         Record.CostCollectionChoices.Enqueue(choice?.Text); // TODO kinda sus, are all texts unique?
         return Task.CompletedTask;
     }
-    
 
     public override Task HandleManaPaymentChoice(IManaPaymentChoice choice, Player player, IManaPaymentChoice[] options, string hint)
     {
         Record.ManaPaymentChoices.Enqueue(choice.ToDisplayString());
         return Task.CompletedTask;
     }
-    
 
     public override Task HandlePermanentsChoice(Permanent[] choices, Player player, Permanent[] options, int min, int max, string hint)
     {
-        Record.PermanentsChoices.Enqueue([.. choices.Select(p => p.Pid)]);
+        Record.PermanentsChoices.Enqueue([.. choices.Select(p => p.PermanentId)]);
         return Task.CompletedTask;
     }
-    
 
     public override Task HandlePlayersChoice(Player[] choices, Player player, Player[] options, int min, int max, string hint)
     {
@@ -52,11 +61,9 @@ public class RecorderPlayerControllerWrapper(IPlayerController controller)
         return Task.CompletedTask;
     }
     
-
     public override Task HandleStringChoice(string? choice, Player player, string[] options, string hint)
     {
         Record.StringChoices.Enqueue(choice);
         return Task.CompletedTask;
     }
-    
 }

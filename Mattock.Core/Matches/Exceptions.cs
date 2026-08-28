@@ -48,8 +48,29 @@ public class TooManyTeamsException : CantStartException
     public TooManyTeamsException(string message, System.Exception inner) : base(message, inner) { }
 }
 
-[System.Serializable]
-public class UnhandledRollbackException(Player player, RollbackRequest rollback)
-    : Exception($"Unhandled rollback from player {player.GetDisplayName()} to snapshot {rollback.RequestedSnapshotId}")
+// TODO docs
+[Serializable]
+public class CodeErrorException : Exception
 {
+    public CodeErrorException() : base("Code error") { }
+    public CodeErrorException(string message) : base($"Code error: {message}") { }
+    public CodeErrorException(string message, Exception inner) : base($"Code error: {message}", inner) { }
+}
+
+// TODO docs
+[Serializable]
+public class MatchException : Exception
+{
+    public MatchException() { }
+    public MatchException(string message) : base(message) { }
+    public MatchException(string message, Exception inner) : base(message, inner) { }
+}
+
+// TODO docs
+[Serializable]
+public class ScriptingException : MatchException
+{
+    public ScriptingException() { }
+    public ScriptingException(string message) : base(message) { }
+    public ScriptingException(string message, System.Exception inner) : base(message, inner) { }
 }

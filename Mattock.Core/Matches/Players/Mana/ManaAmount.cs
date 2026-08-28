@@ -64,7 +64,7 @@ public partial class ManaAmount(
         "R" => ManaType.Red,
         "G" => ManaType.Green,
         "C" => ManaType.Colorless,
-        _ => throw new Exception($"Unrecognizable mana type symbol: {s}"),
+        _ => throw new CodeErrorException($"Unrecognizable mana type symbol: {s}"),
     };
 
     [GeneratedRegex(@"\{(.+?)\}")]

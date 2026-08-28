@@ -12,24 +12,22 @@ public class MatchStack(
 ) : ICardZone
 {
     public Match Match = match;
-    private int _lastId = 0;
 
     public List<StackEffect> Effects { get; } = [];
-
-    public string GenerateSid() => $"se{++_lastId}";
 
     public bool IsEmpty() => Effects.Count == 0;
 
     public int GetCount() => Effects.Count;
 
-    public StackEffect? GetStackEffectBySid(string sid) => Effects.SingleOrDefault(e => e.Sid == sid);
+    public StackEffect? GetStackEffectByStackEffectIdid(string stackEffectId)
+        => Effects.SingleOrDefault(e => e.StackEffectId == stackEffectId);
 
     public StackEffect Create(
         Card card,
         EffectContext ctx
     )
     {
-        var sid = Match.MoveCard(
+        var stackEffectId = Match.MoveCard(
             card,
             CardZoneChangeType.Bottom,
             new SpellCardZoneChanger(
@@ -38,12 +36,12 @@ public class MatchStack(
             )
         );
 
-        if (sid is null)
-            throw new Exception($"Failed to move a card stack effect for card {card.GetDisplayName()}");
+        if (stackEffectId is null)
+            throw new CodeErrorException($"Failed to move a card stack effect for card {card.GetDisplayName()}");
 
-        var result = GetStackEffectBySid(sid);
+        var result = GetStackEffectByStackEffectIdid(stackEffectId);
         if (result is null)
-            throw new Exception($"Failed to fetch newly created stack effect with SID = {sid} (cast card {card.GetDisplayName()})");
+            throw new CodeErrorException($"Failed to fetch newly created stack effect with StackEffectId = {stackEffectId} (cast card {card.GetDisplayName()})");
 
         return result;
     }
@@ -95,7 +93,7 @@ public class MatchStack(
             var stack = card.Match.Stack;
 
             if (type == CardZoneChangeType.Top)
-                throw new Exception($"Tried to move {card.GetDisplayName()} to the top of the stack");
+                throw new CodeErrorException($"Tried to move {card.GetDisplayName()} to the top of the stack");
         
             var effect = new StackEffect(
                 stack,
@@ -104,7 +102,7 @@ public class MatchStack(
             );
 
             card.Match.Stack.Effects.Add(effect);
-            return effect.Sid;
+            return effect.StackEffectId;
         }
 
         public ICardZone GetTargetZone()

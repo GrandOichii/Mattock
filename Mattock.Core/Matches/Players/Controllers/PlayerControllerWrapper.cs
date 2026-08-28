@@ -16,12 +16,51 @@ public abstract class PlayerControllerWrapper(
 ) : IPlayerController
 {
     private IPlayerController _controller = controller;
-    public abstract Task HandleCommandChoice(ICommand choice, Player player, ICommand[] choices);
-    public abstract Task HandlePlayersChoice(Player[] choices, Player player, Player[] options, int min, int max, string hint);
-    public abstract Task HandlePermanentsChoice(Permanent[] choices, Player player, Permanent[] options, int min, int max, string hint);
-    public abstract Task HandleStringChoice(string? choice, Player player, string[] options, string hint);
-    public abstract Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint);
-    public abstract Task HandleCostCollectionChoice(CostCollection? choice, Player player, CostCollection[] options, string hint);
+
+    public abstract Task HandleCommandChoice(
+        ICommand choice,
+        Player player,
+        ICommand[] options
+    );
+
+    public abstract Task HandlePlayersChoice(
+        Player[] choices,
+        Player player,
+        Player[] options,
+        int min,
+        int max,
+        string hint
+    );
+
+    public abstract Task HandlePermanentsChoice(
+        Permanent[] choices,
+        Player player,
+        Permanent[] options,
+        int min,
+        int max,
+        string hint
+    );
+
+    public abstract Task HandleStringChoice(
+        string? choice,
+        Player player,
+        string[] options,
+        string hint
+    );
+
+    public abstract Task HandleCardChoice(
+        Card? choice,
+        Player player,
+        Card[] options,
+        string hint
+    );
+
+    public abstract Task HandleCostCollectionChoice(
+        CostCollection? choice,
+        Player player,
+        CostCollection[] options,
+        string hint
+    );
     
     public abstract Task HandleManaPaymentChoice(
         IManaPaymentChoice choice,
@@ -30,10 +69,25 @@ public abstract class PlayerControllerWrapper(
         string hint
     );
 
+    public abstract Task HandleAttackDeclarationsChoice(
+        AttackDeclaration[] choices,
+        Player player,
+        AttackDeclaration[] options
+    );
+
+    public abstract Task HandleBlockDeclarationsChoice(
+        BlockDeclaration[] choices,
+        Player player,
+        BlockDeclaration[] options
+    );
+
     public void SetController(IPlayerController controller)
     {
         _controller = controller;
     }
+
+    public IPlayerController GetWrappedController()
+        => _controller;
 
     // public void AddEvent(Event , allowNonee)
     // {
@@ -138,22 +192,22 @@ public abstract class PlayerControllerWrapper(
         return _controller.Update(player, stateMsg);
     }
 
-    public Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
+    public async Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
     {
-        var result = _controller.ChooseAttackDeclarations(player, options);
+        var result = await _controller.ChooseAttackDeclarations(player, options);
 
-        // if (result.Item2 is null)
-        // TODO handle
+        if (result.Item2 is null)
+            await HandleAttackDeclarationsChoice(result.Item1, player, options);
 
         return result;
     }
 
-    public Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
+    public async Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
     {
-        var result = _controller.ChooseBlockDeclarations(player, options);
+        var result = await _controller.ChooseBlockDeclarations(player, options);
         
-        // if (result.Item2 is null)
-        // TODO handle
+        if (result.Item2 is null)
+            await HandleBlockDeclarationsChoice(result.Item1, player, options);
 
         return result;
     }

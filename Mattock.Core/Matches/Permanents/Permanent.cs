@@ -10,7 +10,7 @@ namespace Mattock.Core.Matches.Permanents;
 
 public class Permanent
 {
-    public string Pid { get; }
+    public string PermanentId { get; }
     public Match Match { get; }
     public Card Card { get; }
 
@@ -31,7 +31,7 @@ public class Permanent
 
     public Permanent(Card card, Player controller)
     {
-        Pid = card.Match.Battlefield.GeneratePid();
+        PermanentId = card.Match.Ids.GeneratePermanentId();
         Match = card.Match;
         Card = card;
         _controller = controller;
@@ -57,7 +57,7 @@ public class Permanent
 
     public PermanentStatus GetStatus(PermanentStatusType type) => StatusMap[type];
 
-    public string GetDisplayName() => $"[{Pid}]";
+    public string GetDisplayName() => $"[{PermanentId}]";
 
     public Player GetOwner() => Match.Players[Card.OwnerIdx];
 
@@ -124,7 +124,7 @@ public class Permanent
     public void SetAttackTarget(IAttackDeclarationTarget target)
     {
         if (CombatState is not null)
-            throw new Exception($"Called {SetAttackTarget} on a permanent with a non-null {nameof(CombatState)}"); // TODO type 
+            throw new CodeErrorException($"Called {SetAttackTarget} on a permanent with a non-null {nameof(CombatState)}"); 
 
         CombatState = new(this, target);
     }
@@ -132,7 +132,7 @@ public class Permanent
     public void AddBlocker(Permanent permanent)
     {
         if (CombatState is null)
-            throw new Exception($"Called {AddBlocker} on a permanent with a null {nameof(CombatState)}"); // TODO type 
+            throw new CodeErrorException($"Called {AddBlocker} on a permanent with a null {nameof(CombatState)}"); 
 
         CombatState.AddBlocker(permanent);
     }
@@ -186,9 +186,8 @@ public class Permanent
 
     public int GetPower()
     {
-        // TODO
         if (string.IsNullOrEmpty(Card.Template.Power))
-            throw new Exception($"Tried to get power of {GetDisplayName()}, which has no power"); // TODO type
+            throw new CodeErrorException($"Tried to get power of {GetDisplayName()}, which has no power");
         
         if (!int.TryParse(Card.Template.Power, out var result))
             throw new NotImplementedException("Non-int power is not implemented yet");

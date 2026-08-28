@@ -11,7 +11,7 @@ public class StackEffect(
 )
 {
     public Match Match { get; } = stack.Match;
-    public string Sid { get; } = stack.GenerateSid();
+    public string StackEffectId { get; } = stack.Match.Ids.GenerateStackEffectId();
     public IStackEffectResolver Resolver { get; } = resolver;
     public EffectContext Ctx { get; } = ctx;
 

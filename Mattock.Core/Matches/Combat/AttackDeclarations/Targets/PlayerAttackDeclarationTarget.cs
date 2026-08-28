@@ -25,4 +25,7 @@ public class PlayerAttackDeclarationTarget : IAttackDeclarationTarget
 
     public IDamageTarget? GetDamageAssignmentTarget()
         => new PlayerDamageTarget(Target);
+
+    public string GetTargetId()
+        => Target.GetId();
 }

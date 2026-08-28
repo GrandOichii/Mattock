@@ -9,13 +9,13 @@ public class FileCardLoader : ICardLoader
 
     private static readonly string EXPANSION_MANIFEST_FILE = "_manifest.json";
 
-    private Dictionary<string, Dictionary<string, CardTemplate>> _expansionMap;
+    private readonly Dictionary<string, Dictionary<string, CardTemplate>> _expansionMap;
 
     public FileCardLoader(string dir)
     {
         var manifestPath = Path.Join(dir, MANIFEST_FILE);
         var data = JsonSerializer.Deserialize<ManifestData>(File.ReadAllText(manifestPath))
-            ?? throw new Exception($"Null JSON at {manifestPath}");
+            ?? throw new FileCardLoaderException($"Null JSON at {manifestPath}");
 
         _expansionMap = [];
         foreach (var expansion in data.Expansions)
@@ -25,13 +25,13 @@ public class FileCardLoader : ICardLoader
             var expansionDir = Path.Join(dir, expansion); // cards/M10
             var expansionManifestPath = Path.Join(expansionDir, EXPANSION_MANIFEST_FILE);
             var expansionData = JsonSerializer.Deserialize<ExpansionManifestData>(File.ReadAllText(expansionManifestPath))
-                ?? throw new Exception($"Null JSON at {expansionManifestPath}");
+                ?? throw new FileCardLoaderException($"Null JSON at {expansionManifestPath}");
 
             foreach (var card in expansionData.Cards)
             {
                 var cardPath = Path.Join(expansionDir, card);
                 var cardData = JsonSerializer.Deserialize<CardTemplate>(File.ReadAllText($"{cardPath}.json"))
-                    ?? throw new Exception($"Null JSON at {cardPath}");
+                    ?? throw new FileCardLoaderException($"Null JSON at {cardPath}");
                 var scriptPath = $"{cardPath}.lua";
                 cardData.Script = File.ReadAllText(scriptPath);
 
@@ -48,7 +48,7 @@ public class FileCardLoader : ICardLoader
     {
         var split = id.Split(":");
         if (split.Length != 2)
-            throw new Exception($"Incorrect card id format for {nameof(FileCardLoader)}: {id}");
+            throw new FileCardLoaderException($"Incorrect card id format for {nameof(FileCardLoader)}: {id}");
 
         return (split[0], split[1]);
     }
@@ -57,9 +57,9 @@ public class FileCardLoader : ICardLoader
     {
         var (expansion, name) = SplitCardID(id);
         if (!_expansionMap.TryGetValue(expansion, out var cardMap))
-            throw new Exception($"Unrecognized expansion: {expansion} (for card {id})");
+            throw new FileCardLoaderException($"Unrecognized expansion: {expansion} (for card {id})");
         if (!cardMap.TryGetValue(name, out var result))
-            throw new Exception($"Unrecognized card in expansion {expansion}: {name} (for card {id})");
+            throw new FileCardLoaderException($"Unrecognized card in expansion {expansion}: {name} (for card {id})");
         return result;
     }
 }
@@ -72,4 +72,13 @@ class ManifestData
 class ExpansionManifestData
 {
     public required string[] Cards { get; init; }
+}
+
+// TODO docs
+[Serializable]
+public class FileCardLoaderException : Exception
+{
+    public FileCardLoaderException() { }
+    public FileCardLoaderException(string message) : base(message) { }
+    public FileCardLoaderException(string message, Exception inner) : base(message, inner) { }
 }

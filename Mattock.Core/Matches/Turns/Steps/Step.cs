@@ -35,7 +35,7 @@ public abstract class Step(
             Match.EmptyManaPools();
 
         if (!Match.Stack.IsEmpty())
-            throw new Exception($"Code error: the stack was not empty at the end of the step {Type}");
+            throw new CodeErrorException($"The stack was not empty at the end of the step {Type}");
             
         return null;
     }

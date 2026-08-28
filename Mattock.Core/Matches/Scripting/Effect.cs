@@ -43,7 +43,7 @@ public class Effect
             return null;
         } catch (Exception e)
         {
-            throw new Exception($"Failed to execute effect with text \"{Text}\"", e); // TODO type
+            throw new ScriptingException($"Failed to execute effect with text \"{Text}\"", e);
         }
     }
 }

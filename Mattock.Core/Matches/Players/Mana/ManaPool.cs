@@ -37,7 +37,7 @@ public class ManaPool(
     {
         if (Mana.Remove(choice)) return;
 
-        throw new Exception($"Tried to remove non-existant stored mana of type {choice.Type} (\"{choice.Text}\") from mana pool of player {player.GetDisplayName()}");
+        throw new CodeErrorException($"Tried to remove non-existant stored mana of type {choice.Type} (\"{choice.Text}\") from mana pool of player {player.GetDisplayName()}");
     }
 }
 

@@ -15,7 +15,10 @@ public interface IPlayerController
 {
     Task Update(Player player, string? stateMsg = null);
 
-    Task<(ICommand, RollbackRequest?)> ChooseCommand(Player player, ICommand[] options);
+    Task<(ICommand, RollbackRequest?)> ChooseCommand(
+        Player player,
+        ICommand[] options
+    );
 
     Task<(Player[], RollbackRequest?)> ChoosePlayers(
         Player player,

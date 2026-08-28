@@ -15,11 +15,11 @@ public class SpellResolver(
         if (Card.IsPermanentType())
         {
             // 608.3a if no targets, Move from stack onto the battlefield
-            var pid = await match.PutOntoTheBattlefield(Card, effect.Ctx.Controller);
-            if (pid is null) 
+            var permanentId = await match.PutOntoTheBattlefield(Card, effect.Ctx.Controller);
+            if (permanentId is null) 
                 return;
-            var permanent = match.Battlefield.GetPermanentByPid(pid)
-                ?? throw new Exception($"Failed to fetch newly created permanent with PID = {pid} (card: {Card.GetDisplayName()})");
+            var permanent = match.Battlefield.GetPermanentByPermanentid(permanentId)
+                ?? throw new CodeErrorException($"Failed to fetch newly created permanent with PermanentId = {permanentId} (card: {Card.GetDisplayName()})");
 
             // 608.3b Targets
             // TODO

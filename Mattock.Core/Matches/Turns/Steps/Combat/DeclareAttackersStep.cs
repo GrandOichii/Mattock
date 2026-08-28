@@ -47,7 +47,7 @@ public class DeclareAttackersStepPart
             attackers.Add(d.Attacker);
             if (conflict is null) continue;
 
-            throw new Exception($"Chosen attack declarations conflict with each other: {d.GetDisplayName()} and {conflict.GetDisplayName()}");
+            throw new CodeErrorException($"Chosen attack declarations conflict with each other: {d.GetDisplayName()} and {conflict.GetDisplayName()}");
         }
 
         // TODO 508.1c

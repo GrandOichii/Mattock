@@ -52,7 +52,7 @@ public class SpellCastEvent(
         var costVariations = card.GetCostCollections(player);
         if (costVariations.Count != new HashSet<string>(costVariations.Select(c => c.Text)).Count)
         {
-            throw new Exception($"Computed cost variations with duplicate texts (texts: {string.Join(", ", costVariations.Select(c => $"\"{c.Text}\""))})");
+            throw new CodeErrorException($"Computed cost variations with duplicate texts (texts: {string.Join(", ", costVariations.Select(c => $"\"{c.Text}\""))})");
         }
         var (choice, rollback) = await player.ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
         if (rollback is not null)

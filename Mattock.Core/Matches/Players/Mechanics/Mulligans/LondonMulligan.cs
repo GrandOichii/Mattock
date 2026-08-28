@@ -22,7 +22,7 @@ public class LondonMulliganRule(
         {
             var (choice, rollback) = await player.ChooseCard([.. player.Hand.Cards], $"Choose a card to up on the bottom of your library ({target} left)", false);
             if (rollback is not null)
-                throw new Exception($"Player {player.GetDisplayName()} requested rollback while doing a London mulligan");
+                throw new MatchException($"Player {player.GetDisplayName()} requested rollback while doing a London mulligan");
 
             player.Match.MoveCard(
                 choice!,

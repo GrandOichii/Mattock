@@ -31,7 +31,7 @@ public class Card
         Template = template;
         Zone = null;
 
-        Id = Match.GenerateCardId(this);
+        Id = Match.Ids.GenerateCardId(this);
 
         LuaTable data;
         try
@@ -43,7 +43,7 @@ public class Card
         }
         catch (Exception e)
         {
-            throw new Exception($"Failed to run card creation function in card {Template.Name}", e); // TODO type
+            throw new ScriptingException($"Failed to run card creation function in card {Template.Name}", e);
         }
 
         #region Spell effects
@@ -55,7 +55,7 @@ public class Card
             SpellEffects = [.. arr.Select(t => new Effect(t))];
         } catch (Exception e)
         {
-            throw new Exception($"Failed to get spell effects for card {template.Name}", e); // TODO type
+            throw new ScriptingException($"Failed to get spell effects for card {template.Name}", e);
         }
 
         #endregion
@@ -72,7 +72,7 @@ public class Card
             ActivatedAbilities = [.. ActivatedAbilityTemplates.Select(t => new ActivatedAbility(Match, t, this))];
         } catch (Exception e)
         {
-            throw new Exception($"Failed to get spell effects for card {template.Name}", e); // TODO type
+            throw new ScriptingException($"Failed to get spell effects for card {template.Name}", e);
         }
 
         #endregion

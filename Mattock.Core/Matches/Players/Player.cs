@@ -146,6 +146,17 @@ public class Player
         };
     }
 
+    public string GetId()
+        => Match.Ids.GetPlayerId(this);
+
+    public void SetController(IPlayerController controller)
+    {
+        _recorder.SetController(controller);
+    }
+
+    public IPlayerController GetController()
+        => _recorder.GetWrappedController();
+
     // methods
 
     public PlayerResponsesRecord GetRecord()
@@ -202,14 +213,11 @@ public class Player
     /// <returns>Display name</returns>
     public string GetDisplayName() => $"{Setup.Name} [{Idx}]";
 
-    /// <summary>
-    /// Form the library of the player (should only be called once)
-    /// </summary>
-    /// <exception cref="Exception">TODO</exception>
+    // TODO docs
     public void FormLibrary()
     {
         if (_libraryFormed)
-            throw new Exception($"Called {nameof(FormLibrary)} on player {GetDisplayName()}, whose library is already formed");
+            throw new CodeErrorException($"Called {nameof(FormLibrary)} on player {GetDisplayName()}, whose library is already formed");
         _libraryFormed = true;
 
         foreach (var insert in Setup.Deck.MainDeck)
@@ -355,7 +363,7 @@ public class Player
     {
         if (IsInGame()) return;
 
-        throw new Exception($"Code error: tried to prompt a choice from player {GetDisplayName()} while their status is {Status}");
+        throw new CodeErrorException($"Tried to prompt a choice from player {GetDisplayName()} while their status is {Status}");
     }
 
     /// <summary>
@@ -497,7 +505,7 @@ public class Player
     public async Task<(Player[], RollbackRequest?)> ChoosePlayers(Player[] options, int min, int max, string hint)
     {
         if (max == 0)
-            throw new Exception($"Provided max = 0 for {nameof(ChoosePlayers)}"); // TODO type
+            throw new CodeErrorException($"Provided max = 0 for {nameof(ChoosePlayers)}");
 
         return await RollbackApproveLoop(() => _controller.ChoosePlayers(this, options, min, max, hint));
     }
@@ -505,7 +513,7 @@ public class Player
     public async Task<(Permanent[], RollbackRequest?)> ChoosePermanents(Permanent[] options, int min, int max, string hint)
     {
         if (max == 0)
-            throw new Exception($"Provided max = 0 for {nameof(ChoosePermanents)}"); // TODO type
+            throw new CodeErrorException($"Provided max = 0 for {nameof(ChoosePermanents)}");
 
         return await RollbackApproveLoop(() => _controller.ChoosePermanents(this, options, min, max, hint));
     }
@@ -518,7 +526,7 @@ public class Player
     public async Task<(CostCollection, RollbackRequest?)> ChooseCostCollection(CostCollection[] options, string hint)
     {
         if (options.Length == 0)
-            throw new Exception($"Provided empty options for {nameof(ChooseCostCollection)} (hint: {hint})");
+            throw new CodeErrorException($"Provided empty options for {nameof(ChooseCostCollection)} (hint: {hint})");
         if (options.Length == 1)
             return (options[0], null);
         var (result, rollback) = await RollbackApproveLoop(() => _controller.ChooseCostCollection(this, options, hint, false));
@@ -528,14 +536,14 @@ public class Player
     public async Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(AttackDeclaration[] options)
     {
         if (options.Length == 0)
-            throw new Exception($"Provided empty options for {nameof(ChooseAttackDeclarations)}");
+            throw new CodeErrorException($"Provided empty options for {nameof(ChooseAttackDeclarations)}");
         return await RollbackApproveLoop(() => _controller.ChooseAttackDeclarations(this, options));
     }
 
     public async Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(BlockDeclaration[] options)
     {
         if (options.Length == 0)
-            throw new Exception($"Provided empty options for {nameof(ChooseBlockDeclarations)}"); // TODO type
+            throw new CodeErrorException($"Provided empty options for {nameof(ChooseBlockDeclarations)}");
         return await RollbackApproveLoop(() => _controller.ChooseBlockDeclarations(this, options));
     }
 

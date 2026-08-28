@@ -26,7 +26,7 @@ public class PassCommand(
     {
         var p = player.Match.Priority!;
         if (p.PriorityPlayerIdx != player.Idx)
-            throw new Exception($"Code error: received pass command from non-priority player {player.GetDisplayName()} (priority player idx: {p.PriorityPlayerIdx})");
+            throw new CodeErrorException($"Received pass command from non-priority player {player.GetDisplayName()} (priority player idx: {p.PriorityPlayerIdx})");
 
         p.Advance();
         

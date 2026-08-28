@@ -36,7 +36,7 @@ public class TurnManager(
             PhaseType.Combat => new CombatPhase(_match),
             PhaseType.PostcombatMain => new MainPhase(_match, false),
             PhaseType.Ending => new EndingPhase(_match),
-            _ => throw new Exception($"Unrecognized phase type: {type}") // TODO type
+            _ => throw new CodeErrorException($"Unrecognized phase type: {type}"),
         };
     }
 

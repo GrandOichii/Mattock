@@ -93,7 +93,7 @@ public class ManaPayment(
         best ??= Costs.FirstOrDefault(c => c.Type is null);
         if (best is null)
         {
-            throw new Exception($"Failed to find best payment for provided stored mana: {mana.GetType()}"); // TODO type
+            throw new MatchException($"Failed to find best payment for provided stored mana: {mana.GetType()}");
         }
         --best.Amount;
         if (best.Amount == 0)

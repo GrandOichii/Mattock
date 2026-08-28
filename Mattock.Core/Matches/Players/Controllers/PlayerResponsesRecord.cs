@@ -1,5 +1,7 @@
-namespace Mattock.Core.Matches.Players.Controllers;
+using Mattock.Core.Matches.Combat;
+using Mattock.Core.Matches.Combat.AttackDeclarations;
 
+namespace Mattock.Core.Matches.Players.Controllers;
 
 public class PlayerResponsesRecord
 {
@@ -12,6 +14,9 @@ public class PlayerResponsesRecord
     public Queue<int[]> PlayersChoices { get; init; } = [];
     public Queue<string?> StringChoices { get; init; } = [];
 
+    public Queue<AttackDeclaration.Short[]> AttackDeclarationsChoices { get; init; } = [];
+    public Queue<BlockDeclaration.Short[]> BlockDeclarationsChoices { get; init; } = [];
+
     public PlayerResponsesRecord Clone()
         => new()
         {
@@ -22,5 +27,7 @@ public class PlayerResponsesRecord
             PermanentsChoices = new([.. PermanentsChoices]),
             PlayersChoices = new([.. PlayersChoices]),
             StringChoices = new([.. StringChoices]),
+            AttackDeclarationsChoices = new([.. AttackDeclarationsChoices]),
+            BlockDeclarationsChoices = new([.. BlockDeclarationsChoices]),
         };
 }

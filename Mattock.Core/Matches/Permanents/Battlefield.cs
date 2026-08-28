@@ -10,10 +10,6 @@ public class Battlefield(
 {
     private readonly List<Permanent> _permanents = [];
 
-    private int _lastPid = 0;
-
-    public string GeneratePid() => $"p{++_lastPid}";
-
     public string GetZoneName() => "Battlefield";
 
     public void Remove(Card card)
@@ -22,8 +18,11 @@ public class Battlefield(
         throw new NotImplementedException();
     }
 
-    public Permanent? GetPermanentById(string id) => _permanents.SingleOrDefault(p => p.Card.Id == id);
-    public Permanent? GetPermanentByPid(string pid) => _permanents.SingleOrDefault(p => p.Pid == pid);
+    public Permanent? GetPermanentById(string id)
+        => _permanents.SingleOrDefault(p => p.Card.Id == id);
+
+    public Permanent? GetPermanentByPermanentid(string permanentId)
+        => _permanents.SingleOrDefault(p => p.PermanentId == permanentId);
 
     public async Task<string?> MoveCard(Card card, Player controller)
     {
@@ -90,7 +89,7 @@ public class Battlefield(
             // * type doesn't matter
             var permanent = new Permanent(card, controller);
             permanents.Add(permanent);
-            return permanent.Pid;
+            return permanent.PermanentId;
         }
 
         public ICardZone GetTargetZone()

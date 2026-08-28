@@ -37,7 +37,7 @@ public abstract class OwnedCardZone(
         if (Cards.Remove(card)) return;
 
         // TODO this may need to be removed
-        throw new Exception($"Failed to remove card {card.GetDisplayName()} from zone \"{GetZoneName()}\" of player {Player.GetDisplayName()}");
+        throw new CodeErrorException($"Failed to remove card {card.GetDisplayName()} from zone \"{GetZoneName()}\" of player {Player.GetDisplayName()}");
     }
 
     public ICardZoneChanger GetCardZoneChanger()
@@ -73,7 +73,7 @@ public abstract class OwnedCardZone(
                     zone.Cards.Insert(0, card);
                     return card.Id;
                 default:
-                    throw new Exception($"Unrecognized {nameof(CardZoneChangeType)}: {type}");
+                    throw new CodeErrorException($"Unrecognized {nameof(CardZoneChangeType)}: {type}");
             };
         }
 

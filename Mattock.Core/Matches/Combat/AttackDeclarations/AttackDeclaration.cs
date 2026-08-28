@@ -20,4 +20,24 @@ public class AttackDeclaration
     {
         return $"{Attacker.GetDisplayName()} -> {Target.GetDisplayName()}";
     }
+
+    // TODO naming
+    public bool MatchesShort(Short shortAD)
+        => Attacker.PermanentId == shortAD.AttackerPermanentId
+        && Target.GetTargetId() == shortAD.TargetId;
+
+    // TODO naming
+    public Short GetShort()
+        => new()
+        {
+            AttackerPermanentId = Attacker.PermanentId,
+            TargetId = Target.GetTargetId(),
+        };
+
+    // TODO naming
+    public class Short
+    {
+        public required string AttackerPermanentId { get; init; }
+        public required string TargetId { get; init; }
+    }
 }

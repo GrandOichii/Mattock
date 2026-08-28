@@ -22,12 +22,34 @@ public class PlaybackPlayerController(
 
     public Task<(AttackDeclaration[], RollbackRequest?)> ChooseAttackDeclarations(Player player, AttackDeclaration[] options)
     {
-        throw new NotImplementedException();
+        if (!record.AttackDeclarationsChoices.TryDequeue(out var shortDeclarations))
+        {
+            return Task.FromResult<(AttackDeclaration[], RollbackRequest?)>((
+                [], 
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
+        }
+
+        return Task.FromResult<(AttackDeclaration[], RollbackRequest?)>((
+            [.. shortDeclarations.Select(s => options.Single(o => o.MatchesShort(s)))], 
+            null
+        ));
     }
 
     public Task<(BlockDeclaration[], RollbackRequest?)> ChooseBlockDeclarations(Player player, BlockDeclaration[] options)
     {
-        throw new NotImplementedException();
+        if (!record.BlockDeclarationsChoices.TryDequeue(out var shortDeclarations))
+        {
+            return Task.FromResult<(BlockDeclaration[], RollbackRequest?)>((
+                [], 
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
+        }
+
+        return Task.FromResult<(BlockDeclaration[], RollbackRequest?)>((
+            [.. shortDeclarations.Select(s => options.Single(o => o.MatchesShort(s)))], 
+            null
+        ));
     }
 
     public Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
@@ -96,7 +118,7 @@ public class PlaybackPlayerController(
 
     public Task<(Permanent[], RollbackRequest?)> ChoosePermanents(Player player, Permanent[] options, int min, int max, string hint)
     {
-        if (!record.PermanentsChoices.TryDequeue(out var pids))
+        if (!record.PermanentsChoices.TryDequeue(out var permanentIds))
         {
             return Task.FromResult<(Permanent[], RollbackRequest?)>((
                 [],
@@ -105,7 +127,7 @@ public class PlaybackPlayerController(
         }
         
         return Task.FromResult<(Permanent[], RollbackRequest?)>((
-            [.. options.Where(o => pids.Contains(o.Pid))],
+            [.. options.Where(o => permanentIds.Contains(o.PermanentId))],
             null
         ));
     }

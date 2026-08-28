@@ -25,7 +25,7 @@ public class ActivatedAbilityTemplate
             Effects = [.. arr.Select(t => new Effect(t))];
         } catch (Exception e)
         {
-            throw new Exception($"Failed to get effects for activated ability with text \"{Text}\"", e); // TODO type
+            throw new ScriptingException($"Failed to get effects for activated ability with text \"{Text}\"", e);
         }
 
         try
@@ -35,7 +35,7 @@ public class ActivatedAbilityTemplate
             ManaCosts = [.. arr.Select(t => new DynamicManaCost(t))];
         } catch (Exception e)
         {
-            throw new Exception($"Failed to get costs for activated ability with text \"{Text}\"", e); // TODO type
+            throw new ScriptingException($"Failed to get costs for activated ability with text \"{Text}\"", e);
         }
 
         try
@@ -45,7 +45,7 @@ public class ActivatedAbilityTemplate
             Costs = [.. arr.Select(t => new Cost(t))];
         } catch (Exception e)
         {
-            throw new Exception($"Failed to get costs for activated ability with text \"{Text}\"", e); // TODO type
+            throw new ScriptingException($"Failed to get costs for activated ability with text \"{Text}\"", e);
         }
     }
 }

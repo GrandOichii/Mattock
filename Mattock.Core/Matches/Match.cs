@@ -3,6 +3,7 @@ using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
@@ -27,8 +28,7 @@ public class Match
     public TurnManager TurnManager { get; }
     public List<Card> Cards { get; private set; }
     public Priority? Priority { get; private set; }
-    private int _lastCardId;
-    private int _lastAAId;
+    public IdManager Ids { get; }
 
     public Lua LState { get; }
     public MatchConfig Config { get; }
@@ -56,13 +56,12 @@ public class Match
 
         ZoneChange = null;
         Priority = null;
+        Ids = new(this);
         Stack = new(this);
         Events = new(this);
         Battlefield = new(this);
         TurnManager = new(this);
         StateBasedActions = new(this);
-        _lastCardId = 0;
-        _lastAAId = 0;
         Cards = [];
         _winningTeams = null;
 
@@ -115,7 +114,7 @@ public class Match
     public int[] GetWinningTeams()
     {
         if (_winningTeams is null)
-            throw new Exception($"Called {nameof(GetWinningTeams)} while winning teams are not decided");
+            throw new CodeErrorException($"Called {nameof(GetWinningTeams)} while winning teams are not decided");
         return _winningTeams;
     }
 
@@ -133,7 +132,7 @@ public class Match
             "Choose the active player"
         );
         if (rollback is not null)
-            throw new Exception($"Player {active.GetDisplayName()} requested a rollback while choosing the first player");
+            throw new MatchException($"Player {active.GetDisplayName()} requested a rollback while choosing the first player");
         TurnManager.ActivePlayerIdx = chosenActivePlayers[0].Idx;
 
         // Set life totals
@@ -203,7 +202,7 @@ public class Match
     public void ResetPriority(int playerIdx)
     {
         if (Priority is null)
-            throw new Exception($"Called {nameof(ResetPriority)} while no priority is present!");
+            throw new CodeErrorException($"Called {nameof(ResetPriority)} while no priority is present");
         Priority.Reset(playerIdx);
     }
 
@@ -219,7 +218,7 @@ public class Match
                 if (!f.WillTakeMulligan) continue;
                 var (resp, rollback) = await f.Player.ChooseString([ "Yes", "No" ], "Mulligan?");
                 if (rollback is not null)
-                    throw new Exception($"Player requested rollback while deciding to mulligan"); // TODO type
+                    throw new MatchException($"Player requested rollback while deciding to mulligan");
                 f.WillTakeMulligan = resp == "Yes";
             }
 
@@ -228,16 +227,6 @@ public class Match
                 await f.Do();
             }
         }
-    }
-
-    public string GenerateActivatedAbilityId()
-    {
-        return $"aa{++_lastAAId}";
-    }
-
-    public string GenerateCardId(Card card) {
-        Cards.Add(card);
-        return $"c{++_lastCardId}";
     }
 
     public Card GetCardById(string id) => Cards.Single(c => c.Id == id);
@@ -270,7 +259,7 @@ public class Match
 
         if (result.Count == 0)
         {
-            throw new Exception($"Code error: no available commands for player {player.GetDisplayName()}");
+            throw new CodeErrorException($"No available commands for player {player.GetDisplayName()}");
         }
 
         return result;
@@ -376,35 +365,46 @@ public class Match
         return [.. result.Select(idx => Players[idx])];
     }
 
-    public MatchSnapshot GetSnapshot()
-    {
-        var phase = TurnManager.GetCurrentPhase();
-        int? stepIdx = phase.CurrentStepIdx < phase.Steps.Count 
-            ? phase.Steps[phase.CurrentStepIdx].PartIdx 
-            : null;
+    // public MatchSnapshot GetSnapshot()
+    // {
+    //     var phase = TurnManager.GetCurrentPhase();
+    //     int? stepIdx = phase.CurrentStepIdx < phase.Steps.Count 
+    //         ? phase.Steps[phase.CurrentStepIdx].PartIdx 
+    //         : null;
 
-        return new(
-            TurnManager.TurnCounter,
-            TurnManager.ActivePlayerIdx,
-            TurnManager.CurrentPhaseIdx,
-            phase.CurrentStepIdx,
-            stepIdx
-        );
-    }
+    //     return new(
+    //         TurnManager.TurnCounter,
+    //         TurnManager.ActivePlayerIdx,
+    //         TurnManager.CurrentPhaseIdx,
+    //         phase.CurrentStepIdx,
+    //         stepIdx
+    //     );
+    // }
 
     public async Task LoadSnapshot(Snapshot snapshot)
     {
-        
-        throw new NotImplementedException();
+        IPlayerController[] originalControllers = new IPlayerController[Players.Length];
+        for (int i = 0; i < Players.Length; ++i)
+        {
+            originalControllers[i] = Players[i].GetController();
+            Players[i].SetController(new PlaybackPlayerController(snapshot.PlayerRecords[i]));
+        }
+
+        var request = await Run();
+        if (request is null)
+            throw new CodeErrorException($"After loading snapshot rollback request {nameof(RollbackRequest.PLAYBACK_ROLLBACK)} was not returned");
+
+        if (request != RollbackRequest.PLAYBACK_ROLLBACK)
+            throw new CodeErrorException($"While loading snapshot somehow returned rollback reqeust != {nameof(RollbackRequest.PLAYBACK_ROLLBACK)}, requested snapshot id: {request.RequestedSnapshotId}");
     }
 
 }
 
-public record MatchSnapshot
-(
-    int TurnCounter,
-    int ActivePlayerIdx,
-    int CurrentPhaseIdx,
-    int CurrentStepIdx,
-    int? CurrentStepPartIdx
-);
+// public record MatchSnapshot
+// (
+//     int TurnCounter,
+//     int ActivePlayerIdx,
+//     int CurrentPhaseIdx,
+//     int CurrentStepIdx,
+//     int? CurrentStepPartIdx
+// );

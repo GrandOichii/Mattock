@@ -15,4 +15,6 @@ public interface IAttackDeclarationTarget
 
     // ! for permanents, first check that the permanent is still on the battlefield
     IDamageTarget? GetDamageAssignmentTarget();
+
+    string GetTargetId();
 }
