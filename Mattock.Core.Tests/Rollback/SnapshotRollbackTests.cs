@@ -7,21 +7,60 @@ public class SnapshotRollbackTests
     class ExpectedMatch
     {
         public required int TurnNumber { get; init; }
-        public required int SnapshotCount { get; init; }
         public required int ActivePlayerIdx { get; init; }
+        public required Player[] Players { get; init; }
+        public required Snapshot[] Snapshots { get; init; }
+
+        public class Player
+        {
+            public required int Life { get; init; }
+            public required int HandCount { get; init; }
+            public required int LibraryCount { get; init; }
+            public required int GraveyardCount { get; init; }
+        }
+
+        public class Snapshot
+        {
+            public required int TurnNumber { get; init; }
+        }
     }
 
     private static void Expect(ExpectedMatch expected, CommandChoicesBuilder.Asserts a)
     {
         a.AssertMatch(am => am
             .TurnNumber(expected.TurnNumber)
-            .AssertSnapshots(asn => asn.HasCount(expected.SnapshotCount))
+            .AssertSnapshots(asn => asn.HasCount(expected.Snapshots.Length))
             .ActivePlayerIs(expected.ActivePlayerIdx)
         );
+
+        for (int i = 0; i < expected.Players.Length; ++i)
+        {
+            var e = expected.Players[i];
+            a.AssertMatch(am => am.AssertPlayer(i, ap => ap
+                .HasLife(e.Life)
+                .AssertLibrary(al => al
+                    .HasCardCount(e.LibraryCount)
+                )
+                .AssertHand(al => al
+                    .HasCardCount(e.HandCount)
+                )
+                .AssertGraveyard(al => al
+                    .HasCardCount(e.GraveyardCount)
+                )
+            ));
+        }
+
+        for (int i = 0; i < expected.Snapshots.Length; ++i)
+        {
+            var e = expected.Snapshots[i];
+            a.AssertMatch(am => am.AssertSnapshots(asn => asn.AssertSnapshot(i, asni => asni
+                .TurnNumber(e.TurnNumber)
+            )));
+        }
     }
 
     [Fact]
-    public async Task TODONameMe()
+    public async Task SecondPlayerRollsBackToTurn1()
     {
         // Arrange
         var config = new MatchConfigBuilder()
@@ -40,55 +79,43 @@ public class SnapshotRollbackTests
             ]
         };
 
+        ExpectedMatch turn1 = new()
+        {
+            TurnNumber = 1,
+            ActivePlayerIdx = 0,
+            Players = [
+                new() {
+                    GraveyardCount = 0,
+                    HandCount = 7,
+                    LibraryCount = 53,
+                    Life = 20,
+                },
+                new() {
+                    GraveyardCount = 0,
+                    HandCount = 7,
+                    LibraryCount = 53,
+                    Life = 20,
+                }
+            ],
+            Snapshots = [
+                new() {
+                    TurnNumber = 1,
+                }
+            ]
+        };
+
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.Me()
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Assert(a => 
-                Expect(new()
-                {
-                    SnapshotCount = 1,
-                    TurnNumber = 1,
-                    ActivePlayerIdx = 0,
-                }, a)
-                // .AssertMatch(am => am
-                //     .AssertPlayer(0, ap => ap
-                //         .AssertHand(ah => ah.HasCardCount(7))
-                //     )
-                //     .AssertPlayer(1, ap => ap
-                //         .AssertHand(ah => ah.HasCardCount(7))
-                //     )
-                //     .AssertSnapshots(asn => asn.HasCount(1))
-                // )
-
+                Expect(turn1, a)
             )
             .Act.AutoPassToTurn(2)
             .Act.AutoPassToTurn(1)
-            // // post rollback
+            // * post rollback
             .Act.Assert(a => 
-                Expect(new()
-                {
-                    SnapshotCount = 1,
-                    TurnNumber = 1,
-                    ActivePlayerIdx = 0,
-                }, a)
-                // .AssertMatch(am => am
-                //     .AssertPlayer(0, ap => ap
-                //         .AssertHand(ah => ah.HasCardCount(7))
-                //     )
-                //     .AssertPlayer(1, ap => ap
-                //         .AssertHand(ah => ah.HasCardCount(7))
-                //     )
-                //     .AssertSnapshots(asn => asn
-                //         .HasCount(2)
-                //         .AssertSnapshot(0, asn0 => asn0
-                //             .HasId("turn-1")
-                //         )
-                //         .AssertSnapshot(1, asn1 => asn1
-                //             .HasId("turn-2")
-                //         )
-                //     )
-                // )
+                Expect(turn1, a)
             )
             .Act.Crash()
         ;
@@ -100,27 +127,31 @@ public class SnapshotRollbackTests
             .Act.Assert(a => 
                 Expect(new()
                 {
-                    SnapshotCount = 2,
                     TurnNumber = 2,
                     ActivePlayerIdx = 1,
+                    Players = [
+                        new() {
+                            GraveyardCount = 0,
+                            HandCount = 7,
+                            LibraryCount = 53,
+                            Life = 20,
+                        },
+                        new() {
+                            GraveyardCount = 0,
+                            HandCount = 8,
+                            LibraryCount = 52,
+                            Life = 20,
+                        }
+                    ],
+                    Snapshots = [
+                        new() {
+                            TurnNumber = 1,
+                        },
+                        new() {
+                            TurnNumber = 2,
+                        }
+                    ]
                 }, a)
-                // .AssertMatch(am => am
-                //     .AssertPlayer(0, ap => ap
-                //         .AssertHand(ah => ah.HasCardCount(7))
-                //     )
-                //     .AssertPlayer(1, ap => ap
-                //         .AssertHand(ah => ah.HasCardCount(8))
-                //     )
-                //     .AssertSnapshots(asn => asn
-                //         .HasCount(2)
-                //         .AssertSnapshot(0, asn0 => asn0
-                //             .HasId("turn-1")
-                //         )
-                //         .AssertSnapshot(1, asn1 => asn1
-                //             .HasId("turn-2")
-                //         )
-                //     )
-                // )
             )
             .Act.Rollback(1)
         ;

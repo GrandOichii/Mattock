@@ -11,4 +11,10 @@ public class SnapshotAsserts(
         snapshot.Meta.TurnCounter.ShouldBe(expected);
         return this;
     }
+
+    public SnapshotAsserts HasId(int expected)
+    {
+        snapshot.Id.ShouldBe(expected);
+        return this;
+    }
 }
