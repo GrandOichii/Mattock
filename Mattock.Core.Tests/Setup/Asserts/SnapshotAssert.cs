@@ -6,9 +6,9 @@ public class SnapshotAsserts(
     Snapshot snapshot
 )
 {
-    public SnapshotAsserts HasId(string expected)
+    public SnapshotAsserts TurnNumber(int expected)
     {
-        snapshot.Id.ShouldBe(expected);
+        snapshot.Meta.TurnCounter.ShouldBe(expected);
         return this;
     }
 }

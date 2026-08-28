@@ -4,28 +4,37 @@ public class SnapshotsManager(
     Session session
 )
 {
-    public List<Snapshot> Snapshots { get; } = [];
+    private int _lastSnapshotId = 0;
+    public LinkedList<Snapshot> Snapshots { get; } = [];
 
-    public Snapshot CreateSnapshot(string id)
+    public Snapshot CreateSnapshot()
     {
-        if (Snapshots.Any(s => s.Id == id))
-            throw new CodeErrorException($"Snapshot with Id = {id} already exists");
+        // if (Snapshots.Any(s => s.Id == id))
+        //     throw new CodeErrorException($"Snapshot with Id = {id} already exists");
 
         Snapshot snap = new(
-            id,
+            ++_lastSnapshotId,
             // session.GetMatchSnapshot(),
-            [.. session.Match.Players.Select(p => p.GetRecord())]
+            [.. session.Match.Players.Select(p => p.GetRecord())],
+            session.Match
         );
-        Snapshots.Add(snap);
+        Snapshots.AddLast(snap);
 
         while (Snapshots.Count > session.Config.SnapshotMemory)
-            Snapshots.Remove(Snapshots[0]);
+            Snapshots.RemoveFirst();
             
         return snap;
     }
 
-    public Snapshot? Get(string id)
+    public Snapshot DestructiveDequeue(int id)
     {
-        return Snapshots.SingleOrDefault(s => s.Id == id);
+        while (true)
+        {
+            var result = Snapshots.Last();
+            Snapshots.RemoveLast();
+            if (result.Id == id) return result;
+            if (Snapshots.Count == 0)
+                throw new CodeErrorException($"Failed to find snapshot with Id = {id}");
+        }
     }
 }

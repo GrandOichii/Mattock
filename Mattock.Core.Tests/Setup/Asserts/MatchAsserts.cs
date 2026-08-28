@@ -82,7 +82,7 @@ public class MatchAsserts(TestSessionWrapper match)
 
     public MatchAsserts MatchPhases(params PhaseType[] phases)
     {
-        var turn = match.GetMatch().TurnManager;
+        var turn = match.GetMatch().TurnManager.Turn!;
         turn.Phases.Count.ShouldBe(phases.Length);
 
         for (int i = 0; i < phases.Length; ++i)
@@ -94,14 +94,14 @@ public class MatchAsserts(TestSessionWrapper match)
 
     public MatchAsserts CurrentPhase(PhaseType type)
     {
-        match.GetMatch().TurnManager.GetCurrentPhase().Type.ShouldBe(type);
+        match.GetMatch().TurnManager.Turn!.GetCurrentPhase().Type.ShouldBe(type);
         return this;
     }
 
     public MatchAsserts CurrentStep(StepType type)
     {
-        match.GetMatch().TurnManager.GetCurrentPhase().GetCurrentStep().ShouldNotBeNull();
-        match.GetMatch().TurnManager.GetCurrentPhase().GetCurrentStep()!.Type.ShouldBe(type);
+        match.GetMatch().TurnManager.Turn!.GetCurrentPhase().GetCurrentStep().ShouldNotBeNull();
+        match.GetMatch().TurnManager.Turn!.GetCurrentPhase().GetCurrentStep()!.Type.ShouldBe(type);
         return this;
     }
 

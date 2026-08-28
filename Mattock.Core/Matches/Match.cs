@@ -120,7 +120,7 @@ public class Match
 
     public Player GetActivePlayer() => Players[TurnManager.ActivePlayerIdx];
 
-    public async Task<RollbackRequest?> Run()
+    public async Task Setup()
     {
         // Game start
 
@@ -158,7 +158,10 @@ public class Match
         // Mulligans
 
         await TakeMulligans();
+    }
 
+    public async Task<RollbackRequest?> Run()
+    {
         return await TakeTurns();
     }
 
@@ -390,12 +393,16 @@ public class Match
             Players[i].SetController(new PlaybackPlayerController(snapshot.PlayerRecords[i]));
         }
 
+        await Setup();
         var request = await Run();
         if (request is null)
             throw new CodeErrorException($"After loading snapshot rollback request {nameof(RollbackRequest.PLAYBACK_ROLLBACK)} was not returned");
 
         if (request != RollbackRequest.PLAYBACK_ROLLBACK)
             throw new CodeErrorException($"While loading snapshot somehow returned rollback reqeust != {nameof(RollbackRequest.PLAYBACK_ROLLBACK)}, requested snapshot id: {request.RequestedSnapshotId}");
+
+        for (int i = 0; i < Players.Length; ++i)
+            Players[i].SetController(originalControllers[i]);
     }
 
 }

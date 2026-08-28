@@ -28,7 +28,7 @@ public class PlayLandSpecialAction : IAction
         if (match.TurnManager.ActivePlayerIdx != player.Idx) return [];
 
         // Phase has to be a main phase
-        var phase = match.TurnManager.GetCurrentPhase();
+        var phase = match.TurnManager.Turn!.GetCurrentPhase();
         if (!phase.IsMainPhase()) return [];
 
         // Has to not have already played a land this turn (can be changed)

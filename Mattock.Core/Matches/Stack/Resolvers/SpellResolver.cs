@@ -18,6 +18,7 @@ public class SpellResolver(
             var permanentId = await match.PutOntoTheBattlefield(Card, effect.Ctx.Controller);
             if (permanentId is null) 
                 return;
+
             var permanent = match.Battlefield.GetPermanentByPermanentid(permanentId)
                 ?? throw new CodeErrorException($"Failed to fetch newly created permanent with PermanentId = {permanentId} (card: {Card.GetDisplayName()})");
 

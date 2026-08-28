@@ -15,7 +15,7 @@ public class SnapshotsAsserts(
 
     public SnapshotsAsserts AssertSnapshot(int idx, Action<SnapshotAsserts> a)
     {
-        a(new(manager.Snapshots[idx]));
+        a(new(manager.Snapshots.ToArray()[idx]));
         return this;
     }
 }

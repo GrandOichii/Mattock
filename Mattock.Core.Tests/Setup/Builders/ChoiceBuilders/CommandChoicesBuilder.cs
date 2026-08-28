@@ -173,7 +173,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         return Enqueue((
             async (wrapper, player, options) =>
             {
-                var currentStep = wrapper.GetMatch().TurnManager.GetCurrentPhase().GetCurrentStep();
+                var currentStep = wrapper.GetMatch().TurnManager.Turn!.GetCurrentPhase().GetCurrentStep();
                 if (currentStep is null || currentStep.Type != step)
                     return (PassChoice(options), true, false);
                 return (RespondNull<ICommand>(), false, true);
@@ -187,7 +187,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         return Enqueue((
             async (wrapper, player, options) =>
             {
-                var currentPhase = wrapper.GetMatch().TurnManager.GetCurrentPhase();
+                var currentPhase = wrapper.GetMatch().TurnManager.Turn!.GetCurrentPhase();
                 if (currentPhase is null || currentPhase.Type != phase)
                     return (PassChoice(options), true, false);
                 return (RespondNull<ICommand>(), false, true);
@@ -234,7 +234,7 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         ));
     }
 
-    public TestPlayerControllerBuilder Rollback(string id)
+    public TestPlayerControllerBuilder Rollback(int id)
     {
         return Enqueue((
             async (wrapper, player, options) =>

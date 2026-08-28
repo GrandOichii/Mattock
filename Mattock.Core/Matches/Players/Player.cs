@@ -160,7 +160,7 @@ public class Player
     // methods
 
     public PlayerResponsesRecord GetRecord()
-        => _recorder.Record;
+        => _recorder.Record.Clone();
 
     /// <summary>
     /// Get the team index

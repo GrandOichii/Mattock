@@ -9,7 +9,7 @@ public class CheckerSBA : IStateBasedAction
 
     public bool Apply(Match match)
     {
-        Steps.Add(match.TurnManager.GetCurrentPhase().GetCurrentStep()?.Type);
+        Steps.Add(match.TurnManager.Turn!.GetCurrentPhase().GetCurrentStep()?.Type);
         ++Called;
         return false;
     }

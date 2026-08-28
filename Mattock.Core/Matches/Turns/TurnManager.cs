@@ -9,9 +9,8 @@ public class TurnManager(
 )
 {
     public int ActivePlayerIdx { get; set; } = -1;
-    public List<Phase> Phases { get; } = [];
-    public int CurrentPhaseIdx { get; private set; } = 0;
     public int TurnCounter { get; set; } = 0;
+    public TurnResolver? Turn = null;
 
     public int NextInTurnOrderIdx(int playerIdx)
     {
@@ -27,33 +26,10 @@ public class TurnManager(
         return result;
     }
 
-    public Phase CreatePhase(PhaseType type)
+    public TurnResolver CreateTurn()
     {
-        return type switch
-        {
-            PhaseType.Beginning => new BeginningPhase(_match),
-            PhaseType.PrecombatMain => new MainPhase(_match, true),
-            PhaseType.Combat => new CombatPhase(_match),
-            PhaseType.PostcombatMain => new MainPhase(_match, false),
-            PhaseType.Ending => new EndingPhase(_match),
-            _ => throw new CodeErrorException($"Unrecognized phase type: {type}"),
-        };
-    }
-
-    public void ResetTurn()
-    {
-        Phases.Clear();
-        CurrentPhaseIdx = 0;
-
-        PhaseType[] phases = [
-            PhaseType.Beginning,
-            PhaseType.PrecombatMain,
-            PhaseType.Combat,
-            PhaseType.PostcombatMain,
-            PhaseType.Ending,
-        ];
-        foreach (var type in phases)
-            Phases.Add(CreatePhase(type));
+        ++TurnCounter;
+        return new(_match);
     }
 
     public void AdvanceTurn()
@@ -65,45 +41,17 @@ public class TurnManager(
         ActivePlayerIdx = NextInTurnOrderIdx(ActivePlayerIdx);
     }
 
-    public void AdvancePhase()
-    {
-        ++CurrentPhaseIdx;
-    }
-
-    public bool IsTurnEnded()
-    {
-        return CurrentPhaseIdx >= Phases.Count;
-    }
-
     public async Task<RollbackRequest?> DoTurn()
     {
-        ++TurnCounter;
-        ResetTurn();
-        _match.Session.Snapshots.CreateSnapshot($"turn-{TurnCounter}");
+        Turn ??= CreateTurn();
 
-        while (!IsTurnEnded())
-        {
-            var phase = GetCurrentPhase();
-
-            var request = await phase.Do();
-            if (request is not null)
-            {
-                return request;
-            }
-            
-            if (_match.ShouldHalt())
-                return null;
-
-            AdvancePhase();
-        }
+        var request = await Turn.Resolve();
+        if (request is not null)
+            return request;
+        Turn = null;
 
         AdvanceTurn();
 
-        foreach (var p in _match.Players)
-            p.ResetTrackers();
-            
         return null;
     }
-
-    public Phase GetCurrentPhase() => Phases[CurrentPhaseIdx];
 }

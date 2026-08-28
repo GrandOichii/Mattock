@@ -147,7 +147,7 @@ public class Card
             return false;
 
         // TODO this is very basic, change later
-        if (!IsInstant() && !(Match.TurnManager.GetCurrentPhase().IsMainPhase() && player.IsActive()))
+        if (!IsInstant() && !(Match.TurnManager.Turn!.GetCurrentPhase().IsMainPhase() && player.IsActive()))
             return false; 
 
         if (Zone != player.Hand)

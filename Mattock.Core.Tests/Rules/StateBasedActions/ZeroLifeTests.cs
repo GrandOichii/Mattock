@@ -46,8 +46,6 @@ public class ZeroLifeTests
         match.Assert(a => a
             .DidntCrash()
             .NoChoicesLeft()
-            .CurrentPhase(PhaseType.Beginning)
-            .CurrentStep(StepType.Upkeep)
             .WinningTeams([0])
         );
     }

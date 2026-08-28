@@ -40,13 +40,13 @@ public class Session
     {
         // TODO call setup for player controllers
 
+        await Match.Setup();
         while (true)
         {
             var request = await Match.Run();
             if (request is null) break;
 
-            var snap = Snapshots.Get(request.RequestedSnapshotId)
-                ?? throw new MatchException($"Requested to rollback to snapshot with unkown id: {request.RequestedSnapshotId}");
+            var snap = Snapshots.DestructiveDequeue(request.RequestedSnapshotId);
 
             Match = CreateMatch();
             await Match.LoadSnapshot(snap);

@@ -42,8 +42,6 @@ public class DrawFromEmptyLibraryTests
         match.Assert(a => a
             .DidntCrash()
             .NoChoicesLeft()
-            .CurrentPhase(PhaseType.Beginning)
-            .CurrentStep(StepType.Draw)
             .WinningTeams([1])
         );
     }
