@@ -56,7 +56,6 @@ public class TestSessionWrapper
 
     public async Task Run()
     {
-        // var core = File.ReadAllText("../../../../core.lua");
         var coreScript = CoreLoader.Load("../../../../core");
 
         Session = new TestSession(
@@ -84,11 +83,4 @@ public class TestSessionWrapper
         action(new(this));
         return this;
     }
-
-    // public TestMatchWrapper AssertPlayer(int playerIdx, Action<PlayerAsserts> action)
-    // {
-    //     Match.ShouldNotBeNull();
-    //     action(new(Match.Players[playerIdx]));
-    //     return this;
-    // }
 }

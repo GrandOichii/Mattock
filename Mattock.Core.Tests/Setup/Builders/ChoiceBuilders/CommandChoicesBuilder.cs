@@ -4,10 +4,16 @@ using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-public class CommandChoicesBuilder(TestPlayerControllerBuilder builder) 
-    : ChoicesBuilder<(TestPlayerController.CommandChoice, bool)>(builder)
+public class CommandChoicesBuilder
+    : ChoicesBuilder<(TestPlayerController.CommandChoice, bool)>
 {
-    
+    public RollbackChoicesBuilder Rollback { get; }
+
+    public CommandChoicesBuilder(TestPlayerControllerBuilder builder) : base(builder)
+    {
+        Rollback = new(this);
+    }
+
     public TestPlayerControllerBuilder NTimes(int n, Action<CommandChoicesBuilder> action)
     {
         for (int i = 0; i < n; ++i)
@@ -234,21 +240,6 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
         ));
     }
 
-    public TestPlayerControllerBuilder Rollback(int id)
-    {
-        return Enqueue((
-            async (wrapper, player, options) =>
-            {
-                return (
-                    (null, new() { RequestedSnapshotId = id} ),
-                    true,
-                    true
-                );
-            },
-            true
-        ));
-    }
-
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
         return Enqueue((
@@ -340,4 +331,41 @@ public class CommandChoicesBuilder(TestPlayerControllerBuilder builder)
             return this;
         }
     }
+
+    public class RollbackChoicesBuilder(CommandChoicesBuilder ccb)
+    {
+        public TestPlayerControllerBuilder ToTurn(int turn)
+        {
+            return ccb.Enqueue((
+                async (wrapper, player, options) =>
+                {
+                    var id = wrapper.Session!.Snapshots.Snapshots.First(s => s.Meta.TurnCounter == turn).Id;
+                    return (
+                        (null, new() { RequestedSnapshotId = id} ),
+                        true,
+                        true
+                    );
+                },
+                true
+            ));
+        }
+
+        public TestPlayerControllerBuilder ToLast()
+        {
+            return ccb.Enqueue((
+                async (wrapper, player, options) =>
+                {
+                    var id = wrapper.Session!.Snapshots.Snapshots.Last().Id;
+                    return (
+                        (null, new() { RequestedSnapshotId = id} ),
+                        // (null, null),
+                        true,
+                        true
+                    );
+                },
+                true
+            ));
+        }
+    }
 }
+

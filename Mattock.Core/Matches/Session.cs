@@ -46,7 +46,7 @@ public class Session
             var request = await Match.Run();
             if (request is null) break;
 
-            var snap = Snapshots.DestructiveDequeue(request.RequestedSnapshotId);
+            var snap = Snapshots.GetAndClear(request.RequestedSnapshotId);
 
             Match = CreateMatch();
             await Match.LoadSnapshot(snap);

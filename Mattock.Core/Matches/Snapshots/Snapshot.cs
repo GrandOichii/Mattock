@@ -4,8 +4,8 @@ namespace Mattock.Core.Matches.Snapshots;
 
 public class Snapshot(
     int id,
-    // MatchSnapshot snapshot,
     PlayerResponsesRecord[] playerRecords,
+    string description,
     Match match
 )
 {
@@ -14,11 +14,13 @@ public class Snapshot(
     public PlayerResponsesRecord[] PlayerRecords { get; } = playerRecords;
 
     public Metadata Meta { get; } = new(
+        description,
         match.TurnManager.TurnCounter
     );
 
     public record Metadata
     (
+        string Description,
         int TurnCounter
     );
 }

@@ -26,7 +26,7 @@ public class TurnResolver
         foreach (var type in phases)
             Phases.Add(CreatePhase(type));
 
-        _match.Session.Snapshots.CreateSnapshot();
+        _match.Session.Snapshots.CreateSnapshot($"Start of turn {match.TurnManager.TurnCounter}");
     }
 
     public async Task<RollbackRequest?> Resolve()

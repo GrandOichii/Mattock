@@ -49,4 +49,10 @@ public class PlayerAsserts(Player player)
         action(new(player.ManaPool));
         return this;
     }
+
+    public PlayerAsserts ControlledPermanentsCount(int expected)
+    {
+        player.Match.Battlefield.GetPermanentsControlledBy(player).Length.ShouldBe(expected);
+        return this;
+    }
 }
