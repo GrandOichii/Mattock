@@ -50,6 +50,15 @@ public class MatchScripts
             { "Rollback", response.Item2 },
         });
     }
+
+    private LuaTable CreateResponseTable<T>((T, RollbackRequest?) response)
+    {
+        return LuaCommon.CreateTable(Match.LState, new()
+        {
+            { "Response", response.Item1 },
+            { "Rollback", response.Item2 },
+        });
+    }
     
     [LuaCommand]
     public void DEBUG(object o)
@@ -146,6 +155,16 @@ public class MatchScripts
     }
 
     [LuaCommand]
+    public LuaTable ChooseString(Player player, LuaTable optionsTable, string hint)
+    {
+        var options = LuaCommon.ParseTable<string>(optionsTable);
+        var result = player.ChooseString(options, hint)
+            .GetAwaiter().GetResult();
+
+        return CreateResponseTable(result);
+    }
+
+    [LuaCommand]
     public LuaTable ChoosePermanents(Player player, LuaTable optionsTable, int min, int max, string hint)
     {
         var options = LuaCommon.ParseTable<Permanent>(optionsTable);
@@ -200,6 +219,25 @@ public class MatchScripts
             damages.Add(new(
                 new TODODamageSource(amount),
                 new PermanentDamageTarget(permanent)
+            ));
+        }
+        return Match.Events.ProcessDamage([.. damages])
+            .GetAwaiter().GetResult();
+    }
+
+    [LuaCommand]
+    public RollbackRequest? DealDamageToPlayers(LuaTable damageTable)
+    {
+        var arr = LuaCommon.ParseTable<LuaTable>(damageTable);
+        List<Damage.Damage> damages = [];
+        foreach (var item in arr)
+        {
+            var player = LuaCommon.Get<Player>(item, "Player");
+            var amount = LuaCommon.GetInt(item, "Amount");
+
+            damages.Add(new(
+                new TODODamageSource(amount),
+                new PlayerDamageTarget(player)
             ));
         }
         return Match.Events.ProcessDamage([.. damages])

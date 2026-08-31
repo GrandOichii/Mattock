@@ -95,7 +95,7 @@ function Mana:Group(...)
     local mana = {...}
 
     return function (ctx)
-        return mana
+        return mana, nil
     end
 end
 
@@ -106,18 +106,33 @@ function Mana:Choose(...)
         local mana = {}
         local texts = {}
         for _, g in ipairs(groups) do
-            mana[#mana+1] = g(ctx)
+            local item = g(ctx)
+            mana[#mana+1] = item
 
-            if Util:GetIdx(texts, mana.Text) > 0 then
-                error('Mana:Choose detected two mana costs that share the same text')
+            local text = ''
+            
+            for _, m in ipairs(item) do
+                text = text..m.Text
             end
-
-            texts[#texts+1] = mana.Text
+            
+            if Util:GetIdx(texts, text) > 0 then
+                error('Mana:Choose detected two mana costs that share the same text: '..text)
+            end
+            texts[#texts+1] = text
         end
 
-        error('Mana:Choose not implemented')
-        -- TODO call ChooseString to pick the mana text
-        -- TODO based on returned text get the idx using Util:GetIdx
-        -- TODO return the indexed mana
+        local player = Player:You()(ctx)
+        local choice = ChooseString(player, texts, 'Choose what mana to gain') -- TODO better hint
+
+        if choice.Rollback ~= nil then
+            return nil, choice.Rollback
+        end
+
+        local idx = Util:GetIdx(texts, choice.Response)
+        if idx < 0 then
+            error('Failed to index returned string choice for Mana:Choose (choice: '..choice..')')
+        end
+
+        return mana[idx]
     end
 end

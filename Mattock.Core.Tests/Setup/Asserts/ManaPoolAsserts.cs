@@ -16,7 +16,7 @@ public class ManaPoolAsserts(ManaPool manaPool)
         return this;
     }
 
-    public ManaPoolAsserts HasColoredMana(ManaType t, int v)
+    public ManaPoolAsserts HasMana(ManaType t, int v)
     {
         manaPool.Mana.Count(m => m.Type == t).ShouldBe(v);
         return this;

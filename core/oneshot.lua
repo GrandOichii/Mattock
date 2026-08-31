@@ -66,6 +66,22 @@ function OneShot:DealDamageToPermanents(manyPermanents, number)
     end
 end
 
+function OneShot:DealDamageToPlayers(manyPlayers, number)
+    return function (ctx)
+        local permanents = manyPlayers(ctx)
+        local amount = number(ctx)
+        local damage = {}
+        for _, p in ipairs(permanents) do
+            damage[#damage+1] = {
+                Player = p,
+                Amount = amount
+            }
+        end
+
+        return DealDamageToPlayers(damage)
+    end
+end
+
 function OneShot:AddMana(manyPlayers, ...)
     local manaGroups = {...}
 
@@ -73,7 +89,10 @@ function OneShot:AddMana(manyPlayers, ...)
         local players = manyPlayers(ctx)
         local newMana = {}
         for _, manaGroup in ipairs(manaGroups) do
-            local mana = manaGroup(ctx)
+            local mana, rollback = manaGroup(ctx)
+            if rollback ~= nil then
+                return rollback
+            end
             for _, m in ipairs(mana) do
                 assert(m.Type ~= -1, 'Provided generic mana for OneShot:AddMana')
 

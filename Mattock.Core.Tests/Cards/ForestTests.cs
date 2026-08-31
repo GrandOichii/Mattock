@@ -80,7 +80,7 @@ public class ForestTests
             .AssertPlayer(0, ap => ap
                 .AssertManaPool(amp => amp
                     .HasTotalMana(1)
-                    .HasColoredMana(ManaType.Green, 1)
+                    .HasMana(ManaType.Green, 1)
                 )
             )
             .NoChoicesLeft()

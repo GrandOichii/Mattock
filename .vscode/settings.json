@@ -19,6 +19,8 @@
         "PermanentIsSummoningSick",
         "TapPermanents",
         "DealDamageToPermanents",
-        "AddMana"
+        "AddMana",
+        "ChooseString",
+        "DealDamageToPlayers"
     ]
 }

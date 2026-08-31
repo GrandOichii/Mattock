@@ -16,7 +16,9 @@ function _Create()
                                 Select:Players()
                                     :You()
                                     :Many(),
-                                Mana.Fixed:Colorless(1)
+                                Mana:Group(
+                                    Mana.Fixed:Colorless(1)
+                                )
                             )
                         )
                         :Build()
@@ -30,15 +32,32 @@ function _Create()
                 )
                 :Effect(
                     New:Effect('Add {G} or {B}. This land deals 1 damage to you.')
+                        :CanProduceMana()
                         :Effect(
                             OneShot:AddMana(
                                 Select:Players()
                                     :You()
                                     :Many(),
-                                Mana:Group(
-                                    Mana.Fixed:Green(1),
-                                    Mana.Fixed:Black(1)
+                                Mana:Choose(
+                                    Mana:Group(
+                                        Mana.Fixed:Green(1)
+                                    ),
+                                    Mana:Group(
+                                        Mana.Fixed:Blue(1)
+                                    )
                                 )
+                            )
+                        )
+                        :Build()
+                )
+                :Effect(
+                    New:Effect('This land deals 1 damage to you.')
+                        :Effect(
+                            OneShot:DealDamageToPlayers(
+                                Select:Players()
+                                    :You()
+                                    :Many(),
+                                Number:Const(1)
                             )
                         )
                         :Build()

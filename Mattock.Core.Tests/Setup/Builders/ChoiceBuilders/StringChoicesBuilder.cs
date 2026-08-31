@@ -1,9 +1,15 @@
 namespace Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-
-public class StringChoicesBuilder(TestPlayerControllerBuilder builder) 
-    : ChoicesBuilder<TestPlayerController.StringChoice>(builder)
+public class StringChoicesBuilder 
+    : ChoicesBuilder<TestPlayerController.StringChoice>
 {
+    public RollbackChoicesBuilder Rollback { get; }
+
+    public StringChoicesBuilder(TestPlayerControllerBuilder builder) : base(builder)
+    {
+        Rollback = new(this);
+    }
+
     public TestPlayerControllerBuilder Yes()
     {
         return Enqueue(async (player, options, hint, allowNone) =>
@@ -24,6 +30,36 @@ public class StringChoicesBuilder(TestPlayerControllerBuilder builder)
                 true
             );
         });
+    }
+
+    public TestPlayerControllerBuilder Choose(string choice)
+    {
+        return Enqueue(async (player, options, hint, allowNone) =>
+        {
+            return (
+                Respond(choice),
+                true
+            );
+        });
+    }
+
+    
+    // TODO repeated code
+    public class RollbackChoicesBuilder(StringChoicesBuilder mcb)
+    {
+        public TestPlayerControllerBuilder ToLast()
+        {
+            return mcb.Enqueue(
+                async (player, options, hint, allowNone) =>
+                {
+                    var id = player.Match.Session.Snapshots.Snapshots.Last().Id;
+                    return (
+                        (null!, new() { RequestedSnapshotId = id} ),
+                        true
+                    );
+                }
+            );
+        }
     }
 }
 

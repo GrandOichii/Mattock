@@ -103,7 +103,8 @@ public class CommandChoicesBuilder
             {
                 ActivatedAbility[] arr = [.. player
                     .GetActivatableManaAbilities()
-                    .Where(a => a.Card.HasName(permanentName))];
+                    .Where(a => a.Card.HasName(permanentName))
+                ];
 
                 var command = new ActivateManaAbilityCommand(player, arr[abilityIdx]);
                 return (Respond(command), true, true);
