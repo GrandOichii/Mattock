@@ -5,12 +5,8 @@ function _Create()
         :ActivatedAbility(
             New:ActivatedAbility('{1}{B}, {T}: Target player loses 1 life.')
                 :ManaCost(
-                    Mana:Generic(
-                        Number:Const(1)
-                    ),
-                    Mana:Black(
-                        Number:Const(1)
-                    )
+                    Mana.Fixed:Generic(1),
+                    Mana.Fixed:Black(1)
                 )
                 :Cost(
                     Cost:SelfTap()

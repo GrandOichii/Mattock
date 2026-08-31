@@ -1,7 +1,7 @@
 Number = {}
 
-function Number:Const(const)
+function Number:Const(int)
     return function (ctx)
-        return const
+        return int
     end
 end

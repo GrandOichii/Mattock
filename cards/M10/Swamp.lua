@@ -15,8 +15,8 @@ function _Create()
                                 Select:Players()
                                     :You()
                                     :Many(),
-                                Mana:Black(
-                                    Number:Const(1)
+                                Mana:Group(
+                                    Mana.Fixed:Black(1)
                                 )
                             )
                         )

@@ -1,0 +1,20 @@
+{
+    "Script": "",
+    "Name": "Yavimaya Coast",
+    "ManaCosts": [
+    ],
+    "ColorIndicator": [
+    ],
+
+    "Types": [ "Land" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "{T}: Add {C}.\n{T}: Add {G} or {B}. This land deals 1 damage to you.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

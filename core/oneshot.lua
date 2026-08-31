@@ -47,8 +47,7 @@ function OneShot:TapPermanents(manyPermanents)
 end
 
 function OneShot:Destroy(manyPermanents)
-    -- TODO
-    return {}
+    error('OneShot:Destroy not implemented')
 end
 
 function OneShot:DealDamageToPermanents(manyPermanents, number)
@@ -68,18 +67,21 @@ function OneShot:DealDamageToPermanents(manyPermanents, number)
 end
 
 function OneShot:AddMana(manyPlayers, ...)
-    local mana = {...}
+    local manaGroups = {...}
 
     return function (ctx)
         local players = manyPlayers(ctx)
         local newMana = {}
-        for _, m in ipairs(mana) do
-            assert(m.Type ~= -1, 'Provided generic mana for OneShot:AddMana')
+        for _, manaGroup in ipairs(manaGroups) do
+            local mana = manaGroup(ctx)
+            for _, m in ipairs(mana) do
+                assert(m.Type ~= -1, 'Provided generic mana for OneShot:AddMana')
 
-            newMana[#newMana+1] = {
-                Type = m.Type,
-                Amount = m.GetAmount(ctx)
-            }
+                newMana[#newMana+1] = {
+                    Type = m.Type,
+                    Amount = m.GetAmount(ctx)
+                }
+            end
         end
 
         return AddMana(players, newMana)

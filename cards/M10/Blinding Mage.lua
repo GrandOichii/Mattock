@@ -7,9 +7,7 @@ function _Create()
         :ActivatedAbility(
             New:ActivatedAbility('{W}, {T}: Tap target creature.')
                 :ManaCost(
-                    Mana:White(
-                        Number:Const(1)
-                    )
+                    Mana.Fixed:White(1)
                 )
                 :Cost(
                     Cost:SelfTap()
