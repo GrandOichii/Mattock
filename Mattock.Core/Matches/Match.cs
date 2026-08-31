@@ -93,9 +93,7 @@ public class Match
             if (players.Length > config.MaxTeamSize)
                 throw new TeamTooBigException($"Team with Idx = {tIdx} has too many players (actual: {players.Length}, max: {config.MaxTeamSize})");
 
-        Rng = config.RandomMatch
-            ? new(new Random().Next())
-            : new(config.Seed);
+        Rng = new(config.Seed);
         TurnManager.ActivePlayerIdx = config.RandomFirstPlayer
             ? Rng.Next() % Players.Length
             : config.FirstPlayerIdx;

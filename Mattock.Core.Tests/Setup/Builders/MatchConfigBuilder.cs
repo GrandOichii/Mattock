@@ -1,10 +1,14 @@
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-
 namespace Mattock.Core.Tests.Setup.Builders;
 
 public class MatchConfigBuilder
 {
-    private readonly MatchConfig _result = MatchConfig.Copy(MatchConfig.Default);
+    private readonly MatchConfig _result;
+
+    public MatchConfigBuilder()
+    {
+        _result = MatchConfig.Copy(MatchConfig.Default);
+        _result.Seed = new Random().Next();
+    }
 
     public MatchConfig Build() => _result;
 

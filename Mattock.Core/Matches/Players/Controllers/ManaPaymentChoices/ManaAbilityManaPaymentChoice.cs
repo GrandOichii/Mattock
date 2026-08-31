@@ -17,5 +17,5 @@ public class ManaAbilityManaPaymentChoice(
     }
 
     public string ToDisplayString()
-        => $"Activate mana ability {Ability.Id}";
+        => $"Activate mana ability {Ability.ActivatedAbilityId}";
 }

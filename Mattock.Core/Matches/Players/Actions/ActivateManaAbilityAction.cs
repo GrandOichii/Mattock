@@ -31,5 +31,5 @@ public class ActivateManaAbilityCommand(
     }
 
     public string ToCommandString()
-        => $"{ActivateManaAbilityAction.ActionWord} {aa.Id}";
+        => $"{ActivateManaAbilityAction.ActionWord} {aa.ActivatedAbilityId}";
 }

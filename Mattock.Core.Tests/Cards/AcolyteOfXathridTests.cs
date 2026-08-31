@@ -575,4 +575,97 @@ public class AcolyteOfXathridTests
             )
         );
     }
+
+    [Fact]
+    public async Task RollbackBeforeActivation_NoMana()
+    {
+        // Arrange
+        var loader = new FileCardLoader("../../../../cards");
+
+        var card = loader.Load("M10:Acolyte of Xathrid");
+        var swamp = loader.Load("M10:Swamp");
+        
+        var config = new MatchConfigBuilder()
+            .FirstPlayerIdx(0)
+            .NoManaPoolEmptying()
+            .NoSummoningSickness()
+            .Build();
+        
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [ 
+                new() {
+                    Amount = 4,
+                    Card = card,
+                },
+                new() {
+                    Amount = 3,
+                    Card = swamp,
+                }
+            ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck)
+            .ChoosePlayers.WithIdx(0)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.PlayLandWithName(swamp.Name)
+            .Act.CastSpellWithName(card.Name)
+            .ManaPaymentChoices.First() // tap swamp
+            .ManaPaymentChoices.First() // pay with mana from pool
+            .Act.AutoPassUntilStackEmpty()
+            .Act.Assert(a => a
+                .CanActivate()
+            )
+            .Act.Assert(a => HasLife(0, 20, a))
+            .Act.Assert(a => HasLife(1, 20, a))
+            .Act.Activate(card.Name)
+            .ChoosePlayers.Me()
+            // * can't pay, forced to roll back to pre activation
+            .PayMana.Rollback.ToLast()
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPass();
+
+        var match = new TestSessionWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .CurrentStep(null)
+            .CurrentPhase(PhaseType.PrecombatMain)
+            .TurnNumber(1)
+            .AssertPlayer(0, ap => ap
+                .HasLife(20)
+                .AssertManaPool(am => am
+                    .IsEmpty()
+                )
+            )
+            .AssertPlayer(1, ap => ap
+                .HasLife(20)
+                .AssertManaPool(am => am
+                    .IsEmpty()
+                )
+            )
+            .AssertBattlefield(ab => ab
+                .AssertPermanent(swamp.Name, ap => ap
+                    .IsTapped()
+                )
+                .AssertPermanent(card.Name, ap => ap
+                    .IsUntapped()
+                )
+            )
+        );
+    }
 }

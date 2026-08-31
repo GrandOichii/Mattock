@@ -13,7 +13,7 @@ public class ActivatedAbility(
     Card card
 )
 {
-    public string Id { get; } = match.Ids.GenerateActivatedAbilityId();
+    public string ActivatedAbilityId { get; } = match.Ids.GenerateActivatedAbilityId();
     public string Text { get; } = aat.Text;
     public DynamicManaCost[] ManaCosts { get; } = [.. aat.ManaCosts];
     public Cost[] Costs { get; } = [.. aat.Costs];

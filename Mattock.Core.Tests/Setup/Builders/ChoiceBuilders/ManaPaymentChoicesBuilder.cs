@@ -3,9 +3,16 @@ using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 namespace Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
 
-public class ManaPaymentChoicesBuilder(TestPlayerControllerBuilder builder)
-    : ChoicesBuilder<TestPlayerController.ManaPaymentChoice>(builder)
+public class ManaPaymentChoicesBuilder
+    : ChoicesBuilder<TestPlayerController.ManaPaymentChoice>
 {
+    public RollbackChoicesBuilder Rollback { get; }
+
+    public ManaPaymentChoicesBuilder(TestPlayerControllerBuilder builder) : base(builder)
+    {
+        Rollback = new(this);
+    }
+
     public TestPlayerControllerBuilder NTimes(int n, Action<ManaPaymentChoicesBuilder> action)
     {
         for (int i = 0; i < n; ++i)
@@ -81,6 +88,24 @@ public class ManaPaymentChoicesBuilder(TestPlayerControllerBuilder builder)
         {
             options.Length.ShouldBe(v);
             return this;
+        }
+    }
+
+    // TODO repeated code
+    public class RollbackChoicesBuilder(ManaPaymentChoicesBuilder mcb)
+    {
+        public TestPlayerControllerBuilder ToLast()
+        {
+            return mcb.Enqueue(
+                async (player, options, hint) =>
+                {
+                    var id = player.Match.Session.Snapshots.Snapshots.Last().Id;
+                    return (
+                        (null!, new() { RequestedSnapshotId = id} ),
+                        true
+                    );
+                }
+            );
         }
     }
 }

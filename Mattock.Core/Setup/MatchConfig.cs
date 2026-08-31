@@ -39,7 +39,7 @@ public class MatchConfig
     {
         FirstPlayerIdx = -1,
         RandomFirstPlayer = true,
-        Seed = -1,
+        Seed = 0,
         RandomMatch = true,
         StartingLifeTotal = 20,
         InitialHandSize = 7,

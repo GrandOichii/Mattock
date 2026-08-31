@@ -98,10 +98,18 @@ public class MatchAsserts(TestSessionWrapper match)
         return this;
     }
 
-    public MatchAsserts CurrentStep(StepType type)
+    public MatchAsserts CurrentStep(StepType? type)
     {
-        match.GetMatch().TurnManager.Turn!.GetCurrentPhase().GetCurrentStep().ShouldNotBeNull();
-        match.GetMatch().TurnManager.Turn!.GetCurrentPhase().GetCurrentStep()!.Type.ShouldBe(type);
+        var step = match.GetMatch().TurnManager.Turn!.GetCurrentPhase().GetCurrentStep();
+        if (type is null)
+        {
+            step.ShouldBeNull();
+            return this;
+        }
+
+        step.ShouldNotBeNull();
+        step.Type.ShouldBe((StepType)type);
+        
         return this;
     }
 

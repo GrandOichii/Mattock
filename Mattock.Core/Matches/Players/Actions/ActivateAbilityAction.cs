@@ -31,5 +31,5 @@ public class ActivateAbilityCommand(
     }
 
     public string ToCommandString()
-        => $"{ActivateAbilityAction.ActionWord} {aa.Id}";
+        => $"{ActivateAbilityAction.ActionWord} {aa.ActivatedAbilityId}";
 }
