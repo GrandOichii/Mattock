@@ -7,4 +7,6 @@ public class TargetDeclaration(
 {
     public string Key { get; } = key;
     public object[] Items { get; } = items;
+
+    public readonly static TargetDeclaration ROLLBACK = new("ROLLBACK", []);
 }

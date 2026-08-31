@@ -442,6 +442,24 @@ public class Player
         return [.. cards.SelectMany(c => c.GetActivatableManaAbilitiesFor(this))];
     }
 
+    public Task<RollbackRequest?> Mill(int amount)
+    {
+        // TODO this is very basic
+
+        for (int i = 0; i < amount; ++i)
+        {
+            var top = Library.GetLast();
+            if (top is null)
+                break;
+            
+
+            Match.MoveCard(top, CardZoneChangeType.Top, Graveyard.GetCardZoneChanger());
+        }
+
+        // i = amount of cards milled
+        return Task.FromResult<RollbackRequest?>(null);
+    }
+
     /// <summary>
     /// Update the player controller with the actual game state
     /// </summary>

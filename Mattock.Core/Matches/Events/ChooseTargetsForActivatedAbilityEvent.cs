@@ -14,7 +14,14 @@ public class ChooseTargetsForActivatedAbilityEvent(
     public async Task<RollbackRequest?> Do(Match match)
     {
         var targets = aa.GetTargets();
-        TargetDeclaration[] declarations = [.. targets.Select(t => t.Get(ctx))];
+        TargetDeclaration[] declarations = new TargetDeclaration[targets.Length];
+        for (int i = 0; i < targets.Length; ++i)
+        {
+            var (dec, request) = targets[i].Get(ctx);
+            if (request is not null)
+                return request;
+            declarations[i] = dec;
+        }
         ctx.Targets.AddRange(declarations);
 
         return null;

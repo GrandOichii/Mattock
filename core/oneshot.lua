@@ -10,6 +10,15 @@ function OneShot:Draw(manyPlayers, number)
     end
 end
 
+function OneShot:Mill(manyPlayers, number)
+    return function (ctx)
+        local players = manyPlayers(ctx)
+        local amount = number(ctx)
+
+        return Mill(players, amount)
+    end
+end
+
 function OneShot:Discard(manyPlayers, number, random)
     return function (ctx)
         -- TODO use random

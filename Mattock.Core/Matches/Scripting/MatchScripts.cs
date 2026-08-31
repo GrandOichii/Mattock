@@ -75,14 +75,25 @@ public class MatchScripts
     }
 
     [LuaCommand]
-    public RollbackRequest? DrawCards(LuaTable playerTable, int amount)
+    public RollbackRequest? DrawCards(LuaTable playersTable, int amount)
     {
-        var players = LuaCommon.ParseTable<Player>(playerTable);
+        var players = LuaCommon.ParseTable<Player>(playersTable);
 
         return Match.Events.DrawCards([..
             players.Select(p => new CardDraw(p, amount))
         ]).GetAwaiter().GetResult();
     }
+
+    [LuaCommand]
+    public RollbackRequest? Mill(LuaTable playersTable, int amount)
+    {
+        var players = LuaCommon.ParseTable<Player>(playersTable);
+
+        return Match.Events.Mill([..
+            players.Select(p => new Mill(p, amount))
+        ]).GetAwaiter().GetResult();
+    }
+
 
     [LuaCommand]
     public RollbackRequest? DiscardCards(LuaTable playerTable, int amount, bool random)
@@ -256,5 +267,11 @@ public class MatchScripts
 
         return Match.Events.AddMana(players, mana)
             .GetAwaiter().GetResult();
+    }
+
+    [LuaCommand]
+    public bool AreOpponents(Player p1, Player p2)
+    {
+        return p1.IsOpponentFor(p2);
     }
 }

@@ -85,6 +85,15 @@ public class MatchEvents(
         return await _match.ProcessEvent(e);
     }
 
+    public async Task<RollbackRequest?> Mill(Mill[] mills)
+    {
+        MillEvent e = new(
+            mills
+        );
+
+        return await _match.ProcessEvent(e);
+    }
+
     public async Task<RollbackRequest?> GainLife(LifeGain[] gains)
     {
         LifeGainEvent e = new(

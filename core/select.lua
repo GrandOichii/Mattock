@@ -63,6 +63,13 @@ function Select:Players()
         return select:Only(Player:You())
     end
 
+    function select:Opponents()
+        return select:_Filter(function (ctx, p)
+            local me = Player:You()(ctx)
+            return AreOpponents(me, p)
+        end)
+    end
+
     function select:Only(player)
         return select:_Filter(function (ctx, p)
             return p == player(ctx)

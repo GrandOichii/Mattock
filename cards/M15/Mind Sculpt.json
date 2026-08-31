@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Mind Sculpt",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 1,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        1
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Target opponent mills 7 cards.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

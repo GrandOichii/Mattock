@@ -21,6 +21,8 @@
         "DealDamageToPermanents",
         "AddMana",
         "ChooseString",
-        "DealDamageToPlayers"
+        "DealDamageToPlayers",
+        "AreOpponents",
+        "Mill"
     ]
 }

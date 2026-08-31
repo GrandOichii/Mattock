@@ -68,14 +68,13 @@ function Target:_(tgtKey, itemsSelect, targetAmount, chooserFunc, hint)
             )
 
             if chosen.Rollback ~= nil then
-                -- TODO
-                error('Unhandled rollback in Target:_')
+                return nil, chosen.Rollback
             end
 
             return {
                 Key = tgtKey,
                 Items = chosen.Response
-            }
+            }, nil
         end,
         Check = function (ctx)
             local min = targetAmount:Min(ctx)

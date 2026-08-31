@@ -18,11 +18,11 @@ public class RollbackRequest
         return results.All(r => r);
     }
 
-    public static RollbackRequest? FromLuaReturned(object[] returned)
+    public static RollbackRequest? FromLuaReturned(object[] returned, int idx=0)
     {
-         if (returned[0] == null)
+         if (returned[idx] == null)
             return null;
 
-        return LuaCommon.GetReturnAs<RollbackRequest>(returned);
+        return LuaCommon.GetReturnAs<RollbackRequest>(returned, idx);
     }
 }
