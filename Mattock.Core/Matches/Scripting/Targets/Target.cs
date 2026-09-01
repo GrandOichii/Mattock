@@ -27,9 +27,9 @@ public class Target
         var returned = GetFunc.Call(ctx);
         if (returned[0] is null)
         {
-            var request = RollbackRequest.FromLuaReturned(returned, 1)
+            var rollback = RollbackRequest.FromLuaReturned(returned, 1)
                 ?? throw new CodeErrorException($"Target returned null target declaration and null rollback request");
-            return (TargetDeclaration.ROLLBACK, request);
+            return (TargetDeclaration.ROLLBACK, rollback);
         }
         var table = LuaCommon.GetReturnAs<LuaTable>(returned);
         var key = LuaCommon.Get<string>(table, "Key");

@@ -34,16 +34,16 @@ public class DeclareBlockersStepPart
             var available = player.GetAvailableBlockDeclarations();
             if (available.Length == 0) continue;
 
-            var (chosen, rollback) = await player.ChooseBlockDeclarations(available);
-            if (rollback is not null)
-                return rollback;
+            var (chosen, rollbackRequest) = await player.ChooseBlockDeclarations(available);
+            if (rollbackRequest is not null)
+                return rollbackRequest;
 
             declarations.AddRange(chosen);
         }
         
-        var request = await match.Events.DeclareBlockers([.. declarations]);
-        if (request is not null)
-            return request;
+        var rollback = await match.Events.DeclareBlockers([.. declarations]);
+        if (rollback is not null)
+            return rollback;
         return null;
     }
 }

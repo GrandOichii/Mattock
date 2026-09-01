@@ -22,9 +22,9 @@ public class ActivateAbilityCommand(
 {
     public async Task<RollbackRequest?> Do()
     {
-        var request = await player.Activate(aa);
-        if (request is not null)
-            return request;
+        var rollback = await player.Activate(aa);
+        if (rollback is not null)
+            return rollback;
             
         player.Match.ResetPriority(player.Idx);
         return null;

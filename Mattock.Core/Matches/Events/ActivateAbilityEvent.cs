@@ -50,9 +50,9 @@ public class ActivateAbilityEvent(
         // The remainder of the process for activating an ability is identical to the process for casting a spell listed in rules 601.2b–i.
 
         // 601.2c Choose targets
-        var request = await match.Events.ChooseTargetsForActivatedAbility(aa, ctx);
-        if (request is not null)
-            return request;
+        var rollback = await match.Events.ChooseTargetsForActivatedAbility(aa, ctx);
+        if (rollback is not null)
+            return rollback;
 
         // var 
         // TODO
@@ -70,7 +70,7 @@ public class ActivateAbilityEvent(
         // TODO
 
         // 601.2h Pay the cost
-        var rollback = await costs.Pay(ctx);
+        rollback = await costs.Pay(ctx);
         if (rollback is not null)
             return rollback;
         if (match.ShouldHalt())

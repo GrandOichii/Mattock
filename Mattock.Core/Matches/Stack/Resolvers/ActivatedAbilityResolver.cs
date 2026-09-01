@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Cards.CardZones;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
@@ -11,13 +12,16 @@ public class ActivatedAbilityResolver(
     ActivatedAbility aa
 ) : IStackEffectResolver
 {
-    public async Task Resolve(StackEffect effect)
+    public async Task<RollbackRequest?> Resolve(StackEffect effect)
     {
         foreach (var e in aa.Effects)
         {
-            e.Do(effect.Ctx);
+            var rollback = e.Do(effect.Ctx);
+            if (rollback is not null)
+                return rollback;
         }
 
+        return null;
     }
 
     public bool IsCard(Card card) => false;

@@ -36,9 +36,9 @@ public class Effect
         {
             foreach (var part in Parts)
             {
-                var request = part.Do(ctx);
-                if (request is not null)
-                    return request;
+                var rollback = part.Do(ctx);
+                if (rollback is not null)
+                    return rollback;
             }
             return null;
         } catch (Exception e)

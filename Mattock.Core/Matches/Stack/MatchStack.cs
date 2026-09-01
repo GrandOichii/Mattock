@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack.Resolvers;
@@ -22,12 +23,12 @@ public class MatchStack(
     public StackEffect? GetStackEffectByStackEffectIdid(string stackEffectId)
         => Effects.SingleOrDefault(e => e.StackEffectId == stackEffectId);
 
-    public StackEffect Create(
+    public async Task<(StackEffect?, RollbackRequest?)> Create(
         Card card,
         EffectContext ctx
     )
     {
-        var stackEffectId = Match.MoveCard(
+        var (stackEffectId, rollback) = await Match.MoveCard(
             card,
             CardZoneChangeType.Bottom,
             new SpellCardZoneChanger(
@@ -36,6 +37,9 @@ public class MatchStack(
             )
         );
 
+        if (rollback is not null)
+            return (null, rollback);
+
         if (stackEffectId is null)
             throw new CodeErrorException($"Failed to move a card stack effect for card {card.GetDisplayName()}");
 
@@ -43,7 +47,7 @@ public class MatchStack(
         if (result is null)
             throw new CodeErrorException($"Failed to fetch newly created stack effect with StackEffectId = {stackEffectId} (cast card {card.GetDisplayName()})");
 
-        return result;
+        return (result, null);
     }
 
     public StackEffect Create(
@@ -69,12 +73,16 @@ public class MatchStack(
         Effects.RemoveAt(idx);
     }
 
-    public async Task ResolveTop()
+    public async Task<RollbackRequest?> ResolveTop()
     {
         var top = Effects.Last();
-        await top.Resolve();
+        var rollback = await top.Resolve();
+        if (rollback is not null)
+            return rollback;
 
         Effects.Remove(top);
+
+        return null;
     }
 
     class SpellCardZoneChanger(
@@ -88,7 +96,7 @@ public class MatchStack(
             return true;
         }
 
-        public string Do(Card card, CardZoneChangeType type)
+        public Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type)
         {
             var stack = card.Match.Stack;
 
@@ -102,7 +110,9 @@ public class MatchStack(
             );
 
             card.Match.Stack.Effects.Add(effect);
-            return effect.StackEffectId;
+            return Task.FromResult(
+                new CardZoneChangeResult(effect.StackEffectId, null)
+            );
         }
 
         public ICardZone GetTargetZone()

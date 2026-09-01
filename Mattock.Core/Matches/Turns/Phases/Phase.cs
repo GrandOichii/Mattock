@@ -20,13 +20,13 @@ public class Phase(
 
     public async Task<RollbackRequest?> Do()
     {
-        // RollbackRequest? rollback = await DoPreSteps();
-        // if (rollback is not null)
-        //     return rollback;
-        // if (Match.ShouldHalt())
-        //     return null;
+        RollbackRequest? rollback = await DoPreSteps();
+        if (rollback is not null)
+            return rollback;
+        if (Match.ShouldHalt())
+            return null;
 
-        var rollback = await DoSteps();
+        rollback = await DoSteps();
         if (rollback is not null)
             return rollback;
         if (Match.ShouldHalt())
@@ -46,11 +46,10 @@ public class Phase(
         return null;
     }
 
-    // ! if this needs to be returned, change the structure of a phase into phase parts, same as for the steps - rollback reasons
-    // public virtual Task<RollbackRequest?> DoPreSteps()
-    // {
-    //     return Task.FromResult<RollbackRequest?>(null);
-    // }
+    public virtual Task<RollbackRequest?> DoPreSteps()
+    {
+        return Task.FromResult<RollbackRequest?>(null);
+    }
 
     public virtual Task<RollbackRequest?> DoPostSteps()
     {
@@ -65,10 +64,10 @@ public class Phase(
 
             if (!step.CanBeTaken()) continue;
 
-            var request = await step.Do();
+            var rollback = await step.Do();
 
-            if (request is not null)
-                return request;
+            if (rollback is not null)
+                return rollback;
             if (Match.ShouldHalt())
                 return null;
         }

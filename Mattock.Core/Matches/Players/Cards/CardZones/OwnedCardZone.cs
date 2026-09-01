@@ -53,7 +53,7 @@ public abstract class OwnedCardZone(
             return true;
         }
 
-        public string Do(Card card, CardZoneChangeType type)
+        public Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type)
         {
             var match = zone.Player.Match;
 
@@ -68,10 +68,14 @@ public abstract class OwnedCardZone(
             {
                 case CardZoneChangeType.Bottom:
                     zone.Cards.Add(card);
-                    return card.Id;
+                    return Task.FromResult<CardZoneChangeResult>(
+                        new(card.Id, null)
+                    );
                 case CardZoneChangeType.Top:
                     zone.Cards.Insert(0, card);
-                    return card.Id;
+                    return Task.FromResult<CardZoneChangeResult>(
+                        new(card.Id, null)
+                    );
                 default:
                     throw new CodeErrorException($"Unrecognized {nameof(CardZoneChangeType)}: {type}");
             };

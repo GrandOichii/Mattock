@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Costs;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
@@ -184,12 +185,16 @@ public class Card
         return result;
     }
 
-    public async Task ResolveSpellEffects(EffectContext ctx)
+    public async Task<RollbackRequest?> ResolveSpellEffects(EffectContext ctx)
     {
         foreach (var spellEffect in SpellEffects)
         {
-            spellEffect.Do(ctx);
+            var rollback = spellEffect.Do(ctx);
+            if (rollback is not null)
+                return rollback;
         }
+
+        return null;
     }
 
     public ActivatedAbility[] GetActivatableAbilitiesFor(Player player)

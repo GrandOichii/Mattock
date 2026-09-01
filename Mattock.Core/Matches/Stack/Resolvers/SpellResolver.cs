@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Stack.Resolvers;
@@ -9,18 +10,25 @@ public class SpellResolver(
 {
     public Card Card { get; } = card;
 
-    public async Task Resolve(StackEffect effect)
+    public async Task<RollbackRequest?> Resolve(StackEffect effect)
     {
         var match = Card.Match;
+        RollbackRequest? rollback;
         if (Card.IsPermanentType())
         {
             // 608.3a if no targets, Move from stack onto the battlefield
-            var permanentId = await match.PutOntoTheBattlefield(Card, effect.Ctx.Controller);
-            if (permanentId is null) 
-                return;
+            rollback = await match.Events.PutOntoTheBattlefield(
+                [ (Card, effect.Ctx.Controller) ]
+            );
 
-            var permanent = match.Battlefield.GetPermanentByPermanentid(permanentId)
-                ?? throw new CodeErrorException($"Failed to fetch newly created permanent with PermanentId = {permanentId} (card: {Card.GetDisplayName()})");
+            if (rollback is not null)
+                return rollback;
+            // var permanentId = await match.PutOntoTheBattlefield(Card, effect.Ctx.Controller);
+            // if (permanentId is null) 
+            //     return;
+
+            // var permanent = match.Battlefield.GetPermanentByPermanentid(permanentId)
+            //     ?? throw new CodeErrorException($"Failed to fetch newly created permanent with PermanentId = {permanentId} (card: {Card.GetDisplayName()})");
 
             // 608.3b Targets
             // TODO
@@ -39,7 +47,7 @@ public class SpellResolver(
 
             // 608.3g 
 
-            return;
+            return null;
         }
 
         // 608.2a Intervening "if" clause (603.4)
@@ -49,7 +57,9 @@ public class SpellResolver(
         // TODO
 
         // 608.2c Execute effects
-        await Card.ResolveSpellEffects(effect.Ctx);
+        rollback = await Card.ResolveSpellEffects(effect.Ctx);
+        if (rollback is not null)
+            return rollback;
 
         // TODO
 
@@ -81,14 +91,19 @@ public class SpellResolver(
         // TODO
 
         // 608.2n Move from stack to owner's graveyard
-        match.MoveCard(
+        (_, rollback) = await match.MoveCard(
             Card,
             CardZoneChangeType.Top,
             match.Players[Card.OwnerIdx].Graveyard.GetCardZoneChanger()
         );
 
+        if (rollback is not null)
+            return rollback;
+
         // 608.2p Triggers
         // TODO
+
+        return null;
     }
 
     public bool IsCard(Card card) => Card == card;

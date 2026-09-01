@@ -22,9 +22,9 @@ public class CastSpellCommand(
 {
     public async Task<RollbackRequest?> Do()
     {
-        var request = await player.Cast(card);
-        if (request is not null)
-            return request;
+        var rollback = await player.Cast(card);
+        if (rollback is not null)
+            return rollback;
 
         player.Match.ResetPriority(player.Idx);
         return null;

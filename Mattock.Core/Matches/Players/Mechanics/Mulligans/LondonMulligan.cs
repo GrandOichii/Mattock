@@ -15,8 +15,8 @@ public class LondonMulliganRule(
         if (frame.MulligansTaken >= freeMulligans) 
             target = (frame.MulligansTaken - freeMulligans + 1) * decreasePerMulligan;
 
-        player.ShuffleHandIntoLibrary();
-        player.Draw(player.Match.Config.InitialHandSize);
+        await player.ShuffleHandIntoLibrary();
+        await player.Draw(player.Match.Config.InitialHandSize);
 
         for (; target > 0; --target)
         {
@@ -24,7 +24,8 @@ public class LondonMulliganRule(
             if (rollback is not null)
                 throw new MatchException($"Player {player.GetDisplayName()} requested rollback while doing a London mulligan");
 
-            player.Match.MoveCard(
+            // TODO ignored rollback
+            await player.Match.MoveCard(
                 choice!,
                 CardZoneChangeType.Bottom,
                 player.Library.GetCardZoneChanger()

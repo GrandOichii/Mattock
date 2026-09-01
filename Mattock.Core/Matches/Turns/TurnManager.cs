@@ -45,9 +45,9 @@ public class TurnManager(
     {
         Turn ??= CreateTurn();
 
-        var request = await Turn.Resolve();
-        if (request is not null)
-            return request;
+        var rollback = await Turn.Resolve();
+        if (rollback is not null)
+            return rollback;
         Turn = null;
 
         AdvanceTurn();

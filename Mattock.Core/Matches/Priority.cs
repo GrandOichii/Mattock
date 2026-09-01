@@ -30,9 +30,9 @@ public class Priority
     {
         while (!Done && !Match.ShouldHalt())
         {
-            var request = await ProcessPriority(Match.Players[PriorityPlayerIdx]);
-            if (request is not null)
-                return request;
+            var rollback = await ProcessPriority(Match.Players[PriorityPlayerIdx]);
+            if (rollback is not null)
+                return rollback;
         }
         return null;
     }

@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Permanents;
@@ -24,9 +25,9 @@ public class Battlefield(
     public Permanent? GetPermanentByPermanentid(string permanentId)
         => _permanents.SingleOrDefault(p => p.PermanentId == permanentId);
 
-    public async Task<string?> MoveCard(Card card, Player controller)
+    public async Task<CardZoneChangeResult> MoveCard(Card card, Player controller)
     {
-        return match.MoveCard(
+        return await match.MoveCard(
             card,
             CardZoneChangeType.Bottom,
             new CardZoneChanger(
@@ -84,12 +85,15 @@ public class Battlefield(
             return !card.IsSorcery() && !card.IsInstant();
         }
 
-        public string Do(Card card, CardZoneChangeType type)
+        public Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type)
         {
             // * type doesn't matter
             var permanent = new Permanent(card, controller);
             permanents.Add(permanent);
-            return permanent.PermanentId;
+
+            return Task.FromResult(
+                new CardZoneChangeResult(permanent.PermanentId, null)
+            );
         }
 
         public ICardZone GetTargetZone()

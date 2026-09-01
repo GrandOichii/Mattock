@@ -9,9 +9,9 @@ public class CardDraw(
     int amount
 )
 {
-    public void Do()
+    public async Task<RollbackRequest?> Do()
     {
-        player.Draw(amount);
+        return await player.Draw(amount);
     }
 }
 
@@ -19,15 +19,17 @@ public class CardDrawEvent(
     CardDraw[] draws
 ) : IEvent
 {
-    public Task<RollbackRequest?> Do(Match match)
+    public async Task<RollbackRequest?> Do(Match match)
     {
         foreach (var draw in draws)
         {
-            draw.Do();
+            var rollback = await draw.Do();
+            if (rollback is not null)
+                return rollback;
         }
 
         // TODO trigger
         
-        return Task.FromResult<RollbackRequest?>(null);
+        return null;
     }
 }

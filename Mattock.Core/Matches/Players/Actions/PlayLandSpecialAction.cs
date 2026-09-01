@@ -48,11 +48,11 @@ public class PlayLandCommand(
     public async Task<RollbackRequest?> Do()
     {
         var match = card.Match;
-        var player = match.GetActivePlayer();
+        var player = match.GetActivePlayer(); // TODO active player?
         ++player.LandsPlayedThisTurn;
-        await match.PutOntoTheBattlefield(
-            card,
-            match.GetActivePlayer()
+        
+        await match.Events.PutOntoTheBattlefield(
+            [ (card, player) ]
         );
 
         return null;

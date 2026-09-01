@@ -161,4 +161,13 @@ public class MatchEvents(
 
         return await _match.ProcessEvent(e);
     }
+
+    public async Task<RollbackRequest?> PutOntoTheBattlefield((Card, Player)[] pairs)
+    {
+        PutOntoTheBattlefieldEvent e = new(
+            pairs
+        );
+
+        return await _match.ProcessEvent(e);
+    }
 }

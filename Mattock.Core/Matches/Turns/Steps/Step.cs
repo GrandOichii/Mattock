@@ -23,9 +23,9 @@ public abstract class Step(
     {
         for (; PartIdx < Parts.Length; ++PartIdx)
         {
-            var request = await Parts[PartIdx].Do(Match);
-            if (request is not null)
-                return request;
+            var rollback = await Parts[PartIdx].Do(Match);
+            if (rollback is not null)
+                return rollback;
             if (Match.ShouldHalt())
                 return null;
         }

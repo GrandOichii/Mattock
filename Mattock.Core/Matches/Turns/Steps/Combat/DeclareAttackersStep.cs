@@ -1,4 +1,5 @@
 
+using Mattock.Core.Matches.Combat.AttackDeclarations;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Rollback;
@@ -57,9 +58,9 @@ public class DeclareAttackersStepPart
         // TODO 508.1e
 
         // tap all attackers
-        var request = await match.Events.TapPermanents([.. attackers]);
-        if (request is not null)
-            return request;
+        rollback = await match.Events.TapPermanents([.. attackers]);
+        if (rollback is not null)
+            return rollback;
 
         // TODO 508.1g
 
@@ -70,9 +71,9 @@ public class DeclareAttackersStepPart
         // TODO 508.1j
 
         // turn creatures into attacking creatures
-        request = await match.Events.DeclareAttackers(declarations);
-        if (request is not null)
-            return request;
+        rollback = await match.Events.DeclareAttackers(declarations);
+        if (rollback is not null)
+            return rollback;
 
         // TODO 508.1m trigger
         return null;

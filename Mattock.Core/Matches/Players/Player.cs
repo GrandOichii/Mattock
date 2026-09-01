@@ -236,52 +236,60 @@ public class Player
     /// Draw the specified amount of cards
     /// </summary>
     /// <param name="amount">Number of cards to be drawn</param>
-    public void Draw(int amount)
+    public async Task<RollbackRequest?> Draw(int amount)
     {
         GameEndSafeguard();
 
         for (; amount > 0; --amount)
         {
-            DrawSingle();
+            var (_, request) = await DrawSingle();
+            if (request is not null)
+                return request;
         }
+
+        return null;
     }
 
-    /// <summary>
-    /// Draw a single card from the library
-    /// </summary>
-    public void DrawSingle()
+    public async Task<(Card?, RollbackRequest?)> DrawSingle()
     {
         var card = Library.GetLast();
         if (card is null)
         {
             if (!Match.Config.GameLossIfRequiredToDrawFromEmptyLibrary)
-                return;
+                return (null, null);
 
             DrewFromEmptyLibrary = true;
-            return;
+            return (null, null);
         }
 
-        Match.MoveCard(
+        var (_, request) = await Match.MoveCard(
             card,
             CardZoneChangeType.Bottom,
             Hand.GetCardZoneChanger()
         );
+
+        if (request is not null)
+            return (null, request);
+
+        return (card, request);
     }
 
-    /// <summary>
-    /// Shuffle the hand into the library
-    /// </summary>
-    public void ShuffleHandIntoLibrary()
+    public async Task<RollbackRequest?> ShuffleHandIntoLibrary()
     {
         for (var last = Hand.GetLast(); last is not null; last = Hand.GetLast())
         {
-            Match.MoveCard(
+            var (_, request) = await Match.MoveCard(
                 last,
                 CardZoneChangeType.Bottom,
                 Library.GetCardZoneChanger()
             );
+
+            if (request is not null)
+                return request;
         }
+
         Library.Shuffle();
+        return null;
     }
 
     /// <summary>
@@ -384,16 +392,21 @@ public class Player
     /// Discard the specified cards
     /// </summary>
     /// <param name="cards">Cards to be discarded</param>
-    public void Discard(Card[] cards)
+    public async Task<RollbackRequest?> Discard(Card[] cards)
     {
         foreach (var card in cards)
         {
-            Match.MoveCard(
+            var (_, request) = await Match.MoveCard(
                 card,
                 CardZoneChangeType.Top, // TODO
                 Graveyard.GetCardZoneChanger()
             );
+
+            if (request is not null)
+                return request;
         }
+
+        return null;
     }
 
     /// <summary>
@@ -442,7 +455,7 @@ public class Player
         return [.. cards.SelectMany(c => c.GetActivatableManaAbilitiesFor(this))];
     }
 
-    public Task<RollbackRequest?> Mill(int amount)
+    public async Task<RollbackRequest?> Mill(int amount)
     {
         // TODO this is very basic
 
@@ -452,12 +465,14 @@ public class Player
             if (top is null)
                 break;
             
+            var (_, rollback) = await Match.MoveCard(top, CardZoneChangeType.Top, Graveyard.GetCardZoneChanger());
+            if (rollback is not null)
+                return rollback;
 
-            Match.MoveCard(top, CardZoneChangeType.Top, Graveyard.GetCardZoneChanger());
         }
 
         // i = amount of cards milled
-        return Task.FromResult<RollbackRequest?>(null);
+        return null;
     }
 
     /// <summary>

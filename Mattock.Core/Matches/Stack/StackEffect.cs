@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Stack.Resolvers;
 
@@ -15,10 +16,12 @@ public class StackEffect(
     public IStackEffectResolver Resolver { get; } = resolver;
     public EffectContext Ctx { get; } = ctx;
 
-    public async Task Resolve()
+    public async Task<RollbackRequest?> Resolve()
     {
-        await Resolver.Resolve(this);
+        return await Resolver.Resolve(this);
     }
 
     public bool IsCard(Card card) => Resolver.IsCard(card);
+
+    
 }

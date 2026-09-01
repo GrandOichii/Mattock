@@ -61,9 +61,9 @@ public class ActivateManaAbilityEvent(
         // TODO
 
         // 601.2h Pay the cost
-        var request = await costs.Pay(ctx);
-        if (request is not null)
-            return request;
+        var rollback = await costs.Pay(ctx);
+        if (rollback is not null)
+            return rollback;
 
         // 601.2i Modify characteristics
         // TODO
@@ -71,9 +71,9 @@ public class ActivateManaAbilityEvent(
         // 605.3b
         foreach (var e in aa.Effects)
         {
-            request = e.Do(ctx);
-            if (request is not null)
-                return request;
+            rollback = e.Do(ctx);
+            if (rollback is not null)
+                return rollback;
         }
 
         return null;

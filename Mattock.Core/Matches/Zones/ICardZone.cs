@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Zones;
 
@@ -11,9 +12,14 @@ public interface ICardZone
 
 public interface ICardZoneChanger
 {
-    string Do(Card card, CardZoneChangeType type);
+    Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type);
 
     bool Accepts(Card card);
     
     ICardZone GetTargetZone();
 }
+
+public record CardZoneChangeResult(
+    string? Id,
+    RollbackRequest? Request
+);

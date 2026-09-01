@@ -35,11 +35,9 @@ public class TurnResolver
         {
             var phase = GetCurrentPhase();
 
-            var request = await phase.Do();
-            if (request is not null)
-            {
-                return request;
-            }
+            var rollback = await phase.Do();
+            if (rollback is not null)
+                return rollback;
             
             if (_match.ShouldHalt())
                 return null;

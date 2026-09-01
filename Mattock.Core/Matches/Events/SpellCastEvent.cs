@@ -1,5 +1,6 @@
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
@@ -35,9 +36,9 @@ public class SpellCastEvent(
         // TODO
 
         // 601.2c Choose targets
-        var request = await match.Events.ChooseTargetsForSpell(card, ctx);
-        if (request is not null)
-            return request;
+        var rollback = await match.Events.ChooseTargetsForSpell(card, ctx);
+        if (rollback is not null)
+            return rollback;
 
         // var 
         // TODO
@@ -54,7 +55,9 @@ public class SpellCastEvent(
         {
             throw new CodeErrorException($"Computed cost variations with duplicate texts (texts: {string.Join(", ", costVariations.Select(c => $"\"{c.Text}\""))})");
         }
-        var (choice, rollback) = await player.ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
+        
+        CostCollection choice;
+        (choice, rollback) = await player.ChooseCostCollection([.. costVariations], $"Choose how to pay for {card.GetDisplayName()}");
         if (rollback is not null)
             return rollback;
 
@@ -62,9 +65,9 @@ public class SpellCastEvent(
         // TODO
 
         // 601.2h Pay the cost
-        request = await choice.Pay(ctx);
-        if (request is not null)
-            return request;
+        rollback = await choice.Pay(ctx);
+        if (rollback is not null)
+            return rollback;
 
         // 601.2i Modify characteristics
         // TODO

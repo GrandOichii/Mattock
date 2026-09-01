@@ -1,4 +1,5 @@
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Rollback;
 
 namespace Mattock.Core.Matches.Zones;
 
@@ -12,16 +13,17 @@ public class CardZoneChange(
     public CardZoneChangeType Type { get; private set; } = type;
     public ICardZoneChanger Changer { get; private set; } = changer;
 
-    public string? Process()
+    public async Task<CardZoneChangeResult> Process()
     {
         if (!Changer.Accepts(Card))
         {
-            return null;
+            return new(null, null);
         }
+        
         Card.Zone?.Remove(Card);
 
         Card.SetZone(Changer.GetTargetZone());
-        return Changer.Do(Card, Type);
+        return await Changer.Do(Card, Type);
     }
 }
 

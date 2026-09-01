@@ -20,9 +20,9 @@ public class CostCollection(
     {
         foreach (var cost in costs)
         {
-            var request = await cost.Pay(ctx);
-            if (request is not null)
-                return request;
+            var rollback = await cost.Pay(ctx);
+            if (rollback is not null)
+                return rollback;
             if (ctx.Controller.Match.ShouldHalt())
                 return null;
         }

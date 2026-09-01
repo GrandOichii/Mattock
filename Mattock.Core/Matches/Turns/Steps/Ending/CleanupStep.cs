@@ -31,7 +31,10 @@ public class CleanupStepPart
                 var (card, rollback) = await player.ChooseCard([.. player.Hand.Cards], "Discard cards to hand size", false);
                 if (rollback is not null)
                     return rollback;
-                player.Discard([card!]);
+
+                rollback = await player.Discard([ card! ]);
+                if (rollback is not null)
+                    return rollback;
             }
             // TODO
         }

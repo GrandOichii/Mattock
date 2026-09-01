@@ -43,10 +43,10 @@ public class Session
         await Match.Setup();
         while (true)
         {
-            var request = await Match.Run();
-            if (request is null) break;
+            var rollback = await Match.Run();
+            if (rollback is null) break;
 
-            var snap = Snapshots.GetAndClear(request.RequestedSnapshotId);
+            var snap = Snapshots.GetAndClear(rollback.RequestedSnapshotId);
 
             Match = CreateMatch();
             await Match.LoadSnapshot(snap);

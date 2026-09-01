@@ -150,7 +150,7 @@ public class Match
 
         foreach (var player in Players)
         {
-            player.Draw(Config.InitialHandSize);
+            await player.Draw(Config.InitialHandSize);
         }
 
         // Mulligans
@@ -167,9 +167,9 @@ public class Match
     {
         while (!ShouldHalt())
         {
-            var request = await TurnManager.DoTurn();
-            if (request is not null)
-                return request;
+            var rollback = await TurnManager.DoTurn();
+            if (rollback is not null)
+                return rollback;
         }
 
         return null;
@@ -191,7 +191,10 @@ public class Match
 
             if (Stack.IsEmpty() || ShouldHalt()) break;
 
-            await Stack.ResolveTop();
+            rollback = await Stack.ResolveTop();
+            if (rollback is not null)
+                return (effectsResolved, rollback);
+
             effectsResolved = true;
             Priority = null;
         }
@@ -234,7 +237,7 @@ public class Match
 
     public Card[] GetCards() => [.. Cards];
 
-    public string? MoveCard(
+    public async Task<CardZoneChangeResult> MoveCard(
         Card card,
         CardZoneChangeType type,
         ICardZoneChanger changer
@@ -244,9 +247,9 @@ public class Match
 
         // TODO apply all zone change replacement effects
 
-        var newId = ZoneChange.Process();
+        var result = await ZoneChange.Process();
         ZoneChange = null;
-        return newId;
+        return result;
     }
 
     public List<ICommand> GetAvailableCommands(Player player)
@@ -273,11 +276,6 @@ public class Match
             if (p == player) continue;
             await player.Update($"Waiting for {player.GetDisplayName()}");
         }
-    }
-
-    public async Task<string?> PutOntoTheBattlefield(Card card, Player controller)
-    {
-        return await Battlefield.MoveCard(card, controller);
     }
 
     public void EmptyManaPools()
@@ -392,12 +390,12 @@ public class Match
         }
 
         await Setup();
-        var request = await Run();
-        if (request is null)
+        var rollback = await Run();
+        if (rollback is null)
             throw new CodeErrorException($"After loading snapshot rollback request {nameof(RollbackRequest.PLAYBACK_ROLLBACK)} was not returned");
 
-        if (request != RollbackRequest.PLAYBACK_ROLLBACK)
-            throw new CodeErrorException($"While loading snapshot somehow returned rollback reqeust != {nameof(RollbackRequest.PLAYBACK_ROLLBACK)}, requested snapshot id: {request.RequestedSnapshotId}");
+        if (rollback != RollbackRequest.PLAYBACK_ROLLBACK)
+            throw new CodeErrorException($"While loading snapshot somehow returned rollback reqeust != {nameof(RollbackRequest.PLAYBACK_ROLLBACK)}, requested snapshot id: {rollback.RequestedSnapshotId}");
 
         for (int i = 0; i < Players.Length; ++i)
             Players[i].SetController(originalControllers[i]);

@@ -38,7 +38,7 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        match.GetMatch().MoveCard(
+                        await match.GetMatch().MoveCard(
                             opp.Library.GetLast()!,
                             CardZoneChangeType.Bottom,
                             player.Graveyard.GetCardZoneChanger()
@@ -129,7 +129,7 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        match.GetMatch().MoveCard(
+                        await match.GetMatch().MoveCard(
                             opp.Library.GetLast()!,
                             CardZoneChangeType.Bottom,
                             player.Hand.GetCardZoneChanger()
@@ -220,7 +220,7 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        match.GetMatch().MoveCard(
+                        await match.GetMatch().MoveCard(
                             opp.Hand.GetLast()!,
                             CardZoneChangeType.Bottom,
                             player.Library.GetCardZoneChanger()
@@ -314,7 +314,9 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        await match.GetMatch().PutOntoTheBattlefield(opp.Library.GetLast()!, opp);
+                        await match.GetMatch().Events.PutOntoTheBattlefield(
+                            [ (opp.Library.GetLast()!, opp) ]
+                        );
                         return ((null, null), false, true);
                     },
                     true
