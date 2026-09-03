@@ -216,6 +216,14 @@ public class MatchScripts
         return Match.Events.TapPermanents(permanents)
             .GetAwaiter().GetResult();
     }
+    
+    [LuaCommand]
+    public RollbackRequest? UntapPermanents(LuaTable arrTable)
+    {
+        Permanent[] permanents = LuaCommon.ParseTable<Permanent>(arrTable);
+        return Match.Events.UntapPermanents(permanents)
+            .GetAwaiter().GetResult();
+    }
 
     [LuaCommand]
     public RollbackRequest? DealDamageToPermanents(LuaTable damageTable)

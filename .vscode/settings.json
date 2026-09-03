@@ -23,6 +23,7 @@
         "ChooseString",
         "DealDamageToPlayers",
         "AreOpponents",
-        "Mill"
+        "Mill",
+        "UntapPermanents"
     ]
 }

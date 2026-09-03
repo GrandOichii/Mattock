@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Tireless Missionaries",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 4
+        },
+        {
+            "Type": 0,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Human", "Cleric" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "When this creature enters, you gain 3 life.",
+    "Power": "2",
+    "Toughness": "3",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

@@ -10,6 +10,18 @@ function Select:_(allGetter)
         return select
     end
 
+    function select:Only(single)
+        return select:_Filter(function (ctx, item)
+            return item == single(ctx)
+        end)
+    end
+
+    function select:Exept(single)
+        return select:_Filter(function (ctx, item)
+            return item ~= single(ctx)
+        end)
+    end
+
     function select:FromTarget(tgtKey)
         return select:_Filter(function (ctx, item)
             local targets = GetTargetDeclarationCollectionItems(ctx.Targets, tgtKey)
@@ -67,12 +79,6 @@ function Select:Players()
         return select:_Filter(function (ctx, p)
             local me = Player:You()(ctx)
             return AreOpponents(me, p)
-        end)
-    end
-
-    function select:Only(player)
-        return select:_Filter(function (ctx, p)
-            return p == player(ctx)
         end)
     end
 

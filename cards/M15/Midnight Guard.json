@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Midnight Guard",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 2
+        },
+        {
+            "Type": 0,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Human", "Soldier" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever another creature enters, untap this creature.",
+    "Power": "2",
+    "Toughness": "3",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}
