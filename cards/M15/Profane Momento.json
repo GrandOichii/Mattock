@@ -1,0 +1,24 @@
+{
+    "Script": "",
+    "Name": "Profane Momento",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+    ],
+
+    "Types": [ "Artifact" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever a creature card is put into an opponent's graveyard from anywhere, you gain 1 life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

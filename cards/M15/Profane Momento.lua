@@ -1,25 +1,22 @@
--- When this creature enters, you gain 3 life.
+-- Whenever a creature card is put into an opponent's graveyard from anywhere, you gain 1 life.
 
 function _Create()
     return New:Card()
         :TriggeredAbility(
-            New:TriggeredAbility('When this creature enters, you gain 3 life.')
+            New:TriggeredAbility('Whenever a creature card is put into an opponent\'s graveyard from anywhere, you gain 1 life.')
                 :Trigger(
-                    Triggers:OnPermanentEnter()
-                        :PermanentFilter(
-                            Select:Permanents()
-                                :Only(Permanent:This()) -- this creature
-                        )
+                    Triggers:SingleCardZoneChange()
+                        -- TODO
                         :Build()
                 )
                 :Effect(
-                    New:Effect('You gain 3 life.')
+                    New:Effect('You gain 1 life.')
                         :Effect(
                             OneShot:GainLife(
                                 Select:Players()
                                     :You()
                                     :Many(),
-                                Number:Const(3)
+                                Number:Const(1)
                             )
                         )
                         :Build()

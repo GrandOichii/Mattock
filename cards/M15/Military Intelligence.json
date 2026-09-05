@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Military Intelligence",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 1,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        1
+    ],
+
+    "Types": [ "Enchantment" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever you attack with two or more creatures, draw a card.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

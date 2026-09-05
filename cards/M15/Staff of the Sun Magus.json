@@ -1,0 +1,24 @@
+{
+    "Script": "",
+    "Name": "Staff of the Sun Magus",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 3
+        }
+    ],
+    "ColorIndicator": [
+    ],
+
+    "Types": [ "Artifact" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever you cast a white spell or a Plains you control enters, you gain 1 life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

@@ -1,5 +1,5 @@
 Triggers = {}
 
-function Triggers:OnPermanentEnter(permanentsSelect)
+function Triggers:OnPermanentEnter()
     error('Triggers:WhenThisEnters not implemented')
 end
