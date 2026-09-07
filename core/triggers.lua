@@ -27,28 +27,36 @@ function Triggers:_(triggerType) -- TODO? text
             )
         end
 
-        builder:_Filter(function (ctx, triggerCtx)
-            local card = Card:This()(ctx)
-            local zone = GetCardZone(card)
-            for _, zoneSelect in ipairs(builder._zoneSelects) do
-                if zoneSelect:Match(ctx, zone) then
-                    return true
-                end
-            end
-            return false
-        end)
-
         return {
             Type = builder.type,
             Filters = builder.filters,
         }
     end
 
+    builder:_Filter(function (ctx, triggerCtx)
+        local card = Card:This()(ctx)
+        local zone = GetCardZone(card)
+        for _, zoneSelect in ipairs(builder._zoneSelects) do
+            if zoneSelect:Match(ctx, zone) then
+                return true
+            end
+        end
+        return false
+    end)
+
     return builder
 end
 
 function Triggers:OnPermanentEnter()
-    error('Triggers:OnPermanentEnter not implemented')
+    local builder = Triggers:_(TriggerTypes.ETB)
+
+    function builder:PermanentFilter(permanentsSelect)
+        return builder:_Filter(function (ctx, triggerCtx)
+            return permanentsSelect:Match(ctx, triggerCtx.Permanent)
+        end)
+    end
+
+    return builder
 end
 
 function Triggers:StepBeginning()

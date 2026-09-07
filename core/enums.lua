@@ -51,4 +51,5 @@ ZoneNames = {
 
 TriggerTypes = {
     StepBeginning = 0,
+    ETB = 1,
 }

@@ -22,13 +22,13 @@ public class UntapStepPart
     public Task<RollbackRequest?> Do(Match match)
     {
         var active = match.GetActivePlayer();
-        foreach (var p in match.Battlefield.GetPermanentsControlledBy(active))
+        var permanents = match.Battlefield.GetPermanentsControlledBy(active);
+        
+        foreach (var p in permanents)
         {
             p.HasSummoningSickness = false;
             // TODO untap
         }
-
-        // TODO untap permanents
 
         return Task.FromResult<RollbackRequest?>(null);
     }

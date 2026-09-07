@@ -41,11 +41,12 @@ public class DeckCardTemplateBuilder(string? cardName = null)
 
     public DeckCardTemplateBuilder Land() => AddType("Land");
 
-    public DeckCardTemplateBuilder Artifact() => AddType("Artifact");
+    public DeckCardTemplateBuilder Artifact() => AddType(CardTypes.Artifact);
+    public DeckCardTemplateBuilder Creature() => AddType(CardTypes.Creature);
 
-    public DeckCardTemplateBuilder Instant() => AddType("Instant");
+    public DeckCardTemplateBuilder Instant() => AddType(CardTypes.Instant);
 
-    public DeckCardTemplateBuilder Sorcery() =>  AddType("Sorcery");
+    public DeckCardTemplateBuilder Sorcery() =>  AddType(CardTypes.Sorcery);
 
     public DeckCardTemplateBuilder AddType(string type)
     {

@@ -168,7 +168,7 @@ public class EventsManager(
 
     public async Task<RollbackRequest?> PutOntoTheBattlefield((Card, Player)[] pairs)
     {
-        PutOntoTheBattlefieldEvent e = new(
+        ETBEvent e = new(
             pairs
         );
 
