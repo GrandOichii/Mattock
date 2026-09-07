@@ -1,29 +1,19 @@
 using Mattock.Core.Loaders;
-using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-namespace Mattock.Core.Tests.Cards;
+namespace Mattock.Core.Tests.Cards.Singles;
 
 /// <summary>
-/// Tests for the card Angel's Mercy
+/// Tests for the card Naturalize
 /// </summary>
-public class AngelsMercyTests
+public class NaturalizeTests
 {
-    private static void HasLife(int pIdx, int expected, CommandChoicesBuilder.Asserts a)
-    {
-        a.AssertMatch(am => am
-            .AssertPlayer(pIdx, ap => ap
-                .HasLife(expected)
-            )
-        );
-    }
-
     [Fact]
-    public async Task Baseline()
+    public async Task NoTargets()
     {
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M10:Angel's Mercy");
+        var card = loader.Load("M10:Naturalize");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
@@ -41,14 +31,11 @@ public class AngelsMercyTests
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
-            .Act.AddMana(ManaType.White, 4)
+            .Act.AddMana(ManaType.Green, 2)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
-            .Act.Assert(a => HasLife(0, 20, a))
-            .Act.CastSpellWithName(card.Name)
-            .ManaPaymentChoices.NTimes(4, smc => smc.First())
-            .Act.Assert(a => HasLife(0, 20, a))
-            .Act.AutoPassUntilStackEmpty()
-            .Act.Assert(a => HasLife(0, 27, a))
+            .Act.Assert(a => a
+                .CantCastSpell()
+            )
             .Act.Crash()
         ;
 
@@ -69,12 +56,8 @@ public class AngelsMercyTests
         match.Assert(a => a
             .CrashedIntentially()
             .NoChoicesLeft()
-            .AssertPlayer(0, ap => ap
-                .HasLife(27)
-            )
-            .AssertPlayer(1, ap => ap
-                .HasLife(20)
-            )
         );
     }
+
+    // TODO add actual tests
 }

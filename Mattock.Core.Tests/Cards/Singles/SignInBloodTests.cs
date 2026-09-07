@@ -1,7 +1,7 @@
 using Mattock.Core.Loaders;
 using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-namespace Mattock.Core.Tests.Cards;
+namespace Mattock.Core.Tests.Cards.Singles;
 
 /// <summary>
 /// Tests for the card Sign in Blood

@@ -1,12 +1,11 @@
 using Mattock.Core.Loaders;
-using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-namespace Mattock.Core.Tests.Cards;
+namespace Mattock.Core.Tests.Cards.Singles;
 
 /// <summary>
-/// Tests for the card M11:Ajani's Mantra
+/// Tests for the card Midnight Guard
 /// </summary>
-public class AjanisMantraTests
+public class MidnightGuardTests
 {
     [Fact]
     public async Task NoTriggerWhileNotOnBattlefield()
@@ -14,125 +13,7 @@ public class AjanisMantraTests
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M11:Ajani's Mantra");
-
-        var config = new MatchConfigBuilder()
-            .FirstPlayerIdx(0)
-            .NoManaPoolEmptying()
-            .NoMaxHandSize()
-            .Build();
-        
-        var deck = new DeckTemplate()
-        {
-            MainDeck = [ new() {
-                Amount = 60,
-                Card = card,
-            } ]
-        };
-
-        var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .SetDeck(deck)
-            .ChoosePlayers.WithIdx(0)
-            .Act.Mill(0, 10)
-            .Act.Mill(1, 10)
-            .Act.AutoPassToTurn(4)
-            .Act.Crash()
-        ;
-
-        var p2 = new TestPlayerControllerBuilder("p2", 1)
-            .SetDeck(deck)
-            .Act.AutoPass();
-
-        var match = new TestSessionWrapper(
-            config,
-            [ p1, p2 ]
-        );
-        match.RemoveMulligans();
-
-        // Act
-        await match.Run();
-
-        // Assert
-        match.Assert(a => a
-            .CrashedIntentially()
-            .NoChoicesLeft()
-            .AssertPlayer(0, ap => ap
-                .HasLife(20)
-            )
-            .AssertPlayer(1, ap => ap
-                .HasLife(20)
-            )
-        );
-    }
-
-    [Fact]
-    public async Task NoTriggerOnOpponentsTurn()
-    {
-        // Arrange
-        var loader = new FileCardLoader("../../../../cards");
-
-        var card = loader.Load("M11:Ajani's Mantra");
-
-        var config = new MatchConfigBuilder()
-            .FirstPlayerIdx(0)
-            .NoManaPoolEmptying()
-            .NoMaxHandSize()
-            .Build();
-        
-        var deck = new DeckTemplate()
-        {
-            MainDeck = [ new() {
-                Amount = 60,
-                Card = card,
-            } ]
-        };
-
-        var p1 = new TestPlayerControllerBuilder("p1", 0)
-            .SetDeck(deck)
-            .ChoosePlayers.WithIdx(0)
-            .Act.AddMana(ManaType.White, 2)
-            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
-            .Act.CastSpellWithName(card.Name)
-            .ManaPaymentChoices.NTimes(2, smc => smc.First())
-            .Act.AutoPassUntilStackEmpty()
-            .Act.AutoPassToTurn(2)
-            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
-            .Act.Crash()
-        ;
-
-        var p2 = new TestPlayerControllerBuilder("p2", 1)
-            .SetDeck(deck)
-            .Act.AutoPass();
-
-        var match = new TestSessionWrapper(
-            config,
-            [ p1, p2 ]
-        );
-        match.RemoveMulligans();
-
-        // Act
-        await match.Run();
-
-        // Assert
-        match.Assert(a => a
-            .CrashedIntentially()
-            .NoChoicesLeft()
-            .AssertPlayer(0, ap => ap
-                .HasLife(20)
-            )
-            .AssertPlayer(1, ap => ap
-                .HasLife(20)
-            )
-        );
-    }
-
-    [Fact]
-    public async Task TriggersAtStartOfTurn()
-    {
-        // Arrange
-        var loader = new FileCardLoader("../../../../cards");
-
-        var card = loader.Load("M11:Ajani's Mantra");
+        var card = loader.Load("M15:Midnight Guard");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
@@ -143,22 +24,162 @@ public class AjanisMantraTests
         
         var deck = new DeckTemplate()
         {
-            MainDeck = [ new() {
-                Amount = 1,
-                Card = card,
-            } ]
+            MainDeck = [ 
+                new() {
+                    Amount = 4,
+                    Card = card,
+                },
+                new DeckCardTemplateBuilder("c")
+                    .ZeroCost()
+                    .Creature()
+                    .StatLine("1/2")
+                    .Amount(3)
+                    .Build(),
+            ]
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
-            .Act.AddMana(ManaType.White, 2)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName("c")
+            .Act.Pass()
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPass();
+
+        var match = new TestSessionWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertStack(ast => ast.IsEmpty())
+        );
+    }
+
+    [Fact]
+    public async Task NoTriggerOnSelfETB()
+    {
+        // Arrange
+        var loader = new FileCardLoader("../../../../cards");
+
+        var card = loader.Load("M15:Midnight Guard");
+
+        var config = new MatchConfigBuilder()
+            .FirstPlayerIdx(0)
+            .NoManaPoolEmptying()
+            .NoMaxHandSize()
+            .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+            .Build();
+        
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [ 
+                new() {
+                    Amount = 4,
+                    Card = card,
+                },
+                new DeckCardTemplateBuilder("c")
+                    .ZeroCost()
+                    .Creature()
+                    .StatLine("1/2")
+                    .Amount(3)
+                    .Build(),
+            ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck)
+            .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.White, 3)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName(card.Name)
-            .ManaPaymentChoices.NTimes(2, smc => smc.First())
-            .Act.AutoPassUntilStackEmpty()
-            .Act.AutoPassToTurn(3)
-            .Act.AutoPassToStep(StepType.Upkeep)
+            .ManaPaymentChoices.NTimes(3, smc => smc.First())
+            .Act.Pass()
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPass();
+
+        var match = new TestSessionWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertStack(ast => ast.IsEmpty())
+        );
+    }
+
+    [Fact]
+    public async Task TriggerOnOtherETB_SameController()
+    {
+        // Arrange
+        var loader = new FileCardLoader("../../../../cards");
+
+        var card = loader.Load("M15:Midnight Guard");
+
+        var config = new MatchConfigBuilder()
+            .FirstPlayerIdx(0)
+            .NoManaPoolEmptying()
+            .NoMaxHandSize()
+            .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+            .Build();
+        
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [ 
+                new() {
+                    Amount = 4,
+                    Card = card,
+                },
+                new DeckCardTemplateBuilder("c")
+                    .ZeroCost()
+                    .Creature()
+                    .StatLine("1/2")
+                    .Amount(3)
+                    .Build(),
+            ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck)
+            .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.White, 3)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(card.Name)
+            .ManaPaymentChoices.NTimes(3, smc => smc.First())
+            .Act.Pass()
+            .Act.Tap(card.Name)
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .AssertBattlefield(ab => ab
+                        .AssertPermanent(card.Name, ap => ap.IsTapped())
+                    )
+                )
+            )
+            .Act.CastSpellWithName("c")
+            .Act.Pass()
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .AssertStack(ast => ast
@@ -172,14 +193,13 @@ public class AjanisMantraTests
                     )
                 )
             )
-            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.Pass()
             .Act.Crash()
         ;
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
-            .Act.AutoPass()
-        ;
+            .Act.AutoPass();
 
         var match = new TestSessionWrapper(
             config,
@@ -194,22 +214,19 @@ public class AjanisMantraTests
         match.Assert(a => a
             .CrashedIntentially()
             .NoChoicesLeft()
-            .AssertPlayer(0, ap => ap
-                .HasLife(21)
-            )
-            .AssertPlayer(1, ap => ap
-                .HasLife(20)
+            .AssertBattlefield(ab => ab
+                .AssertPermanent(card.Name, ap => ap.IsUntapped())
             )
         );
     }
 
     [Fact]
-    public async Task Triggers3Times()
+    public async Task TriggerOnOtherETB_DifferentController()
     {
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M11:Ajani's Mantra");
+        var card = loader.Load("M15:Midnight Guard");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
@@ -220,28 +237,60 @@ public class AjanisMantraTests
         
         var deck = new DeckTemplate()
         {
-            MainDeck = [ new() {
-                Amount = 1,
-                Card = card,
-            } ]
+            MainDeck = [ 
+                new() {
+                    Amount = 4,
+                    Card = card,
+                },
+                new DeckCardTemplateBuilder("c")
+                    .ZeroCost()
+                    .Creature()
+                    .StatLine("1/2")
+                    .Amount(3)
+                    .Build(),
+            ]
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
-            .Act.AddMana(ManaType.White, 2)
+            .Act.AddMana(ManaType.White, 3)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName(card.Name)
-            .ManaPaymentChoices.NTimes(2, smc => smc.First())
-            .Act.AutoPassUntilStackEmpty()
-            .Act.AutoPassToTurn(7)
-            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
-            .Act.Crash()
+            .ManaPaymentChoices.NTimes(3, smc => smc.First())
+            .Act.Pass()
+            .Act.Tap(card.Name)
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .AssertBattlefield(ab => ab
+                        .AssertPermanent(card.Name, ap => ap.IsTapped())
+                    )
+                )
+            )
+            .Act.AutoPass()
         ;
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
-            .Act.AutoPass()
+            .Act.AutoPassToTurn(2)
+            .Act.AutoPassToPhase(PhaseType.PostcombatMain)
+            .Act.CastSpellWithName("c")
+            .Act.Pass()
+            .Act.Assert(a => a
+                .AssertMatch(am => am
+                    .AssertStack(ast => ast
+                        .EffectCount(1)
+                        .AssertEffect(0, ae => ae
+                            .HasController(0)
+                            .AssertAsTriggeredAbility(ata => ata
+                                .CardName(card.Name)
+                            )
+                        )
+                    )
+                )
+            )
+            .Act.Pass()
+            .Act.Crash()
         ;
 
         var match = new TestSessionWrapper(
@@ -257,14 +306,9 @@ public class AjanisMantraTests
         match.Assert(a => a
             .CrashedIntentially()
             .NoChoicesLeft()
-            .AssertPlayer(0, ap => ap
-                .HasLife(23)
-            )
-            .AssertPlayer(1, ap => ap
-                .HasLife(20)
+            .AssertBattlefield(ab => ab
+                .AssertPermanent(card.Name, ap => ap.IsUntapped())
             )
         );
     }
-
-    // TODO add test where the player plays 2 copies of Ajani's Matra and has to order the effects
 }

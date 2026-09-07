@@ -1,20 +1,18 @@
 using Mattock.Core.Loaders;
 using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-namespace Mattock.Core.Tests.Cards;
+namespace Mattock.Core.Tests.Cards.Singles;
 
 /// <summary>
-/// Tests for the card Forest
+/// Tests for the card Angel's Mercy
 /// </summary>
-public class ForestTests
+public class AngelsMercyTests
 {
-    private static void ManaPoolEmpty(int pIdx, CommandChoicesBuilder.Asserts a)
+    private static void HasLife(int pIdx, int expected, CommandChoicesBuilder.Asserts a)
     {
         a.AssertMatch(am => am
             .AssertPlayer(pIdx, ap => ap
-                .AssertManaPool(amp => amp
-                    .IsEmpty()
-                )
+                .HasLife(expected)
             )
         );
     }
@@ -25,8 +23,8 @@ public class ForestTests
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M10:Forest");
-        
+        var card = loader.Load("M10:Angel's Mercy");
+
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
             .NoManaPoolEmptying()
@@ -43,21 +41,14 @@ public class ForestTests
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.White, 4)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
-            .Act.Assert(a => a.CanPlayLand())
-            .Act.PlayLandWithName("Forest")
-            .Act.Assert(a => a.CanActivateMana())
-            .Act.Assert(a => ManaPoolEmpty(0, a))
-            .Act.Assert(a => ManaPoolEmpty(1, a))
-            .Act.ActivateMana("Forest")
-            .Act.Assert(a => a
-                .AssertMatch(am => am
-                    .AssertStack(ast => ast
-                        .IsEmpty()
-                    )
-                )
-            )
-            .Act.Assert(a => ManaPoolEmpty(1, a))
+            .Act.Assert(a => HasLife(0, 20, a))
+            .Act.CastSpellWithName(card.Name)
+            .ManaPaymentChoices.NTimes(4, smc => smc.First())
+            .Act.Assert(a => HasLife(0, 20, a))
+            .Act.AutoPassUntilStackEmpty()
+            .Act.Assert(a => HasLife(0, 27, a))
             .Act.Crash()
         ;
 
@@ -77,13 +68,13 @@ public class ForestTests
         // Assert
         match.Assert(a => a
             .CrashedIntentially()
-            .AssertPlayer(0, ap => ap
-                .AssertManaPool(amp => amp
-                    .HasTotalMana(1)
-                    .HasMana(ManaType.Green, 1)
-                )
-            )
             .NoChoicesLeft()
+            .AssertPlayer(0, ap => ap
+                .HasLife(27)
+            )
+            .AssertPlayer(1, ap => ap
+                .HasLife(20)
+            )
         );
     }
 }

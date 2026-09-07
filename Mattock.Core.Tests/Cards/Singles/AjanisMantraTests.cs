@@ -1,20 +1,20 @@
 using Mattock.Core.Loaders;
 using Mattock.Core.Tests.Setup.Builders.ChoiceBuilders;
 
-namespace Mattock.Core.Tests.Cards;
+namespace Mattock.Core.Tests.Cards.Singles;
 
 /// <summary>
-/// Tests for the card M15:Tireless Missionaries
+/// Tests for the card Ajani's Mantra
 /// </summary>
-public class TirelessMissionariesTests
+public class AjanisMantraTests
 {
     [Fact]
-    public async Task DoNothingNoTriggers()
+    public async Task NoTriggerWhileNotOnBattlefield()
     {
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M15:Tireless Missionaries");
+        var card = loader.Load("M11:Ajani's Mantra");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
@@ -66,41 +66,37 @@ public class TirelessMissionariesTests
     }
 
     [Fact]
-    public async Task NoTriggerWhileNotOnBattlefield()
+    public async Task NoTriggerOnOpponentsTurn()
     {
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M15:Tireless Missionaries");
+        var card = loader.Load("M11:Ajani's Mantra");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
             .NoManaPoolEmptying()
             .NoMaxHandSize()
-            .GameLossIfRequiredToDrawFromEmptyLibrary(false)
             .Build();
         
         var deck = new DeckTemplate()
         {
-            MainDeck = [ 
-                new() {
-                    Amount = 4,
-                    Card = card,
-                },
-                new DeckCardTemplateBuilder("a")
-                    .ZeroCost()
-                    .Artifact()
-                    .Amount(3)
-                    .Build(),
-            ]
+            MainDeck = [ new() {
+                Amount = 60,
+                Card = card,
+            } ]
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.White, 2)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
-            .Act.CastSpellWithName("a")
-            .Act.AutoPassToTurn(4)
+            .Act.CastSpellWithName(card.Name)
+            .ManaPaymentChoices.NTimes(2, smc => smc.First())
+            .Act.AutoPassUntilStackEmpty()
+            .Act.AutoPassToTurn(2)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Crash()
         ;
 
@@ -131,12 +127,12 @@ public class TirelessMissionariesTests
     }
 
     [Fact]
-    public async Task TriggersOnSelfETB()
+    public async Task TriggersAtStartOfTurn()
     {
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M15:Tireless Missionaries");
+        var card = loader.Load("M11:Ajani's Mantra");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
@@ -147,27 +143,22 @@ public class TirelessMissionariesTests
         
         var deck = new DeckTemplate()
         {
-            MainDeck = [ 
-                new() {
-                    Amount = 4,
-                    Card = card,
-                },
-                new DeckCardTemplateBuilder("a")
-                    .ZeroCost()
-                    .Artifact()
-                    .Amount(3)
-                    .Build(),
-            ]
+            MainDeck = [ new() {
+                Amount = 1,
+                Card = card,
+            } ]
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
-            .Act.AddMana(ManaType.White, 5)
+            .Act.AddMana(ManaType.White, 2)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName(card.Name)
-            .ManaPaymentChoices.NTimes(5, smc => smc.First())
-            .Act.Pass()
+            .ManaPaymentChoices.NTimes(2, smc => smc.First())
+            .Act.AutoPassUntilStackEmpty()
+            .Act.AutoPassToTurn(3)
+            .Act.AutoPassToStep(StepType.Upkeep)
             .Act.Assert(a => a
                 .AssertMatch(am => am
                     .AssertStack(ast => ast
@@ -181,13 +172,14 @@ public class TirelessMissionariesTests
                     )
                 )
             )
-            .Act.AutoPassUntilStackEmpty()
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Crash()
         ;
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
-            .Act.AutoPass();
+            .Act.AutoPass()
+        ;
 
         var match = new TestSessionWrapper(
             config,
@@ -203,7 +195,7 @@ public class TirelessMissionariesTests
             .CrashedIntentially()
             .NoChoicesLeft()
             .AssertPlayer(0, ap => ap
-                .HasLife(23)
+                .HasLife(21)
             )
             .AssertPlayer(1, ap => ap
                 .HasLife(20)
@@ -212,12 +204,12 @@ public class TirelessMissionariesTests
     }
 
     [Fact]
-    public async Task DoesntTriggerOnOtherETB()
+    public async Task Triggers3Times()
     {
         // Arrange
         var loader = new FileCardLoader("../../../../cards");
 
-        var card = loader.Load("M15:Tireless Missionaries");
+        var card = loader.Load("M11:Ajani's Mantra");
 
         var config = new MatchConfigBuilder()
             .FirstPlayerIdx(0)
@@ -228,36 +220,29 @@ public class TirelessMissionariesTests
         
         var deck = new DeckTemplate()
         {
-            MainDeck = [ 
-                new() {
-                    Amount = 4,
-                    Card = card,
-                },
-                new DeckCardTemplateBuilder("a")
-                    .ZeroCost()
-                    .Artifact()
-                    .Amount(3)
-                    .Build(),
-            ]
+            MainDeck = [ new() {
+                Amount = 1,
+                Card = card,
+            } ]
         };
 
         var p1 = new TestPlayerControllerBuilder("p1", 0)
             .SetDeck(deck)
             .ChoosePlayers.WithIdx(0)
-            .Act.AddMana(ManaType.White, 5)
+            .Act.AddMana(ManaType.White, 2)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.CastSpellWithName(card.Name)
-            .ManaPaymentChoices.NTimes(5, smc => smc.First())
-            .Act.Pass()
+            .ManaPaymentChoices.NTimes(2, smc => smc.First())
             .Act.AutoPassUntilStackEmpty()
-            .Act.CastSpellWithName("a")
-            .Act.AutoPassUntilStackEmpty()
+            .Act.AutoPassToTurn(7)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
             .Act.Crash()
         ;
 
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
-            .Act.AutoPass();
+            .Act.AutoPass()
+        ;
 
         var match = new TestSessionWrapper(
             config,
@@ -280,4 +265,6 @@ public class TirelessMissionariesTests
             )
         );
     }
+
+    // TODO add test where the player plays 2 copies of Ajani's Matra and has to order the effects
 }
