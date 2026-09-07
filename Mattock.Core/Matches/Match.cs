@@ -10,6 +10,7 @@ using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
+using Mattock.Core.Matches.Triggers;
 using Mattock.Core.Matches.Turns;
 using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
@@ -35,8 +36,9 @@ public class Match
     public Mechanics Mechanics { get; }
     private readonly Dictionary<int, Player[]> _teams;
     public CardZoneChange? ZoneChange { get; private set; }
-    public MatchEvents Events { get; }
+    public EventsManager Events { get; }
     public StateBasedActionsManager StateBasedActions { get; }
+    public TriggerManager Triggers { get; }
     public IAction[] Actions { get; }
     private int[]? _winningTeams;
 
@@ -62,6 +64,7 @@ public class Match
         Battlefield = new(this);
         TurnManager = new(this);
         StateBasedActions = new(this);
+        Triggers = new(this);
         Cards = [];
         _winningTeams = null;
 
@@ -237,6 +240,8 @@ public class Match
 
     public Card[] GetCards() => [.. Cards];
 
+    public (Card, Player)[] GetCardControllerPairs() => [.. GetZones().SelectMany(z => z.GetCardControllerPairs())];
+
     public async Task<CardZoneChangeResult> MoveCard(
         Card card,
         CardZoneChangeType type,
@@ -400,6 +405,14 @@ public class Match
         for (int i = 0; i < Players.Length; ++i)
             Players[i].SetController(originalControllers[i]);
     }
+
+    public ICardZone[] GetZones()
+        => [
+            Battlefield,
+            Stack,
+            // TODO exile
+            .. Players.SelectMany(p => p.GetZones())
+        ];
 
 }
 

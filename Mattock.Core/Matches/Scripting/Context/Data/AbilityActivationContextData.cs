@@ -1,8 +1,5 @@
-using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Scripting.Activated;
-using Mattock.Core.Utility;
-using NLua;
 
 namespace Mattock.Core.Matches.Scripting.Context.Data;
 
@@ -11,5 +8,5 @@ public class AbilityActivationContextData(
     ActivatedAbility ability
 ) : IEffectContextData
 {
-    public Card Object { get; } = ability.Card;
+    public Card Source { get; } = ability.Card;
 }

@@ -7,14 +7,18 @@ using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Rollback;
+using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
+using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Scripting.Targets;
+using Mattock.Core.Matches.Scripting.Triggered;
+using Mattock.Core.Matches.Triggers;
 using Microsoft.VisualBasic;
 
 namespace Mattock.Core.Matches;
 
-public class MatchEvents(
+public class EventsManager(
     Match _match
 )
 {
@@ -132,10 +136,10 @@ public class MatchEvents(
         return await _match.ProcessEvent(e);
     }
 
-    public async Task<RollbackRequest?> ChooseTargetsForActivatedAbility(ActivatedAbility aa, EffectContext ctx)
+    public async Task<RollbackRequest?> ChooseTargetsForAbility(Ability ability, EffectContext ctx)
     {
-        ChooseTargetsForActivatedAbilityEvent e = new(
-            aa,
+        ChooseTargetsForAbilityEvent e = new(
+            ability,
             ctx
         );
 
@@ -166,6 +170,15 @@ public class MatchEvents(
     {
         PutOntoTheBattlefieldEvent e = new(
             pairs
+        );
+
+        return await _match.ProcessEvent(e);
+    }
+
+    public async Task<RollbackRequest?> TriggerAbility(QueuedTriggeredAbility ability)
+    {
+        TriggerAbilityEvent e = new(
+            ability
         );
 
         return await _match.ProcessEvent(e);

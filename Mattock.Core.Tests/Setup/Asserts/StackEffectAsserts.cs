@@ -17,4 +17,11 @@ public class StackEffectAsserts(StackEffect effect)
         action(new((effect.Resolver as SpellResolver)!));
         return this;
     }
+
+    public StackEffectAsserts AssertAsTriggeredAbility(Action<TriggeredAbilityResolverAsserts> action)
+    {
+        effect.Resolver.ShouldBeOfType<TriggeredAbilityResolver>();
+        action(new((effect.Resolver as TriggeredAbilityResolver)!));
+        return this;
+    }
 }

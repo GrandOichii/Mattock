@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Ajani's Mantra",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 0,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Enchantment" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "At the beginning of your upkeep, you may gain 1 life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

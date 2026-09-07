@@ -22,3 +22,33 @@ ManaTypes = {
     Green = 4,
     Colorless = 5,
 }
+
+StepTypes = {
+    Untap = 0,
+    Upkeep = 1,
+    Draw = 2,
+    BeginningOfCombat = 3,
+    DeclareAttackers = 4,
+    DeclareBlockers = 5,
+    -- FirstStrikeCombatDamage = 6,
+    CombatDamage = 7,
+    EndOfCombat = 8,
+    End = 9,
+    Cleanup = 10,
+}
+
+ZoneNames = {
+    -- Shared zones
+    Battlefield = 'Battlefield',
+    Exile = 'Exile',
+    TheStack = 'TheStack',
+    
+    -- Owned zones
+    Graveyard = 'Graveyard',
+    Hand = 'Hand',
+    Library = 'Library',
+}
+
+TriggerTypes = {
+    StepBeginning = 0,
+}

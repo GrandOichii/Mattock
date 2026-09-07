@@ -146,6 +146,9 @@ public class Player
         };
     }
 
+    public ICardZone[] GetZones()
+        => [.. OwnedZoneMap.Values];
+
     public string GetId()
         => Match.Ids.GetPlayerId(this);
 

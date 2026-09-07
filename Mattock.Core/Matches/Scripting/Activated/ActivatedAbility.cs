@@ -11,14 +11,12 @@ public class ActivatedAbility(
     Match match,
     ActivatedAbilityTemplate aat,
     Card card
-)
+) : Ability(match, card, [.. aat.Effects])
 {
     public string ActivatedAbilityId { get; } = match.Ids.GenerateActivatedAbilityId();
     public string Text { get; } = aat.Text;
     public DynamicManaCost[] ManaCosts { get; } = [.. aat.ManaCosts];
     public Cost[] Costs { get; } = [.. aat.Costs];
-    public Effect[] Effects { get; } = [.. aat.Effects];
-    public Card Card { get; } = card;
     
     public bool CanBeActivated(Player by)
     {
@@ -53,11 +51,6 @@ public class ActivatedAbility(
         );
     }
 
-    public Target[] GetTargets()
-    {
-        return [.. Effects.SelectMany(e => e.Targets)];
-    }
-
     public bool IsManaAbility()
     {
         if (GetTargets().Length > 0) 
@@ -69,7 +62,4 @@ public class ActivatedAbility(
         
         return Effects.Any(e => e.CanProduceMana);
     }
-
-    
-
 }

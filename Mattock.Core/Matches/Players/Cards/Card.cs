@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
@@ -5,6 +6,7 @@ using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Scripting.Targets;
+using Mattock.Core.Matches.Scripting.Triggered;
 using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup.Templates;
 using Mattock.Core.Utility;
@@ -18,19 +20,22 @@ public class Card
     public int OwnerIdx { get; }
     public string Id { get; }
     public CardTemplate Template { get; }
-    public ICardZone? Zone { get; private set; }
+    public ICardZone Zone { get; private set; }
 
     public Effect[] SpellEffects { get; }
 
     public ActivatedAbilityTemplate[] ActivatedAbilityTemplates { get; }
     public ActivatedAbility[] ActivatedAbilities { get; }
 
+    public TriggeredAbilityTemplate[] TriggeredAbilityTemplates { get; }
+    public TriggeredAbility[] TriggeredAbilities { get; }
+
     public Card(Player owner, CardTemplate template)
     {
         Match = owner.Match;
         OwnerIdx = owner.Idx;
         Template = template;
-        Zone = null;
+        Zone = owner.Library; // TODO sus
 
         Id = Match.Ids.GenerateCardId(this);
 
@@ -73,7 +78,24 @@ public class Card
             ActivatedAbilities = [.. ActivatedAbilityTemplates.Select(t => new ActivatedAbility(Match, t, this))];
         } catch (Exception e)
         {
-            throw new ScriptingException($"Failed to get spell effects for card {template.Name}", e);
+            throw new ScriptingException($"Failed to get activated abilities for card {template.Name}", e);
+        }
+
+        #endregion
+
+        #region Triggered abilities
+
+        try
+        {
+            var aaTable = LuaCommon.Get<LuaTable>(data, "TriggeredAbilities");
+            var arr = LuaCommon.ParseTable<LuaTable>(aaTable);
+            TriggeredAbilityTemplates = [.. arr.Select(t => new TriggeredAbilityTemplate(t))];
+
+            // TODO might have to move this somewhere
+            TriggeredAbilities = [.. TriggeredAbilityTemplates.Select(t => new TriggeredAbility(Match, t, this))];
+        } catch (Exception e)
+        {
+            throw new ScriptingException($"Failed to get triggered abilities for card {template.Name}", e);
         }
 
         #endregion
@@ -210,6 +232,12 @@ public class Card
     public ActivatedAbility[] GetActivatedAbilities()
     {
         // TODO
-        return ActivatedAbilities;
+        return [.. ActivatedAbilities];
+    }
+
+    public TriggeredAbility[] GetTriggeredAbilities()
+    {
+        // TODO
+        return [.. TriggeredAbilities];
     }
 }

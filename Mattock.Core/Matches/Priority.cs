@@ -1,5 +1,7 @@
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Rollback;
+using Mattock.Core.Matches.Triggers;
 
 namespace Mattock.Core.Matches;
 
@@ -49,7 +51,22 @@ public class Priority
         {
             return null;
         }
-        var (command, rollback) = await player.PromptCommand();
+
+        var abilities = Match.Triggers.PopTriggeredAbilityQueue();
+
+        // TODO order (603.3b)
+        QueuedTriggeredAbility[] ordered = [.. abilities];
+        RollbackRequest? rollback;
+
+        foreach (var ability in ordered)
+        {
+            rollback = await Match.Events.TriggerAbility(ability);
+            if (rollback is not null)
+                return rollback;
+        }
+
+        ICommand command;
+        (command, rollback) = await player.PromptCommand();
         if (rollback is not null)
             return rollback;
 

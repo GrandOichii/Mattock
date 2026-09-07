@@ -20,7 +20,7 @@ public class CardZoneChange(
             return new(null, null);
         }
         
-        Card.Zone?.Remove(Card);
+        Card.Zone.Remove(Card);
 
         Card.SetZone(Changer.GetTargetZone());
         return await Changer.Do(Card, Type);

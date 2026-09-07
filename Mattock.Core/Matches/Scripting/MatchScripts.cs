@@ -7,9 +7,11 @@ using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
+using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Targets;
+using Mattock.Core.Matches.Zones;
 using Mattock.Core.Setup;
 using Mattock.Core.Utility;
 using NLua;
@@ -281,5 +283,24 @@ public class MatchScripts
     public bool AreOpponents(Player p1, Player p2)
     {
         return p1.IsOpponentFor(p2);
+    }
+
+    [LuaCommand]
+    public string GetZoneName(ICardZone zone)
+    {
+        return zone.GetZoneName();
+    }
+
+    [LuaCommand]
+    public LuaTable GetZones()
+    {
+        var zones = Match.GetZones();
+        return LuaCommon.CreateTable(Match.LState, zones);
+    }
+
+    [LuaCommand]
+    public ICardZone GetCardZone(Card card)
+    {
+        return card.Zone;
     }
 }

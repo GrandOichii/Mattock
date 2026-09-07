@@ -38,18 +38,9 @@ function Select:_(allGetter)
         return function (ctx)
             local all = allGetter()
 
-            local filterFunc = function (item)
-                for _, filter in ipairs(select.filters) do
-                    if not filter(ctx, item) then
-                        return false
-                    end
-                end
-                return true
-            end
-
             local items = {}
             for _, item in ipairs(all) do
-                if filterFunc(item) then
+                if select:Match(ctx, item) then
                     items[#items+1] = item
                 end
             end
@@ -63,6 +54,15 @@ function Select:_(allGetter)
             local result = select:Many()(ctx)
             return #result
         end
+    end
+
+    function select:Match(ctx, item)
+        for _, filter in ipairs(select.filters) do
+            if not filter(ctx, item) then
+                return false
+            end
+        end
+        return true
     end
 
     return select
@@ -111,6 +111,33 @@ function Select:Permanents()
     function select:ControlledBy(player)
         return select:_Filter(function (ctx, permanent)
             return GetPermanentController(permanent) == player(ctx)
+        end)
+    end
+
+    return select
+end
+
+function Select:Zones()
+    local select = Select:_(GetZones)
+
+    function select:OwnedBy(player)
+        error('Select:OwnedBy not implemented')
+    end
+
+    function select:NotOwnedBy(player)
+        error('Select:NotOwnedBy not implemented')
+    end
+
+    function select:WithNames(...)
+        local names = {...}
+
+        return select:_Filter(function (ctx, zone)
+            for _, name in ipairs(names) do
+                if GetZoneName(zone) == name then
+                    return true
+                end
+            end
+            return false
         end)
     end
 

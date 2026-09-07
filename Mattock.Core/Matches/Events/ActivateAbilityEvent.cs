@@ -50,7 +50,7 @@ public class ActivateAbilityEvent(
         // The remainder of the process for activating an ability is identical to the process for casting a spell listed in rules 601.2b–i.
 
         // 601.2c Choose targets
-        var rollback = await match.Events.ChooseTargetsForActivatedAbility(aa, ctx);
+        var rollback = await match.Events.ChooseTargetsForAbility(aa, ctx);
         if (rollback is not null)
             return rollback;
 

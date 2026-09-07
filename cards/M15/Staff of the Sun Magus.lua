@@ -3,7 +3,7 @@
 function _Create()
     return New:Card()
         :TriggeredAbility(
-            New:TriggeredAbility('Whenever you cast a white spell or a Plains you control enters, you gain 1 life..')
+            New:TriggeredAbility('Whenever you cast a white spell or a Plains you control enters, you gain 1 life.')
                 :Trigger(
                     Triggers:OnSpellCast()
                         :CasterFilter(

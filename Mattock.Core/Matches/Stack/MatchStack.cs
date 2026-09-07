@@ -20,7 +20,7 @@ public class MatchStack(
 
     public int GetCount() => Effects.Count;
 
-    public StackEffect? GetStackEffectByStackEffectIdid(string stackEffectId)
+    public StackEffect? GetStackEffectByStackEffectId(string stackEffectId)
         => Effects.SingleOrDefault(e => e.StackEffectId == stackEffectId);
 
     public async Task<(StackEffect?, RollbackRequest?)> Create(
@@ -43,12 +43,19 @@ public class MatchStack(
         if (stackEffectId is null)
             throw new CodeErrorException($"Failed to move a card stack effect for card {card.GetDisplayName()}");
 
-        var result = GetStackEffectByStackEffectIdid(stackEffectId);
+        var result = GetStackEffectByStackEffectId(stackEffectId);
         if (result is null)
             throw new CodeErrorException($"Failed to fetch newly created stack effect with StackEffectId = {stackEffectId} (cast card {card.GetDisplayName()})");
 
         return (result, null);
     }
+
+    public (Card, Player)[] GetCardControllerPairs()
+    {
+        // TODO this could change
+        return [];
+    }
+
 
     public StackEffect Create(
         EffectContext ctx,

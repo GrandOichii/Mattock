@@ -1,20 +1,16 @@
--- Whenever a creature card is put into an opponent's graveyard from anywhere, you gain 1 life.
+-- At the beginning of your upkeep, you may gain 1 life.
 
 function _Create()
     return New:Card()
         :TriggeredAbility(
-            New:TriggeredAbility('Whenever a creature card is put into an opponent\'s graveyard from anywhere, you gain 1 life.')
+            New:TriggeredAbility('At the beginning of your upkeep, you may gain 1 life.')
                 :Trigger(
-                    Triggers:SingleCardZoneChange()
-                        :TargetZoneFilter(
-                            Zones:Select()
-                                :NotOwnedBy(Player:You())
+                    Triggers:StepBeginning()
+                        :Steps(StepTypes.Upkeep)
+                        :PlayerFilter(
+                            Select:Players()
+                                :You()
                         )
-                        :CardFilter(
-                            Select:Cards()
-                                :OfType(CardTypes.Creature)
-                        )
-                        -- TODO
                         :Build()
                 )
                 :Effect(

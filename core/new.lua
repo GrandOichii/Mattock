@@ -4,12 +4,14 @@ function New:Card()
     local builder = {
         spellEffects = {},
         activatedAbilities = {},
+        triggeredAbilities = {},
     }
 
     function builder:Build()
         return {
             SpellEffects = builder.spellEffects,
             ActivatedAbilities = builder.activatedAbilities,
+            TriggeredAbilities = builder.triggeredAbilities,
         }
     end
 
@@ -20,6 +22,11 @@ function New:Card()
 
     function builder:ActivatedAbility(aa)
         builder.activatedAbilities[#builder.activatedAbilities+1] = aa
+        return builder
+    end
+    
+    function builder:TriggeredAbility(aa)
+        builder.triggeredAbilities[#builder.triggeredAbilities+1] = aa
         return builder
     end
 
@@ -91,6 +98,34 @@ function New:ActivatedAbility(text)
             Costs = builder.costs,
             Effects = builder.effects,
             ManaCosts = builder.manaCosts,
+        }
+    end
+
+    return builder
+end
+
+-- TODO this shares a lot of stuff with New:ActivatedAbility
+function New:TriggeredAbility(text)
+    local builder = {
+        effects = {},
+        triggers = {},
+    }
+
+    function builder:Effect(effect)
+        builder.effects[#builder.effects+1] = effect
+        return builder
+    end
+
+    function builder:Trigger(trigger)
+        builder.triggers[#builder.triggers+1] = trigger
+        return builder
+    end
+
+    function builder:Build()
+        return {
+            Text = text,
+            Effects = builder.effects,
+            Triggers = builder.triggers,
         }
     end
 

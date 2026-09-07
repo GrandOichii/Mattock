@@ -15,6 +15,9 @@ public abstract class OwnedCardZone(
 
     public int GetCount() => Cards.Count;
 
+    public (Card, Player)[] GetCardControllerPairs()
+        => [.. Cards.Select(c => (c, Match.Players[c.OwnerIdx]))];
+
     public void Shuffle()
     {
         // Owner.Match.Logger?.LogDebug("Shuffling MatchCardCollection {ZoneLogName}", ZoneLogName);

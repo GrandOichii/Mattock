@@ -1,4 +1,6 @@
 using Mattock.Core.Matches.Rollback;
+using Mattock.Core.Matches.Triggers;
+using Mattock.Core.Matches.Triggers.Context;
 using Mattock.Core.Matches.Turns.Phases;
 
 namespace Mattock.Core.Matches.Turns.Steps;
@@ -21,6 +23,17 @@ public abstract class Step(
 
     public async Task<RollbackRequest?> Do()
     {
+        if (PartIdx == 0)
+        {
+            Match.Triggers.Process(new(
+                TriggerType.StepBeginning,
+                new StepBeginningTriggerContext(
+                    Type,
+                    Match.GetActivePlayer()
+                )
+            ));
+        }
+
         for (; PartIdx < Parts.Length; ++PartIdx)
         {
             var rollback = await Parts[PartIdx].Do(Match);

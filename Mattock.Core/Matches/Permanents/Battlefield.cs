@@ -19,6 +19,9 @@ public class Battlefield(
         throw new NotImplementedException();
     }
 
+    public (Card, Player)[] GetCardControllerPairs()
+        => [.. _permanents.Select(p => (p.Card, p.GetController()))];
+
     public Permanent? GetPermanentById(string id)
         => _permanents.SingleOrDefault(p => p.Card.Id == id);
 

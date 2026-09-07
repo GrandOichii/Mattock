@@ -24,6 +24,10 @@
         "DealDamageToPlayers",
         "AreOpponents",
         "Mill",
-        "UntapPermanents"
+        "UntapPermanents",
+        "GetCurrentStep",
+        "GetZoneName",
+        "GetZones",
+        "GetCardZone"
     ]
 }

@@ -126,6 +126,18 @@ public class CommandChoicesBuilder
         ));
     }
 
+    public TestPlayerControllerBuilder Mill(int playerIdx, int amount)
+    {
+        return Enqueue((
+            async (wrapper, player, options) =>
+            {
+                await wrapper.GetMatch().Players[playerIdx].Mill(amount);
+                return (RespondNull<ICommand>(), false, true);
+            },
+            true
+        ));
+    }
+
     public TestPlayerControllerBuilder SetPlayerStatus(int playerIdx, PlayerStatus status, bool silent = false)
     {
         return Enqueue((
@@ -177,6 +189,10 @@ public class CommandChoicesBuilder
 
     public TestPlayerControllerBuilder AutoPassToStep(StepType step)
     {
+        if (step == StepType.Untap)
+        {
+            throw new Exception($"Cannot auto pass to step: {StepType.Untap}");
+        }
         return Enqueue((
             async (wrapper, player, options) =>
             {

@@ -1,19 +1,18 @@
-using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Rollback;
-using Mattock.Core.Matches.Scripting.Activated;
+using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Targets;
 
 namespace Mattock.Core.Matches.Events;
 
-public class ChooseTargetsForActivatedAbilityEvent(
-    ActivatedAbility aa,
+public class ChooseTargetsForAbilityEvent(
+    Ability ability,
     EffectContext ctx
 ) : IEvent
 {
     public async Task<RollbackRequest?> Do(Match match)
     {
-        var targets = aa.GetTargets();
+        var targets = ability.GetTargets();
         TargetDeclaration[] declarations = new TargetDeclaration[targets.Length];
         for (int i = 0; i < targets.Length; ++i)
         {
