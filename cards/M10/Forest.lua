@@ -7,10 +7,10 @@ function _Create()
                 :Cost(
                     Cost:SelfTap()
                 )
-                :Effect(
-                    New:Effect('Add {G}.')
+                :Effects(
+                    New:Effects('Add {G}.')
                         :CanProduceMana()
-                        :Effect(
+                        :Effects(
                             OneShot:AddMana(
                                 Select:Players()
                                     :You()

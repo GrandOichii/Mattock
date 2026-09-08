@@ -8,7 +8,7 @@ function Triggers:_(triggerType) -- TODO? text
         _zoneSelects = {},
     }
 
-    function builder:_Filter(filter)
+    function builder:_AddFilter(filter)
         builder.filters[#builder.filters+1] = filter
         return builder
     end
@@ -33,7 +33,7 @@ function Triggers:_(triggerType) -- TODO? text
         }
     end
 
-    builder:_Filter(function (ctx, triggerCtx)
+    builder:_AddFilter(function (ctx, triggerCtx)
         local card = Card:This()(ctx)
         local zone = GetCardZone(card)
         for _, zoneSelect in ipairs(builder._zoneSelects) do
@@ -47,12 +47,30 @@ function Triggers:_(triggerType) -- TODO? text
     return builder
 end
 
-function Triggers:OnPermanentEnter()
+function Triggers:ETB()
     local builder = Triggers:_(TriggerTypes.ETB)
 
     function builder:PermanentFilter(permanentsSelect)
-        return builder:_Filter(function (ctx, triggerCtx)
+        return builder:_AddFilter(function (ctx, triggerCtx)
             return permanentsSelect:Match(ctx, triggerCtx.Permanent)
+        end)
+    end
+
+    return builder
+end
+
+function Triggers:SpellCast()
+    local builder = Triggers:_(TriggerTypes.SpellCast)
+
+    function builder:CasterFilter(playersSelect)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            return playersSelect:Match(ctx, triggerCtx.Caster)
+        end)
+    end
+
+    function builder:CardFilter(cardsSelect)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            return cardsSelect:Match(ctx, triggerCtx.Card)
         end)
     end
 
@@ -65,12 +83,11 @@ function Triggers:StepBeginning()
     function builder:Steps(...)
         local steps = {...}
 
-        return builder:_Filter(function (ctx, triggerCtx)
+        return builder:_AddFilter(function (ctx, triggerCtx)
             if triggerCtx.StepType == nil then
                 return false
             end
             for _, step in ipairs(steps) do
-                DEBUG(tostring(step)..'  '..tostring(triggerCtx.StepType))
                 if step == triggerCtx.StepType then
                     return true
                 end
@@ -80,7 +97,7 @@ function Triggers:StepBeginning()
     end
 
     function builder:PlayerFilter(playersSelect)
-        return builder:_Filter(function (ctx, triggerCtx)
+        return builder:_AddFilter(function (ctx, triggerCtx)
             return playersSelect:Match(ctx, triggerCtx.Player)
         end)
     end

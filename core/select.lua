@@ -5,25 +5,25 @@ function Select:_(allGetter)
         filters = {}
     }
 
-    function select:_Filter(f)
+    function select:_AddFilter(f)
         select.filters[#select.filters+1] = f
         return select
     end
 
     function select:Only(single)
-        return select:_Filter(function (ctx, item)
+        return select:_AddFilter(function (ctx, item)
             return item == single(ctx)
         end)
     end
 
     function select:Exept(single)
-        return select:_Filter(function (ctx, item)
+        return select:_AddFilter(function (ctx, item)
             return item ~= single(ctx)
         end)
     end
 
     function select:FromTarget(tgtKey)
-        return select:_Filter(function (ctx, item)
+        return select:_AddFilter(function (ctx, item)
             local targets = GetTargetDeclarationCollectionItems(ctx.Targets, tgtKey)
             for _, t in ipairs(targets) do
                 if item == t then
@@ -76,7 +76,7 @@ function Select:Players()
     end
 
     function select:Opponents()
-        return select:_Filter(function (ctx, p)
+        return select:_AddFilter(function (ctx, p)
             local me = Player:You()(ctx)
             return AreOpponents(me, p)
         end)
@@ -89,8 +89,21 @@ function Select:Permanents()
     local select = Select:_(GetPermanents)
 
     function select:NotOfType(type)
-        return select:_Filter(function (ctx, permanent)
+        return select:_AddFilter(function (ctx, permanent)
             -- TODO
+            return false
+        end)
+    end
+
+    function select:OfSubtypes(...)
+        local subtypes = {...}
+
+        return select:_AddFilter(function (ctx, permanent)
+            for _, subtype in ipairs(subtypes) do
+                if PermanentHasSubtype(permanent, subtype) then
+                    return true
+                end
+            end
             return false
         end)
     end
@@ -98,7 +111,7 @@ function Select:Permanents()
     function select:OfTypes(...)
         local types = {...}
 
-        return select:_Filter(function (ctx, permanent)
+        return select:_AddFilter(function (ctx, permanent)
             for _, type in ipairs(types) do
                 if PermanentHasType(permanent, type) then
                     return true
@@ -109,7 +122,7 @@ function Select:Permanents()
     end
 
     function select:ControlledBy(player)
-        return select:_Filter(function (ctx, permanent)
+        return select:_AddFilter(function (ctx, permanent)
             return GetPermanentController(permanent) == player(ctx)
         end)
     end
@@ -131,9 +144,28 @@ function Select:Zones()
     function select:WithNames(...)
         local names = {...}
 
-        return select:_Filter(function (ctx, zone)
+        return select:_AddFilter(function (ctx, zone)
             for _, name in ipairs(names) do
                 if GetZoneName(zone) == name then
+                    return true
+                end
+            end
+            return false
+        end)
+    end
+
+    return select
+end
+
+function Select:Cards()
+    local select = Select:_(GetCards)
+
+    function select:OfColors(...)
+        local colors = {...}
+
+        return select:_AddFilter(function (ctx, card)
+            for _, color in ipairs(colors) do
+                if CardHasColor(card, color) then
                     return true
                 end
             end

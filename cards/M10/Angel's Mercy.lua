@@ -3,8 +3,8 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('You gain 7 life.')
-                :Effect(
+            New:Effects('You gain 7 life.')
+                :Effects(
                     OneShot:GainLife(
                         Select:Players()
                             :You()

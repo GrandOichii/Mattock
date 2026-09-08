@@ -3,8 +3,8 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('Destroy all nonland permanents.')
-                :Effect(
+            New:Effects('Destroy all nonland permanents.')
+                :Effects(
                     OneShot:Destroy(
                         Select:Permanents()
                             :NotOfType(CardTypes.Land)

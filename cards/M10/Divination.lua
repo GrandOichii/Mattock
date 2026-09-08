@@ -3,8 +3,8 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('Draw 2 cards.')
-                :Effect(
+            New:Effects('Draw 2 cards.')
+                :Effects(
                     OneShot:Draw(
                         Select:Players()
                             :You()

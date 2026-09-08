@@ -126,6 +126,18 @@ public class Card
         return Template.Types.Contains(type);
     }
 
+    public bool HasSubtype(string subtype)
+    {
+        // TODO
+        return Template.Subtypes.Contains(subtype);
+    }
+
+    public bool HasColor(Color color)
+    {
+        // TODO
+        return Template.ColorIndicator.Contains(color);
+    }
+
     public bool IsLand() => HasType("Land");
 
     public bool IsSorcery() => HasType("Sorcery");

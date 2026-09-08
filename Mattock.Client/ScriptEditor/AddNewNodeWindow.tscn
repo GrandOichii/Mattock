@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://bpb6oe6gsfj3v"]
+
+[ext_resource type="Script" uid="uid://0wibduid61u" path="res://ScriptEditor/AddNewNodeWindow.cs" id="1_vlsc3"]
+
+[node name="AddNewNodeWindow" type="Window"]
+oversampling_override = 1.0
+title = "Add a new node"
+initial_position = 2
+size = Vector2i(1600, 1200)
+script = ExtResource("1_vlsc3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Filter: "
+
+[node name="FilterEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Table" type="Tree" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+column_titles_visible = true
+hide_root = true
+
+[node name="NodeInfoContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NodeName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/NodeInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "NODE NAME HERE"
+
+[node name="NodeDescription" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/NodeInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "NODE DESCRIPTION HERE
+NODE DESCRIPTION HERE
+NODE DESCRIPTION HERE"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CancelAddNewNodeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="AddNewNodeButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add"
+
+[connection signal="close_requested" from="." to="." method="OnCloseRequested"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer3/FilterEdit" to="." method="OnFilterEditTextChanged"]
+[connection signal="item_activated" from="MarginContainer/VBoxContainer/HBoxContainer/Table" to="." method="OnTableItemActivated"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/CancelAddNewNodeButton" to="." method="OnCancelAddNewNodeButtonPressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/AddNewNodeButton" to="." method="OnAddNewNodeButtonPressed"]

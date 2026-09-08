@@ -3,14 +3,14 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('Target player discards 2 cards.')
+            New:Effects('Target player discards 2 cards.')
                 :Target(
                     Target:Player(
                         Select:Players(),
                         Number:Const(1)
                     )
                 )
-                :Effect(
+                :Effects(
                     OneShot:Discard(
                         Select:Players()
                             :FromTarget('T1')

@@ -11,8 +11,8 @@ function _Create()
                 :Cost(
                     Cost:SelfTap()
                 )
-                :Effect(
-                    New:Effect('Target player loses 1 life.')
+                :Effects(
+                    New:Effects('Target player loses 1 life.')
                         :Target(
                             Target:Player(
                                 'T1',
@@ -22,7 +22,7 @@ function _Create()
                                 )
                             )
                         )
-                        :Effect(
+                        :Effects(
                             OneShot:LoseLife(
                                 Select:Players()
                                     :FromTarget('T1')

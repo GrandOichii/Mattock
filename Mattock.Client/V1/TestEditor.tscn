@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://ch60vs05f32px"]
+
+[ext_resource type="PackedScene" uid="uid://bi8ojvpae518l" path="res://ScriptEditor/ScriptEditorDisplay.tscn" id="1_ard1j"]
+[ext_resource type="Script" uid="uid://pfolrgohejn" path="res://V1/TestEditor.cs" id="1_fjo4c"]
+
+[node name="TestEditor" type="Control" unique_id=557295456]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fjo4c")
+EditorScene = ExtResource("1_ard1j")
+Directory = "../Scripts/M10"
+BaseFile = "../Scripts/Base.script.json"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1496023273]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1267625653]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="List" type="ItemList" parent="HBoxContainer/VBoxContainer" unique_id=1783636764]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NewCardNameEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer" unique_id=243949600]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Enter card name"
+
+[node name="AddButton" type="Button" parent="HBoxContainer/VBoxContainer" unique_id=2069977316]
+layout_mode = 2
+text = "Add"
+
+[node name="Tabs" type="TabContainer" parent="HBoxContainer" unique_id=2058292541]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[connection signal="item_activated" from="HBoxContainer/VBoxContainer/List" to="." method="OnListItemActivated"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/AddButton" to="." method="OnAddButtonPressed"]

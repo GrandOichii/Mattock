@@ -5,19 +5,19 @@ function _Create()
         :TriggeredAbility(
             New:TriggeredAbility('Whenever you cast a white spell or a Plains you control enters, you gain 1 life.')
                 :Trigger(
-                    Triggers:OnSpellCast()
+                    Triggers:SpellCast()
                         :CasterFilter(
                             Select:Players()
                                 :You()
                         )
                         :CardFilter(
                             Select:Cards()
-                                :OfColors(Color.White)
+                                :OfColors(Colors.White)
                         )
                         :Build()
                 )
                 :Trigger(
-                    Triggers:OnPermanentEnter()
+                    Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()
                                 :OfSubtypes('Plains')
@@ -25,9 +25,9 @@ function _Create()
                         )
                         :Build()
                 )
-                :Effect(
-                    New:Effect('You gain 1 life.')
-                        :Effect(
+                :Effects(
+                    New:Effects('You gain 1 life.')
+                        :Effects(
                             OneShot:GainLife(
                                 Select:Players()
                                     :You()

@@ -1,0 +1,13 @@
+- Ajani's Pridemate + Soul Warden + Raise the Alarm
+- Guardian Seraph + Harm's Way
+- Harm's Way + Safe Passage
+- Clone + Clone
+- Levitation + Magebane Armor
+- Mind Control + Aegis Angel
+- Sleep + Time Warp (by opponent)
+- Twincast + Twincast
+<!-- - Cemetary Reaper + (before resolved) Disentomb -->
+- Megrim + Mind Rot
+- Sanguine Blood + Exquisite Blood
+- Act of Treason + Vampire Aristocrat
+- 

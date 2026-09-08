@@ -16,9 +16,9 @@ function _Create()
                         )
                         :Build()
                 )
-                :Effect(
-                    New:Effect('Draw a card.')
-                        :Effect(
+                :Effects(
+                    New:Effects('Draw a card.')
+                        :Effects(
                             OneShot:Draw(
                                 Select:Players()
                                     :You()

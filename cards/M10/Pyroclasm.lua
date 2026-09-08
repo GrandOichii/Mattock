@@ -3,8 +3,8 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('Pyroclasm deals 2 damage to each creature.')
-                :Effect(
+            New:Effects('Pyroclasm deals 2 damage to each creature.')
+                :Effects(
                     OneShot:DealDamageToPermanents(
                         Select:Permanents()
                             :OfTypes(CardTypes.Creature)

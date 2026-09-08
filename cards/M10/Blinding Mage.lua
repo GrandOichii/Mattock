@@ -12,8 +12,8 @@ function _Create()
                 :Cost(
                     Cost:SelfTap()
                 )
-                :Effect(
-                    New:Effect('Tap target creature.')
+                :Effects(
+                    New:Effects('Tap target creature.')
                         :Target(
                             Target:Permanent(
                                 'T1',
@@ -24,7 +24,7 @@ function _Create()
                                 )
                             )
                         )
-                        :Effect(
+                        :Effects(
                             OneShot:TapPermanents(
                                 Select:Permanents()
                                     :FromTarget('T1')

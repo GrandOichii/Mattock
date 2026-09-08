@@ -8,10 +8,10 @@ function _Create()
                 :Cost(
                     Cost:SelfTap()
                 )
-                :Effect(
-                    New:Effect('Add {C}.')
+                :Effects(
+                    New:Effects('Add {C}.')
                         :CanProduceMana()
-                        :Effect(
+                        :Effects(
                             OneShot:AddMana(
                                 Select:Players()
                                     :You()
@@ -30,10 +30,10 @@ function _Create()
                 :Cost(
                     Cost:SelfTap()
                 )
-                :Effect(
-                    New:Effect('Add {G} or {B}. This land deals 1 damage to you.')
+                :Effects(
+                    New:Effects('Add {G} or {B}. This land deals 1 damage to you.')
                         :CanProduceMana()
-                        :Effect(
+                        :Effects(
                             OneShot:AddMana(
                                 Select:Players()
                                     :You()
@@ -50,9 +50,9 @@ function _Create()
                         )
                         :Build()
                 )
-                :Effect(
-                    New:Effect('This land deals 1 damage to you.')
-                        :Effect(
+                :Effects(
+                    New:Effects('This land deals 1 damage to you.')
+                        :Effects(
                             OneShot:DealDamageToPlayers(
                                 Select:Players()
                                     :You()

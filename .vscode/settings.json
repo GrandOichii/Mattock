@@ -28,6 +28,9 @@
         "GetCurrentStep",
         "GetZoneName",
         "GetZones",
-        "GetCardZone"
+        "GetCardZone",
+        "PermanentHasSubtype",
+        "GetCards",
+        "CardHasColor"
     ]
 }

@@ -23,6 +23,14 @@ ManaTypes = {
     Colorless = 5,
 }
 
+Colors = {
+    White = 0,
+    Blue = 1,
+    Black = 2,
+    Red = 3,
+    Green = 4,
+}
+
 StepTypes = {
     Untap = 0,
     Upkeep = 1,
@@ -52,4 +60,5 @@ ZoneNames = {
 TriggerTypes = {
     StepBeginning = 0,
     ETB = 1,
+    SpellCast = 2,
 }

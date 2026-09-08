@@ -1,6 +1,5 @@
 using Mattock.Core.Matches.Combat;
 using Mattock.Core.Matches.Combat.AttackDeclarations;
-using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Events;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
@@ -11,10 +10,8 @@ using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
-using Mattock.Core.Matches.Scripting.Targets;
-using Mattock.Core.Matches.Scripting.Triggered;
 using Mattock.Core.Matches.Triggers;
-using Microsoft.VisualBasic;
+using Mattock.Core.Matches.Triggers.Context;
 
 namespace Mattock.Core.Matches;
 
@@ -123,7 +120,20 @@ public class EventsManager(
             card
         );
 
-        return await _match.ProcessEvent(e);
+        var rollback = await _match.ProcessEvent(e);
+        if (rollback is not null)
+            return rollback;
+
+        _match.Triggers.Process(new(
+            TriggerType.SpellCast,
+            new SpellCastTriggerContext(
+                card,
+                player
+            )
+
+        ));
+
+        return null;
     }
 
     public async Task<RollbackRequest?> ChooseTargetsForSpell(Card card, EffectContext ctx)

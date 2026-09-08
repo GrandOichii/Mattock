@@ -3,7 +3,7 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('Target player draws 2 cards and loses 2 life.')
+            New:Effects('Target player draws 2 cards and loses 2 life.')
                 :Target(
                     Target:Player(
                         'T1',
@@ -13,7 +13,7 @@ function _Create()
                         )
                     )
                 )
-                :Effect(
+                :Effects(
                     OneShot:Draw(
                         Select:Players()
                             :FromTarget('T1')
@@ -21,7 +21,7 @@ function _Create()
                         Number:Const(2)
                     )
                 )
-                :Effect(
+                :Effects(
                     OneShot:LoseLife(
                         Select:Players()
                             :FromTarget('T1')

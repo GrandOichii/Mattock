@@ -5,16 +5,16 @@ function _Create()
         :TriggeredAbility(
             New:TriggeredAbility('When this creature enters, you gain 3 life.')
                 :Trigger(
-                    Triggers:OnPermanentEnter()
+                    Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()
                                 :Only(Permanent:This()) -- this creature
                         )
                         :Build()
                 )
-                :Effect(
-                    New:Effect('You gain 3 life.')
-                        :Effect(
+                :Effects(
+                    New:Effects('You gain 3 life.')
+                        :Effects(
                             OneShot:GainLife(
                                 Select:Players()
                                     :You()

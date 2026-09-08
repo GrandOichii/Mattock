@@ -66,6 +66,12 @@ public class Permanent
         // TODO
         return Card.HasType(type);
     }
+    
+    public bool HasSubtype(string subtype)
+    {
+        // TODO
+        return Card.HasSubtype(subtype);
+    }
 
     public bool IsControlledBy(int playerIdx)
     {

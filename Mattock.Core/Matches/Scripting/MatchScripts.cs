@@ -151,6 +151,12 @@ public class MatchScripts
     }
 
     [LuaCommand]
+    public bool PermanentHasSubtype(Permanent permanent, string subtype)
+    {
+        return permanent.HasSubtype(subtype);
+    }
+
+    [LuaCommand]
     public LuaTable GetTargetDeclarationCollectionItems(TargetDeclarationCollection targets, string tgtKey)
     {
         var declaration = targets.Get(tgtKey);
@@ -302,5 +308,18 @@ public class MatchScripts
     public ICardZone GetCardZone(Card card)
     {
         return card.Zone;
+    }
+
+    [LuaCommand]
+    public LuaTable GetCards()
+    {
+        var result = Match.GetCards();
+        return LuaCommon.CreateTable(Match.LState, result);
+    }
+
+    [LuaCommand]
+    public bool CardHasColor(Card card, int color)
+    {
+        return card.HasColor((Color)color);
     }
 }

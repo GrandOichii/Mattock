@@ -164,8 +164,8 @@
 -- function _Create()
 --     return New:Card()
 --         :SpellEffect(
---             New:Effect('Draw 2 cards.')
---                 :Effect(
+--             New:Effects('Draw 2 cards.')
+--                 :Effects(
 --                     OneShot:Draw(
 --                         Select:Players()
 --                             :You()
@@ -184,7 +184,7 @@
 -- function _Create()
 --     return New:Card()
 --         :SpellEffect(
---             New:Effect('Destroy target artifact, creature or planeswalker.')
+--             New:Effects('Destroy target artifact, creature or planeswalker.')
 --                 :Target(
 --                     'T1',
 --                     Target:Permanent(
@@ -197,7 +197,7 @@
 --                     ),
 --                     Number:Const(1)
 --                 )
---                 :Effect(
+--                 :Effects(
 --                     OneShot:Destroy(
 --                         Select:Permanents()
 --                             :FromTarget('T1')

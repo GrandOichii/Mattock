@@ -5,7 +5,7 @@ function _Create()
         :TriggeredAbility(
             New:TriggeredAbility('Whenever another creature enters, untap this creature.')
                 :Trigger(
-                    Triggers:OnPermanentEnter()
+                    Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()
                                 :Exept(Permanent:This()) -- Another
@@ -13,9 +13,9 @@ function _Create()
                         )
                         :Build()
                 )
-                :Effect(
-                    New:Effect('Untap this creature.')
-                        :Effect(
+                :Effects(
+                    New:Effects('Untap this creature.')
+                        :Effects(
                             OneShot:UntapPermanents(
                                 Select:Permanents()
                                     :Only(Permanent:This())

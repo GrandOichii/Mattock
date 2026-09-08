@@ -1,0 +1,69 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 400.0,
+      "EditorSizeY": 560.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "OneShot:Draw",
+      "EditorOffsetX": 1660.0,
+      "EditorOffsetY": 220.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 103.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1360.0,
+      "EditorOffsetY": 380.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 2
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "New:Effect",
+      "EditorOffsetX": 940.0,
+      "EditorOffsetY": 80.0,
+      "EditorSizeX": 340.0,
+      "EditorSizeY": 260.0,
+      "InputArray": null,
+      "Data": {
+        "text": "Draw 2 cards."
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 1
+    }
+  ]
+}

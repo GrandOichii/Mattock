@@ -39,13 +39,27 @@ public class DeckCardTemplateBuilder(string? cardName = null)
         return this;
     }
 
-    public DeckCardTemplateBuilder Land() => AddType("Land");
+    public DeckCardTemplateBuilder Colored(params Color[] colors)
+    {
+        _result.Card.ColorIndicator = colors;
+        return this;
+    }
 
+    public DeckCardTemplateBuilder White()
+        => Colored(Color.White);
+    public DeckCardTemplateBuilder Blue()
+        => Colored(Color.Blue);
+    public DeckCardTemplateBuilder Black()
+        => Colored(Color.Black);
+    public DeckCardTemplateBuilder Red()
+        => Colored(Color.Red);
+    public DeckCardTemplateBuilder Green()
+        => Colored(Color.Green);
+
+    public DeckCardTemplateBuilder Land() => AddType("Land");
     public DeckCardTemplateBuilder Artifact() => AddType(CardTypes.Artifact);
     public DeckCardTemplateBuilder Creature() => AddType(CardTypes.Creature);
-
     public DeckCardTemplateBuilder Instant() => AddType(CardTypes.Instant);
-
     public DeckCardTemplateBuilder Sorcery() =>  AddType(CardTypes.Sorcery);
 
     public DeckCardTemplateBuilder AddType(string type)

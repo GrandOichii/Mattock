@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bi8ojvpae518l"]
+
+[ext_resource type="Script" uid="uid://cllejsb4ltiv2" path="res://ScriptEditor/ScriptEditorDisplay.cs" id="1_2klx6"]
+[ext_resource type="PackedScene" uid="uid://dar8dp6vv66hb" path="res://ScriptEditor/ScriptNodeDisplay.tscn" id="2_s7x56"]
+[ext_resource type="PackedScene" uid="uid://bpb6oe6gsfj3v" path="res://ScriptEditor/AddNewNodeWindow.tscn" id="3_sdu04"]
+
+[node name="ScriptEditorDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2klx6")
+ScriptNodeDisplayScene = ExtResource("2_s7x56")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Graph" type="GraphEdit" parent="VBoxContainer/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+right_disconnects = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "Generated script"
+
+[node name="GeneratedScriptDisplay" type="RichTextLabel" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+bbcode_enabled = true
+selection_enabled = true
+
+[node name="AddNewNodeWindow" parent="." instance=ExtResource("3_sdu04")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="connection_request" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphConnectionRequest"]
+[connection signal="copy_nodes_request" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphCopyNodesRequest"]
+[connection signal="delete_nodes_request" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphDeleteNodesRequest"]
+[connection signal="disconnection_request" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphDisconnectionRequest"]
+[connection signal="duplicate_nodes_request" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphDuplicateNodesRequest"]
+[connection signal="end_node_move" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphEndNodeMove"]
+[connection signal="gui_input" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphGuiInput"]
+[connection signal="paste_nodes_request" from="VBoxContainer/HSplitContainer/Graph" to="." method="OnGraphPasteNodesRequest"]
+[connection signal="ScriptNodeChosen" from="AddNewNodeWindow" to="." method="OnAddNewNodeWindowScriptNodeChosen"]

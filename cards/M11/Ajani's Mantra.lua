@@ -13,9 +13,9 @@ function _Create()
                         )
                         :Build()
                 )
-                :Effect(
-                    New:Effect('You gain 1 life.')
-                        :Effect(
+                :Effects(
+                    New:Effects('You gain 1 life.')
+                        :Effects(
                             OneShot:GainLife(
                                 Select:Players()
                                     :You()

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dar8dp6vv66hb"]
+
+[ext_resource type="Script" uid="uid://7trf1am4r3vi" path="res://ScriptEditor/ScriptNodeDisplay.cs" id="1_jrlyu"]
+[ext_resource type="PackedScene" uid="uid://db670ywdutnjg" path="res://ScriptEditor/ScriptNodeDisplaySlot.tscn" id="2_nlby1"]
+
+[node name="ScriptNodeDisplay" type="GraphNode"]
+offset_right = 9.0
+offset_bottom = 55.0
+resizable = true
+script = ExtResource("1_jrlyu")
+SlotScene = ExtResource("2_nlby1")
+
+[connection signal="resize_end" from="." to="." method="OnResizeEnd"]

@@ -3,7 +3,7 @@
 function _Create()
     return New:Card()
         :SpellEffect(
-            New:Effect('Destroy target artifact or enchantment.')
+            New:Effects('Destroy target artifact or enchantment.')
                 :Target(
                     Target:Permanent(
                         'T1',

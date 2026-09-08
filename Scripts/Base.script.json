@@ -1,0 +1,17 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 200.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {
+      }
+    }
+  ],
+  "Connections": []
+}

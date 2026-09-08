@@ -33,7 +33,7 @@ function New:Card()
     return builder
 end
 
-function New:Effect(text)
+function New:Effects(text)
     local builder = {
         effects = {},
         targets = {},
@@ -54,8 +54,11 @@ function New:Effect(text)
         return builder
     end
 
-    function builder:Effect(e)
-        builder.effects[#builder.effects+1] = e
+    function builder:Effects(...)
+        local effects = {...}
+        for _, e in ipairs(effects) do
+            builder.effects[#builder.effects+1] = e
+        end
         return builder
     end
 
@@ -87,7 +90,7 @@ function New:ActivatedAbility(text)
         return builder
     end
 
-    function builder:Effect(effect)
+    function builder:Effects(effect)
         builder.effects[#builder.effects+1] = effect
         return builder
     end
@@ -111,7 +114,7 @@ function New:TriggeredAbility(text)
         triggers = {},
     }
 
-    function builder:Effect(effect)
+    function builder:Effects(effect)
         builder.effects[#builder.effects+1] = effect
         return builder
     end
