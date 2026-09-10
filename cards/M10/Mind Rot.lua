@@ -4,7 +4,7 @@ function _Create()
     return New:Card()
         :SpellEffect(
             New:Effects('Target player discards 2 cards.')
-                :Target(
+                :Targets(
                     Target:Player(
                         Select:Players(),
                         Number:Const(1)

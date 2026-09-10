@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
 
 namespace ScriptEditor.Core;
 
@@ -162,17 +164,38 @@ public class ScriptNodeState
             List<string> inputArrayValues = [];
             for (int i = 0; i < InputArray.SlotCount; ++i)
             {
-                var port = leftIdx + i;
-                var connection = parent.Connections.SingleOrDefault(c => 
-                    c.ToId == Id &&
-                    c.ToPort == port
-                );
-                if (connection is null) continue;
+                
+                if (node.InputArray.Position == ScriptNodePortPosition.Left)
+                {
+                    var port = leftIdx + i;
+                    var connection = parent.Connections.SingleOrDefault(c => 
+                        c.ToId == Id &&
+                        c.ToPort == port
+                    );
+                    ++leftIdx;
+                    if (connection is null) continue;
 
-                var from = parent.Nodes.FirstOrDefault(n => n.Id == connection.FromId)
-                    ?? throw new System.Exception($"Node with Id = {connection.FromId} not found");
-                var value = from.Generate(connection.FromPort, parent, mapping);
-                inputArrayValues.Add($"{node.InputArray.ItemPrefix}{value}{node.InputArray.ItemPostfix}");
+                    var from = parent.Nodes.FirstOrDefault(n => n.Id == connection.FromId)
+                        ?? throw new System.Exception($"Node with Id = {connection.FromId} not found");
+                    var value = from.Generate(connection.FromPort, parent, mapping);
+                    inputArrayValues.Add($"{node.InputArray.ItemPrefix}{value}{node.InputArray.ItemPostfix}");
+                    
+                } else
+                {
+                    var port = rightIdx + i;
+                    var connection = parent.Connections.SingleOrDefault(c => 
+                        c.FromId == Id &&
+                        c.FromPort == port
+                    );
+                    ++rightIdx;
+                    if (connection is null) continue;
+
+                    var from = parent.Nodes.FirstOrDefault(n => n.Id == connection.ToId)
+                        ?? throw new System.Exception($"Node with Id = {connection.ToId} not found");
+                    var value = from.Generate(connection.ToPort, parent, mapping);
+                    inputArrayValues.Add($"{node.InputArray.ItemPrefix}{value}{node.InputArray.ItemPostfix}");
+                    
+                }
             }
             var joined = "";
             if (inputArrayValues.Count > 0 || !node.InputArray.NoScriptIfEmpty)

@@ -161,239 +161,264 @@ public static class Scripts
         return node;
     }
 
-    // public static void AddSelect(
+    public static ScriptNode TargetAmount(
+        ScriptNode node,
+        string script
+    )
+    {
+        node.Outputs.Add(new()
+        {
+            Script = script,
+            Label = "Amount",
+            Position = ScriptNodePortPosition.Right,
+            Type = "Target.Amount"
+        });
+
+        return node;
+
+    }
+
+
+    // public static void AddTarget(
     //     ScriptNodeCollection scriptNodes,
     //     string type,
-    //     string label,
-    //     string method
+
     // )
-    // {
-    //     var script = $"""
-    //     PUNK.Select:{method}()$filters$single$amount$memKey
-    //     """;
+
+    public static void AddSelect(
+        ScriptNodeCollection scriptNodes,
+        string type,
+        string label,
+        string method
+    )
+    {
+        var script = $"""
+        Select:{method}()$filters
+        """;
         
-    //     var result = new ScriptNode()
-    //     {
-    //         Name = $"{type}Select",
-    //         Label = label,
-    //         Inputs = [
-    //             new ScriptNodeInputPort() {
-    //                 HasMissingScript = true,
-    //                 MissingScript = "",
-    //                 Key = "amount",
-    //                 Label = "Amount",
-    //                 Position = ScriptNodePortPosition.Left,
-    //                 AllowMultiple = false,
-    //                 MultipleSeparator = "",
-    //                 Postfix = "\n)",
-    //                 Prefix = "\n:Amount(\n\"$amountSelectTip\",\n",
-    //                 Type = "Number"
-    //             }
-    //         ],
-    //         Outputs = [
-    //             new() {
-    //                 Label = label,
-    //                 Position = ScriptNodePortPosition.Right,
-    //                 Type = $"{type}Select",
-    //                 Script = script
-    //             },
-    //             new() {
-    //                 Label = "Count",
-    //                 Position = ScriptNodePortPosition.Right,
-    //                 Type = "Number",
-    //                 Script = $"{script}\n:Count()"
-    //             }
-    //         ],
-    //         InputArray = new()
-    //         {
-    //             Key = "filters",
-    //             Type = $"{type}Filter",
-    //             AddButtonLabel = "Add filter" ,
-    //             ScriptPrefix = "\n",
-    //             ScriptPostfix = "",
-    //             NoScriptIfEmpty = true,
-    //             ItemSeparator = "\n",
-    //             ItemPostfix = "",
-    //             ItemPrefix = "",
-    //         },
-    //         SimpleArgs = [
-    //             new ScriptNodeSimpleArg() {
-    //                 Config = new BoolArgConfig() {
-    //                     TrueScript = "\n:Single(\"$selectTip\")",
-    //                     FalseScript = "",
-    //                     Label = "Single",
-    //                 },
-    //                 Key = "single",
-    //                 Prefix = "",
-    //                 Postfix = ""
-    //             },
-    //             new ScriptNodeSimpleArg() {
-    //                 Config = new StringArgConfig() {
-    //                     Default = "",
-    //                     Multiline = true,
-    //                     Placeholder = "Enter select tip",
-    //                 },
-    //                 Key = "selectTip",
-    //                 Postfix = "",
-    //                 Prefix = "",
-    //             },
-    //             new ScriptNodeSimpleArg() {
-    //                 Config = new StringArgConfig() {
-    //                     Default = "",
-    //                     Multiline = false,
-    //                     Placeholder = "Enter memory key",
-    //                 },
-    //                 Key = "memKey",
-    //                 Prefix = "\n:Remember('",
-    //                 Postfix = "')",
-    //                 NoScriptIfEmpty = true,
-    //             }
-    //         ],
-    //         Description = $"{type} selector"
-    //     };
+        var result = new ScriptNode()
+        {
+            Name = $"Select:{type}",
+            Label = label,
+            Inputs = [
+                // new ScriptNodeInputPort() {
+                //     HasMissingScript = true,
+                //     MissingScript = "",
+                //     Key = "amount",
+                //     Label = "Amount",
+                //     Position = ScriptNodePortPosition.Left,
+                //     AllowMultiple = false,
+                //     MultipleSeparator = "",
+                //     Postfix = "\n)",
+                //     Prefix = "\n:Amount(\n\"$amountSelectTip\",\n",
+                //     Type = "Number"
+                // }
+            ],
+            Outputs = [
+                new() {
+                    Label = "Select",
+                    Position = ScriptNodePortPosition.Right,
+                    Type = $"{type}Select",
+                    Script = script
+                },
+                new() {
+                    Label = "Many",
+                    Position = ScriptNodePortPosition.Right,
+                    Type = $"{type}Many",
+                    Script = $"{script}\n:Many()"
+                }
+            ],
+            InputArray = new()
+            {
+                Key = "filters",
+                Type = $"{type}Filter",
+                AddButtonLabel = "Add filter" ,
+                ScriptPrefix = "\n",
+                ScriptPostfix = "",
+                NoScriptIfEmpty = true,
+                ItemSeparator = "\n",
+                ItemPostfix = "",
+                ItemPrefix = "",
+                Position = ScriptNodePortPosition.Left,
+            },
+            SimpleArgs = [
+                // new ScriptNodeSimpleArg() {
+                //     Config = new BoolArgConfig() {
+                //         TrueScript = "\n:Single(\"$selectTip\")",
+                //         FalseScript = "",
+                //         Label = "Single",
+                //     },
+                //     Key = "single",
+                //     Prefix = "",
+                //     Postfix = ""
+                // },
+                // new ScriptNodeSimpleArg() {
+                //     Config = new StringArgConfig() {
+                //         Default = "",
+                //         Multiline = true,
+                //         Placeholder = "Enter select tip",
+                //     },
+                //     Key = "selectTip",
+                //     Postfix = "",
+                //     Prefix = "",
+                // },
+                // new ScriptNodeSimpleArg() {
+                //     Config = new StringArgConfig() {
+                //         Default = "",
+                //         Multiline = false,
+                //         Placeholder = "Enter memory key",
+                //     },
+                //     Key = "memKey",
+                //     Prefix = "\n:Remember('",
+                //     Postfix = "')",
+                //     NoScriptIfEmpty = true,
+                // }
+            ],
+            Description = $"{type} selector"
+        };
 
-    //     scriptNodes.Nodes.Add(result);
+        scriptNodes.Nodes.Add(result);
 
-    //     var only = Filter
-    //     (
-    //         new()
-    //         {
-    //             Name = $"Only_{type}Filter",
-    //             Label = "Only",
-    //             Inputs = [
-    //                 Inputs.Single(
-    //                     "item",
-    //                     type,
-    //                     "Only this"
-    //                 )
-    //             ],
-    //             Outputs = [],
-    //             InputArray = null,
-    //             SimpleArgs = [],
-    //             Description = "TODO"
-    //         },
-    //         "",
-    //         type,
-    //         ":Only(\n$item\n)",
-    //         method
-    //     );
+        // var only = Filter
+        // (
+        //     new()
+        //     {
+        //         Name = $"Only_{type}Filter",
+        //         Label = "Only",
+        //         Inputs = [
+        //             Inputs.Single(
+        //                 "item",
+        //                 type,
+        //                 "Only this"
+        //             )
+        //         ],
+        //         Outputs = [],
+        //         InputArray = null,
+        //         SimpleArgs = [],
+        //         Description = "TODO"
+        //     },
+        //     "",
+        //     type,
+        //     ":Only(\n$item\n)",
+        //     method
+        // );
 
-    //     scriptNodes.Nodes.Add(only);
+        // scriptNodes.Nodes.Add(only);
 
-    //     var except = Filter
-    //     (
-    //         new()
-    //         {
-    //             Name = $"Except_{type}Filter",
-    //             Label = "Except",
-    //             Inputs = [
-    //                 Inputs.Single(
-    //                     "item",
-    //                     type,
-    //                     "Except this"
-    //                 )
-    //             ],
-    //             Outputs = [],
-    //             InputArray = null,
-    //             SimpleArgs = [],
-    //             Description = "TODO"
-    //         },
-    //         "",
-    //         type,
-    //         ":Except(\n$item\n)",
-    //         method
+        // var except = Filter
+        // (
+        //     new()
+        //     {
+        //         Name = $"Except_{type}Filter",
+        //         Label = "Except",
+        //         Inputs = [
+        //             Inputs.Single(
+        //                 "item",
+        //                 type,
+        //                 "Except this"
+        //             )
+        //         ],
+        //         Outputs = [],
+        //         InputArray = null,
+        //         SimpleArgs = [],
+        //         Description = "TODO"
+        //     },
+        //     "",
+        //     type,
+        //     ":Except(\n$item\n)",
+        //     method
 
-    //     );
+        // );
 
-    //     scriptNodes.Nodes.Add(except);
+        // scriptNodes.Nodes.Add(except);
 
-    //     var choose = Effect(
-    //         new()
-    //         {
-    //             Name = $"Choose{type}_Effect",
-    //             Description = "TODO",
-    //             InputArray = null,
-    //             Inputs = [
-    //                 Inputs.Select(
-    //                     "select",
-    //                     type,
-    //                     "Select"
-    //                 )
-    //             ],
-    //             Label = "Choose",
-    //             Outputs = [],
-    //             SimpleArgs = []
-    //         },
-    //         """
-    //         PUNK.Effects:Choose(
-    //         $select
-    //         )
-    //         """
-    //     );
+        // var choose = Effect(
+        //     new()
+        //     {
+        //         Name = $"Choose{type}_Effect",
+        //         Description = "TODO",
+        //         InputArray = null,
+        //         Inputs = [
+        //             Inputs.Select(
+        //                 "select",
+        //                 type,
+        //                 "Select"
+        //             )
+        //         ],
+        //         Label = "Choose",
+        //         Outputs = [],
+        //         SimpleArgs = []
+        //     },
+        //     """
+        //     PUNK.Effects:Choose(
+        //     $select
+        //     )
+        //     """
+        // );
         
-    //     scriptNodes.Nodes.Add(choose);
+        // scriptNodes.Nodes.Add(choose);
 
-    //     var inMemory = Filter(
-    //         new()
-    //         {
-    //             Name = $"InMemory_{type}Filter",
-    //             Description = "TODO",
-    //             InputArray = null,
-    //             Inputs = [],
-    //             Label = "In memory",
-    //             Outputs = [],
-    //             SimpleArgs = [
-    //                 new() {
-    //                     Config = new StringArgConfig() {
-    //                         Default = "",
-    //                         Multiline = false,
-    //                         Placeholder = "Enter memory key"
-    //                     },
-    //                     Key = "memKey",
-    //                     Postfix = "",
-    //                     Prefix = "",
-    //                     NoScriptIfEmpty = false,
-    //                 },
-    //             ],
-    //         },
-    //         "From memory",
-    //         type,
-    //         """
-    //         :InMemory("$memKey")
-    //         """,
-    //         method
+        // var inMemory = Filter(
+        //     new()
+        //     {
+        //         Name = $"InMemory_{type}Filter",
+        //         Description = "TODO",
+        //         InputArray = null,
+        //         Inputs = [],
+        //         Label = "In memory",
+        //         Outputs = [],
+        //         SimpleArgs = [
+        //             new() {
+        //                 Config = new StringArgConfig() {
+        //                     Default = "",
+        //                     Multiline = false,
+        //                     Placeholder = "Enter memory key"
+        //                 },
+        //                 Key = "memKey",
+        //                 Postfix = "",
+        //                 Prefix = "",
+        //                 NoScriptIfEmpty = false,
+        //             },
+        //         ],
+        //     },
+        //     "From memory",
+        //     type,
+        //     """
+        //     :InMemory("$memKey")
+        //     """,
+        //     method
 
-    //     );
+        // );
         
-    //     scriptNodes.Nodes.Add(inMemory);
-    // }
+        // scriptNodes.Nodes.Add(inMemory);
+    }
 
-    // public static ScriptNode Filter(
-    //     ScriptNode node,
-    //     string label,
-    //     string type,
-    //     string script,
-    //     string selectMethod
-    // )
-    // {
-    //     node.Outputs.Add(new()
-    //     {
-    //         Script = script,
-    //         Position = ScriptNodePortPosition.Right,
-    //         Label = $"{label} (filter)",
-    //         Type = $"{type}Filter"
-    //     });
+    public static ScriptNode Filter(
+        ScriptNode node,
+        string label,
+        string type,
+        string script
+        // string selectMethod
+    )
+    {
+        node.Outputs.Add(new()
+        {
+            Script = script,
+            Position = ScriptNodePortPosition.Right,
+            Label = $"{label} (filter)",
+            Type = $"{type}Filter"
+        });
 
-    //     node.Outputs.Add(new()
-    //     {
-    //         Script = $"PUNK.Select:{selectMethod}(){script}",
-    //        Position = ScriptNodePortPosition.Right,
-    //        Label = $"{label} (select)",
-    //        Type = $"{type}Select"
-    //     });
+        // node.Outputs.Add(new()
+        // {
+        //     Script = $"PUNK.Select:{selectMethod}(){script}",
+        //    Position = ScriptNodePortPosition.Right,
+        //    Label = $"{label} (select)",
+        //    Type = $"{type}Select"
+        // });
 
-    //     return node;
-    // }
+        return node;
+    }
 
     public static ScriptNode OneShot(
         ScriptNode node,
@@ -470,26 +495,26 @@ public static class Scripts
 public static class Inputs
 {
 
-    // public static ScriptNodeInputPort Select(
-    //     string key,
-    //     string type,
-    //     string label,
-    //     string? missingScript = null
-    // )
-    // {
-    //     return new() {
-    //         Key = key,
-    //         Prefix = "",
-    //         Postfix = "",
-    //         AllowMultiple = false,
-    //         MultipleSeparator = "",
-    //         HasMissingScript = missingScript is not null,
-    //         MissingScript = missingScript ?? "",
-    //         Label = label,
-    //         Position = ScriptNodePortPosition.Left,
-    //         Type = $"{type}Select"
-    //     };
-    // }
+    public static ScriptNodeInputPort Many(
+        string key,
+        string type,
+        string label,
+        string? missingScript = null
+    )
+    {
+        return new() {
+            Key = key,
+            Prefix = "",
+            Postfix = "",
+            AllowMultiple = false,
+            MultipleSeparator = "",
+            HasMissingScript = missingScript is not null,
+            MissingScript = missingScript ?? "",
+            Label = label,
+            Position = ScriptNodePortPosition.Left,
+            Type = $"{type}Many"
+        };
+    }
 
     public static ScriptNodeInputPort Number(
         string key,

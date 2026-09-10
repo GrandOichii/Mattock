@@ -20,13 +20,19 @@ function New:Card()
         return builder
     end
 
-    function builder:ActivatedAbility(aa)
-        builder.activatedAbilities[#builder.activatedAbilities+1] = aa
+    function builder:ActivatedAbilities(...)
+        local abilities = {...}
+        for _, ability in ipairs(abilities) do
+            builder.activatedAbilities[#builder.activatedAbilities+1] = ability
+        end
         return builder
     end
-    
-    function builder:TriggeredAbility(aa)
-        builder.triggeredAbilities[#builder.triggeredAbilities+1] = aa
+
+    function builder:TriggeredAbilities(...)
+        local abilities = {...}
+        for _, ability in ipairs(abilities) do
+            builder.triggeredAbilities[#builder.triggeredAbilities+1] = ability
+        end
         return builder
     end
 
@@ -62,8 +68,11 @@ function New:Effects(text)
         return builder
     end
 
-    function builder:Target(target)
-        builder.targets[#builder.targets+1] = target
+    function builder:Targets(...)
+        local targets = {...}
+        for _, target in ipairs(targets) do
+            builder.targets[#builder.targets+1] = target
+        end
         return builder
     end
 
@@ -77,8 +86,11 @@ function New:ActivatedAbility(text)
         manaCosts = {},
     }
 
-    function builder:Cost(cost)
-        builder.costs[#builder.costs+1] = cost
+    function builder:Costs(...)
+        local costs = {...}
+        for _, cost in ipairs(costs) do
+            builder.costs[#builder.costs+1] = cost
+        end
         return builder
     end
 
@@ -90,8 +102,11 @@ function New:ActivatedAbility(text)
         return builder
     end
 
-    function builder:Effects(effect)
-        builder.effects[#builder.effects+1] = effect
+    function builder:Effects(...)
+        local effects = {...}
+        for _, effect in ipairs(effects) do
+            builder.effects[#builder.effects+1] = effect
+        end
         return builder
     end
 
@@ -114,13 +129,19 @@ function New:TriggeredAbility(text)
         triggers = {},
     }
 
-    function builder:Effects(effect)
-        builder.effects[#builder.effects+1] = effect
+    function builder:Effects(...)
+        local effects = {...}
+        for _, effect in ipairs(effects) do
+            builder.effects[#builder.effects+1] = effect
+        end
         return builder
     end
 
-    function builder:Trigger(trigger)
-        builder.triggers[#builder.triggers+1] = trigger
+    function builder:Triggers(...)
+        local triggers = {...}
+        for _, trigger in ipairs(triggers) do
+            builder.triggers[#builder.triggers+1] = trigger
+        end
         return builder
     end
 

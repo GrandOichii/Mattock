@@ -1,0 +1,217 @@
+{
+  "StartId": 9,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "OneShot:LoseLife",
+      "EditorOffsetX": 1400.0,
+      "EditorOffsetY": 660.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "Target:Player",
+      "EditorOffsetX": 740.0,
+      "EditorOffsetY": 680.0,
+      "EditorSizeX": 242.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 2,
+      "Name": "Number:Const",
+      "EditorOffsetX": 280.0,
+      "EditorOffsetY": 780.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": 480.0,
+      "EditorOffsetY": 780.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 4,
+      "Name": "Select:Player",
+      "EditorOffsetX": 520.0,
+      "EditorOffsetY": 600.0,
+      "EditorSizeX": 141.0,
+      "EditorSizeY": 161.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1140.0,
+      "EditorOffsetY": 800.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 6,
+      "Name": "New:Effect",
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 480.0,
+      "EditorSizeX": 300.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Target player loses 1 life."
+      }
+    },
+    {
+      "Id": 7,
+      "Name": "Cost:SelfTap",
+      "EditorOffsetX": 160.0,
+      "EditorOffsetY": 560.0,
+      "EditorSizeX": 130.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 8,
+      "Name": "Cost collection",
+      "EditorOffsetX": 360.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 137.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 9,
+      "Name": "New:Card",
+      "EditorOffsetX": -20.0,
+      "EditorOffsetY": -40.0,
+      "EditorSizeX": 228.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 10,
+      "Name": "New:ActivatedAbility",
+      "EditorOffsetX": 620.0,
+      "EditorOffsetY": 320.0,
+      "EditorSizeX": 340.0,
+      "EditorSizeY": 205.0,
+      "InputArray": null,
+      "Data": {
+        "text": "{1}{B}, {T}: Target player loses 1 life."
+      }
+    },
+    {
+      "Id": 11,
+      "Name": "ActivatedAbilities",
+      "EditorOffsetX": 320.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 161.0,
+      "InputArray": {
+        "SlotCount": 2
+      },
+      "Data": {}
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 0,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 0,
+      "ToPort": 2
+    },
+    {
+      "FromId": 1,
+      "FromPort": 1,
+      "ToId": 0,
+      "ToPort": 1
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 1
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 1
+    },
+    {
+      "FromId": 9,
+      "FromPort": 1,
+      "ToId": 11,
+      "ToPort": 0
+    },
+    {
+      "FromId": 11,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 0
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 200.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "New:Effect",
+      "EditorOffsetX": 918.0,
+      "EditorOffsetY": 327.0,
+      "EditorSizeX": 340.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Target opponent mills seven cards."
+      }
+    },
+    {
+      "Id": 2,
+      "Name": "Target:Player",
+      "EditorOffsetX": 400.0,
+      "EditorOffsetY": 600.0,
+      "EditorSizeX": 242.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "Player:Select.Opponents",
+      "EditorOffsetX": -160.0,
+      "EditorOffsetY": 580.0,
+      "EditorSizeX": 233.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 4,
+      "Name": "OneShot:Mill",
+      "EditorOffsetX": 1017.0,
+      "EditorOffsetY": 686.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Select:Player",
+      "EditorOffsetX": 140.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 141.0,
+      "EditorSizeY": 161.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": 60.0,
+      "EditorOffsetY": 740.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Number:Const",
+      "EditorOffsetX": 700.0,
+      "EditorOffsetY": 900.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 7
+      }
+    },
+    {
+      "Id": 8,
+      "Name": "Number:Const",
+      "EditorOffsetX": -140.0,
+      "EditorOffsetY": 740.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 1,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 2
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    }
+  ]
+}

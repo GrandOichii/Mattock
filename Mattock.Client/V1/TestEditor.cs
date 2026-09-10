@@ -80,10 +80,12 @@ public partial class TestEditor
 		newTab.ObjectColors = new() {
 			{ "Effect", new Color(1, 1, 0, 1) },
 			{ "SingleEffect", new Color(1, 0.8f, 0.3f, 1) },
-			// { "Condition", new Color(1, 0, 1, 1) },
-			// { "Cost", new Color(0.64705884f, 0.16470589f, 0.16470589f, 1) },
+			{ "Target", new Color(1, 0, 1, 1) },
+			{ "Target.Amount", new Color(0.6f, 0.1f, 0.1f, 1) },
 			// { "Effect", new Color(0, 1, 1, 1) },
-			// { "GigFilter", new Color(0, 1, 0, 1) },
+			{ "PlayerFilter", new Color(0, 1, 0, 1) },
+			{ "PlayerMany", new Color(0, 0.66f, 0, 1) },
+			{ "PlayerSelect", new Color(0, 0.33f, 0, 1) },
 			// { "GigSelect", new Color(0, 0.66f, 0, 1) },
 			// { "GigSingle", new Color(0, 0.33f, 0, 1) },
 			// { "InPlayCardFilter", new Color(1, 0.64705884f, 0, 1) },
@@ -92,12 +94,16 @@ public partial class TestEditor
 			// { "MatchCardFilter", new Color(1, 0, 0, 1) },
 			// { "MatchCardSelect", new Color(0.66f, 0, 0, 1) },
 			// { "MatchCardSingle", new Color(0.33f, 0, 0, 1) },
-			// { "Modifier", new Color(0.75f, 0.75f, 0.75f, 1) },
+			{ "ActivatedAbility", new Color(0.75f, 0.75f, 0.75f, 1) },
+			{ "ActivatedAbilityCollection", new Color(0.5f, 0.5f, 0.5f, 1) },
+			{ "ActivatedManaAbility", new Color(0.25f, 0.25f, 0.25f, 1) },
+			{ "ActivatedManaAbilityCollection", new Color(0.1f, 0.1f, 0.1f, 1) },
 			{ "Number", new Color(0.6f, 0.1f, 0.9f, 1) },
 			// { "PlayerFilter", new Color(0, 0, 1, 1) },
 			// { "PlayerSelect", new Color(0, 0, 0.66f, 1) },
 			// { "PlayerSingle", new Color(0, 0, 0.33f, 1) },
-			// { "Trigger", new Color(0, 0.5f, 0.5f, 1) }
+			{ "Cost", new Color(0, 0.5f, 0.5f, 1) },
+			{ "CostCollection", new Color(0, 0.1f, 0.1f, 1) },
 		};
 		newTab.LoadScriptNodes(ScriptLoader.ScriptNodes);
 

@@ -39,7 +39,19 @@ public class ScriptLoader
                         Position = ScriptNodePortPosition.Right,
                         Type = "Effect",
                         MultipleSeparator = "",
-                    }
+                    },
+                    new() {
+                        Key = "activatedAbilities",
+                        Prefix = "\n:ActivatedAbilties(\n",
+                        Postfix = "\n)",
+                        HasMissingScript = true,
+                        MissingScript = "",
+                        AllowMultiple = false,
+                        Label = "Activated abilties",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "ActivatedAbilityCollection",
+                        MultipleSeparator = "",
+                    },
                 ],
                 Outputs = [
                     new() {
@@ -48,8 +60,8 @@ public class ScriptLoader
                         Type = "Card",
                         Script = """
                         function _Create()
-                        return New:Card()
-                        :Build()$spellEffect
+                        return New:Card()$spellEffect$activatedAbilities
+                        :Build()
                         end
                         """
                     }
@@ -87,13 +99,25 @@ public class ScriptLoader
                         Position = ScriptNodePortPosition.Left,
                         Type = "Effect",
                         Script = """
-                        New:Effects('$text')$singleEffects
+                        New:Effects('$text')$targets$singleEffects
                         :Build()
                         """
                     }
                 ],
                 Description = "TODO",
-                InputArray = null,
+                InputArray = new()
+                {
+                    Key = "targets",
+                    Type = "Target",
+                    AddButtonLabel = "Add target",
+                    ScriptPrefix = "\n:Targets(\n",
+                    ScriptPostfix = ")",
+                    NoScriptIfEmpty = true,
+                    ItemSeparator = ",\n",
+                    ItemPrefix = "",
+                    ItemPostfix = "\n",
+                    Position = ScriptNodePortPosition.Left,
+                },
                 SimpleArgs = [
                     new ScriptNodeSimpleArg() {
                         Config = new StringArgConfig() {
@@ -110,6 +134,131 @@ public class ScriptLoader
             }
         );
 
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "New:ActivatedAbility",
+                Label = "Activated ability",
+                Inputs = [
+                    new() {
+                        AllowMultiple = false,
+                        HasMissingScript = true,
+                        Key = "costs",
+                        Label = "Costs",
+                        MissingScript = "",
+                        MultipleSeparator = "",
+                        Position = ScriptNodePortPosition.Left,
+                        Postfix = ")",
+                        Prefix = "\n:Costs(\n",
+                        Type = "CostCollection",
+                    },
+                    // TODO duplicated code
+                    new() {
+                        Key = "singleEffects",
+                        Prefix = "\n:Effects(\n",
+                        Postfix = "\n)",
+                        HasMissingScript = true,
+                        MissingScript = "",
+                        AllowMultiple = false,
+                        Label = "Single effects",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "Effect",
+                        MultipleSeparator = "",                        
+                    }
+                ],
+                Outputs = [
+                    new() {
+                        Label = "",
+                        Position = ScriptNodePortPosition.Left,
+                        Type = "ActivatedAbility",
+                        Script = """
+                        New:ActivatedAbility('$text')$costs$singleEffects
+                        :Build()
+                        """,
+                    }
+                ],
+                Description = "TODO",
+                InputArray = null,
+                SimpleArgs = [
+                    new ScriptNodeSimpleArg() {
+                        Config = new StringArgConfig() {
+                            Default = "",
+                            Multiline = true,
+                            Placeholder = "Activated ability text",
+                        },
+                        Key = "text",
+                        Postfix = "",
+                        Prefix = "",
+                        NoScriptIfEmpty = false
+                    }
+                ]
+            }
+        );
+
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "Cost collection",
+                Label = "Costs",
+                Inputs = [],
+                Outputs = [
+                    new() {
+                        Label = "Costs",
+                        Position = ScriptNodePortPosition.Right,
+                        Script = "$costs",
+                        Type = "CostCollection",
+                    }
+                ],
+                Description = "TODO",
+                InputArray = new()
+                {
+                    AddButtonLabel = "Add cost",
+                    ItemPostfix = "",
+                    ItemPrefix = "",
+                    ItemSeparator = ",\n",
+                    Key = "costs",
+                    NoScriptIfEmpty = false,
+                    Position = ScriptNodePortPosition.Left,
+                    ScriptPostfix = "",
+                    ScriptPrefix = "",
+                    Type = "Cost"
+                },
+                SimpleArgs = [],
+            }
+        );
+
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "ActivatedAbilities",
+                Label = "Activated ability collection",
+                Inputs = [],
+                Outputs = [
+                    new() {
+                        Label = "Abilities",
+                        Position = ScriptNodePortPosition.Left,
+                        Script = "$abilities",
+                        Type = "ActivatedAbilityCollection",
+                    }
+                ],
+                Description = "TODO",
+                InputArray = new()
+                {
+                    AddButtonLabel = "Add ability",
+                    ItemPostfix = "",
+                    ItemPrefix = "",
+                    ItemSeparator = ",\n",
+                    Key = "abilities",
+                    NoScriptIfEmpty = false,
+                    Position = ScriptNodePortPosition.Right,
+                    ScriptPostfix = "",
+                    ScriptPrefix = "",
+                    Type = "ActivatedAbility"
+                },
+                SimpleArgs = [],
+            }
+        );
+
         // Single effects
 
         ScriptNodes.Nodes.Add(
@@ -120,6 +269,11 @@ public class ScriptLoader
                     Name = "OneShot:Draw",
                     Label = "Draw cards",
                     Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
                         Inputs.Number(
                             "amount",
                             "Amount"
@@ -132,10 +286,281 @@ public class ScriptLoader
                 },
                 """
                 OneShot:Draw(
-                $manyPlayers,
+                $players,
                 $amount
                 )
                 """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
+                    Name = "OneShot:GainLife",
+                    Label = "Gain life",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
+                        Inputs.Number(
+                            "amount",
+                            "Amount"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:GainLife(
+                $players,
+                $amount
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
+                    Name = "OneShot:LoseLife",
+                    Label = "Lose life",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
+                        Inputs.Number(
+                            "amount",
+                            "Amount"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:LoseLife(
+                $players,
+                $amount
+                )
+                """
+            )
+        );
+        
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
+                    Name = "OneShot:Mill",
+                    Label = "Mill",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
+                        Inputs.Number(
+                            "amount",
+                            "Amount"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:Mill(
+                $players,
+                $amount
+                )
+                """
+            )
+        );
+
+        // Costs
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "Cost:SelfTap",
+                Label = "Tap self",
+                Inputs = [],
+                Outputs = [
+                    new() {
+                        Label = "Cost",
+                        Position = ScriptNodePortPosition.Right,
+                        Script = "Cost:SelfTap()",
+                        Type = "Cost"
+                    },
+                ],
+                Description = "TODO",
+                InputArray = null,
+                SimpleArgs = []
+            }
+        );
+
+        // Selects
+
+        Scripts.AddSelect
+        (
+            ScriptNodes,
+            "Player",
+            "Players",
+            "Players"
+        );
+        
+        // Targets
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "Target:Player",
+                Label = "Target player",
+                Inputs = [
+                    new() {
+                        Key = "players",
+                        Prefix = "",
+                        Postfix = "",
+                        HasMissingScript = false,
+                        MissingScript = "",
+                        AllowMultiple = false,
+                        MultipleSeparator = "",                        
+                        Label = "Player select",
+                        Position = ScriptNodePortPosition.Left,
+                        Type = "PlayerSelect",
+                    },
+                    new() {
+                        Key = "amount",
+                        Prefix = "",
+                        Postfix = "",
+                        HasMissingScript = false,
+                        MissingScript = "",
+                        AllowMultiple = false,
+                        MultipleSeparator = "",
+                        Label = "Amount",
+                        Position = ScriptNodePortPosition.Left,
+                        Type = "Target.Amount",
+                    },
+                ],
+                Outputs = [
+                    new() {
+                        Label = "Target",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "Target",
+                        Script = """
+                        Target:Player(
+                        '$tgtKey',
+                        $players,
+                        $amount
+                        )
+                        """,
+                    },
+                    new() {
+                        Label = "Many",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "PlayerMany",
+                        Script = """
+                        Select:Players()
+                        :FromTarget('$tgtKey')
+                        :Many()
+                        """,
+                    },
+                ],
+                Description = "TODO",
+                InputArray = null,
+                SimpleArgs = [
+                    new ScriptNodeSimpleArg() {
+                        Config = new StringArgConfig() {
+                            Default = "",
+                            Multiline = false,
+                            Placeholder = "Target key",
+                        },
+                        Key = "tgtKey",
+                        Postfix = "",
+                        Prefix = "",
+                        NoScriptIfEmpty = false
+                    }
+                ],
+            }
+        );
+
+        // Target amounts
+        ScriptNodes.Nodes.Add(
+            Scripts.TargetAmount
+            (
+                new()
+                {
+                    Name = "Target.Amount:Exactly",
+                    Label = "Exactly",
+                    Inputs = [
+                        Inputs.Number(
+                            "number",
+                            "Number"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "Exact number of targets"
+                },
+                """
+                Target.Amount:Exactly(
+                $number
+                )
+                """
+            )
+        );
+
+        // Filters
+
+        // Player filters
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Player:Select.You",
+                    Label = "You",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                "You",
+                "Player",
+                ":You()"
+                // "Players"
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Player:Select.Opponents",
+                    Label = "Opponents",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                "Opponents",
+                "Player",
+                ":Opponents()"
+                // "Players"
             )
         );
 
@@ -2676,13 +3101,7 @@ public class ScriptLoader
         // );
         
         // // Selects
-        // Scripts.AddSelect
-        // (
-        //     ScriptNodes,
-        //     "Player",
-        //     "Players",
-        //     "Players"
-        // );
+        
         
         // Scripts.AddSelect
         // (

@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :TriggeredAbility(
+        :TriggeredAbilities(
             New:TriggeredAbility('Whenever you cast a white spell or a Plains you control enters, you gain 1 life.')
-                :Trigger(
+                :Triggers(
                     Triggers:SpellCast()
                         :CasterFilter(
                             Select:Players()
@@ -14,9 +14,7 @@ function _Create()
                             Select:Cards()
                                 :OfColors(Colors.White)
                         )
-                        :Build()
-                )
-                :Trigger(
+                        :Build(),
                     Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()

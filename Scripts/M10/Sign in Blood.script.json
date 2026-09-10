@@ -1,0 +1,175 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 200.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "OneShot:Draw",
+      "EditorOffsetX": 1240.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "OneShot:LoseLife",
+      "EditorOffsetX": 1220.0,
+      "EditorOffsetY": 740.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 3,
+      "Name": "Number:Const",
+      "EditorOffsetX": -220.0,
+      "EditorOffsetY": 660.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": 0.0,
+      "EditorOffsetY": 660.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Target:Player",
+      "EditorOffsetX": 380.0,
+      "EditorOffsetY": 560.0,
+      "EditorSizeX": 242.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 6,
+      "Name": "New:Effect",
+      "EditorOffsetX": 760.0,
+      "EditorOffsetY": 260.0,
+      "EditorSizeX": 399.99988,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Target player draws 2 cards and loses 2 life."
+      }
+    },
+    {
+      "Id": 7,
+      "Name": "Select:Player",
+      "EditorOffsetX": 80.0,
+      "EditorOffsetY": 460.0,
+      "EditorSizeX": 141.0,
+      "EditorSizeY": 161.00006,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 8,
+      "Name": "Number:Const",
+      "EditorOffsetX": 660.0,
+      "EditorOffsetY": 760.0,
+      "EditorSizeX": 160.00012,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 2
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 2
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 2
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 1
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 1,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 1,
+      "ToId": 2,
+      "ToPort": 1
+    }
+  ]
+}

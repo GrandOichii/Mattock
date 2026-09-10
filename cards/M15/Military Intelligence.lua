@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :TriggeredAbility(
+        :TriggeredAbilities(
             New:TriggeredAbility('Whenever you attack with two or more creatures, draw a card.')
-                :Trigger(
+                :Triggers(
                     Triggers:OnAttack()
                         :AttackingPlayerFilter(
                             Select:Players()

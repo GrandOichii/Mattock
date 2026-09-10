@@ -4,17 +4,17 @@
 
 function _Create()
     return New:Card()
-        :ActivatedAbility(
+        :ActivatedAbilities(
             New:ActivatedAbility('{W}, {T}: Tap target creature.')
                 :ManaCost(
                     Mana.Fixed:White(1)
                 )
-                :Cost(
+                :Costs(
                     Cost:SelfTap()
                 )
                 :Effects(
                     New:Effects('Tap target creature.')
-                        :Target(
+                        :Targets(
                             Target:Permanent(
                                 'T1',
                                 Select:Permanents()

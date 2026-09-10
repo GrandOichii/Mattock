@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :TriggeredAbility(
+        :TriggeredAbilities(
             New:TriggeredAbility('When this creature enters, you gain 3 life.')
-                :Trigger(
+                :Triggers(
                     Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()

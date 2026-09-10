@@ -4,7 +4,7 @@ function _Create()
     return New:Card()
         :SpellEffect(
             New:Effects('Target opponent mills seven cards.')
-                :Target(
+                :Targets(
                     Target:Player(
                         'T1',
                         Select:Players()

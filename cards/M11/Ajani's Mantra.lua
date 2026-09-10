@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :TriggeredAbility(
+        :TriggeredAbilities(
             New:TriggeredAbility('At the beginning of your upkeep, you may gain 1 life.')
-                :Trigger(
+                :Triggers(
                     Triggers:StepBeginning()
                         :Steps(StepTypes.Upkeep)
                         :PlayerFilter(

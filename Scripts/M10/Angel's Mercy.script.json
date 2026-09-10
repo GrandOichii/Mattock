@@ -1,68 +1,68 @@
 {
-  "StartId": 1,
+  "StartId": 4,
   "Nodes": [
     {
       "Id": 0,
       "Name": "New:Effect",
-      "EditorOffsetX": 940.0,
-      "EditorOffsetY": 80.0,
-      "EditorSizeX": 240.0,
+      "EditorOffsetX": 640.0,
+      "EditorOffsetY": 120.0,
+      "EditorSizeX": 198.0,
       "EditorSizeY": 238.0,
       "InputArray": {
         "SlotCount": 1
       },
       "Data": {
-        "text": "Draw 2 cards."
+        "text": "Gain 7 life."
       }
     },
     {
       "Id": 1,
-      "Name": "New:Card",
-      "EditorOffsetX": 640.0,
-      "EditorOffsetY": 80.0,
-      "EditorSizeX": 181.0,
-      "EditorSizeY": 200.0,
-      "InputArray": null,
-      "Data": {}
-    },
-    {
-      "Id": 2,
       "Name": "Player:Select.You",
-      "EditorOffsetX": 820.0,
-      "EditorOffsetY": 420.0,
+      "EditorOffsetX": 460.0,
+      "EditorOffsetY": 480.0,
       "EditorSizeX": 176.0,
       "EditorSizeY": 78.0,
       "InputArray": null,
       "Data": {}
     },
     {
-      "Id": 3,
+      "Id": 2,
       "Name": "Number:Const",
-      "EditorOffsetX": 1080.0,
-      "EditorOffsetY": 540.0,
+      "EditorOffsetX": 560.0,
+      "EditorOffsetY": 660.0,
       "EditorSizeX": 160.0,
       "EditorSizeY": 111.0,
       "InputArray": null,
       "Data": {
-        "value": 2
+        "value": 7
       }
     },
     {
-      "Id": 4,
-      "Name": "OneShot:Draw",
-      "EditorOffsetX": 1400.0,
-      "EditorOffsetY": 100.0,
+      "Id": 3,
+      "Name": "OneShot:GainLife",
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 260.0,
       "EditorSizeX": 212.0,
       "EditorSizeY": 128.0,
       "InputArray": null,
       "Data": {}
     },
     {
+      "Id": 4,
+      "Name": "New:Card",
+      "EditorOffsetX": 280.0,
+      "EditorOffsetY": 80.0,
+      "EditorSizeX": 200.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
       "Id": 5,
       "Name": "Select:Player",
-      "EditorOffsetX": 1080.0,
-      "EditorOffsetY": 360.0,
-      "EditorSizeX": 152.0,
+      "EditorOffsetX": 700.0,
+      "EditorOffsetY": 380.0,
+      "EditorSizeX": 141.0,
       "EditorSizeY": 161.0,
       "InputArray": {
         "SlotCount": 1
@@ -72,7 +72,7 @@
   ],
   "Connections": [
     {
-      "FromId": 1,
+      "FromId": 4,
       "FromPort": 0,
       "ToId": 0,
       "ToPort": 0
@@ -80,26 +80,26 @@
     {
       "FromId": 0,
       "FromPort": 0,
-      "ToId": 4,
+      "ToId": 3,
       "ToPort": 0
-    },
-    {
-      "FromId": 3,
-      "FromPort": 0,
-      "ToId": 4,
-      "ToPort": 2
     },
     {
       "FromId": 5,
       "FromPort": 1,
-      "ToId": 4,
+      "ToId": 3,
       "ToPort": 1
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
     },
     {
       "FromId": 2,
       "FromPort": 0,
-      "ToId": 5,
-      "ToPort": 0
+      "ToId": 3,
+      "ToPort": 2
     }
   ]
 }

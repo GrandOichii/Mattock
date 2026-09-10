@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :TriggeredAbility(
+        :TriggeredAbilities(
             New:TriggeredAbility('Whenever a creature card is put into an opponent\'s graveyard from anywhere, you gain 1 life.')
-                :Trigger(
+                :Triggers(
                     Triggers:SingleCardZoneChange()
                         :TargetZoneFilter(
                             Zones:Select()

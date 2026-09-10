@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :TriggeredAbility(
+        :TriggeredAbilities(
             New:TriggeredAbility('Whenever another creature enters, untap this creature.')
-                :Trigger(
+                :Triggers(
                     Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()

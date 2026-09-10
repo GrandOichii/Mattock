@@ -233,7 +233,6 @@ public partial class ScriptNodeDisplay : GraphNode
         _lastArrSlot = label;
         ++_arrSlotCount; 
 
-
         ConfigSlot(
             _node.InputArray.Position,
             ++_inputArrayCount,

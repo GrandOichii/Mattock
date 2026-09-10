@@ -2,9 +2,9 @@
 
 function _Create()
     return New:Card()
-        :ActivatedAbility(
+        :ActivatedAbilities(
             New:ActivatedAbility('{T}: Add {G}.')
-                :Cost(
+                :Costs(
                     Cost:SelfTap()
                 )
                 :Effects(

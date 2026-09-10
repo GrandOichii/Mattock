@@ -3,9 +3,9 @@
 
 function _Create()
     return New:Card()
-        :ActivatedAbility(
+        :ActivatedAbilities(
             New:ActivatedAbility('{T}: Add {C}.')
-                :Cost(
+                :Costs(
                     Cost:SelfTap()
                 )
                 :Effects(
@@ -25,9 +25,9 @@ function _Create()
                 )
                 :Build()
         )
-        :ActivatedAbility(
+        :ActivatedAbilities(
             New:ActivatedAbility('{T}: Add {G} or {B}. This land deals 1 damage to you.')
-                :Cost(
+                :Costs(
                     Cost:SelfTap()
                 )
                 :Effects(
