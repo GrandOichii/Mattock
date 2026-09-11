@@ -1,5 +1,5 @@
 {
-  "StartId": 9,
+  "StartId": 7,
   "Nodes": [
     {
       "Id": 0,
@@ -75,60 +75,39 @@
       "EditorOffsetX": 1060.0,
       "EditorOffsetY": 480.0,
       "EditorSizeX": 300.0,
-      "EditorSizeY": 238.0,
+      "EditorSizeY": 271.0,
       "InputArray": {
         "SlotCount": 1
       },
       "Data": {
-        "text": "Target player loses 1 life."
+        "text": "Target player loses 1 life.",
+        "canProduceMana": false
       }
     },
     {
       "Id": 7,
-      "Name": "Cost:SelfTap",
-      "EditorOffsetX": 160.0,
-      "EditorOffsetY": 560.0,
-      "EditorSizeX": 130.0,
-      "EditorSizeY": 78.0,
-      "InputArray": null,
-      "Data": {}
-    },
-    {
-      "Id": 8,
-      "Name": "Cost collection",
-      "EditorOffsetX": 360.0,
-      "EditorOffsetY": 440.0,
-      "EditorSizeX": 137.0,
-      "EditorSizeY": 136.0,
-      "InputArray": {
-        "SlotCount": 1
-      },
-      "Data": {}
-    },
-    {
-      "Id": 9,
       "Name": "New:Card",
       "EditorOffsetX": -20.0,
       "EditorOffsetY": -40.0,
-      "EditorSizeX": 228.0,
+      "EditorSizeX": 233.0,
       "EditorSizeY": 300.0,
       "InputArray": null,
       "Data": {}
     },
     {
-      "Id": 10,
+      "Id": 8,
       "Name": "New:ActivatedAbility",
       "EditorOffsetX": 620.0,
       "EditorOffsetY": 320.0,
       "EditorSizeX": 340.0,
-      "EditorSizeY": 205.0,
+      "EditorSizeY": 230.0,
       "InputArray": null,
       "Data": {
         "text": "{1}{B}, {T}: Target player loses 1 life."
       }
     },
     {
-      "Id": 11,
+      "Id": 9,
       "Name": "ActivatedAbilities",
       "EditorOffsetX": 320.0,
       "EditorOffsetY": 100.0,
@@ -138,6 +117,40 @@
         "SlotCount": 2
       },
       "Data": {}
+    },
+    {
+      "Id": 10,
+      "Name": "Cost:SelfTap",
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 320.0,
+      "EditorSizeX": 199.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 11,
+      "Name": "Mana.Fixed:Generic",
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 160.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "amount": 1
+      }
+    },
+    {
+      "Id": 12,
+      "Name": "Mana.Fixed:Black",
+      "EditorOffsetX": 1320.0,
+      "EditorOffsetY": 180.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "amount": 1
+      }
     }
   ],
   "Connections": [
@@ -184,33 +197,39 @@
       "ToPort": 0
     },
     {
-      "FromId": 10,
-      "FromPort": 0,
-      "ToId": 6,
+      "FromId": 7,
+      "FromPort": 1,
+      "ToId": 9,
       "ToPort": 0
     },
     {
-      "FromId": 7,
+      "FromId": 9,
       "FromPort": 0,
       "ToId": 8,
       "ToPort": 0
     },
     {
       "FromId": 8,
-      "FromPort": 0,
-      "ToId": 10,
-      "ToPort": 1
+      "FromPort": 2,
+      "ToId": 6,
+      "ToPort": 0
     },
     {
-      "FromId": 9,
+      "FromId": 8,
       "FromPort": 1,
+      "ToId": 10,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
       "ToId": 11,
       "ToPort": 0
     },
     {
       "FromId": 11,
       "FromPort": 0,
-      "ToId": 10,
+      "ToId": 12,
       "ToPort": 0
     }
   ]

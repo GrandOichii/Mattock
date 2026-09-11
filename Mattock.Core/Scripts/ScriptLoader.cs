@@ -42,12 +42,12 @@ public class ScriptLoader
                     },
                     new() {
                         Key = "activatedAbilities",
-                        Prefix = "\n:ActivatedAbilties(\n",
+                        Prefix = "\n:ActivatedAbilities(\n",
                         Postfix = "\n)",
                         HasMissingScript = true,
                         MissingScript = "",
                         AllowMultiple = false,
-                        Label = "Activated abilties",
+                        Label = "Activated abilities",
                         Position = ScriptNodePortPosition.Right,
                         Type = "ActivatedAbilityCollection",
                         MultipleSeparator = "",
@@ -99,7 +99,7 @@ public class ScriptLoader
                         Position = ScriptNodePortPosition.Left,
                         Type = "Effect",
                         Script = """
-                        New:Effects('$text')$targets$singleEffects
+                        New:Effects('$text')$canProduceMana$targets$singleEffects
                         :Build()
                         """
                     }
@@ -129,6 +129,17 @@ public class ScriptLoader
                         Postfix = "",
                         Prefix = "",
                         NoScriptIfEmpty = false
+                    },
+                    new ScriptNodeSimpleArg() {
+                        Config = new BoolArgConfig() {
+                            FalseScript = "",
+                            TrueScript = "\n:CanProduceMana()",
+                            Label = "Produces mana?",
+                        },
+                        Key = "canProduceMana",
+                        Postfix = "",
+                        Prefix = "",
+                        NoScriptIfEmpty = false
                     }
                 ]
             }
@@ -143,14 +154,26 @@ public class ScriptLoader
                     new() {
                         AllowMultiple = false,
                         HasMissingScript = true,
+                        Key = "manaCosts",
+                        Label = "Mana costs",
+                        MissingScript = "",
+                        MultipleSeparator = "",
+                        Position = ScriptNodePortPosition.Right,
+                        Postfix = "\n)",
+                        Prefix = "\n:ManaCosts(\n",
+                        Type = "Mana",
+                    },
+                    new() {
+                        AllowMultiple = false,
+                        HasMissingScript = true,
                         Key = "costs",
                         Label = "Costs",
                         MissingScript = "",
                         MultipleSeparator = "",
-                        Position = ScriptNodePortPosition.Left,
-                        Postfix = ")",
+                        Position = ScriptNodePortPosition.Right,
+                        Postfix = "\n)",
                         Prefix = "\n:Costs(\n",
-                        Type = "CostCollection",
+                        Type = "Cost",
                     },
                     // TODO duplicated code
                     new() {
@@ -172,7 +195,7 @@ public class ScriptLoader
                         Position = ScriptNodePortPosition.Left,
                         Type = "ActivatedAbility",
                         Script = """
-                        New:ActivatedAbility('$text')$costs$singleEffects
+                        New:ActivatedAbility('$text')$manaCosts$costs$singleEffects
                         :Build()
                         """,
                     }
@@ -192,38 +215,6 @@ public class ScriptLoader
                         NoScriptIfEmpty = false
                     }
                 ]
-            }
-        );
-
-        ScriptNodes.Nodes.Add(
-            new()
-            {
-                Name = "Cost collection",
-                Label = "Costs",
-                Inputs = [],
-                Outputs = [
-                    new() {
-                        Label = "Costs",
-                        Position = ScriptNodePortPosition.Right,
-                        Script = "$costs",
-                        Type = "CostCollection",
-                    }
-                ],
-                Description = "TODO",
-                InputArray = new()
-                {
-                    AddButtonLabel = "Add cost",
-                    ItemPostfix = "",
-                    ItemPrefix = "",
-                    ItemSeparator = ",\n",
-                    Key = "costs",
-                    NoScriptIfEmpty = false,
-                    Position = ScriptNodePortPosition.Left,
-                    ScriptPostfix = "",
-                    ScriptPrefix = "",
-                    Type = "Cost"
-                },
-                SimpleArgs = [],
             }
         );
 
@@ -288,6 +279,38 @@ public class ScriptLoader
                 OneShot:Draw(
                 $players,
                 $amount
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
+                    Name = "OneShot:AddMana",
+                    Label = "Add mana",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
+                        Inputs.ManaGroup(
+                            "mana",
+                            "Mana group"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:AddMana(
+                $players,
+                $mana
                 )
                 """
             )
@@ -391,24 +414,69 @@ public class ScriptLoader
 
         // Costs
         ScriptNodes.Nodes.Add(
-            new()
-            {
-                Name = "Cost:SelfTap",
-                Label = "Tap self",
-                Inputs = [],
-                Outputs = [
-                    new() {
-                        Label = "Cost",
-                        Position = ScriptNodePortPosition.Right,
-                        Script = "Cost:SelfTap()",
-                        Type = "Cost"
-                    },
-                ],
-                Description = "TODO",
-                InputArray = null,
-                SimpleArgs = []
-            }
+            Scripts.Cost(
+                new()
+                {
+                    Name = "Cost:SelfTap",
+                    Label = "Tap self",
+                    Inputs = [],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = []
+                },
+                """
+                Cost:SelfTap()
+                """
+            )
         );
+
+        // Mana
+
+        string[] manaTypes = [
+            "Generic",
+            "White",
+            "Blue",
+            "Black",
+            "Red",
+            "Green",
+        ];
+
+        foreach (var manaType in manaTypes)
+        {
+            ScriptNodes.Nodes.Add(
+                Scripts.Mana(manaType)
+            );
+        }
+
+        // Mana groups
+
+        ScriptNodes.Nodes.Add(new()
+        {
+            Name = "Mana:Group",
+            Label = "Mana group",
+            Inputs = [
+                Inputs.Mana(
+                    "mana",
+                    "Mana"
+                ),
+            ],
+            Outputs = [
+                new() {
+                    Label = "",
+                    Position = ScriptNodePortPosition.Left,
+                    Type = "ManaGroup",
+                    Script = """
+                    Mana:Group(
+                    $mana
+                    )
+                    """
+                }
+            ],
+            Description = "TODO",
+            InputArray = null,
+            SimpleArgs = []
+        });
 
         // Selects
 
@@ -3461,10 +3529,9 @@ public class ScriptLoader
         //         "Gig"
         //     )
         // );
-    
     }
 
-    public string Load(string path)
+    public static string Load(string path)
     {
         if (!File.Exists(path))
             throw new Exception($"Script file doesn't exist at path: {path}");

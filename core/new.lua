@@ -94,7 +94,7 @@ function New:ActivatedAbility(text)
         return builder
     end
 
-    function builder:ManaCost(...)
+    function builder:ManaCosts(...)
         local costs = {...}
         for _, cost in ipairs(costs) do
             builder.manaCosts[#builder.manaCosts+1] = cost

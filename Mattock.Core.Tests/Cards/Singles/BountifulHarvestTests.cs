@@ -21,7 +21,7 @@ public class BountifulHarvestTests
     public async Task NoLands()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Bountiful Harvest");
         
@@ -83,7 +83,7 @@ public class BountifulHarvestTests
     public async Task SingleLand()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Bountiful Harvest");
         
@@ -151,7 +151,7 @@ public class BountifulHarvestTests
     public async Task SingleOpponentLand()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Bountiful Harvest");
         
@@ -221,7 +221,7 @@ public class BountifulHarvestTests
     public async Task SingleNonLand()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Bountiful Harvest");
         
@@ -291,7 +291,7 @@ public class BountifulHarvestTests
     public async Task DoubleLand()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Bountiful Harvest");
         
@@ -362,7 +362,7 @@ public class BountifulHarvestTests
     public async Task LandX5()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Bountiful Harvest");
         

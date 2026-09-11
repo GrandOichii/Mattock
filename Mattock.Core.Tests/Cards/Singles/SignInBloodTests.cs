@@ -32,7 +32,7 @@ public class SignInBloodTests
     public async Task TargetSelf()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Sign in Blood");
         
@@ -99,7 +99,7 @@ public class SignInBloodTests
     public async Task TargetOpponent()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Sign in Blood");
         

@@ -6,7 +6,7 @@
       "Name": "New:Card",
       "EditorOffsetX": 260.0,
       "EditorOffsetY": 100.0,
-      "EditorSizeX": 200.0,
+      "EditorSizeX": 233.0,
       "EditorSizeY": 300.0,
       "InputArray": null,
       "Data": {}
@@ -71,12 +71,13 @@
       "EditorOffsetX": 760.0,
       "EditorOffsetY": 260.0,
       "EditorSizeX": 399.99988,
-      "EditorSizeY": 238.0,
+      "EditorSizeY": 271.0,
       "InputArray": {
         "SlotCount": 1
       },
       "Data": {
-        "text": "Target player draws 2 cards and loses 2 life."
+        "text": "Target player draws 2 cards and loses 2 life.",
+        "canProduceMana": false
       }
     },
     {

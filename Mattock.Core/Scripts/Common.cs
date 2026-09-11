@@ -449,6 +449,89 @@ public static class Scripts
         return node;
     }
 
+    public static ScriptNode Cost(
+        ScriptNode node,
+        string script
+    )
+    {
+        node.Inputs.Insert(0, new()
+        {
+            Key = "nextCost",
+            Prefix = ",\n",
+            Postfix = "",
+            AllowMultiple = false,
+            MultipleSeparator = "",
+            HasMissingScript = true,
+            MissingScript = "",
+            Label = "Next cost",
+            Position = ScriptNodePortPosition.Right,
+            Type = "Cost",
+        });
+        node.Outputs.Add(new()
+        {
+            Label = "This",
+            Position = ScriptNodePortPosition.Left,
+            Type = "Cost",
+            Script = $"{script}$nextCost",
+        });
+
+        return node;
+    }
+
+    public static ScriptNode Mana(
+        string manaType
+    )
+    {
+        return new()
+        {
+            Name = $"Mana.Fixed:{manaType}",
+            Label = $"{manaType} mana",
+            Inputs = [
+                new()
+                {
+                    Key = "nextMana",
+                    Prefix = ",\n",
+                    Postfix = "",
+                    AllowMultiple = false,
+                    MultipleSeparator = "",
+                    HasMissingScript = true,
+                    MissingScript = "",
+                    Label = "Next mana",
+                    Position = ScriptNodePortPosition.Right,
+                    Type = "Mana",
+                },
+            ],
+            Outputs = [
+                new()
+                {
+                    Label = "This",
+                    Position = ScriptNodePortPosition.Left,
+                    Type = "Mana",
+                    Script = $"Mana.Fixed:{manaType}($amount)$nextMana",
+                },
+            ],
+            Description = "TODO",
+            InputArray = null,
+            SimpleArgs = [
+                new() {
+                    Key = "amount",
+                    Config = new IntegerArgConfig() {
+                        Label = "Amount: ",
+                        HasMax = false,
+                        HasMin = true,
+                        Max = 0,
+                        Min = 0,
+                        Default = 0,
+                        ZeroMeansEmpty = true,
+                    },
+                    NoScriptIfEmpty = false,
+                    Prefix = "",
+                    Postfix = "",
+                }
+            ],
+        };
+    }
+
     // public static ScriptNode Modifier(
     //     ScriptNode node,
     //     string method,
@@ -533,6 +616,44 @@ public static class Inputs
             Label = label,
             Position = ScriptNodePortPosition.Left,
             Type = "Number"
+        };
+    }
+
+    public static ScriptNodeInputPort Mana(
+        string key,
+        string label
+    )
+    {
+        return new() {
+            Key = key,
+            Prefix = "",
+            AllowMultiple = false,
+            MultipleSeparator = "",
+            Postfix = "",
+            HasMissingScript = false,
+            MissingScript = "",
+            Label = label,
+            Position = ScriptNodePortPosition.Right,
+            Type = "Mana"
+        };
+    }
+
+    public static ScriptNodeInputPort ManaGroup(
+        string key,
+        string label
+    )
+    {
+        return new() {
+            Key = key,
+            Prefix = "",
+            AllowMultiple = false,
+            MultipleSeparator = "",
+            Postfix = "",
+            HasMissingScript = false,
+            MissingScript = "",
+            Label = label,
+            Position = ScriptNodePortPosition.Right,
+            Type = "ManaGroup"
         };
     }
 

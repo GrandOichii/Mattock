@@ -79,6 +79,7 @@ public partial class TestEditor
 
 		newTab.ObjectColors = new() {
 			{ "Effect", new Color(1, 1, 0, 1) },
+			{ "ManaGroup", new Color(1, 1, 1, 1) },
 			{ "SingleEffect", new Color(1, 0.8f, 0.3f, 1) },
 			{ "Target", new Color(1, 0, 1, 1) },
 			{ "Target.Amount", new Color(0.6f, 0.1f, 0.1f, 1) },
@@ -103,7 +104,7 @@ public partial class TestEditor
 			// { "PlayerSelect", new Color(0, 0, 0.66f, 1) },
 			// { "PlayerSingle", new Color(0, 0, 0.33f, 1) },
 			{ "Cost", new Color(0, 0.5f, 0.5f, 1) },
-			{ "CostCollection", new Color(0, 0.1f, 0.1f, 1) },
+			{ "Mana", new Color(0, 0.3f, 0.3f, 1) },
 		};
 		newTab.LoadScriptNodes(ScriptLoader.ScriptNodes);
 

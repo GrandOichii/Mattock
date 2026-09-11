@@ -12,7 +12,7 @@ public class AjanisMantraTests
     public async Task NoTriggerWhileNotOnBattlefield()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M11:Ajani's Mantra");
 
@@ -69,7 +69,7 @@ public class AjanisMantraTests
     public async Task NoTriggerOnOpponentsTurn()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M11:Ajani's Mantra");
 
@@ -130,7 +130,7 @@ public class AjanisMantraTests
     public async Task TriggersAtStartOfTurn()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M11:Ajani's Mantra");
 
@@ -207,7 +207,7 @@ public class AjanisMantraTests
     public async Task Triggers3Times()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M11:Ajani's Mantra");
 

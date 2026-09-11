@@ -11,7 +11,7 @@ public class TirelessMissionariesTests
     public async Task DoNothingNoTriggers()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Tireless Missionaries");
 
@@ -68,7 +68,7 @@ public class TirelessMissionariesTests
     public async Task NoTriggerWhileNotOnBattlefield()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Tireless Missionaries");
 
@@ -133,7 +133,7 @@ public class TirelessMissionariesTests
     public async Task TriggersOnSelfETB()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Tireless Missionaries");
 
@@ -214,7 +214,7 @@ public class TirelessMissionariesTests
     public async Task DoesntTriggerOnOtherETB()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Tireless Missionaries");
 

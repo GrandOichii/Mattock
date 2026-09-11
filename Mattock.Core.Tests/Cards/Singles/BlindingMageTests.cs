@@ -23,7 +23,7 @@ public class BlindingMageTests
     public async Task CantActivate_Tapped()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Blinding Mage");
         
@@ -96,7 +96,7 @@ public class BlindingMageTests
     public async Task Activate_CheckTargets()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Blinding Mage");
         

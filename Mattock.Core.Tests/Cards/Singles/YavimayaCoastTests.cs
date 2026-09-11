@@ -32,7 +32,7 @@ public class YavimayaCoastTests
     public async Task ActivateGeneric()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Yavimaya Coast");
         
@@ -102,7 +102,7 @@ public class YavimayaCoastTests
     public async Task ActivateColored(string choice, ManaType manaType)
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Yavimaya Coast");
         
@@ -175,7 +175,7 @@ public class YavimayaCoastTests
     public async Task RollbackBeforeChoice()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Yavimaya Coast");
         

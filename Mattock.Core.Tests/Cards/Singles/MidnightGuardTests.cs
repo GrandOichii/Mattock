@@ -11,7 +11,7 @@ public class MidnightGuardTests
     public async Task NoTriggerWhileNotOnBattlefield()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Midnight Guard");
 
@@ -72,7 +72,7 @@ public class MidnightGuardTests
     public async Task NoTriggerOnSelfETB()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Midnight Guard");
 
@@ -135,7 +135,7 @@ public class MidnightGuardTests
     public async Task TriggerOnOtherETB_SameController()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Midnight Guard");
 
@@ -224,7 +224,7 @@ public class MidnightGuardTests
     public async Task TriggerOnOtherETB_DifferentController()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Midnight Guard");
 

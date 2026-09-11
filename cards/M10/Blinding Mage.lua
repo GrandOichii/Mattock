@@ -6,7 +6,7 @@ function _Create()
     return New:Card()
         :ActivatedAbilities(
             New:ActivatedAbility('{W}, {T}: Tap target creature.')
-                :ManaCost(
+                :ManaCosts(
                     Mana.Fixed:White(1)
                 )
                 :Costs(

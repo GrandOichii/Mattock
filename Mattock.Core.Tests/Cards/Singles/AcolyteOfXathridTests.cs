@@ -21,7 +21,7 @@ public class AcolyteOfXathridTests
     // public async Task CantActivate_NoMana()
     // {
     //     // Arrange
-    //     var loader = new FileCardLoader("../../../../cards");
+    //     var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
     //     var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -83,7 +83,7 @@ public class AcolyteOfXathridTests
     public async Task CantActivate_AlreadyTapped()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -147,7 +147,7 @@ public class AcolyteOfXathridTests
     public async Task CantActivate_SummoningSick()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -208,7 +208,7 @@ public class AcolyteOfXathridTests
     public async Task Activate_OnSelf()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -280,7 +280,7 @@ public class AcolyteOfXathridTests
     public async Task Activate_OnOpp()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -352,7 +352,7 @@ public class AcolyteOfXathridTests
     public async Task PlayAndActivate_PayUsingManaAbilities()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var creature = loader.Load("M10:Acolyte of Xathrid");
         var swamp = loader.Load("M10:Swamp");
@@ -451,7 +451,7 @@ public class AcolyteOfXathridTests
     public async Task CantActivate_NotFromBattlefield()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -510,7 +510,7 @@ public class AcolyteOfXathridTests
     public async Task CantActivate_OppAbility()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         
@@ -580,7 +580,7 @@ public class AcolyteOfXathridTests
     public async Task RollbackBeforeActivation_NoMana()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Acolyte of Xathrid");
         var swamp = loader.Load("M10:Swamp");

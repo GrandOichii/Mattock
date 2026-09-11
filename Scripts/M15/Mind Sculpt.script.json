@@ -6,7 +6,7 @@
       "Name": "New:Card",
       "EditorOffsetX": 260.0,
       "EditorOffsetY": 100.0,
-      "EditorSizeX": 200.0,
+      "EditorSizeX": 233.0,
       "EditorSizeY": 300.0,
       "InputArray": null,
       "Data": {}
@@ -17,12 +17,13 @@
       "EditorOffsetX": 918.0,
       "EditorOffsetY": 327.0,
       "EditorSizeX": 340.0,
-      "EditorSizeY": 238.0,
+      "EditorSizeY": 271.0,
       "InputArray": {
         "SlotCount": 1
       },
       "Data": {
-        "text": "Target opponent mills seven cards."
+        "text": "Target opponent mills seven cards.",
+        "canProduceMana": false
       }
     },
     {

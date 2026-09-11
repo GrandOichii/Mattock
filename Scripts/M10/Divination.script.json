@@ -7,12 +7,13 @@
       "EditorOffsetX": 940.0,
       "EditorOffsetY": 80.0,
       "EditorSizeX": 240.0,
-      "EditorSizeY": 238.0,
+      "EditorSizeY": 271.0,
       "InputArray": {
         "SlotCount": 1
       },
       "Data": {
-        "text": "Draw 2 cards."
+        "text": "Draw 2 cards.",
+        "canProduceMana": false
       }
     },
     {
@@ -20,7 +21,7 @@
       "Name": "New:Card",
       "EditorOffsetX": 640.0,
       "EditorOffsetY": 80.0,
-      "EditorSizeX": 181.0,
+      "EditorSizeX": 233.0,
       "EditorSizeY": 200.0,
       "InputArray": null,
       "Data": {}
@@ -28,8 +29,8 @@
     {
       "Id": 2,
       "Name": "Player:Select.You",
-      "EditorOffsetX": 820.0,
-      "EditorOffsetY": 420.0,
+      "EditorOffsetX": 800.0,
+      "EditorOffsetY": 460.0,
       "EditorSizeX": 176.0,
       "EditorSizeY": 78.0,
       "InputArray": null,
@@ -38,8 +39,8 @@
     {
       "Id": 3,
       "Name": "Number:Const",
-      "EditorOffsetX": 1080.0,
-      "EditorOffsetY": 540.0,
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 580.0,
       "EditorSizeX": 160.0,
       "EditorSizeY": 111.0,
       "InputArray": null,
@@ -60,8 +61,8 @@
     {
       "Id": 5,
       "Name": "Select:Player",
-      "EditorOffsetX": 1080.0,
-      "EditorOffsetY": 360.0,
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 400.0,
       "EditorSizeX": 152.0,
       "EditorSizeY": 161.0,
       "InputArray": {

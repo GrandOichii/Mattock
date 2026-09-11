@@ -14,7 +14,7 @@ public class StaffOfTheSunMagusTests
     public async Task TriggerOnPlains()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -109,7 +109,7 @@ public class StaffOfTheSunMagusTests
     public async Task NoTriggerOnOppPlains()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -194,7 +194,7 @@ public class StaffOfTheSunMagusTests
     public async Task TriggerOnWhiteInstant()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -296,7 +296,7 @@ public class StaffOfTheSunMagusTests
     public async Task NoTriggerOnBlueInstant()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -391,7 +391,7 @@ public class StaffOfTheSunMagusTests
     public async Task NoTriggerOnOppWhiteInstant()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");

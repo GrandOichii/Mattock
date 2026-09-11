@@ -4,7 +4,7 @@ function _Create()
     return New:Card()
         :ActivatedAbilities(
             New:ActivatedAbility('{1}{B}, {T}: Target player loses 1 life.')
-                :ManaCost(
+                :ManaCosts(
                     Mana.Fixed:Generic(1),
                     Mana.Fixed:Black(1)
                 )

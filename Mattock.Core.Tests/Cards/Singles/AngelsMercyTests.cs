@@ -21,7 +21,7 @@ public class AngelsMercyTests
     public async Task Baseline()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Angel's Mercy");
 

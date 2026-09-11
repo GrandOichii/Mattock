@@ -3,16 +3,20 @@ using Mattock.Core.Setup.Templates;
 
 namespace Mattock.Core.Loaders;
 
-public class FileCardLoader : ICardLoader
+public class FileCardLoader
+    : ICardLoader
 {
     private static readonly string MANIFEST_FILE = "_manifest.json";
 
     private static readonly string EXPANSION_MANIFEST_FILE = "_manifest.json";
 
     private readonly Dictionary<string, Dictionary<string, CardTemplate>> _expansionMap;
+    private readonly ICardScriptLoader _scriptLoader;
 
-    public FileCardLoader(string dir)
+    public FileCardLoader(ICardScriptLoader scriptLoader, string dir)
     {
+        _scriptLoader = scriptLoader;
+
         var manifestPath = Path.Join(dir, MANIFEST_FILE);
         var data = JsonSerializer.Deserialize<ManifestData>(File.ReadAllText(manifestPath))
             ?? throw new FileCardLoaderException($"Null JSON at {manifestPath}");
@@ -32,9 +36,8 @@ public class FileCardLoader : ICardLoader
                 var cardPath = Path.Join(expansionDir, card);
                 var cardData = JsonSerializer.Deserialize<CardTemplate>(File.ReadAllText($"{cardPath}.json"))
                     ?? throw new FileCardLoaderException($"Null JSON at {cardPath}");
-                var scriptPath = $"{cardPath}.lua";
-                cardData.Script = File.ReadAllText(scriptPath);
-
+                cardData.Script = _scriptLoader.Load(expansion, card);
+                
                 cards[cardData.Name] = cardData;
             }
             _expansionMap[expansion] = cards;

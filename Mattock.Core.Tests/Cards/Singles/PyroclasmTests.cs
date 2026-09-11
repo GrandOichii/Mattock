@@ -34,7 +34,7 @@ public class PyroclasmTests
     public async Task Baseline()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
 
         var card = loader.Load("M10:Pyroclasm");
         

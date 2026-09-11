@@ -22,7 +22,7 @@ public class MindSculptTests
     public async Task TargetSingleOpponent()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Mind Sculpt");
         
@@ -80,7 +80,7 @@ public class MindSculptTests
     public async Task RollbackBeforeTargetChoice()
     {
         // Arrange
-        var loader = new FileCardLoader("../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Mind Sculpt");
         
