@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Players.Cards;
 using ScriptEditor.Core;
 using ScriptEditor.Core.SimpleArgs;
 
@@ -143,6 +144,82 @@ public static class Scripts
 
     //     return node;
     // }
+
+    public static ScriptNode Target(
+        string type
+    )
+    {
+        return new()
+        {
+            Name = $"Target:{type}",
+            Label = $"{type} targets",
+            Inputs = [
+                new() {
+                    Key = "select",
+                    Prefix = "",
+                    Postfix = "",
+                    HasMissingScript = false,
+                    MissingScript = "",
+                    AllowMultiple = false,
+                    MultipleSeparator = "",
+                    Label = $"{type} select",
+                    Position = ScriptNodePortPosition.Left,
+                    Type = $"{type}Select"
+                },
+                new() {
+                    Key = "amount",
+                    Prefix = "",
+                    Postfix = "",
+                    HasMissingScript = false,
+                    MissingScript = "",
+                    AllowMultiple = false,
+                    MultipleSeparator = "",
+                    Label = "Amount",
+                    Position = ScriptNodePortPosition.Left,
+                    Type = "Target.Amount",
+                },
+            ],
+            Outputs = [
+                new() {
+                    Label = "Target",
+                    Position = ScriptNodePortPosition.Right,
+                    Type = "Target",
+                    Script = $"""
+                    Target:{type}(
+                    '$tgtKey',
+                    $select,
+                    $amount
+                    )
+                    """,
+                },
+                new() {
+                    Label = "Many",
+                    Position = ScriptNodePortPosition.Right,
+                    Type = $"{type}Many",
+                    Script = $"""
+                    Select:{type}s()
+                    :FromTarget('$tgtKey')
+                    :Many()
+                    """,
+                },
+            ],
+            Description = "TODO",
+            InputArray = null,
+            SimpleArgs = [
+                new ScriptNodeSimpleArg() {
+                    Config = new StringArgConfig() {
+                        Default = "",
+                        Multiline = false,
+                        Placeholder = "Target key",
+                    },
+                    Key = "tgtKey",
+                    Postfix = "",
+                    Prefix = "",
+                    NoScriptIfEmpty = false,
+                },
+            ]
+        };
+    }
 
     public static ScriptNode Number(
         ScriptNode node,
@@ -728,20 +805,13 @@ public static class SimpleArgs
 
 public static class ArgConfigs
 {
-
-    // public static EnumArgConfig Colors()
-    // {
-    //     return new()
-    //     {
-    //         Values = new()
-    //         {
-    //             { "Red", "Red" },
-    //             { "Blue", "Blue" },
-    //             { "Yellow", "Yellow" },
-    //             { "Green", "Green" },
-    //         }
-    //     };
-    // }
+    public static EnumArgConfig Colors()
+    {
+        return new()
+        {
+            Values = CardTypes.All.ToDictionary(type => type),
+        };
+    }
 
     // public static EnumArgConfig Types()
     // {

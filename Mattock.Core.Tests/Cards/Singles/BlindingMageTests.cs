@@ -23,7 +23,7 @@ public class BlindingMageTests
     public async Task CantActivate_Tapped()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Blinding Mage");
         
@@ -93,10 +93,10 @@ public class BlindingMageTests
     }
 
     [Fact]
-    public async Task Activate_CheckTargets()
+    public async Task CantTargetArtifact()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M10:Blinding Mage");
         
@@ -121,8 +121,13 @@ public class BlindingMageTests
                     .AddType(CardTypes.Creature)
                     .StatLine("0/1")
                     .ZeroCost()
-                    .Amount(60)
-                    .Build()
+                    .Amount(4)
+                    .Build(),
+                new DeckCardTemplateBuilder("a")
+                    .Artifact()
+                    .ZeroCost()
+                    .Amount(3)
+                    .Build(),
             ]
         };
 
@@ -152,6 +157,8 @@ public class BlindingMageTests
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck2)
             .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName("a")
+            .Act.AutoPassUntilStackEmpty()
             .Act.CastSpellWithName("c")
             .AttackDeclarationsChoices.Done()
             .Act.AutoPass()

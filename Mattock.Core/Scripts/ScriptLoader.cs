@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Transactions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ScriptEditor.Core;
@@ -289,6 +285,60 @@ public class ScriptLoader
             (
                 new()
                 {
+                    Name = "OneShot:TapPermanents",
+                    Label = "Tap permanents",
+                    Inputs = [
+                        Inputs.Many(
+                            "permanents",
+                            "Permanent",
+                            "Permanents"
+                        ),
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:TapPermanents(
+                $permanents
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
+                    Name = "OneShot:UntapPermanents",
+                    Label = "Untap permanents",
+                    Inputs = [
+                        Inputs.Many(
+                            "permanents",
+                            "Permanent",
+                            "Permanents"
+                        ),
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:UntapPermanents(
+                $permanents
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
                     Name = "OneShot:AddMana",
                     Label = "Add mana",
                     Inputs = [
@@ -487,80 +537,101 @@ public class ScriptLoader
             "Players",
             "Players"
         );
+
+        Scripts.AddSelect
+        (
+            ScriptNodes,
+            "Permanent",
+            "Permanents",
+            "Permanents"
+        );
         
         // Targets
+
         ScriptNodes.Nodes.Add(
-            new()
-            {
-                Name = "Target:Player",
-                Label = "Target player",
-                Inputs = [
-                    new() {
-                        Key = "players",
-                        Prefix = "",
-                        Postfix = "",
-                        HasMissingScript = false,
-                        MissingScript = "",
-                        AllowMultiple = false,
-                        MultipleSeparator = "",                        
-                        Label = "Player select",
-                        Position = ScriptNodePortPosition.Left,
-                        Type = "PlayerSelect",
-                    },
-                    new() {
-                        Key = "amount",
-                        Prefix = "",
-                        Postfix = "",
-                        HasMissingScript = false,
-                        MissingScript = "",
-                        AllowMultiple = false,
-                        MultipleSeparator = "",
-                        Label = "Amount",
-                        Position = ScriptNodePortPosition.Left,
-                        Type = "Target.Amount",
-                    },
-                ],
-                Outputs = [
-                    new() {
-                        Label = "Target",
-                        Position = ScriptNodePortPosition.Right,
-                        Type = "Target",
-                        Script = """
-                        Target:Player(
-                        '$tgtKey',
-                        $players,
-                        $amount
-                        )
-                        """,
-                    },
-                    new() {
-                        Label = "Many",
-                        Position = ScriptNodePortPosition.Right,
-                        Type = "PlayerMany",
-                        Script = """
-                        Select:Players()
-                        :FromTarget('$tgtKey')
-                        :Many()
-                        """,
-                    },
-                ],
-                Description = "TODO",
-                InputArray = null,
-                SimpleArgs = [
-                    new ScriptNodeSimpleArg() {
-                        Config = new StringArgConfig() {
-                            Default = "",
-                            Multiline = false,
-                            Placeholder = "Target key",
-                        },
-                        Key = "tgtKey",
-                        Postfix = "",
-                        Prefix = "",
-                        NoScriptIfEmpty = false
-                    }
-                ],
-            }
+            Scripts.Target(
+                "Player"
+            )
         );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Target(
+                "Permanent"
+            )
+        );
+        
+        // ScriptNodes.Nodes.Add(
+        //     new()
+        //     {
+        //         Name = "Target:Player",
+        //         Label = "Target player",
+        //         Inputs = [
+        //             new() {
+        //                 Key = "players",
+        //                 Prefix = "",
+        //                 Postfix = "",
+        //                 HasMissingScript = false,
+        //                 MissingScript = "",
+        //                 AllowMultiple = false,
+        //                 MultipleSeparator = "",                        
+        //                 Label = "Player select",
+        //                 Position = ScriptNodePortPosition.Left,
+        //                 Type = "PlayerSelect",
+        //             },
+        //             new() {
+        //                 Key = "amount",
+        //                 Prefix = "",
+        //                 Postfix = "",
+        //                 HasMissingScript = false,
+        //                 MissingScript = "",
+        //                 AllowMultiple = false,
+        //                 MultipleSeparator = "",
+        //                 Label = "Amount",
+        //                 Position = ScriptNodePortPosition.Left,
+        //                 Type = "Target.Amount",
+        //             },
+        //         ],
+        //         Outputs = [
+        //             new() {
+        //                 Label = "Target",
+        //                 Position = ScriptNodePortPosition.Right,
+        //                 Type = "Target",
+        //                 Script = """
+        //                 Target:Player(
+        //                 '$tgtKey',
+        //                 $players,
+        //                 $amount
+        //                 )
+        //                 """,
+        //             },
+        //             new() {
+        //                 Label = "Many",
+        //                 Position = ScriptNodePortPosition.Right,
+        //                 Type = "PlayerMany",
+        //                 Script = """
+        //                 Select:Players()
+        //                 :FromTarget('$tgtKey')
+        //                 :Many()
+        //                 """,
+        //             },
+        //         ],
+        //         Description = "TODO",
+        //         InputArray = null,
+        //         SimpleArgs = [
+        //             new ScriptNodeSimpleArg() {
+        //                 Config = new StringArgConfig() {
+        //                     Default = "",
+        //                     Multiline = false,
+        //                     Placeholder = "Target key",
+        //                 },
+        //                 Key = "tgtKey",
+        //                 Postfix = "",
+        //                 Prefix = "",
+        //                 NoScriptIfEmpty = false
+        //             }
+        //         ],
+        //     }
+        // );
 
         // Target amounts
         ScriptNodes.Nodes.Add(
@@ -629,6 +700,38 @@ public class ScriptLoader
                 "Player",
                 ":Opponents()"
                 // "Players"
+            )
+        );
+
+        // Permanent filters
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Permanents:Select.OfTypes",
+                    Label = "Of types",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new ScriptNodeArrayArg() {
+                            Key = "types",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            AddButtonText = "Add type",
+                            ItemPostfix = "'",
+                            ItemPrefix = "'",
+                            Separator = ", ",
+                            Config = ArgConfigs.Colors(),
+                        },
+                    ],
+                    Description = "TODO",
+                },
+                "",
+                "Permanent",
+                ":OfTypes($types)"
             )
         );
 

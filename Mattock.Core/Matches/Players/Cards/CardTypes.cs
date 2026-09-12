@@ -16,6 +16,22 @@ public static class CardTypes
     public static readonly string Vanguard = "Vanguard";
     public static readonly string Conspiracy = "Conspiracy";
 
+    public static readonly string[] All = [
+        Artifact,
+        Creature,
+        Enchantment,
+        Instant,
+        Land,
+        Planeswalker,
+        Sorcery,
+        Kindred,
+        Dungeon,
+        Battle,
+        Phenomenon,
+        Vanguard,
+        Conspiracy,
+    ];
+
     public static readonly string[] Castable = [
         Artifact,
         Creature,
