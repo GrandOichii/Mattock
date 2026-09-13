@@ -1,0 +1,228 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 560.0,
+      "EditorOffsetY": 160.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 540.0,
+      "EditorOffsetY": 400.0,
+      "EditorSizeX": 340.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Whenever another creature enters, untap this creature."
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "New:Effect",
+      "EditorOffsetX": 920.0,
+      "EditorOffsetY": 400.0,
+      "EditorSizeX": 220.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Untap this creature.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "OneShot:UntapPermanents",
+      "EditorOffsetX": 1200.0,
+      "EditorOffsetY": 640.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 103.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": 1000.0,
+      "EditorOffsetY": 700.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Triggers:ETB",
+      "EditorOffsetX": 280.0,
+      "EditorOffsetY": 460.0,
+      "EditorSizeX": 223.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": 100.0,
+      "EditorOffsetY": 500.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 211.0,
+      "InputArray": {
+        "SlotCount": 2
+      },
+      "Data": {}
+    },
+    {
+      "Id": 8,
+      "Name": "Select:Permanents.OfTypes",
+      "EditorOffsetX": -180.0,
+      "EditorOffsetY": 680.0,
+      "EditorSizeX": 203.0,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "types": [
+          "Creature"
+        ]
+      }
+    },
+    {
+      "Id": 9,
+      "Name": "Select:Permanent.Only",
+      "EditorOffsetX": 700.0,
+      "EditorOffsetY": 780.0,
+      "EditorSizeX": 215.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 10,
+      "Name": "Permanent:This",
+      "EditorOffsetX": 520.0,
+      "EditorOffsetY": 820.0,
+      "EditorSizeX": 127.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 11,
+      "Name": "Select:Permanent.Except",
+      "EditorOffsetX": -180.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 231.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 12,
+      "Name": "Permanent:This",
+      "EditorOffsetX": -340.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 127.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 1,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 1
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 9,
+      "ToPort": 0
+    },
+    {
+      "FromId": 9,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 11,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 0
+    },
+    {
+      "FromId": 12,
+      "FromPort": 0,
+      "ToId": 11,
+      "ToPort": 0
+    }
+  ]
+}

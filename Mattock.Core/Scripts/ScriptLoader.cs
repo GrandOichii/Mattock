@@ -48,6 +48,18 @@ public class ScriptLoader
                         Type = "ActivatedAbilityCollection",
                         MultipleSeparator = "",
                     },
+                    new() {
+                        Key = "triggeredAbilities",
+                        Prefix = "\n:TriggeredAbilities(\n",
+                        Postfix = "\n)",
+                        HasMissingScript = true,
+                        MissingScript = "",
+                        AllowMultiple = false,
+                        Label = "Triggered abilities",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "TriggeredAbilityCollection",
+                        MultipleSeparator = "",
+                    },
                 ],
                 Outputs = [
                     new() {
@@ -56,7 +68,7 @@ public class ScriptLoader
                         Type = "Card",
                         Script = """
                         function _Create()
-                        return New:Card()$spellEffect$activatedAbilities
+                        return New:Card()$spellEffect$activatedAbilities$triggeredAbilities
                         :Build()
                         end
                         """
@@ -246,6 +258,127 @@ public class ScriptLoader
             }
         );
 
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "New:TriggeredAbility",
+                Label = "Triggered ability",
+                Inputs = [
+                    // new() {
+                    //     AllowMultiple = false,
+                    //     HasMissingScript = true,
+                    //     Key = "manaCosts",
+                    //     Label = "Mana costs",
+                    //     MissingScript = "",
+                    //     MultipleSeparator = "",
+                    //     Position = ScriptNodePortPosition.Right,
+                    //     Postfix = "\n)",
+                    //     Prefix = "\n:ManaCosts(\n",
+                    //     Type = "Mana",
+                    // },
+                    // new() {
+                    //     AllowMultiple = false,
+                    //     HasMissingScript = true,
+                    //     Key = "costs",
+                    //     Label = "Costs",
+                    //     MissingScript = "",
+                    //     MultipleSeparator = "",
+                    //     Position = ScriptNodePortPosition.Right,
+                    //     Postfix = "\n)",
+                    //     Prefix = "\n:Costs(\n",
+                    //     Type = "Cost",
+                    // },
+                    // TODO duplicated code
+                    new() {
+                        Key = "singleEffects",
+                        Prefix = "\n:Effects(\n",
+                        Postfix = "\n)",
+                        HasMissingScript = true,
+                        MissingScript = "",
+                        AllowMultiple = false,
+                        Label = "Single effects",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "Effect",
+                        MultipleSeparator = "",                        
+                    }
+                ],
+                Outputs = [
+                    new() {
+                        Label = "",
+                        Position = ScriptNodePortPosition.Left,
+                        Type = "TriggeredAbility",
+                        // Script = """
+                        // New:TriggeredAbility('$text')$manaCosts$costs$singleEffects
+                        // :Build()
+                        // """,
+                        Script = """
+                        New:TriggeredAbility('$text')$triggers$singleEffects
+                        :Build()
+                        """,
+                    }
+                ],
+                Description = "TODO",
+                InputArray = new()
+                {
+                    AddButtonLabel = "Add trigger",
+                    ItemPostfix = "",
+                    ItemPrefix = "",
+                    ItemSeparator = ",\n",
+                    Key = "triggers",
+                    NoScriptIfEmpty = false,
+                    Position = ScriptNodePortPosition.Left,
+                    ScriptPrefix = "\n:Triggers(\n",
+                    ScriptPostfix = "\n)",
+                    Type = "Trigger",
+                },
+                SimpleArgs = [
+                    new ScriptNodeSimpleArg() {
+                        Config = new StringArgConfig() {
+                            Default = "",
+                            Multiline = true,
+                            Placeholder = "Triggered ability text",
+                        },
+                        Key = "text",
+                        Postfix = "",
+                        Prefix = "",
+                        NoScriptIfEmpty = false
+                    }
+                ]
+            }
+        );
+
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "TriggeredAbilities",
+                Label = "Triggered ability collection",
+                Inputs = [],
+                Outputs = [
+                    new() {
+                        Label = "Abilities",
+                        Position = ScriptNodePortPosition.Left,
+                        Script = "$abilities",
+                        Type = "TriggeredAbilityCollection",
+                    }
+                ],
+                Description = "TODO",
+                InputArray = new()
+                {
+                    AddButtonLabel = "Add ability",
+                    ItemPostfix = "",
+                    ItemPrefix = "",
+                    ItemSeparator = ",\n",
+                    Key = "abilities",
+                    NoScriptIfEmpty = false,
+                    Position = ScriptNodePortPosition.Right,
+                    ScriptPostfix = "",
+                    ScriptPrefix = "",
+                    Type = "TriggeredAbility"
+                },
+                SimpleArgs = [],
+            }
+        );
+
         // Single effects
 
         ScriptNodes.Nodes.Add(
@@ -274,6 +407,38 @@ public class ScriptLoader
                 """
                 OneShot:Draw(
                 $players,
+                $amount
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
+                    Name = "OneShot:DealDamageToPermanents",
+                    Label = "Deal damage to permanents",
+                    Inputs = [
+                        Inputs.Many(
+                            "permanents",
+                            "Permanent",
+                            "Permanents"
+                        ),
+                        Inputs.Number(
+                            "amount",
+                            "Amount"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:DealDamageToPermanents(
+                $permanents,
                 $amount
                 )
                 """
@@ -463,6 +628,7 @@ public class ScriptLoader
         );
 
         // Costs
+
         ScriptNodes.Nodes.Add(
             Scripts.Cost(
                 new()
@@ -477,6 +643,129 @@ public class ScriptLoader
                 },
                 """
                 Cost:SelfTap()
+                """
+            )
+        );
+
+        // Triggers
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
+                    Name = "Triggers:SpellCast",
+                    Label = "Spell cast trigger",
+                    Inputs = [
+                        new() {
+                            Key = "casterFilter",
+                            Prefix = "\n:CasterFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Caster filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PlayerSelect",
+                            MultipleSeparator = "",
+                        },
+                        new() {
+                            Key = "cardFilter",
+                            Prefix = "\n:CardFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Card filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "CardSelect",
+                            MultipleSeparator = "",
+                        },
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [],
+                },
+                """
+                Triggers:SpellCast()$casterFilter$cardFilter
+                :Build()
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
+                    Name = "Triggers:StepBeginning",
+                    Label = "Step beginning trigger",
+                    Inputs = [
+                        new() {
+                            Key = "playerFilter",
+                            Prefix = "\n:PlayerFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Player filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PlayerSelect",
+                            MultipleSeparator = "",
+                        },
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [
+                        new ScriptNodeArrayArg() {
+                            Key = "steps",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            AddButtonText = "Add step",
+                            ItemPostfix = "",
+                            ItemPrefix = "",
+                            Separator = ", ",
+                            Config = ArgConfigs.Steps(),
+                        },
+                    ],
+                },
+                """
+                Triggers:StepBeginning()
+                :Steps($steps)$playerFilter
+                :Build()
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
+                    Name = "Triggers:ETB",
+                    Label = "Enter trigger",
+                    Inputs = [
+                        new() {
+                            Key = "permanentFilter",
+                            Prefix = "\n:PermanentFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Permanent filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PermanentSelect",
+                            MultipleSeparator = "",
+                        }
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [],
+                },
+                """
+                Triggers:ETB()$permanentFilter
+                :Build()
                 """
             )
         );
@@ -544,6 +833,14 @@ public class ScriptLoader
             "Permanent",
             "Permanents",
             "Permanents"
+        );
+        
+        Scripts.AddSelect
+        (
+            ScriptNodes,
+            "Card",
+            "Cards",
+            "Cards"
         );
         
         // Targets
@@ -668,7 +965,7 @@ public class ScriptLoader
             (
                 new()
                 {
-                    Name = "Player:Select.You",
+                    Name = "Select:Player.You",
                     Label = "You",
                     Inputs = [],
                     Outputs = [],
@@ -688,7 +985,7 @@ public class ScriptLoader
             (
                 new()
                 {
-                    Name = "Player:Select.Opponents",
+                    Name = "Select:Player.Opponents",
                     Label = "Opponents",
                     Inputs = [],
                     Outputs = [],
@@ -709,7 +1006,7 @@ public class ScriptLoader
             (
                 new()
                 {
-                    Name = "Permanents:Select.OfTypes",
+                    Name = "Select:Permanents.OfTypes",
                     Label = "Of types",
                     Inputs = [],
                     Outputs = [],
@@ -724,7 +1021,7 @@ public class ScriptLoader
                             ItemPostfix = "'",
                             ItemPrefix = "'",
                             Separator = ", ",
-                            Config = ArgConfigs.Colors(),
+                            Config = ArgConfigs.Types(),
                         },
                     ],
                     Description = "TODO",
@@ -740,10 +1037,41 @@ public class ScriptLoader
             (
                 new()
                 {
-                    Name = "Permanents:Select.ControlledBy",
+                    Name = "Select:Permanents.OfSubTypes",
+                    Label = "Of subtypes",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new ScriptNodeArrayArg() {
+                            Key = "subTypes",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            AddButtonText = "Add subtype",
+                            ItemPostfix = "'",
+                            ItemPrefix = "'",
+                            Separator = ", ",
+                            Config = ArgConfigs.Subtypes(),
+                        },
+                    ],
+                    Description = "TODO",
+                },
+                "",
+                "Permanent",
+                ":OfSubtypes($subTypes)"
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Select:Permanents.ControlledBy",
                     Label = "Controlled by",
                     Inputs = [
-                        Inputs.Many(
+                        Inputs.Select(
                             "players",
                             "Player",
                             "Players"
@@ -757,10 +1085,45 @@ public class ScriptLoader
                 "",
                 "Permanent",
                 """
-                :ControlledBy($players)
+                :ControlledBy(
+                $players
+                )
                 """
             )
         );
+
+        // Card filters
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Select:Cards.OfColors",
+                    Label = "Of colors",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new ScriptNodeArrayArg() {
+                            Key = "colors",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            AddButtonText = "Add color",
+                            ItemPostfix = "",
+                            ItemPrefix = "",
+                            Separator = ", ",
+                            Config = ArgConfigs.Colors(),
+                        },
+                    ],
+                    Description = "TODO",
+                },
+                "",
+                "Card",
+                ":OfColors($colors)"
+            )
+        );
+
 
         // Numbers
 
@@ -3537,28 +3900,28 @@ public class ScriptLoader
         //     )
         // );
 
-        // // Singles
+        // Singles
 
-        // // Single in-play cards
-        // ScriptNodes.Nodes.Add(
-        //     new()
-        //     {
-        //         Name = "Host_InPlayCardSingle",
-        //         Description = "TODO",
-        //         InputArray = null,
-        //         Inputs = [],
-        //         Label = "Gear host",
-        //         SimpleArgs = [],
-        //         Outputs = [
-        //             new() {
-        //                 Label = "Host",
-        //                 Position = ScriptNodePortPosition.Right,
-        //                 Type = "InPlayCardSingle",
-        //                 Script = "PUNK.InPlayCard:Host()"
-        //             }
-        //         ]
-        //     }
-        // );
+        // Single permanents
+        ScriptNodes.Nodes.Add(
+            new()
+            {
+                Name = "Permanent:This",
+                Description = "TODO",
+                InputArray = null,
+                Inputs = [],
+                Label = "This",
+                SimpleArgs = [],
+                Outputs = [
+                    new() {
+                        Label = "This",
+                        Position = ScriptNodePortPosition.Right,
+                        Type = "PermanentSingle",
+                        Script = "Permanent:This()"
+                    }
+                ]
+            }
+        );
         // ScriptNodes.Nodes.Add(
         //     new()
         //     {

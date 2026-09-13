@@ -14,7 +14,6 @@ function _Create()
                             :ControlledBy(
                                 Select:Players()
                                     :You()
-                                    :Many()
                             )
                             :Count()
                     )

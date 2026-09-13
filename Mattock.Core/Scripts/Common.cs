@@ -1,3 +1,4 @@
+using System.Windows.Markup;
 using Mattock.Core.Matches.Players.Cards;
 using ScriptEditor.Core;
 using ScriptEditor.Core.SimpleArgs;
@@ -221,6 +222,22 @@ public static class Scripts
         };
     }
 
+    public static ScriptNode Trigger(
+        ScriptNode node,
+        string script
+    )
+    {
+        node.Outputs.Add(new()
+        {
+            Label = "",
+            Position = ScriptNodePortPosition.Right,
+            Type = "Trigger",
+            Script = script,
+        });
+
+        return node;
+    }
+
     public static ScriptNode Number(
         ScriptNode node,
         string script,
@@ -362,58 +379,55 @@ public static class Scripts
 
         scriptNodes.Nodes.Add(result);
 
-        // var only = Filter
-        // (
-        //     new()
-        //     {
-        //         Name = $"Only_{type}Filter",
-        //         Label = "Only",
-        //         Inputs = [
-        //             Inputs.Single(
-        //                 "item",
-        //                 type,
-        //                 "Only this"
-        //             )
-        //         ],
-        //         Outputs = [],
-        //         InputArray = null,
-        //         SimpleArgs = [],
-        //         Description = "TODO"
-        //     },
-        //     "",
-        //     type,
-        //     ":Only(\n$item\n)",
-        //     method
-        // );
+        var only = Filter
+        (
+            new()
+            {
+                Name = $"Select:{type}.Only",
+                Label = "Only",
+                Inputs = [
+                    Inputs.Single(
+                        "item",
+                        type,
+                        "Only this"
+                    )
+                ],
+                Outputs = [],
+                InputArray = null,
+                SimpleArgs = [],
+                Description = "TODO"
+            },
+            "",
+            type,
+            ":Only(\n$item\n)"
+        );
 
-        // scriptNodes.Nodes.Add(only);
+        scriptNodes.Nodes.Add(only);
 
-        // var except = Filter
-        // (
-        //     new()
-        //     {
-        //         Name = $"Except_{type}Filter",
-        //         Label = "Except",
-        //         Inputs = [
-        //             Inputs.Single(
-        //                 "item",
-        //                 type,
-        //                 "Except this"
-        //             )
-        //         ],
-        //         Outputs = [],
-        //         InputArray = null,
-        //         SimpleArgs = [],
-        //         Description = "TODO"
-        //     },
-        //     "",
-        //     type,
-        //     ":Except(\n$item\n)",
-        //     method
+        var except = Filter
+        (
+            new()
+            {
+                Name = $"Select:{type}.Except",
+                Label = "Except",
+                Inputs = [
+                    Inputs.Single(
+                        "item",
+                        type,
+                        "Except this"
+                    )
+                ],
+                Outputs = [],
+                InputArray = null,
+                SimpleArgs = [],
+                Description = "TODO"
+            },
+            "",
+            type,
+            ":Except(\n$item\n)"
+        );
 
-        // );
-
-        // scriptNodes.Nodes.Add(except);
+        scriptNodes.Nodes.Add(except);
 
         // var choose = Effect(
         //     new()
@@ -682,6 +696,27 @@ public static class Inputs
         };
     }
 
+    public static ScriptNodeInputPort Select(
+        string key,
+        string type,
+        string label,
+        string? missingScript = null
+    )
+    {
+        return new() {
+            Key = key,
+            Prefix = "",
+            Postfix = "",
+            AllowMultiple = false,
+            MultipleSeparator = "",
+            HasMissingScript = missingScript is not null,
+            MissingScript = missingScript ?? "",
+            Label = label,
+            Position = ScriptNodePortPosition.Left,
+            Type = $"{type}Select"
+        };
+    }
+
     public static ScriptNodeInputPort Number(
         string key,
         string label,
@@ -759,27 +794,26 @@ public static class Inputs
     //     };
     // }
     
-    // public static ScriptNodeInputPort Single(
-    //     string key,
-    //     string type,
-    //     string label
-    // )
-    // {
-    //     return new()
-    //     {
-    //         Type = $"{type}Single",
-    //         HasMissingScript = false,
-    //         MissingScript = "",
-    //         AllowMultiple = false,
-    //         MultipleSeparator = "",
-    //         Key = key,
-    //         Label = label,
-    //         Position = ScriptNodePortPosition.Left,
-    //         Postfix = "",
-    //         Prefix = "",
-    //     };
-    // }
-
+    public static ScriptNodeInputPort Single(
+        string key,
+        string type,
+        string label
+    )
+    {
+        return new()
+        {
+            Type = $"{type}Single",
+            HasMissingScript = false,
+            MissingScript = "",
+            AllowMultiple = false,
+            MultipleSeparator = "",
+            Key = key,
+            Label = label,
+            Position = ScriptNodePortPosition.Left,
+            Postfix = "",
+            Prefix = "",
+        };
+    }
 }
 
 public static class SimpleArgs
@@ -811,11 +845,55 @@ public static class SimpleArgs
 
 public static class ArgConfigs
 {
-    public static EnumArgConfig Colors()
+    public static EnumArgConfig Types()
     {
         return new()
         {
             Values = CardTypes.All.ToDictionary(type => type),
+        };
+    }
+
+    public static EnumArgConfig Subtypes()
+    {
+        return new()
+        {
+            Values = CardSubtypes.All.ToDictionary(type => type),
+        };
+    }
+
+    public static EnumArgConfig Colors()
+    {
+        return new()
+        {
+            Values = new()
+            {
+                { "White", "Colors.White" },
+                { "Blue", "Colors.Blue" },
+                { "Black", "Colors.Black" },
+                { "Red", "Colors.Red" },
+                { "Green", "Colors.Green" },
+            }            
+        };
+    }
+
+    public static EnumArgConfig Steps()
+    {
+        return new()
+        {
+            Values = new()
+            {
+                { "Untap", "StepTypes.Untap" },
+                { "Upkeep", "StepTypes.Upkeep" },
+                { "Draw", "StepTypes.Draw" },
+                { "BeginningOfCombat", "StepTypes.BeginningOfCombat" },
+                { "DeclareAttackers", "StepTypes.DeclareAttackers" },
+                { "DeclareBlockers", "StepTypes.DeclareBlockers" },
+                // { "FirstStrikeCombatDamage", "StepTypes.FirstStrikeCombatDamage" },
+                { "CombatDamage", "StepTypes.CombatDamage" },
+                { "EndOfCombat", "StepTypes.EndOfCombat" },
+                { "End", "StepTypes.End" },
+                { "Cleanup", "StepTypes.Cleanup" },
+            },
         };
     }
 

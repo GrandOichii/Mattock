@@ -1,0 +1,308 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.00006,
+      "EditorSizeY": 300.00003,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 560.0,
+      "EditorOffsetY": 200.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 520.0,
+      "EditorOffsetY": 380.0,
+      "EditorSizeX": 560.0001,
+      "EditorSizeY": 263.00006,
+      "InputArray": {
+        "SlotCount": 2
+      },
+      "Data": {
+        "text": "Whenever you cast a white spell or a Plains you control enters, you gain 1 life."
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "New:Effect",
+      "EditorOffsetX": 1180.0,
+      "EditorOffsetY": 460.0,
+      "EditorSizeX": 198.00012,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "You gain 1 life.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "OneShot:GainLife",
+      "EditorOffsetX": 1440.0,
+      "EditorOffsetY": 700.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1173.0,
+      "EditorOffsetY": 998.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 6,
+      "Name": "Select:Player",
+      "EditorOffsetX": 1200.0,
+      "EditorOffsetY": 760.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Select:Player.You",
+      "EditorOffsetX": 960.0,
+      "EditorOffsetY": 840.0,
+      "EditorSizeX": 176.00012,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 8,
+      "Name": "Select:Permanents.ControlledBy",
+      "EditorOffsetX": -300.0,
+      "EditorOffsetY": 1020.0,
+      "EditorSizeX": 203.00006,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 9,
+      "Name": "Select:Player.You",
+      "EditorOffsetX": -840.0,
+      "EditorOffsetY": 660.0,
+      "EditorSizeX": 176.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 10,
+      "Name": "Triggers:SpellCast",
+      "EditorOffsetX": 220.0,
+      "EditorOffsetY": 420.0,
+      "EditorSizeX": 186.00006,
+      "EditorSizeY": 103.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 11,
+      "Name": "Select:Player",
+      "EditorOffsetX": -600.0,
+      "EditorOffsetY": 580.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 12,
+      "Name": "Select:Permanents.OfSubTypes",
+      "EditorOffsetX": -280.0,
+      "EditorOffsetY": 840.0,
+      "EditorSizeX": 175.0,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "subTypes": [
+          "Plains"
+        ]
+      }
+    },
+    {
+      "Id": 13,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": 0.0,
+      "EditorOffsetY": 880.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 211.0,
+      "InputArray": {
+        "SlotCount": 2
+      },
+      "Data": {}
+    },
+    {
+      "Id": 14,
+      "Name": "Triggers:ETB",
+      "EditorOffsetX": 220.0,
+      "EditorOffsetY": 880.0,
+      "EditorSizeX": 223.00006,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 15,
+      "Name": "Select:Cards.OfColors",
+      "EditorOffsetX": -280.0,
+      "EditorOffsetY": 640.0,
+      "EditorSizeX": 147.00006,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "colors": [
+          "White"
+        ]
+      }
+    },
+    {
+      "Id": 16,
+      "Name": "Select:Card",
+      "EditorOffsetX": -60.0,
+      "EditorOffsetY": 560.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.00012,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 6,
+      "FromPort": 1,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 2
+    },
+    {
+      "FromId": 14,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 2
+    },
+    {
+      "FromId": 13,
+      "FromPort": 0,
+      "ToId": 14,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 13,
+      "ToPort": 1
+    },
+    {
+      "FromId": 9,
+      "FromPort": 0,
+      "ToId": 11,
+      "ToPort": 0
+    },
+    {
+      "FromId": 11,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 0
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 11,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 0
+    },
+    {
+      "FromId": 16,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 1
+    },
+    {
+      "FromId": 15,
+      "FromPort": 0,
+      "ToId": 16,
+      "ToPort": 0
+    },
+    {
+      "FromId": 12,
+      "FromPort": 0,
+      "ToId": 13,
+      "ToPort": 0
+    }
+  ]
+}

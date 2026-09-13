@@ -130,7 +130,7 @@
     },
     {
       "Id": 11,
-      "Name": "Permanents:Select.OfTypes",
+      "Name": "Select:Permanents.OfTypes",
       "EditorOffsetX": 480.0,
       "EditorOffsetY": 820.0,
       "EditorSizeX": 203.0,

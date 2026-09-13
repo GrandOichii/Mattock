@@ -8,7 +8,7 @@ function _Create()
                     Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()
-                                :Exept(Permanent:This()) -- Another
+                                :Except(Permanent:This()) -- Another
                                 :OfTypes(CardTypes.Creature) -- Creature
                         )
                         :Build()

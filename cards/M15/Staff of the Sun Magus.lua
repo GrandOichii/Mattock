@@ -1,5 +1,6 @@
 -- Whenever you cast a white spell or a Plains you control enters, you gain 1 life.
 
+
 function _Create()
     return New:Card()
         :TriggeredAbilities(
@@ -18,11 +19,10 @@ function _Create()
                     Triggers:ETB()
                         :PermanentFilter(
                             Select:Permanents()
-                                :OfSubtypes('Plains')
+                                :OfTypes('Plains')
                                 :ControlledBy(
                                     Select:Players()
                                         :You()
-                                        :Many()
                                 )
                         )
                         :Build()

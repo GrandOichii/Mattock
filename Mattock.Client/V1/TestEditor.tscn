@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fjo4c")
 EditorScene = ExtResource("1_ard1j")
-Directory = "../Scripts/M10"
+Directory = "../Scripts/M15"
 BaseFile = "../Scripts/Base.script.json"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1496023273]

@@ -16,7 +16,7 @@ function Select:_(allGetter)
         end)
     end
 
-    function select:Exept(single)
+    function select:Except(single)
         return select:_AddFilter(function (ctx, item)
             return item ~= single(ctx)
         end)
@@ -121,15 +121,9 @@ function Select:Permanents()
         end)
     end
 
-    function select:ControlledBy(manyPlayers)
+    function select:ControlledBy(playersSelect)
         return select:_AddFilter(function (ctx, permanent)
-            local players = manyPlayers(ctx)
-            for _, player in ipairs(players) do
-                if GetPermanentController(permanent).Idx == player.Idx then
-                    return true
-                end
-            end
-            return false
+            return playersSelect:Match(ctx, GetPermanentController(permanent))
         end)
     end
 

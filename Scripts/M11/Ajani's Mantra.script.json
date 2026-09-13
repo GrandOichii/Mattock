@@ -1,0 +1,170 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 540.0,
+      "EditorOffsetY": 160.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 540.0,
+      "EditorOffsetY": 340.0,
+      "EditorSizeX": 320.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "At the beginning of your upkeep, you may gain 1 life."
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "New:Effect",
+      "EditorOffsetX": 920.0,
+      "EditorOffsetY": 360.0,
+      "EditorSizeX": 198.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "You gain 1 life.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "OneShot:GainLife",
+      "EditorOffsetX": 1360.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1060.0,
+      "EditorOffsetY": 820.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 6,
+      "Name": "Select:Player.You",
+      "EditorOffsetX": -360.0,
+      "EditorOffsetY": 820.0,
+      "EditorSizeX": 176.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Triggers:StepBeginning",
+      "EditorOffsetX": 180.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 256.0,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "steps": [
+          "Upkeep"
+        ]
+      }
+    },
+    {
+      "Id": 8,
+      "Name": "Select:Player",
+      "EditorOffsetX": -60.0,
+      "EditorOffsetY": 740.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 1,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 2
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 0
+    },
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 0
+    }
+  ]
+}

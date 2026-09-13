@@ -40,7 +40,7 @@
     },
     {
       "Id": 3,
-      "Name": "Player:Select.Opponents",
+      "Name": "Select:Player.Opponents",
       "EditorOffsetX": -160.0,
       "EditorOffsetY": 580.0,
       "EditorSizeX": 233.0,

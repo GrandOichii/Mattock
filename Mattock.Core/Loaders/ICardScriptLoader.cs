@@ -28,7 +28,7 @@ public class JsonCardScriptLoader(
         var path = Path.Join(dir, expansion, $"{cardName}.script.json");
         if (!File.Exists(path))
         {
-            return $"error('no json card script for {expansion}:{cardName}')";
+            return $"error(\"no json card script for {expansion}:{cardName}\")";
         }
         return ScriptLoader.Load(path);
     }

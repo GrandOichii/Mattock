@@ -28,7 +28,7 @@
     },
     {
       "Id": 2,
-      "Name": "Player:Select.You",
+      "Name": "Select:Player.You",
       "EditorOffsetX": 800.0,
       "EditorOffsetY": 460.0,
       "EditorSizeX": 176.0,

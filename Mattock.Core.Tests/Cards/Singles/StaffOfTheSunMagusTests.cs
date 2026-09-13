@@ -14,7 +14,7 @@ public class StaffOfTheSunMagusTests
     public async Task TriggerOnPlains()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -106,10 +106,92 @@ public class StaffOfTheSunMagusTests
     }
 
     [Fact]
+    public async Task NoTriggerOnNonPlains()
+    {
+        // Arrange
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
+
+        var card = loader.Load("M15:Staff of the Sun Magus");
+        var swamp = loader.Load("M10:Swamp");
+
+        var config = new MatchConfigBuilder()
+            .FirstPlayerIdx(0)
+            .NoManaPoolEmptying()
+            .NoMaxHandSize()
+            .GameLossIfRequiredToDrawFromEmptyLibrary(false)
+            .Build();
+        
+        var deck = new DeckTemplate()
+        {
+            MainDeck = [ 
+                new() {
+                    Amount = 3,
+                    Card = card,
+                },
+                new() {
+                    Amount = 2,
+                    Card = swamp,
+                },
+                new DeckCardTemplateBuilder("white-instant")
+                    .ZeroCost()
+                    .Instant()
+                    .Amount(1)
+                    .White()
+                    .Build(),
+                new DeckCardTemplateBuilder("blue-instant")
+                    .ZeroCost()
+                    .Instant()
+                    .Amount(1)
+                    .Blue()
+                    .Build(),
+            ]
+        };
+
+        var p1 = new TestPlayerControllerBuilder("p1", 0)
+            .SetDeck(deck)
+            .ChoosePlayers.WithIdx(0)
+            .Act.AddMana(ManaType.White, 3)
+            .Act.AutoPassToPhase(PhaseType.PrecombatMain)
+            .Act.CastSpellWithName(card.Name)
+            .ManaPaymentChoices.NTimes(3, mpc => mpc.First())
+            .Act.AutoPassUntilStackEmpty()
+            .Act.PlayLandWithName(swamp.Name)
+            .Act.Pass()
+            .Act.Crash()
+        ;
+
+        var p2 = new TestPlayerControllerBuilder("p2", 1)
+            .SetDeck(deck)
+            .Act.AutoPass();
+
+        var match = new TestSessionWrapper(
+            config,
+            [ p1, p2 ]
+        );
+        match.RemoveMulligans();
+
+        // Act
+        await match.Run();
+
+        // Assert
+        match.Assert(a => a
+            .CrashedIntentially()
+            .NoChoicesLeft()
+            .AssertStack(ast => ast.IsEmpty())
+            .AssertPlayer(0, ap => ap
+                .HasLife(20)
+            )
+            .AssertPlayer(1, ap => ap
+                .HasLife(20)
+            )
+        );
+    }
+
+    [Fact]
     public async Task NoTriggerOnOppPlains()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -194,7 +276,7 @@ public class StaffOfTheSunMagusTests
     public async Task TriggerOnWhiteInstant()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -296,7 +378,7 @@ public class StaffOfTheSunMagusTests
     public async Task NoTriggerOnBlueInstant()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
@@ -391,7 +473,7 @@ public class StaffOfTheSunMagusTests
     public async Task NoTriggerOnOppWhiteInstant()
     {
         // Arrange
-        var loader = new FileCardLoader(new LuaCardScriptLoader("../../../../cards"), "../../../../cards");
+        var loader = new FileCardLoader(new JsonCardScriptLoader("../../../../Scripts"), "../../../../cards");
 
         var card = loader.Load("M15:Staff of the Sun Magus");
         var plains = loader.Load("M10:Plains");
