@@ -418,6 +418,52 @@ public class ScriptLoader
             (
                 new()
                 {
+                    Name = "OneShot:Discard",
+                    Label = "Discard cards",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
+                        Inputs.Number(
+                            "amount",
+                            "Amount"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new() {
+                            Key = "random",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            Config = new BoolArgConfig() {
+                                FalseScript = "false",
+                                TrueScript = "true",
+                                Label = "Random",
+                                Default = false,
+                            }
+                        }
+                    ],
+                    Description = "TODO"
+                },
+                """
+                OneShot:Discard(
+                $players,
+                $amount,
+                $random
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
                     Name = "OneShot:DealDamageToPermanents",
                     Label = "Deal damage to permanents",
                     Inputs = [

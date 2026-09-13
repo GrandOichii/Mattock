@@ -6,8 +6,11 @@ function _Create()
             New:Effects('Target player discards 2 cards.')
                 :Targets(
                     Target:Player(
+                        'T1',
                         Select:Players(),
-                        Number:Const(1)
+                        Target.Amount:Exactly(
+                            Number:Const(1)
+                        )
                     )
                 )
                 :Effects(
