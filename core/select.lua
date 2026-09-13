@@ -121,9 +121,15 @@ function Select:Permanents()
         end)
     end
 
-    function select:ControlledBy(player)
+    function select:ControlledBy(manyPlayers)
         return select:_AddFilter(function (ctx, permanent)
-            return GetPermanentController(permanent) == player(ctx)
+            local players = manyPlayers(ctx)
+            for _, player in ipairs(players) do
+                if GetPermanentController(permanent).Idx == player.Idx then
+                    return true
+                end
+            end
+            return false
         end)
     end
 

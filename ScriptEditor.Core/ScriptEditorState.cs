@@ -95,6 +95,7 @@ public class ScriptNodeState
         Dictionary<string, ScriptNode> mapping
     )
     {
+        Debug.Print(Name);
         var node = mapping.GetValueOrDefault(Name)
             ?? throw new System.Exception($"Script node not found in mapping: {Name}");
         bool isStart = Id == parent.StartId;
@@ -167,10 +168,9 @@ public class ScriptNodeState
                 
                 if (node.InputArray.Position == ScriptNodePortPosition.Left)
                 {
-                    var port = leftIdx + i;
                     var connection = parent.Connections.SingleOrDefault(c => 
                         c.ToId == Id &&
-                        c.ToPort == port
+                        c.ToPort == leftIdx
                     );
                     ++leftIdx;
                     if (connection is null) continue;
@@ -182,10 +182,9 @@ public class ScriptNodeState
                     
                 } else
                 {
-                    var port = rightIdx + i;
                     var connection = parent.Connections.SingleOrDefault(c => 
                         c.FromId == Id &&
-                        c.FromPort == port
+                        c.FromPort == rightIdx
                     );
                     ++rightIdx;
                     if (connection is null) continue;

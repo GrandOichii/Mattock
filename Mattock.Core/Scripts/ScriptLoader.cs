@@ -735,6 +735,33 @@ public class ScriptLoader
             )
         );
 
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Permanents:Select.ControlledBy",
+                    Label = "Controlled by",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO",
+                },
+                "",
+                "Permanent",
+                """
+                :ControlledBy($players)
+                """
+            )
+        );
+
         // Numbers
 
         ScriptNodes.Nodes.Add(

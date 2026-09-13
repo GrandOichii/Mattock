@@ -1,0 +1,148 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 233.0,
+      "EditorSizeY": 300.00003,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "New:Effect",
+      "EditorOffsetX": 620.0,
+      "EditorOffsetY": 120.0,
+      "EditorSizeX": 380.0,
+      "EditorSizeY": 271.00003,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "You gain 1 life for each land you control.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 2,
+      "Name": "OneShot:GainLife",
+      "EditorOffsetX": 1100.0,
+      "EditorOffsetY": 380.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 3,
+      "Name": "Permanents:Select.ControlledBy",
+      "EditorOffsetX": 640.0,
+      "EditorOffsetY": 800.0,
+      "EditorSizeX": 203.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 4,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": 900.0,
+      "EditorOffsetY": 580.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 211.0,
+      "InputArray": {
+        "SlotCount": 2
+      },
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Permanents:Select.OfTypes",
+      "EditorOffsetX": 640.0,
+      "EditorOffsetY": 560.0,
+      "EditorSizeX": 203.0,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "types": [
+          "Land"
+        ]
+      }
+    },
+    {
+      "Id": 6,
+      "Name": "Player:Select.You",
+      "EditorOffsetX": 120.0,
+      "EditorOffsetY": 700.0,
+      "EditorSizeX": 176.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Select:Player",
+      "EditorOffsetX": 360.0,
+      "EditorOffsetY": 620.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 4,
+      "FromPort": 2,
+      "ToId": 2,
+      "ToPort": 2
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 1,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 1,
+      "ToId": 2,
+      "ToPort": 1
+    }
+  ]
+}

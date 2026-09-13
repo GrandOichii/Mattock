@@ -303,6 +303,12 @@ public static class Scripts
                     Position = ScriptNodePortPosition.Right,
                     Type = $"{type}Many",
                     Script = $"{script}\n:Many()"
+                },
+                new() {
+                    Label = "Count",
+                    Position = ScriptNodePortPosition.Right,
+                    Type = "Number",
+                    Script = $"{script}\n:Count()"
                 }
             ],
             InputArray = new()

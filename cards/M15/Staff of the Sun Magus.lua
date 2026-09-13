@@ -19,7 +19,11 @@ function _Create()
                         :PermanentFilter(
                             Select:Permanents()
                                 :OfSubtypes('Plains')
-                                :ControlledBy(Player:You())
+                                :ControlledBy(
+                                    Select:Players()
+                                        :You()
+                                        :Many()
+                                )
                         )
                         :Build()
                 )

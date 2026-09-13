@@ -11,7 +11,11 @@ function _Create()
                             :Many(),
                         Select:Permanents()
                             :OfTypes(CardTypes.Land)
-                            :ControlledBy(Player:You())
+                            :ControlledBy(
+                                Select:Players()
+                                    :You()
+                                    :Many()
+                            )
                             :Count()
                     )
                 )
