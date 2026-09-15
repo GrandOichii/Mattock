@@ -1,0 +1,120 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "OneShot:Draw",
+      "EditorOffsetX": 1040.0,
+      "EditorOffsetY": 300.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "OneShot:Discard",
+      "EditorOffsetX": 1020.0,
+      "EditorOffsetY": 540.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 161.0,
+      "InputArray": null,
+      "Data": {
+        "random": true
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "Select:Player",
+      "EditorOffsetX": 640.0,
+      "EditorOffsetY": 400.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 4,
+      "Name": "New:Effect",
+      "EditorOffsetX": 580.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 340.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Each player draws three cards, then discards three cards at random.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 5,
+      "Name": "Number:Const",
+      "EditorOffsetX": 620.0,
+      "EditorOffsetY": 620.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 3
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 1,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 3,
+      "FromPort": 1,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 2
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 2
+    }
+  ]
+}

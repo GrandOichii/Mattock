@@ -12,12 +12,16 @@ public class SafePlayerControllerWrapper(
     IPlayerController controller
 ) : PlayerControllerWrapper(controller)
 {
-    public override Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint)
+    public override Task HandleCardsChoice(Card[] choices, Player player, Card[] options, int min, int max, string hint)
     {
-        if (choice is null) return Task.CompletedTask;
+        if (choices.Length < min)
+            throw new SafePlayerControllerWrapperException($"Controller chose {choices.Length} cards for {nameof(ChooseCards)}, while min = {min}");
+        if (max != -1 && choices.Length > max)
+            throw new SafePlayerControllerWrapperException($"Controller chose {choices.Length} cards for {nameof(ChooseCards)}, while max = {max}");
         
-        if (!options.Contains(choice))
-            throw new SafePlayerControllerWrapperException($"Controller chose card {choice.GetDisplayName()} for {nameof(ChooseCard)}, which is not one of the options (options: {string.Join(", ", options.Select(c => c.GetDisplayName()))})");
+        Card[] badChoices = [.. choices.Where(c => !options.Contains(c))];
+        if (badChoices.Length > 0)
+            throw new SafePlayerControllerWrapperException($"Controller chose cards {string.Join(", ", badChoices.Select(c => c.GetDisplayName()))} for {nameof(ChooseCards)}, which are not in options (options: {string.Join(", ", options.Select(c => c.GetDisplayName()))})");
         return Task.CompletedTask;
     }
 

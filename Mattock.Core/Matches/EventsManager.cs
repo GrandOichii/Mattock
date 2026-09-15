@@ -86,6 +86,24 @@ public class EventsManager(
         return await _match.ProcessEvent(e);
     }
 
+    public async Task <RollbackRequest?> DiscardToSize(DiscardToSize[] discards)
+    {
+        DiscardToSizeEvent e = new(
+            discards
+        );
+
+        return await _match.ProcessEvent(e);
+    }
+
+    public async Task <RollbackRequest?> Discard(Discard[] discards)
+    {
+        DiscardEvent e = new(
+            discards
+        );
+
+        return await _match.ProcessEvent(e);
+    }
+
     public async Task<RollbackRequest?> Mill(Mill[] mills)
     {
         MillEvent e = new(

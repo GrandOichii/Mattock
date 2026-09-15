@@ -48,10 +48,12 @@ public abstract class PlayerControllerWrapper(
         string hint
     );
 
-    public abstract Task HandleCardChoice(
-        Card? choice,
+    public abstract Task HandleCardsChoice(
+        Card[] choice,
         Player player,
         Card[] options,
+        int min,
+        int max,
         string hint
     );
 
@@ -120,11 +122,17 @@ public abstract class PlayerControllerWrapper(
         return result;
     }
 
-    public async Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
+    public async Task<(Card[], RollbackRequest?)> ChooseCards(
+        Player player, 
+        Card[] options, 
+        int min,
+        int max,
+        string hint
+    )
     {
-        var result = await _controller.ChooseCard(player, options, hint, allowNone);
+        var result = await _controller.ChooseCards(player, options, min, max, hint);
         if (result.Item2 is null)
-            await HandleCardChoice(result.Item1, player, options, hint);
+            await HandleCardsChoice(result.Item1, player, options, min, max, hint);
 
         return result;
     }

@@ -98,10 +98,13 @@ public class MatchScripts
 
 
     [LuaCommand]
-    public RollbackRequest? DiscardCards(LuaTable playerTable, int amount, bool random)
+    public RollbackRequest? DiscardCards(LuaTable playersTable, int amount, bool random)
     {
-        // TODO
-        throw new NotImplementedException();
+        var players = LuaCommon.ParseTable<Player>(playersTable);
+
+        return Match.Events.Discard([..
+            players.Select(p => new Discard(p, amount, random))
+        ]).GetAwaiter().GetResult();
     }
 
     [LuaCommand]

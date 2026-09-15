@@ -12,7 +12,7 @@ public class TestPlayerControllerBuilder
     public PlayersChoicesBuilder PlayersChoices { get; }
     public PermanentsChoicesBuilder PermanentsChoices { get; }
     public StringChoicesBuilder StringChoices { get; }
-    public CardChoicesBuilder CardChoices { get; }
+    public CardsChoicesBuilder CardChoices { get; }
     public CostCollectionChoicesBuilder CostCollectionChoices { get; }
     public ManaPaymentChoicesBuilder ManaPaymentChoices { get; }
     public AttackDeclarationsChoicesBuilder AttackDeclarationsChoices { get; }
@@ -41,7 +41,7 @@ public class TestPlayerControllerBuilder
     public PlayersChoicesBuilder ChoosePlayers => PlayersChoices;
     public PermanentsChoicesBuilder ChoosePermanents => PermanentsChoices;
     public StringChoicesBuilder ChooseString => StringChoices;
-    public CardChoicesBuilder ChooseCard => CardChoices;
+    public CardsChoicesBuilder ChooseCards => CardChoices;
     public CostCollectionChoicesBuilder ChooseCostCollection => CostCollectionChoices;
     public ManaPaymentChoicesBuilder PayMana => ManaPaymentChoices;
     public CommandChoicesBuilder Act => CommandChoices;

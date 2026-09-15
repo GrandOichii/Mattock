@@ -27,7 +27,7 @@ public class CleanupStepTests
             // *** turn 1
             .Act.AutoPassToStep(StepType.End)
             .Act.Pass()
-            .ChooseCard.NTimes(overMaxHandSize, (i, c) => c
+            .ChooseCards.NTimes(overMaxHandSize, (i, c) => c
                 .First()
             )
             .Act.Crash()

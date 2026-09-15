@@ -52,18 +52,18 @@ public class PlaybackPlayerController(
         ));
     }
 
-    public Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
+    public Task<(Card[], RollbackRequest?)> ChooseCards(Player player, Card[] options, int min, int max, string hint)
     {
-        if (!record.CardChoices.TryDequeue(out var id))
+        if (!record.CardsChoices.TryDequeue(out var ids))
         {
-            return Task.FromResult<(Card?, RollbackRequest?)>((
-                null, 
+            return Task.FromResult<(Card[], RollbackRequest?)>((
+                [], 
                 RollbackRequest.PLAYBACK_ROLLBACK
             ));
         }
         
-        return Task.FromResult<(Card?, RollbackRequest?)>((
-            options.Single(o => o.Id == id),
+        return Task.FromResult<(Card[], RollbackRequest?)>((
+            [.. options.Where(o => ids.Contains(o.Id))],
             null
         ));
     }

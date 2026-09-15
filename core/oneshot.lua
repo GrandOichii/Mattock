@@ -21,7 +21,6 @@ end
 
 function OneShot:Discard(manyPlayers, number, random)
     return function (ctx)
-        -- TODO use random
         local players = manyPlayers(ctx)
         local amount = number(ctx)
 

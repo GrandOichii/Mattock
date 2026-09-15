@@ -20,13 +20,16 @@ public class LondonMulliganRule(
 
         for (; target > 0; --target)
         {
-            var (choice, rollback) = await player.ChooseCard([.. player.Hand.Cards], $"Choose a card to up on the bottom of your library ({target} left)", false);
+            var (choices, rollback) = await player.ChooseCards([.. player.Hand.Cards], 1, 1, $"Choose a card to up on the bottom of your library ({target} left)");
             if (rollback is not null)
                 throw new MatchException($"Player {player.GetDisplayName()} requested rollback while doing a London mulligan");
 
+            if (choices.Length != 1)
+                throw new CodeErrorException($"Got more than 1 card for moving card to bottom for {nameof(LondonMulliganRule)}");
+
             // TODO ignored rollback
             await player.Match.MoveCard(
-                choice!,
+                choices[0],
                 CardZoneChangeType.Bottom,
                 player.Library.GetCardZoneChanger()
             );

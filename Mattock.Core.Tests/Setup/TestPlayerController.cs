@@ -14,7 +14,7 @@ public class TestPlayerController(
     Queue<TestPlayerController.PlayersChoice> playersChoices,
     Queue<TestPlayerController.PermanentsChoice> permanentsChoices,
     Queue<TestPlayerController.StringChoice> stringChoices,
-    Queue<TestPlayerController.CardChoice> cardChoices,
+    Queue<TestPlayerController.CardsChoice> cardsChoices,
     Queue<TestPlayerController.CostCollectionChoice> costCollectionChoices,
     Queue<TestPlayerController.ManaPaymentChoice> manaPaymentChoices,
     Queue<TestPlayerController.AttackDeclarationsChoice> attackDeclarationsChoices,
@@ -25,7 +25,7 @@ public class TestPlayerController(
     public delegate Task<((Player[], RollbackRequest?), bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
     public delegate Task<((Permanent[], RollbackRequest?), bool)> PermanentsChoice(Player player, Permanent[] options, int min, int max, string hint);
     public delegate Task<((string?, RollbackRequest?), bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
-    public delegate Task<((Card?, RollbackRequest?), bool)> CardChoice(Player player, Card[] options, string hint, bool allowNone);
+    public delegate Task<((Card[], RollbackRequest?), bool)> CardsChoice(Player player, Card[] options, int min, int max, string hint);
     public delegate Task<((CostCollection?, RollbackRequest?), bool)> CostCollectionChoice(Player player, CostCollection[] options, string hint, bool allowNone);
     public delegate Task<((IManaPaymentChoice, RollbackRequest?), bool)> ManaPaymentChoice(Player player, IManaPaymentChoice[] options, string hint);
     public delegate Task<((AttackDeclaration[]?, RollbackRequest?), bool)> AttackDeclarationsChoice(Player player, AttackDeclaration[] options);
@@ -53,7 +53,7 @@ public class TestPlayerController(
             stringChoices.Count.ShouldBe(0, $"{nameof(StringChoice)} queue of player {name} is not empty (size: {stringChoices.Count})");
 
         if (checkCardChoices)
-            cardChoices.Count.ShouldBe(0, $"{nameof(CardChoice)} queue of player {name} is not empty (size: {cardChoices.Count})");
+            cardsChoices.Count.ShouldBe(0, $"{nameof(CardsChoice)} queue of player {name} is not empty (size: {cardsChoices.Count})");
 
         if (checkCostCollectionChoices)
             costCollectionChoices.Count.ShouldBe(0, $"{nameof(CostCollectionChoice)} queue of player {name} is not empty (size: {costCollectionChoices.Count})");
@@ -228,16 +228,16 @@ public class TestPlayerController(
         );
     }
 
-    public async Task<(Card?, RollbackRequest?)> ChooseCard(Player player, Card[] options, string hint, bool allowNone)
+    public async Task<(Card[], RollbackRequest?)> ChooseCards(Player player, Card[] options, int min, int max, string hint)
     {
         return await Dequeue(
             player,
             options,
+            min, max,
             hint,
-            allowNone,
-            (d, p, o, h, a) => d(p, o, h, a),
-            cardChoices,
-            nameof(ChooseCard)
+            (d, p, o, mmin, mmax, h) => d(p, o, mmin, mmax, h),
+            cardsChoices,
+            nameof(ChooseCards)
         );
     }
 

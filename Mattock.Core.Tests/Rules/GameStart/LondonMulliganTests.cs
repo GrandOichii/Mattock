@@ -85,7 +85,7 @@ public class LondonMulliganTests
             .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.Yes()
-            .ChooseCard.FirstWithName("c2")
+            .ChooseCards.FirstWithName("c2")
             .ChooseString.No()
             // upkeep
             .Act.Crash();
@@ -93,19 +93,19 @@ public class LondonMulliganTests
         var p2 = new TestPlayerControllerBuilder("p2", 1)
             .SetDeck(deck)
             .ChooseString.Yes()
-            .ChooseCard.FirstWithName("c2")
+            .ChooseCards.FirstWithName("c2")
             .ChooseString.No();
 
         var p3 = new TestPlayerControllerBuilder("p3", 2)
             .SetDeck(deck)
             .ChooseString.Yes()
-            .ChooseCard.FirstWithName("c2")
+            .ChooseCards.FirstWithName("c2")
             .ChooseString.No();
 
         var p4 = new TestPlayerControllerBuilder("p4", 3)
             .SetDeck(deck)
             .ChooseString.Yes()
-            .ChooseCard.FirstWithName("c2")
+            .ChooseCards.FirstWithName("c2")
             .ChooseString.No();
 
         // Act
@@ -164,10 +164,10 @@ public class LondonMulliganTests
             .ChoosePlayers.WithIdx(0)
             .SetDeck(deck)
             .ChooseString.Yes()
-            .ChooseCard.FirstWithName("c2")
+            .ChooseCards.FirstWithName("c2")
             .ChooseString.Yes()
-            .ChooseCard.FirstWithName("c2")
-            .ChooseCard.FirstWithName("c3")
+            .ChooseCards.FirstWithName("c2")
+            .ChooseCards.FirstWithName("c3")
             .ChooseString.No()
             // upkeep
             .Act.Crash();

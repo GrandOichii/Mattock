@@ -1,0 +1,25 @@
+{
+    "Script": "",
+    "Name": "Burning Inquiry",
+    "ManaCosts": [
+        {
+            "Type": 3,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        3
+    ],
+
+    "Types": [ "Sorcery" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Each player draws three cards, than discards three cards at random.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

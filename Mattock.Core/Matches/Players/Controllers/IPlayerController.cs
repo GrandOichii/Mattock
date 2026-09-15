@@ -49,11 +49,12 @@ public interface IPlayerController
         bool allowNone
     );
 
-    Task<(Card?, RollbackRequest?)> ChooseCard(
+    Task<(Card[], RollbackRequest?)> ChooseCards(
         Player player,
         Card[] options,
-        string hint,
-        bool allowNone
+        int min,
+        int max,
+        string hint
     );
 
     Task<(CostCollection?, RollbackRequest?)> ChooseCostCollection(
@@ -78,4 +79,5 @@ public interface IPlayerController
         Player player,
         string hint
     );
+
 }

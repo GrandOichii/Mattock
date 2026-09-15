@@ -25,9 +25,9 @@ public class RecorderPlayerControllerWrapper(IPlayerController controller)
         return Task.CompletedTask;
     }
 
-    public override Task HandleCardChoice(Card? choice, Player player, Card[] options, string hint)
+    public override Task HandleCardsChoice(Card[] choices, Player player, Card[] options, int min, int max, string hint)
     {
-        Record.CardChoices.Enqueue(choice?.Id);
+        Record.CardsChoices.Enqueue([.. choices.Select(p => p.Id)]);
         return Task.CompletedTask;
     }
 

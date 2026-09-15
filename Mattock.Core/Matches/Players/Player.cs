@@ -523,11 +523,13 @@ public class Player
     }
 
     // TODO docs
-    public async Task<(Card?, RollbackRequest?)> ChooseCard(Card[] options, string hint, bool allowNone)
+    public async Task<(Card[], RollbackRequest?)> ChooseCards(Card[] options, int min, int max, string hint)
     {
         // Match.Session.Snapshots.CreateSnapshot($"Before choosing card (hint: {hint})");
+        if (max == 0)
+            throw new CodeErrorException($"Provided max = 0 for {nameof(ChoosePlayers)}");
 
-        return await RollbackApproveLoop(() => _controller.ChooseCard(this, options, hint, allowNone));
+        return await RollbackApproveLoop(() => _controller.ChooseCards(this, options, min, max, hint));
     }
 
     /// <summary>
