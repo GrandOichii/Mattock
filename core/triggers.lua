@@ -77,6 +77,26 @@ function Triggers:SpellCast()
     return builder
 end
 
+function Triggers:LifeGain()
+    local builder = Triggers:_(TriggerTypes.LifeGain)
+
+    function builder:PlayerFilter(playersSelect)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            return playersSelect:Match(ctx, triggerCtx.Player)
+        end)
+    end
+
+    function builder:RememberLifeGained(memKey)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            ctx.Memory[memKey] = triggerCtx.Gained
+
+            return true
+        end)
+    end
+
+    return builder
+end
+
 function Triggers:StepBeginning()
     local builder = Triggers:_(TriggerTypes.StepBeginning)
 

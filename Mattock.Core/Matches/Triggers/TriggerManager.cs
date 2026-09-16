@@ -21,9 +21,6 @@ public class TriggerManager(
                     ability,
                     ctx
                 ));
-                // if (!ability.CanTrigger()) continue;
-
-                // TODO
             }
         }
     }

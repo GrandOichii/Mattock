@@ -5,3 +5,9 @@ function Number:Const(int)
         return int
     end
 end
+
+function Number:FromMemory(memKey)
+    return function (ctx)
+        return ctx.Memory[memKey]
+    end
+end

@@ -1,0 +1,254 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 540.0,
+      "EditorOffsetY": 160.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 840.0,
+      "EditorOffsetY": 220.0,
+      "EditorSizeX": 280.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Whenever you gain life, target opponent loses that much life."
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "Target:Player",
+      "EditorOffsetX": 860.0,
+      "EditorOffsetY": 920.0,
+      "EditorSizeX": 242.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "OneShot:LoseLife",
+      "EditorOffsetX": 1660.0,
+      "EditorOffsetY": 920.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": 560.0,
+      "EditorOffsetY": 960.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Number:Const",
+      "EditorOffsetX": 340.0,
+      "EditorOffsetY": 960.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 7,
+      "Name": "Select:Player",
+      "EditorOffsetX": 620.0,
+      "EditorOffsetY": 760.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 8,
+      "Name": "Select:Player.Opponents",
+      "EditorOffsetX": 320.0,
+      "EditorOffsetY": 840.0,
+      "EditorSizeX": 233.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 9,
+      "Name": "New:Effect",
+      "EditorOffsetX": 1220.0,
+      "EditorOffsetY": 600.0,
+      "EditorSizeX": 360.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Target opponent loses that much life.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 10,
+      "Name": "Triggers:LifeGain",
+      "EditorOffsetX": 460.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 260.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "rememberLifeGained": "LIFE_GAINED"
+      }
+    },
+    {
+      "Id": 11,
+      "Name": "Select:Player",
+      "EditorOffsetX": 220.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 12,
+      "Name": "Select:Player.You",
+      "EditorOffsetX": -20.0,
+      "EditorOffsetY": 600.0,
+      "EditorSizeX": 176.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 13,
+      "Name": "Number:FromMemory",
+      "EditorOffsetX": 1140.0,
+      "EditorOffsetY": 1100.0,
+      "EditorSizeX": 184.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "memKey": "LIFE_GAINED"
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 9,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 9,
+      "ToPort": 1
+    },
+    {
+      "FromId": 3,
+      "FromPort": 1,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 9,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 1
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 0
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 11,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 0
+    },
+    {
+      "FromId": 12,
+      "FromPort": 0,
+      "ToId": 11,
+      "ToPort": 0
+    },
+    {
+      "FromId": 13,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 2
+    }
+  ]
+}

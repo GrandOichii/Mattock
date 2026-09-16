@@ -1,6 +1,7 @@
-using Mattock.Core.Matches.Damage;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Rollback;
+using Mattock.Core.Matches.Triggers;
+using Mattock.Core.Matches.Triggers.Context;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -9,9 +10,11 @@ public class LifeGain(
     int amount
 )
 {
-    public void Do()
+    public (Player, int) Do()
     {
+        var was = player.Life.Current;
         player.Life.Gain(amount);
+        return (player, player.Life.Current - was);
     }
 }
 
@@ -23,11 +26,18 @@ public class LifeGainEvent(
     {
         foreach (var gain in gains)
         {
-            gain.Do();
+            var (player, gained) = gain.Do();
+            if (gained <= 0) continue;
+
+            match.Triggers.Process(new Trigger(
+                TriggerType.LifeGain,
+                new LifeGainTriggerContext(
+                    player,
+                    gained
+                )
+            ));
         }
 
-        // TODO trigger
-        
         return Task.FromResult<RollbackRequest?>(null);
     }
 }

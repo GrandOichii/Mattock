@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Sanguine Bond",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 3
+        },
+        {
+            "Type": 2,
+            "Amount": 2
+        }
+    ],
+    "ColorIndicator": [
+        2
+    ],
+
+    "Types": [ "Enchantment" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever you gain life, target opponent loses that much life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

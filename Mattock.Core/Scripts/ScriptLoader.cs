@@ -788,6 +788,50 @@ public class ScriptLoader
             Scripts.Trigger(
                 new()
                 {
+                    Name = "Triggers:LifeGain",
+                    Label = "Life gain trigger",
+                    Inputs = [
+                        new() {
+                            Key = "playerFilter",
+                            Prefix = "\n:PlayerFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Player filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PlayerSelect",
+                            MultipleSeparator = "",
+                        }
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [
+                        new() {
+                            Key = "rememberLifeGained",
+                            NoScriptIfEmpty = true,
+                            Prefix = "\n:RememberLifeGained('",
+                            Postfix = "')",
+                            Config = new StringArgConfig() {
+                                Default = "",
+                                Multiline = false,
+                                Placeholder = "Life gained memory key",
+                            }
+                        }
+                    ],
+                },
+                """
+                Triggers:LifeGain()$playerFilter$rememberLifeGained
+                :Build()
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
                     Name = "Triggers:ETB",
                     Label = "Enter trigger",
                     Inputs = [
@@ -1201,6 +1245,36 @@ public class ScriptLoader
                 "Number:Const($value)"
             )
         );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Number
+            (
+                new()
+                {
+                    Name = "Number:FromMemory",
+                    Label = "Number from memory",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new ScriptNodeSimpleArg() {
+                            Key = "memKey",
+                            Prefix = "",
+                            Postfix = "",
+                            Config = new StringArgConfig() {
+                                Default = "",
+                                Multiline = false,
+                                Placeholder = "Memory key"
+                            },
+                        }
+                    ],
+                    Description = "TODO"
+                },
+                "Number:FromMemory('$memKey')"
+            )
+        );
+        // Number:FromMemory('LIFE_GAINED')
+
 
         // // Unique
         // ScriptNodes.Nodes.Add(

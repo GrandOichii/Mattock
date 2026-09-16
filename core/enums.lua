@@ -61,4 +61,5 @@ TriggerTypes = {
     StepBeginning = 0,
     ETB = 1,
     SpellCast = 2,
+    LifeGain = 3,
 }

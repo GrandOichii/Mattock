@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Megrim",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 2
+        },
+        {
+            "Type": 2,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        2
+    ],
+
+    "Types": [ "Enchantment" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever an opponent discards a card, Megrim deals 2 damage to that player.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}
