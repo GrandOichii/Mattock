@@ -525,7 +525,6 @@ public class Player
     // TODO docs
     public async Task<(Card[], RollbackRequest?)> ChooseCards(Card[] options, int min, int max, string hint)
     {
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing card (hint: {hint})");
         if (max == 0)
             throw new CodeErrorException($"Provided max = 0 for {nameof(ChoosePlayers)}");
 
@@ -540,18 +539,22 @@ public class Player
     /// <returns></returns>
     public async Task<(string, RollbackRequest?)> ChooseString(string[] options, string hint)
     {
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing string (hint: {hint})");
-
         var (result, rollback) = await RollbackApproveLoop(() => _controller.ChooseString(this, options, hint, false));
         return (result!, rollback);
+    }
+
+    public async Task<(IAnyTargetChoice[], RollbackRequest?)> ChooseAnyTargets(IAnyTargetChoice[] options, int min, int max, string hint)
+    {
+        if (max == 0)
+            throw new CodeErrorException($"Provided max = 0 for {nameof(ChooseAnyTargets)}");
+
+        return await RollbackApproveLoop(() => _controller.ChooseAnyTargets(this, options, min, max, hint));
     }
 
     public async Task<(Player[], RollbackRequest?)> ChoosePlayers(Player[] options, int min, int max, string hint)
     {
         if (max == 0)
             throw new CodeErrorException($"Provided max = 0 for {nameof(ChoosePlayers)}");
-
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing players (hint: {hint})");
 
         return await RollbackApproveLoop(() => _controller.ChoosePlayers(this, options, min, max, hint));
     }
@@ -561,15 +564,11 @@ public class Player
         if (max == 0)
             throw new CodeErrorException($"Provided max = 0 for {nameof(ChoosePermanents)}");
 
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing permanents (hint: {hint})");
-
         return await RollbackApproveLoop(() => _controller.ChoosePermanents(this, options, min, max, hint));
     }
 
     public async Task<(IManaPaymentChoice, RollbackRequest?)> ChooseManaPayment(IManaPaymentChoice[] options, string hint)
     {
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing mana payments (hint: {hint})");
-
         return await RollbackApproveLoop(() => _controller.ChooseManaPayment(this, options, hint));
     }
 
@@ -580,8 +579,6 @@ public class Player
         if (options.Length == 1)
             return (options[0], null);
             
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing cost collections (hint: {hint})");
-
         var (result, rollback) = await RollbackApproveLoop(() => _controller.ChooseCostCollection(this, options, hint, false));
         return (result!, rollback);
     }
@@ -591,8 +588,6 @@ public class Player
         if (options.Length == 0)
             throw new CodeErrorException($"Provided empty options for {nameof(ChooseAttackDeclarations)}");
 
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing attack declarations");
-
         return await RollbackApproveLoop(() => _controller.ChooseAttackDeclarations(this, options));
     }
 
@@ -600,8 +595,6 @@ public class Player
     {
         if (options.Length == 0)
             throw new CodeErrorException($"Provided empty options for {nameof(ChooseBlockDeclarations)}");
-
-        // Match.Session.Snapshots.CreateSnapshot($"Before choosing block declarations");
 
         return await RollbackApproveLoop(() => _controller.ChooseBlockDeclarations(this, options));
     }

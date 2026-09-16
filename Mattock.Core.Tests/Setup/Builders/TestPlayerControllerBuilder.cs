@@ -9,6 +9,7 @@ public class TestPlayerControllerBuilder
     private int _teamIdx;
 
     public CommandChoicesBuilder CommandChoices { get; }
+    public AnyTargetsChoicesBuilder AnyTargetsChoices { get; }
     public PlayersChoicesBuilder PlayersChoices { get; }
     public PermanentsChoicesBuilder PermanentsChoices { get; }
     public StringChoicesBuilder StringChoices { get; }
@@ -28,6 +29,7 @@ public class TestPlayerControllerBuilder
         };
 
         CommandChoices = new(this);
+        AnyTargetsChoices = new(this);
         PlayersChoices = new(this);
         PermanentsChoices = new(this);
         StringChoices = new(this);
@@ -38,6 +40,7 @@ public class TestPlayerControllerBuilder
         BlockDeclarationsChoices = new(this);
     }
 
+    public AnyTargetsChoicesBuilder ChooseAnyTargets => AnyTargetsChoices;
     public PlayersChoicesBuilder ChoosePlayers => PlayersChoices;
     public PermanentsChoicesBuilder ChoosePermanents => PermanentsChoices;
     public StringChoicesBuilder ChooseString => StringChoices;
@@ -62,6 +65,7 @@ public class TestPlayerControllerBuilder
             _deck,
             _teamIdx,
             CommandChoices.Queue,
+            AnyTargetsChoices.Queue,
             PlayersChoices.Queue,
             PermanentsChoices.Queue,
             StringChoices.Queue,

@@ -61,6 +61,19 @@ public class SafePlayerControllerWrapper(
         return Task.CompletedTask;
     }
 
+    public override Task HandleAnyTargetsChoice(IAnyTargetChoice[] choices, Player player, IAnyTargetChoice[] options, int min, int max, string hint)
+    {
+        if (choices.Length < min)
+            throw new SafePlayerControllerWrapperException($"Controller chose {choices.Length} players for {nameof(ChooseAnyTargets)}, while min = {min}");
+        if (max != -1 && choices.Length > max)
+            throw new SafePlayerControllerWrapperException($"Controller chose {choices.Length} players for {nameof(ChooseAnyTargets)}, while max = {max}");
+        
+        IAnyTargetChoice[] badChoices = [.. choices.Where(c => !options.Contains(c))];
+        if (badChoices.Length > 0)
+            throw new SafePlayerControllerWrapperException($"Controller chose any targets {string.Join(", ", badChoices.Select(c => c.ToUniqueString()))} for {nameof(ChooseAnyTargets)}, which are not in options (options: {string.Join(", ", options.Select(c => c.ToUniqueString()))})");
+        return Task.CompletedTask;
+    }
+
     public override Task HandlePermanentsChoice(Permanent[] choices, Player player, Permanent[] options, int min, int max, string hint)
     {
         if (choices.Length < min)

@@ -71,7 +71,10 @@ public class CommandChoicesBuilder
         return Enqueue((
             async (wrapper, player, options) =>
             {
-                var card = player.GetCastableCards().First(c => c.HasName(name));
+                var card = player.GetCastableCards().FirstOrDefault(c => c.HasName(name));
+                if (card is null)
+                    throw new Exception($"Player {player.GetDisplayName()} can't cast spell with name: {name}");
+                    
                 var command = new CastSpellCommand(player, card);
                 return (Respond(command), true, true);
             },

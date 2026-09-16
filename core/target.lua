@@ -84,6 +84,59 @@ function Target:_(tgtKey, itemsSelect, targetAmount, chooserFunc, hint)
                 return false
             end
 
+            -- TODO
+
+            return true
+        end
+    }
+end
+
+function Target:AnyTarget(tgtKey, permanentsSelect, playersSelect, targetAmount, hint)
+    -- asserts that is for damage purposes
+    permanentsSelect = permanentsSelect
+        :OfTypes(
+            CardTypes.Creature,
+            CardTypes.Planeswalker,
+            CardTypes.Battle
+        ) -- TODO verify
+
+    return {
+        Get = function (ctx)
+
+            local permanents = permanentsSelect
+                :Many()(ctx)
+            local players = playersSelect:Many()(ctx)
+
+            local player = Player:You()(ctx)
+
+            local chosen = ChooseAnyTargets(
+                player,
+                permanents,
+                players,
+                targetAmount:Min(ctx),
+                targetAmount:Max(ctx),
+                hint
+            )
+
+            if chosen.Rollback ~= nil then
+                return nil, chosen.Rollback
+            end
+
+            return {
+                Key = tgtKey,
+                Items = chosen.Response
+            }, nil
+        end,
+        Check = function (ctx)
+            local min = targetAmount:Min(ctx)
+
+            local count = permanentsSelect:Count()(ctx) + playersSelect:Count()(ctx)
+            if count < min then
+                return false
+            end
+
+            -- TODO
+
             return true
         end
     }

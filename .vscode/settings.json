@@ -31,6 +31,8 @@
         "GetCardZone",
         "PermanentHasSubtype",
         "GetCards",
-        "CardHasColor"
+        "CardHasColor",
+        "ChooseAnyTargets",
+        "DealDamageToAnyTargets"
     ]
 }

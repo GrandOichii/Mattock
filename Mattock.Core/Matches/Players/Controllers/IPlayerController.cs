@@ -5,9 +5,7 @@ using Mattock.Core.Matches.Players.Actions;
 using Mattock.Core.Matches.Players.Cards;
 using Mattock.Core.Matches.Players.Controllers.ManaPaymentChoices;
 using Mattock.Core.Matches.Players.Costs;
-using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Rollback;
-using Mattock.Core.Matches.Scripting.Activated;
 
 namespace Mattock.Core.Matches.Players.Controllers;
 
@@ -18,6 +16,14 @@ public interface IPlayerController
     Task<(ICommand, RollbackRequest?)> ChooseCommand(
         Player player,
         ICommand[] options
+    );
+
+    Task<(IAnyTargetChoice[], RollbackRequest?)> ChooseAnyTargets(
+        Player player,
+        IAnyTargetChoice[] options,
+        int min,
+        int max,
+        string hint
     );
 
     Task<(Player[], RollbackRequest?)> ChoosePlayers(

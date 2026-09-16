@@ -11,6 +11,7 @@ public class PlayerResponsesRecord
     public Queue<string> ManaPaymentChoices { get; init; } = [];
 
     public Queue<string[]> PermanentsChoices { get; init; } = [];
+    public Queue<string[]> AnyTargetChoices { get; init; } = [];
     public Queue<int[]> PlayersChoices { get; init; } = [];
     public Queue<string?> StringChoices { get; init; } = [];
 
@@ -25,6 +26,7 @@ public class PlayerResponsesRecord
             CostCollectionChoices = new([.. CostCollectionChoices]),
             ManaPaymentChoices = new([.. ManaPaymentChoices]),
             PermanentsChoices = new([.. PermanentsChoices]),
+            AnyTargetChoices = new([.. AnyTargetChoices]),
             PlayersChoices = new([.. PlayersChoices]),
             StringChoices = new([.. StringChoices]),
             AttackDeclarationsChoices = new([.. AttackDeclarationsChoices]),

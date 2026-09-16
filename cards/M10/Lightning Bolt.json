@@ -1,0 +1,25 @@
+{
+    "Script": "",
+    "Name": "Lightning Bolt",
+    "ManaCosts": [
+        {
+            "Type": 3,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        3
+    ],
+
+    "Types": [ "Instant" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Lightning Bolt deals 3 damage to any target.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

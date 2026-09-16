@@ -148,6 +148,22 @@ public class PlaybackPlayerController(
         ));
     }
 
+    public Task<(IAnyTargetChoice[], RollbackRequest?)> ChooseAnyTargets(Player player, IAnyTargetChoice[] options, int min, int max, string hint)
+    {
+        if (!record.AnyTargetChoices.TryDequeue(out var uniqueStrs))
+        {
+            return Task.FromResult<(IAnyTargetChoice[], RollbackRequest?)>((
+                [],
+                RollbackRequest.PLAYBACK_ROLLBACK
+            ));
+        }
+        
+        return Task.FromResult<(IAnyTargetChoice[], RollbackRequest?)>((
+            [.. options.Where(o => uniqueStrs.Contains(o.ToUniqueString()))],
+            null
+        ));
+    }
+
     public Task<(string?, RollbackRequest?)> ChooseString(Player player, string[] options, string hint, bool allowNone)
     {
         if (!record.StringChoices.TryDequeue(out var text))

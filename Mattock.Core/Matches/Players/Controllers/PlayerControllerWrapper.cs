@@ -23,6 +23,15 @@ public abstract class PlayerControllerWrapper(
         ICommand[] options
     );
 
+    public abstract Task HandleAnyTargetsChoice(
+        IAnyTargetChoice[] choices,
+        Player player,
+        IAnyTargetChoice[] options,
+        int min,
+        int max,
+        string hint
+    );
+
     public abstract Task HandlePlayersChoice(
         Player[] choices,
         Player player,
@@ -133,6 +142,21 @@ public abstract class PlayerControllerWrapper(
         var result = await _controller.ChooseCards(player, options, min, max, hint);
         if (result.Item2 is null)
             await HandleCardsChoice(result.Item1, player, options, min, max, hint);
+
+        return result;
+    }
+
+    public async Task<(IAnyTargetChoice[], RollbackRequest?)> ChooseAnyTargets(
+        Player player,
+        IAnyTargetChoice[] options,
+        int min,
+        int max,
+        string hint
+    )
+    {
+        var result = await _controller.ChooseAnyTargets(player, options, min, max, hint);
+        if (result.Item2 is null)
+            await HandleAnyTargetsChoice(result.Item1, player, options, min, max, hint);
 
         return result;
     }

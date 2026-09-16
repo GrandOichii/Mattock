@@ -82,6 +82,22 @@ function OneShot:DealDamageToPermanents(manyPermanents, number)
     end
 end
 
+function OneShot:DealDamageToAnyTarget(manyAnyTargets, number)
+    return function (ctx)
+        local anyTargets = manyAnyTargets(ctx)
+        local amount = number(ctx)
+        local damage = {}
+        for _, t in ipairs(anyTargets) do
+            damage[#damage+1] = {
+                AnyTarget = t,
+                Amount = amount
+            }
+        end
+
+        return DealDamageToAnyTargets(damage)
+    end
+end
+
 function OneShot:DealDamageToPlayers(manyPlayers, number)
     return function (ctx)
         local permanents = manyPlayers(ctx)

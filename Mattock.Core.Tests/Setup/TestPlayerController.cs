@@ -11,6 +11,7 @@ public class TestPlayerController(
     DeckTemplate deck,
     int teamIdx,
     Queue<(TestPlayerController.CommandChoice, bool)> commandChoices,
+    Queue<TestPlayerController.AnyTargetsChoice> anyTargetsChoices,
     Queue<TestPlayerController.PlayersChoice> playersChoices,
     Queue<TestPlayerController.PermanentsChoice> permanentsChoices,
     Queue<TestPlayerController.StringChoice> stringChoices,
@@ -22,6 +23,7 @@ public class TestPlayerController(
 ) : IPlayerController
 {
     public delegate Task<((ICommand?, RollbackRequest?), bool, bool)> CommandChoice(TestSessionWrapper wrapper, Player player, ICommand[] options);
+    public delegate Task<((IAnyTargetChoice[], RollbackRequest?), bool)> AnyTargetsChoice(Player player, IAnyTargetChoice[] options, int min, int max, string hint);
     public delegate Task<((Player[], RollbackRequest?), bool)> PlayersChoice(Player player, Player[] options, int min, int max, string hint);
     public delegate Task<((Permanent[], RollbackRequest?), bool)> PermanentsChoice(Player player, Permanent[] options, int min, int max, string hint);
     public delegate Task<((string?, RollbackRequest?), bool)> StringChoice(Player player, string[] options, string hint, bool allowNone);
@@ -33,6 +35,7 @@ public class TestPlayerController(
 
     public void AssertNoChoicesLeft(
         bool checkCommandChoices,
+        bool checkAnyTargetsChoices,
         bool checkPlayersChoices,
         bool checkPermanentsChoices,
         bool checkStringChoices,
@@ -45,6 +48,9 @@ public class TestPlayerController(
     {
         if (checkPlayersChoices)
             playersChoices.Count.ShouldBe(0, $"{nameof(PlayersChoice)} queue of player {name} is not empty (size: {playersChoices.Count})");
+
+        if (checkAnyTargetsChoices)
+            anyTargetsChoices.Count.ShouldBe(0, $"{nameof(AnyTargetsChoice)} queue of player {name} is not empty (size: {anyTargetsChoices.Count})");
 
         if (checkPermanentsChoices)
             permanentsChoices.Count.ShouldBe(0, $"{nameof(PermanentsChoice)} queue of player {name} is not empty (size: {permanentsChoices.Count})");
@@ -198,6 +204,20 @@ public class TestPlayerController(
             (d, p, o, mmin, mmax, h) => d(p, o, mmin, mmax, h),
             playersChoices,
             nameof(ChoosePlayers)
+        );
+    }
+
+    public async Task<(IAnyTargetChoice[], RollbackRequest?)> ChooseAnyTargets(Player player, IAnyTargetChoice[] options, int min, int max, string hint)
+    {
+        return await Dequeue(
+            player,
+            options,
+            min,
+            max,
+            hint,
+            (d, p, o, mmin, mmax, h) => d(p, o, mmin, mmax, h),
+            anyTargetsChoices,
+            nameof(ChooseAnyTargets)
         );
     }
 

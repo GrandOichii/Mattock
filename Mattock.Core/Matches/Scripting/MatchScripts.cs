@@ -8,6 +8,7 @@ using Mattock.Core.Matches.Mana;
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Players.Mana;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting.Targets;
@@ -177,6 +178,25 @@ public class MatchScripts
     }
 
     [LuaCommand]
+    public LuaTable ChooseAnyTargets(Player player, LuaTable permanentsOptionsTable, LuaTable playersOptionsTable, int min, int max, string hint)
+    {
+        var permanentsOptions = LuaCommon.ParseTable<Permanent>(permanentsOptionsTable);
+        var playersOptions = LuaCommon.ParseTable<Player>(playersOptionsTable);
+
+        var result = player.ChooseAnyTargets(
+            [
+                .. playersOptions.Select(p => new PlayerAnyTargetChoice(p)),
+                .. permanentsOptions.Select(p => new PermanentAnyTargetChoice(p)),
+            ],
+            min,
+            max,
+            hint
+        ).GetAwaiter().GetResult();
+
+        return CreateResponseTable(result);
+    }
+
+    [LuaCommand]
     public LuaTable ChooseString(Player player, LuaTable optionsTable, string hint)
     {
         var options = LuaCommon.ParseTable<string>(optionsTable);
@@ -249,6 +269,25 @@ public class MatchScripts
             damages.Add(new(
                 new TODODamageSource(amount),
                 new PermanentDamageTarget(permanent)
+            ));
+        }
+        return Match.Events.ProcessDamage([.. damages])
+            .GetAwaiter().GetResult();
+    }
+
+    [LuaCommand]
+    public RollbackRequest? DealDamageToAnyTargets(LuaTable damageTable)
+    {
+        var arr = LuaCommon.ParseTable<LuaTable>(damageTable);
+        List<Damage.Damage> damages = [];
+        foreach (var item in arr)
+        {
+            var permanent = LuaCommon.Get<IAnyTargetChoice>(item, "AnyTarget");
+            var amount = LuaCommon.GetInt(item, "Amount");
+
+            damages.Add(new(
+                new TODODamageSource(amount),
+                new AnyTargetDamageTarget(permanent)
             ));
         }
         return Match.Events.ProcessDamage([.. damages])

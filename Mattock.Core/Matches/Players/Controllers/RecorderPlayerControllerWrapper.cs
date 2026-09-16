@@ -55,6 +55,12 @@ public class RecorderPlayerControllerWrapper(IPlayerController controller)
         return Task.CompletedTask;
     }
 
+    public override Task HandleAnyTargetsChoice(IAnyTargetChoice[] choices, Player player, IAnyTargetChoice[] options, int min, int max, string hint)
+    {
+        Record.AnyTargetChoices.Enqueue([.. choices.Select(p => p.ToUniqueString())]);
+        return Task.CompletedTask;
+    }
+
     public override Task HandlePlayersChoice(Player[] choices, Player player, Player[] options, int min, int max, string hint)
     {
         Record.PlayersChoices.Enqueue([.. choices.Select(p => p.Idx)]);
