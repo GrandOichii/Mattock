@@ -1,0 +1,198 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 580.0,
+      "EditorOffsetY": 240.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 840.0,
+      "EditorOffsetY": 300.0,
+      "EditorSizeX": 380.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Whenever an opponent draws a card, this enchantment deals 1 damage to that player."
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1680.0,
+      "EditorOffsetY": 940.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "Select:Player",
+      "EditorOffsetX": 440.0,
+      "EditorOffsetY": 500.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Select:Player.Opponents",
+      "EditorOffsetX": 160.0,
+      "EditorOffsetY": 580.0,
+      "EditorSizeX": 233.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Select:Player",
+      "EditorOffsetX": 1680.0,
+      "EditorOffsetY": 700.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "New:Effect",
+      "EditorOffsetX": 1420.0,
+      "EditorOffsetY": 340.0,
+      "EditorSizeX": 440.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "This enchantment deals 1 damage to that player.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 8,
+      "Name": "OneShot:DealDamageToPlayers",
+      "EditorOffsetX": 2000.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 9,
+      "Name": "Select:Player.FromMemorySingle",
+      "EditorOffsetX": 1380.0,
+      "EditorOffsetY": 760.0,
+      "EditorSizeX": 177.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "memKey": "THAT_PLAYER"
+      }
+    },
+    {
+      "Id": 10,
+      "Name": "Triggers:SingleDraw",
+      "EditorOffsetX": 620.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 185.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "rememberPlayer": "THAT_PLAYER"
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 9,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 0
+    },
+    {
+      "FromId": 6,
+      "FromPort": 1,
+      "ToId": 8,
+      "ToPort": 1
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 2
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 0
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    }
+  ]
+}

@@ -235,34 +235,35 @@ public class Player
         Library.Shuffle();
     }
 
-    /// <summary>
-    /// Draw the specified amount of cards
-    /// </summary>
-    /// <param name="amount">Number of cards to be drawn</param>
-    public async Task<RollbackRequest?> Draw(int amount)
+    // TODO docs
+    public async Task<(Card[], RollbackRequest?)> Draw(int amount)
     {
         GameEndSafeguard();
+        List<Card> result = [];
 
         for (; amount > 0; --amount)
         {
-            var (_, request) = await DrawSingle();
+            var (drawn, request) = await DrawSingle();
             if (request is not null)
-                return request;
+                return ([], request);
+            result.AddRange(drawn);
         }
 
-        return null;
+        return ([.. result], null);
     }
 
-    public async Task<(Card?, RollbackRequest?)> DrawSingle()
+    public async Task<(Card[], RollbackRequest?)> DrawSingle()
     {
+        // TODO the amount of cards drawn per single card can be changed
+
         var card = Library.GetLast();
         if (card is null)
         {
             if (!Match.Config.GameLossIfRequiredToDrawFromEmptyLibrary)
-                return (null, null);
+                return ([], null);
 
             DrewFromEmptyLibrary = true;
-            return (null, null);
+            return ([], null);
         }
 
         var (_, request) = await Match.MoveCard(
@@ -272,9 +273,9 @@ public class Player
         );
 
         if (request is not null)
-            return (null, request);
+            return ([], request);
 
-        return (card, request);
+        return ([card], request);
     }
 
     public async Task<RollbackRequest?> ShuffleHandIntoLibrary()
@@ -391,12 +392,10 @@ public class Player
     /// <returns></returns>
     public bool IsTeammateFor(Player player) => GetTeamIdx() == player.GetTeamIdx();
 
-    /// <summary>
-    /// Discard the specified cards
-    /// </summary>
-    /// <param name="cards">Cards to be discarded</param>
-    public async Task<RollbackRequest?> Discard(Card[] cards)
+    // TODO docs
+    public async Task<(Card[], RollbackRequest?)> Discard(Card[] cards)
     {
+        List<Card> result = [];
         foreach (var card in cards)
         {
             var (_, request) = await Match.MoveCard(
@@ -405,11 +404,13 @@ public class Player
                 Graveyard.GetCardZoneChanger()
             );
 
+            result.Add(card);
+
             if (request is not null)
-                return request;
+                return ([], request);
         }
 
-        return null;
+        return ([.. cards], null);
     }
 
     /// <summary>

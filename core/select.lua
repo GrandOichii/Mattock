@@ -33,6 +33,13 @@ function Select:_(allGetter)
             return false
         end)
     end
+    
+    function select:FromMemorySingle(memKey)
+        return select:_AddFilter(function (ctx, item)
+            local fromMem = ctx.Memory[memKey]
+            return fromMem == item
+        end)
+    end
 
     function select:Many()
         return function (ctx)

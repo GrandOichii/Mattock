@@ -40,7 +40,8 @@ public class CleanupStepPart
         }
 
         // 514.3. Priority (if any effects on the stack)
-        // TODO
+        if (!match.Stack.IsEmpty() || match.Triggers.TriggerQueue.Count > 0)
+            await match.CreateAndResolvePriority();
 
         // 514.3a State-based actions
         match.StateBasedActions.Apply();

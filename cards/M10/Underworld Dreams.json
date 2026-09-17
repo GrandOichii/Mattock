@@ -1,14 +1,10 @@
 {
     "Script": "",
-    "Name": "Megrim",
+    "Name": "Underworld Dreams",
     "ManaCosts": [
         {
-            "Type": null,
-            "Amount": 2
-        },
-        {
             "Type": 2,
-            "Amount": 1
+            "Amount": 3
         }
     ],
     "ColorIndicator": [
@@ -19,7 +15,7 @@
     "Subtypes": [ ],
     "Supertypes": [ ],
     
-    "TextBox": "Whenever an opponent discards a card, this enchantment deals 2 damage to that player.",
+    "TextBox": "Whenever an opponent draws a card, this enchantment deals 1 damage to that player.",
     "Power": "",
     "Toughness": "",
     "Loyalty": "",

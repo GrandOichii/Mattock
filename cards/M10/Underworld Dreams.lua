@@ -1,11 +1,11 @@
--- Whenever an opponent discards a card, this enchantment deals 2 damage to that player.
+-- Whenever an opponent draws a card, this enchantment deals 1 damage to that player.
 
 function _Create()
     return New:Card()
         :TriggeredAbilities(
-            New:TriggeredAbility('Whenever an opponent discards a card, this enchantment deals 2 damage to that player.')
+            New:TriggeredAbility('Whenever an opponent draws a card, this enchantment deals 1 damage to that player.')
                 :Triggers(
-                    Triggers:SingleDiscard()
+                    Triggers:SingleDraw()
                         :PlayerFilter(
                             Select:Players()
                                 :Opponents()
@@ -14,13 +14,13 @@ function _Create()
                         :Build()
                 )
                 :Effects(
-                    New:Effects('This enchantment deals 2 damage to that player.')
+                    New:Effects('This enchantment deals 1 damage to that player.')
                         :Effects(
                             OneShot:DealDamageToPlayers(
                                 Select:Players()
                                     :FromMemorySingle('THAT_PLAYER')
                                     :Many(),
-                                Number:Const(2)
+                                Number:Const(1)
                             )
                         )
                         :Build()

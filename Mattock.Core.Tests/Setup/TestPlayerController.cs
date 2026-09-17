@@ -190,7 +190,7 @@ public class TestPlayerController(
             return result;
         }
 
-        throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint})");
+        throw new Exception($"No choices left in queue for {methodName} of player {player.GetDisplayName()} (hint: {hint}, turn counter: {player.Match.TurnManager.TurnCounter})");
     }
 
     public async Task<(Player[], RollbackRequest?)> ChoosePlayers(Player player, Player[] options, int min, int max, string hint)

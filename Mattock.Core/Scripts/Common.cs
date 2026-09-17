@@ -295,18 +295,6 @@ public static class Scripts
             Name = $"Select:{type}",
             Label = label,
             Inputs = [
-                // new ScriptNodeInputPort() {
-                //     HasMissingScript = true,
-                //     MissingScript = "",
-                //     Key = "amount",
-                //     Label = "Amount",
-                //     Position = ScriptNodePortPosition.Left,
-                //     AllowMultiple = false,
-                //     MultipleSeparator = "",
-                //     Postfix = "\n)",
-                //     Prefix = "\n:Amount(\n\"$amountSelectTip\",\n",
-                //     Type = "Number"
-                // }
             ],
             Outputs = [
                 new() {
@@ -428,6 +416,38 @@ public static class Scripts
         );
 
         scriptNodes.Nodes.Add(except);
+
+        var fromMemorySingle = Filter
+        (
+            new()
+            {
+                Name = $"Select:{type}.FromMemorySingle",
+                Label = "From memory (single)",
+                Inputs = [
+                ],
+                Outputs = [],
+                InputArray = null,
+                SimpleArgs = [
+                    new() {
+                        Key = "memKey",
+                        NoScriptIfEmpty = false,
+                        Postfix = "",
+                        Prefix = "",
+                        Config = new StringArgConfig() {
+                            Default = "",
+                            Multiline = false,
+                            Placeholder = "Memory key",
+                        }
+                    }
+                ],
+                Description = "TODO"
+            },
+            "",
+            type,
+            ":FromMemorySingle('$memKey')"
+        );
+
+        scriptNodes.Nodes.Add(fromMemorySingle);
 
         // var choose = Effect(
         //     new()

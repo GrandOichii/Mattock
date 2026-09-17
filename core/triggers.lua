@@ -97,6 +97,44 @@ function Triggers:LifeGain()
     return builder
 end
 
+function Triggers:SingleDiscard()
+    local builder = Triggers:_(TriggerTypes.SingleDiscard)
+
+    function builder:PlayerFilter(playersSelect)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            return playersSelect:Match(ctx, triggerCtx.Player)
+        end)
+    end
+
+    function builder:RememberPlayer(memKey)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            ctx.Memory[memKey] = triggerCtx.Player
+            return true
+        end)
+    end
+
+    return builder
+end
+
+function Triggers:SingleDraw()
+    local builder = Triggers:_(TriggerTypes.SingleDraw)
+
+    function builder:PlayerFilter(playersSelect)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            return playersSelect:Match(ctx, triggerCtx.Player)
+        end)
+    end
+
+    function builder:RememberPlayer(memKey)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            ctx.Memory[memKey] = triggerCtx.Player
+            return true
+        end)
+    end
+
+    return builder
+end
+
 function Triggers:StepBeginning()
     local builder = Triggers:_(TriggerTypes.StepBeginning)
 

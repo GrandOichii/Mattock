@@ -496,6 +496,38 @@ public class ScriptLoader
             (
                 new()
                 {
+                    Name = "OneShot:DealDamageToPlayers",
+                    Label = "Deal damage to players",
+                    Inputs = [
+                        Inputs.Many(
+                            "players",
+                            "Player",
+                            "Players"
+                        ),
+                        Inputs.Number(
+                            "amount",
+                            "Amount"
+                        )
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:DealDamageToPlayers(
+                $players,
+                $amount
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
                     Name = "OneShot:TapPermanents",
                     Label = "Tap permanents",
                     Inputs = [
@@ -823,6 +855,94 @@ public class ScriptLoader
                 },
                 """
                 Triggers:LifeGain()$playerFilter$rememberLifeGained
+                :Build()
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
+                    Name = "Triggers:SingleDiscard",
+                    Label = "Discard trigger (single)",
+                    Inputs = [
+                        new() {
+                            Key = "playerFilter",
+                            Prefix = "\n:PlayerFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Player filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PlayerSelect",
+                            MultipleSeparator = "",
+                        }
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [
+                        new() {
+                            Key = "rememberPlayer",
+                            NoScriptIfEmpty = true,
+                            Prefix = "\n:RememberPlayer('",
+                            Postfix = "')",
+                            Config = new StringArgConfig() {
+                                Default = "",
+                                Multiline = false,
+                                Placeholder = "Player memory key",
+                            }
+                        }
+                    ],
+                },
+                """
+                Triggers:SingleDiscard()$playerFilter$rememberPlayer
+                :Build()
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
+                    Name = "Triggers:SingleDraw",
+                    Label = "Draw trigger (single)",
+                    Inputs = [
+                        new() {
+                            Key = "playerFilter",
+                            Prefix = "\n:PlayerFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Player filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PlayerSelect",
+                            MultipleSeparator = "",
+                        }
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [
+                        new() {
+                            Key = "rememberPlayer",
+                            NoScriptIfEmpty = true,
+                            Prefix = "\n:RememberPlayer('",
+                            Postfix = "')",
+                            Config = new StringArgConfig() {
+                                Default = "",
+                                Multiline = false,
+                                Placeholder = "Player memory key",
+                            }
+                        }
+                    ],
+                },
+                """
+                Triggers:SingleDraw()$playerFilter$rememberPlayer
                 :Build()
                 """
             )
