@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Black Cat",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 2,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        2
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Zombie", "Cat" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever this creature dies, target opponent discards a card at random.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

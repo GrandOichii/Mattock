@@ -8,4 +8,5 @@ public enum TriggerType
     LifeGain = 3,
     SingleDiscard = 4,
     SingleDraw = 5,
+    SingleDeath = 6,
 }

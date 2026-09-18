@@ -1,0 +1,150 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.00003,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "OneShot:Destroy",
+      "EditorOffsetX": 940.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 103.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "Target:Permanent",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 280.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "Select:Permanents.OfTypes",
+      "EditorOffsetX": -220.0,
+      "EditorOffsetY": 400.0,
+      "EditorSizeX": 203.0,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "types": [
+          "Creature"
+        ]
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "New:Effect",
+      "EditorOffsetX": 600.0,
+      "EditorOffsetY": 160.0,
+      "EditorSizeX": 260.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Destroy target creature.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 5,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": 40.0,
+      "EditorOffsetY": 320.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": -40.0,
+      "EditorOffsetY": 600.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Number:Const",
+      "EditorOffsetX": -240.0,
+      "EditorOffsetY": 620.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 1,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    }
+  ]
+}

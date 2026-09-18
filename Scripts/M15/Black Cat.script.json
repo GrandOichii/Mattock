@@ -1,0 +1,270 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 960.0,
+      "EditorOffsetY": 280.0,
+      "EditorSizeX": 300.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Whenever this creature dies, target opponent discards a card at random."
+      }
+    },
+    {
+      "Id": 2,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 680.0,
+      "EditorOffsetY": 220.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 3,
+      "Name": "Select:Permanent.Only",
+      "EditorOffsetX": 220.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 215.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 4,
+      "Name": "Permanent:This",
+      "EditorOffsetX": 60.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 127.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": 480.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Triggers:SingleDeath",
+      "EditorOffsetX": 680.0,
+      "EditorOffsetY": 400.0,
+      "EditorSizeX": 223.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "New:Effect",
+      "EditorOffsetX": 1419.0,
+      "EditorOffsetY": 512.0,
+      "EditorSizeX": 400.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Target opponent discards a card at random.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 8,
+      "Name": "Target:Player",
+      "EditorOffsetX": 1080.0,
+      "EditorOffsetY": 660.0,
+      "EditorSizeX": 242.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 9,
+      "Name": "Select:Player",
+      "EditorOffsetX": 860.0,
+      "EditorOffsetY": 780.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 10,
+      "Name": "Select:Player.Opponents",
+      "EditorOffsetX": 560.0,
+      "EditorOffsetY": 860.0,
+      "EditorSizeX": 233.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 11,
+      "Name": "OneShot:Discard",
+      "EditorOffsetX": 1980.0,
+      "EditorOffsetY": 800.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 161.0,
+      "InputArray": null,
+      "Data": {
+        "random": true
+      }
+    },
+    {
+      "Id": 12,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1700.0,
+      "EditorOffsetY": 900.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 13,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": 760.0,
+      "EditorOffsetY": 640.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 14,
+      "Name": "Number:Const",
+      "EditorOffsetX": 540.0,
+      "EditorOffsetY": 680.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 6,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 0
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 7,
+      "ToPort": 1
+    },
+    {
+      "FromId": 9,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 0
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 9,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 11,
+      "ToPort": 0
+    },
+    {
+      "FromId": 9,
+      "FromPort": 1,
+      "ToId": 11,
+      "ToPort": 1
+    },
+    {
+      "FromId": 12,
+      "FromPort": 0,
+      "ToId": 11,
+      "ToPort": 2
+    },
+    {
+      "FromId": 13,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 1
+    },
+    {
+      "FromId": 14,
+      "FromPort": 0,
+      "ToId": 13,
+      "ToPort": 0
+    }
+  ]
+}

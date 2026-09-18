@@ -15,8 +15,12 @@ public class Battlefield(
 
     public void Remove(Card card)
     {
-        // TODO
-        throw new NotImplementedException();
+        // TODO this is very basic
+        var permanent = _permanents.Single(p => p.Card == card);
+        var removed = _permanents.Remove(permanent);
+        if (removed) return;
+        
+        throw new CodeErrorException($"Tried to remove a non-existant card from the battlefield: {card.GetDisplayName()}");
     }
 
     public (Card, Player)[] GetCardControllerPairs()

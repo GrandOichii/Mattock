@@ -10,6 +10,12 @@ public class BattlefieldAsserts(Battlefield battlefield)
         return this;
     }
 
+    public BattlefieldAsserts IsEmpty()
+    {
+        battlefield.GetPermanents().Length.ShouldBe(0);
+        return this;
+    }
+
     public BattlefieldAsserts AssertPermanent(int idx, Action<PermanentAsserts> action)
     {
         action(new(battlefield.GetPermanents()[idx]));

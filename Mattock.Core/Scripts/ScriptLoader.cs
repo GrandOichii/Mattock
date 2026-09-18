@@ -528,6 +528,33 @@ public class ScriptLoader
             (
                 new()
                 {
+                    Name = "OneShot:Destroy",
+                    Label = "Destroy permanents",
+                    Inputs = [
+                        Inputs.Many(
+                            "permanents",
+                            "Permanent",
+                            "Permanents"
+                        ),
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [],
+                    Description = "TODO"
+                },
+                """
+                OneShot:Destroy(
+                $permanents
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
                     Name = "OneShot:TapPermanents",
                     Label = "Tap permanents",
                     Inputs = [
@@ -766,6 +793,38 @@ public class ScriptLoader
                 },
                 """
                 Triggers:SpellCast()$casterFilter$cardFilter
+                :Build()
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Trigger(
+                new()
+                {
+                    Name = "Triggers:SingleDeath",
+                    Label = "Creature death trigger (single)",
+                    Inputs = [
+                        new() {
+                            Key = "permanentFilter",
+                            Prefix = "\n:PermanentFilter(\n",
+                            Postfix = "\n)",
+                            HasMissingScript = true,
+                            MissingScript = "",
+                            AllowMultiple = false,
+                            Label = "Permanent filter",
+                            Position = ScriptNodePortPosition.Left,
+                            Type = "PermanentSelect",
+                            MultipleSeparator = "",
+                        },
+                    ],
+                    Outputs = [],
+                    Description = "TODO",
+                    InputArray = null,
+                    SimpleArgs = [],
+                },
+                """
+                Triggers:SingleDeath()$permanentFilter
                 :Build()
                 """
             )

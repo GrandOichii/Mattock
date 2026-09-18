@@ -17,6 +17,17 @@ public class PermanentsChoicesBuilder(TestPlayerControllerBuilder builder)
         });
     }
 
+    public TestPlayerControllerBuilder First()
+    {
+        return Enqueue(async (player, options, min, max, hint) =>
+        {
+            return (
+                Respond<Permanent[]>([options.First()]),
+                true
+            );
+        });
+    }
+
     public TestPlayerControllerBuilder Assert(Action<Asserts> action)
     {
         return Enqueue(async (player, options, min, max, hint) =>

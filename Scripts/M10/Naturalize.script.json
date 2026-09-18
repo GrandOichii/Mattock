@@ -1,0 +1,151 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "New:Effect",
+      "EditorOffsetX": 560.0,
+      "EditorOffsetY": 380.0,
+      "EditorSizeX": 360.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Destroy target artifact or enchantment.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 2,
+      "Name": "OneShot:Destroy",
+      "EditorOffsetX": 960.0,
+      "EditorOffsetY": 640.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 103.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 3,
+      "Name": "Target:Permanent",
+      "EditorOffsetX": 240.0,
+      "EditorOffsetY": 640.0,
+      "EditorSizeX": 280.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "tgtKey": "T1"
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "Select:Permanent",
+      "EditorOffsetX": -20.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 5,
+      "Name": "Target.Amount:Exactly",
+      "EditorOffsetX": -120.0,
+      "EditorOffsetY": 800.0,
+      "EditorSizeX": 222.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Number:Const",
+      "EditorOffsetX": -320.0,
+      "EditorOffsetY": 800.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 7,
+      "Name": "Select:Permanents.OfTypes",
+      "EditorOffsetX": -280.0,
+      "EditorOffsetY": 520.0,
+      "EditorSizeX": 203.0,
+      "EditorSizeY": 181.0,
+      "InputArray": null,
+      "Data": {
+        "types": [
+          "Artifact",
+          "Enchantment"
+        ]
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 1,
+      "ToPort": 1
+    },
+    {
+      "FromId": 3,
+      "FromPort": 1,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 4,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 5,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 1
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 0
+    }
+  ]
+}

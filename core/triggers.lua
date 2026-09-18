@@ -135,6 +135,23 @@ function Triggers:SingleDraw()
     return builder
 end
 
+function Triggers:SingleDeath()
+    local builder = Triggers:_(TriggerTypes.SingleDeath)
+
+    function builder:PermanentFilter(permanentsSelect)
+        return builder:_AddFilter(function (ctx, triggerCtx)
+            return permanentsSelect:Match(ctx, triggerCtx.Permanent)
+        end)
+    end
+
+    builder:PermanentFilter(
+        Select:Permanents()
+            :OfTypes(CardTypes.Creature)
+    )
+
+    return builder
+end
+
 function Triggers:StepBeginning()
     local builder = Triggers:_(TriggerTypes.StepBeginning)
 

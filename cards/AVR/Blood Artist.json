@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Blood Artist",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 2,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        2
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Vampire" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever this creature or another creature dies, target player loses 1 life and you gain 1 life.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

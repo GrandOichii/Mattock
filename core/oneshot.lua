@@ -63,7 +63,11 @@ function OneShot:UntapPermanents(manyPermanents)
 end
 
 function OneShot:Destroy(manyPermanents)
-    error('OneShot:Destroy not implemented')
+    return function (ctx)
+        local permanents = manyPermanents(ctx)
+
+        return DestroyPermanents(permanents)
+    end
 end
 
 function OneShot:DealDamageToPermanents(manyPermanents, number)

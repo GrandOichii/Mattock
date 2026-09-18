@@ -19,6 +19,15 @@ public class EventsManager(
     Match _match
 )
 {
+    public async Task<RollbackRequest?> Destroy(Permanent[] permanents)
+    {
+        DestroyEvent e = new(
+            [.. permanents]
+        );
+
+        return await _match.ProcessEvent(e);
+    }
+
     public async Task<RollbackRequest?> TapPermanents(Permanent[] permanents)
     {
         PermanentStatusChangeEvent e = new(

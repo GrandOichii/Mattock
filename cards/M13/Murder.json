@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Murder",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 2
+        },
+        {
+            "Type": 2,
+            "Amount": 1
+        }
+    ],
+    "ColorIndicator": [
+        2
+    ],
+
+    "Types": [ "Instant" ],
+    "Subtypes": [ ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Destroy target creature.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

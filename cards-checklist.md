@@ -21,7 +21,6 @@ damage prevention,
 damage redirection, 
 permanent controller changer,
 damage to players trigger, 
-
 tutoring, 
 attack restriction, 
 spell target trigger, 
@@ -61,7 +60,6 @@ tokens,
 auras, 
 static abilities, 
 exile, 
-permanent destruction, 
 sacrifice, 
 dynamic keywords, 
 discard effects,
@@ -98,7 +96,7 @@ trigger if clauses,
 - [ ] __Open the Vaults__ - moving cards from non-battlefield zones to the battlefield, 
 - [ ] __Pacifism__ - auras, static abilities, attack restriction, block restriction, 
 - [ ] __Palace Guard__ - number of blockable creatures modification, 
-- [ ] __Planar Cleansing__ - permanent destruction, 
+- [ ] __Planar Cleansing__ - _implementable_
 - [ ] __Razorfoot Griffin__ - keywords, flying, first strike, 
 - [ ] __Rhox Pikemaster__ - keywords, first strike, static abilities, dynamic keywords, 
 - [ ] __Righteousness__ - power/toughness modification, until end of turn effects, 
@@ -106,10 +104,10 @@ trigger if clauses,
 - [ ] __Siege Mastodon__ - _vanilla_
 - [ ] __Silence__ - spell cast restriction, until end of turn effects, 
 - [ ] __Silvercoat Lion__ - _vanilla_
-- [ ] __Solemn Offering__ - permanent destruction, 
+- [ ] __Solemn Offering__ - _implementable_
 - [ ] __Soul Warden__ - _implementable_
 - [ ] __Stormfront Pegasus__ - keywords, flying, 
-- [ ] __Tempest of Light__ - permanent destruction, 
+- [ ] __Tempest of Light__ - _implementable_
 - [ ] __Undead Slayer__ - exile, 
 - [ ] __Veteran Armorsmith__ - static abilities, power/toughness modification, 
 - [ ] __Veteran Swordsmith__ - static abilities, power/toughness modification, 
@@ -132,7 +130,7 @@ trigger if clauses,
 - [ ] __Flash Freeze__ - spell countering, 
 - [ ] __Hive Mind__ - spell copying, choosing new targets, 
 - [ ] __Horned Turtle__ - _vanilla_
-- [ ] __Ice Cage__ - auras, attack restriction, block restriction, ability activation allowance, spell target trigger, permanent destruction, 
+- [ ] __Ice Cage__ - auras, attack restriction, block restriction, ability activation allowance, spell target trigger, 
 - [ ] __Illusionary Servant__ - keywords, flying, spell target trigger, sacrifice, 
 - [ ] __Jace Beleren__ - planeswalkers, 
 - [ ] __Jump__ - until end of turn effects, keywords, dynamic keywords, 
@@ -163,16 +161,16 @@ trigger if clauses,
 ### Black
 
 - [X] __Acolyte of Xathrid__
-- [ ] __Assassinate__ - permanent destruction, 
+- [ ] __Assassinate__ - _implementable_
 - [ ] __Black Knight__ - keywords, first strike, protection from, 
 - [ ] __Bog Wraith__ - keywords, landwalk, 
 - [ ] __Cemetery Reaper__ - static abilities, power/toughness modification, exile, tokens, 
 - [ ] __Child of Night__ - keywords, lifelink, 
 - [ ] __Consume Spirit__ - X costs, limiting the type of mana spent on a cost, 
-- [ ] __Deathmark__ - permanent destruction, 
+- [ ] __Deathmark__ - _implementable_
 - [ ] __Diabolic Tutor__ - tutoring, 
 - [ ] __Disentomb__ - moving cards between zones, 
-- [ ] __Doomblade__ - permanent destruction, 
+- [ ] __Doomblade__ - _implementable_
 - [ ] __Dread Warlock__ - unblockability, 
 - [ ] __Drudge Skeletons__ - regenerate, 
 - [ ] __Duress__ - hand revealing, 
@@ -187,7 +185,7 @@ trigger if clauses,
 - [ ] __Mind Shatter__ - X costs, 
 - [ ] __Relentless Rats__ - power/toughness modification, until end of turn effects, amount in deck restrictions, 
 - [ ] __Rise from the Grave__ - moving cards from non-battlefield zones to the battlefield, adding colors to permanents, adding sybtypes to permanents, 
-- [ ] __Royal Assassin__ - permanent destruction, 
+- [ ] __Royal Assassin__ - _implementable_
 - [X] __Sanguine Blood__
 - [X] __Sign in Blood__
 - [ ] __Soul Bleed__ - auras, 
@@ -211,7 +209,7 @@ trigger if clauses,
 - [X] __Burning Inquiry__
 - [ ] __Burst of Speed__ - dynamic keywords, haste, until end of turn effects, 
 - [ ] __Canyon Minotaur__ - _vanilla_
-- [ ] __Capricious Efret__ - permanent destruction, random, 
+- [ ] __Capricious Efret__ - random, choosing, 
 - [ ] __Chandra Nalaar__ - planeswalkers, 
 - [ ] __Dragon Whelp__ - power/toughness modification, until end of turn effects, activated ability activation amount checks, keywords, flying, 
 - [ ] __Earthquake__ - keywords, flying, 
@@ -228,18 +226,18 @@ trigger if clauses,
 - [ ] __Lava Axe__ - _implementable_
 - [X] __Lightning Bolt__
 - [ ] __Lightning Elemental__ - keywords, haste, 
-- [ ] __Magma Phoenix__ - keywords, flying, death trigger, moving cards between zones, 
+- [ ] __Magma Phoenix__ - keywords, flying, moving cards between zones, 
 - [ ] __Manabarbs__ - tap land for mana trigger, 
 - [ ] __Panic Attack__ - until end of turn effects, block restrictions, 
 - [ ] __Prodigal Pyromancer__ - _implementable_
 - [X] __Pyroclasm__
 - [ ] __Raging Goblin__ - keywords, haste, 
 - [ ] __Seismic Strike__ - _implementable_
-- [ ] __Shatter__ - permanent destruction, 
+- [ ] __Shatter__ - _implementable_
 - [ ] __Shivan Dragon__ - keywords, flying, 
 - [ ] __Siege-Gang Commander__ - tokens, sacrifice,
 - [ ] __Sparkmage Apprentice__ - _implementable_
-- [ ] __Stone Giant__ - dynamic keywords, flying, until end of turn effects,  effect memory, permanent destruction, 
+- [ ] __Stone Giant__ - dynamic keywords, flying, until end of turn effects,  effect memory, 
 - [ ] __Trumpet Blast__ - power/toughness modification, until end of turn effects, 
 - [ ] __Viashino Spearhunter__ - keywords, first strike, 
 - [ ] __Wall of Fire__ - keywords, defender, power/toughness modification, until end of turn effects,
@@ -248,7 +246,7 @@ trigger if clauses,
 
 ### Green
 
-- [ ] __Acidic Slime__ - keywords, deathtouch, permanent destruction, 
+- [ ] __Acidic Slime__ - keywords, deathtouch, 
 - [ ] __Ant Queen__ - tokens, 
 - [ ] __Awakener Druid__ - permanent type addition, permanent power/toughness setting, as long as is on the battlefield, 
 - [ ] __Birds of Paradise__ - keywords, flying, 
@@ -278,7 +276,7 @@ trigger if clauses,
 - [ ] __Might of Oaks__ - power/toughness modification, until end of turn effects, 
 - [ ] __Mist Leopard__ - keywords, shroud, 
 - [ ] __Mold Adder__ - may effects, counters, power/toughness modification, 
-- [ ] __Naturalize__ - permanent destruction
+- [X] __Naturalize__
 - [ ] __Nature's Spiral__ - moving cards between zones, 
 - [ ] __Oakenform__ - auras, static abilities, power/toughness modification, 
 - [ ] __Overrun__ - until end of turn effects, power/toughness modification, dynamic keywords, 
@@ -339,10 +337,10 @@ trigger if clauses,
 - [ ] __Geist of the Moors__ - keywords, flying, 
 - [ ] __Heliod's Pilgrim__ - may effects, tutoring, moving cards between zones, 
 - [ ] __Hushwing Gryff__ - keywords, flash, flying, trigger restrictions, 
-- [ ] __Mass Calcify__ - permanent destruction, 
+- [ ] __Mass Calcify__ - _implementable_
 - [ ] __Meditation Puzzle__ - keywords, convoke, 
 - [ ] __Oppressive Rays__ - auras, attack costs, ability costs modification, 
-- [ ] __Pillar of Light__ - permanent destruction, 
+- [ ] __Pillar of Light__ - _implementable_
 - [ ] __Preeminent Captain__ - keywords, first strike, attack trigger, moving cards from non-battlefield zones to the battlefield,
 - [ ] __Raise the Alarm__ - tokens, 
 - [ ] __Razorfoot Griffin__ - keywords, flying, first strike, 
@@ -351,7 +349,7 @@ trigger if clauses,
 - [ ] __Sanctified Charge__ - until end of turn effects, power/toughness modification, dynamic keywords, first strike, 
 - [ ] __Selfless Cathar__ - sacrifice, until end of turn effects, power/toughness modification, 
 - [ ] __Seraph of the Masses__ - keywords, convoke, flying, dynamic power/toughness calculation,  
-- [ ] __Solemn Offering__ - permanent destruction, 
+- [ ] __Solemn Offering__ - _implementable_
 - [ ] __Soul of Theros__ - until end of turn effects, power/toughness modification, dynamic keywords, first strike, lifelink, exile, 
 - [ ] __Spectra Ward__ - auras, static abilities, power/toughness modification, dynamic keywords, protection from, 
 - [ ] __Spirit Bonds__ - triggered ability costs, tokens, sacrifice, dynamic keywords, indestructible, until end of turn effects, 
@@ -365,7 +363,7 @@ trigger if clauses,
 - [ ] __Aeronaut Tinkerer__ - static abilities, dynamic keywords, flying, 
 - [ ] __Aetherspouts__ - for each effects, moving permanents to non-battlefield zones, 
 - [ ] __Amphin Pathmage__ - unblockability, 
-- [ ] __Chasm Skulker__ - counters, power/toughness modification, death trigger, tokens, landwalk, 
+- [ ] __Chasm Skulker__ - counters, power/toughness modification, tokens, landwalk, 
 - [ ] __Chief Engineer__ - static abilities, convoke, dynamic keywords, 
 - [ ] __Chronostutter__ - moving permanents to non-battlefield zones, 
 - [ ] __Coral Barrier__ - keywords, defender, tokens, landwalk, 
@@ -405,16 +403,16 @@ trigger if clauses,
 ### Black
 
 - [ ] __Accursed Spirit__ - keywords, intimidate, 
-- [ ] __Black Cat__ - death triggers, 
+- [X] __Black Cat__
 - [ ] __Blood Host__ - sacrifice, counters, power/toughness modification, 
 - [ ] __Carrion Crow__ - keywords, flying, entering the battlefield tapped, 
 - [ ] __Caustic Tar__ - auras, static abilities, activated ability granting, 
 - [ ] __Covenant of Blood__ - keywords, convoke,
 - [ ] __Cruel Sadist__ - paying life, counters, removing counters, 
 - [ ] __Endless Obedience__ - keywords, convoke, moving cards from non-battlefield zones to the battlefield, 
-- [ ] __Eternal Thirst__ - auras, static abilities, dynamic keywords, lifelink, triggered ability granting, death triggers, counters, power/toughtness modification, 
+- [ ] __Eternal Thirst__ - auras, static abilities, dynamic keywords, lifelink, triggered ability granting, counters, power/toughtness modification, 
 - [ ] __Feast on the Fallen__ - amount of lost life check, counters, power/toughness modification, 
-- [ ] __In Garruk's Wake__ - permanent destruction, 
+- [ ] __In Garruk's Wake__ - _implementable_
 - [ ] __Indulgent Tormentor__ - unless effects, sacrifice, keywords, flying, 
 - [ ] __Leeching Sliver__ - single attack trigger, 
 - [ ] __Necrobite__ - until end of turn effects, dynamic keywords, deathtouch, regeneration, 
@@ -422,7 +420,7 @@ trigger if clauses,
 - [ ] __Necromancer's Assistant__ - _implementable_
 - [ ] __Necromancer's Stockpile__ - tokens, 
 - [ ] __Nightflame Giant__ - static abilities, power/toughness modification,
-- [ ] __Ob Nixilis__ - keywords, flying, trample, zone search trigger, sacrifice, death trigger, counters, power/toughness modification, 
+- [ ] __Ob Nixilis__ - keywords, flying, trample, zone search trigger, sacrifice, counters, power/toughness modification, 
 - [ ] __Rotfeaster Maggot__ - exile, 
 - [ ] __Shadowcloak Vampire__ - until end of turn effects, paying life, flying, 
 - [ ] __Soul of Innistrad__ - exile, up to, moving cards between zones, 
@@ -438,15 +436,15 @@ trigger if clauses,
 
 - [ ] __Act on Impulse__ - exile, playing cards non-hand zones, 
 - [ ] __Aggressive Mining__ - static abilities, land play restrictions, sacrifice, activated ability activation amount restrictions, 
-- [ ] __Altac Bloodseeker__ - death trigger, until end of turn effects, power/toughness modifications, dynamic keywords, first strike, haste, 
+- [ ] __Altac Bloodseeker__ - until end of turn effects, power/toughness modifications, dynamic keywords, first strike, haste, 
 - [ ] __Belligerent Sliver__ - static abilities, block restrictions, 
-- [ ] __Blastfire Bolt__ - permanent destruction, 
+- [ ] __Blastfire Bolt__ - equipment, 
 - [ ] __Borderland Marauder__ - single attack trigger, until end of turn effects, power/toughness modification, 
 - [ ] __Brood Keeper__ - aura attach trigger, tokens, 
 - [ ] __Burning Anger__ - auras, static abilities, activated ability granting,
 - [ ] __Chandra, Pyromaster__ - planeswalkers, up to, until end of turn effects, block restrictions, 
 - [ ] __Circle of Flame__ - single attack trigger, 
-- [ ] __Clear a Path__ - permanent destruction, keywords, 
+- [ ] __Clear a Path__ - keywords, 
 - [ ] __Cone of Flame__ -different targets, 
 - [ ] __Crowd's Favor__ - keywords, convoke, until end of turn effects, power/toughness modification, dynamic keywords, first strike, 
 - [ ] __Crucible of Fire__ - static abilities, power/toughness modification, 
@@ -459,7 +457,7 @@ trigger if clauses,
 - [ ] __Goblin Roughrider__ - _vanilla_
 - [ ] __Hammerhand__ - auras, until end of turn effects, block restrictions, static abilities, power/toughness modification, dynamic keywords, haste, 
 - [ ] __Heat Ray__ - X costs, 
-- [ ] __Hoarding Dragon__ - keywords, flying, tutoring, exile, death trigger, moving cards between zones, 
+- [ ] __Hoarding Dragon__ - keywords, flying, tutoring, exile, moving cards between zones, 
 - [ ] __Inferno Fist__ - auras, static abilties, power/toughness modification, sacrifice,
 - [ ] __Kird Chieftan__ - static abilties, power/toughness modification, until end of turn effects, dynamic keywords, trample, 
 - [ ] __Krenko's Enforcer__ - keywords, intimidate, 
@@ -472,17 +470,17 @@ trigger if clauses,
 - [ ] __Rummaging Goblin__ - discarding as cost, 
 - [ ] __Scrapyard Mongrel__ - static abilities, power/toughness modification, dynamic keywords, trample, 
 - [ ] __Sharpnel Blast__ - spell cast additional costs,
-- [ ] __Siege Dragon__ - keywords, flying, permanent destruction, single attack trigger, trigger if clause, 
+- [ ] __Siege Dragon__ - keywords, flying, single attack trigger, trigger if clause, 
 - [ ] __Soul of Shandalar__ - keywords, first strike, up to, exile, 
 - [ ] __Stroke the Flames__ - keywords, convoke,
 - [ ] __Thuindering Giant__ - keywords, haste, 
-- [ ] __Torch Fiend__ - sacrifice, permanent destruction, 
+- [ ] __Torch Fiend__ - sacrifice, 
 - [ ] __Wall of Fire__ - keywords, defender, until end of turn effects, power/toughness modification, 
 
 ### Green
 
 - [ ] __Ancient Silberback__ - regeneration, 
-- [ ] __Back to Nature__ - permanent destruction, 
+- [ ] __Back to Nature__ - _implementable_
 - [ ] __Carnivorous Moss-Beast__ - counters, power/toughness modifcation, 
 - [ ] __Charging Rhino__ - block restrictions, 
 - [ ] __Chord of Calling__ - X costs, tutoring, 
@@ -503,10 +501,10 @@ trigger if clauses,
 - [ ] __Nissa's Expedition__ - keywords, convoke, moving cards from non-battlefield zones to the battlefield,
 - [ ] __Overwhelm__ - keywrods, convoke, until end of turn effects, power/toughness modification, 
 - [ ] __Paragon of Eternal Wilds__ - power/toughness modification, keywords, dynamic keywords, until end of turn effects, trample, 
-- [ ] __Phytotitan__ - death trigger, delayed triggers, 
-- [ ] __Plummet__ - permanent destruction, 
+- [ ] __Phytotitan__ - delayed triggers, 
+- [ ] __Plummet__ - keywords, 
 - [ ] __Ranger's Guile__ - until end of turn effects, dynamic keywords, power/toughness modification, hexproof, 
-- [ ] __Reclamation Sage__ - may effects, permanent destruction, 
+- [ ] __Reclamation Sage__ - may effects, 
 - [ ] __Restock__ - moving cards between zones, exile, 
 - [ ] __Roaring Primadox__ - moving permanents to non-battlefield zones, 
 - [ ] __Runeclaw Bear__ - _vanilla_
@@ -525,19 +523,19 @@ trigger if clauses,
 
 ### Multicolored
 
-- [ ] __Garruk, Apex Predator__ - permanent destruction, tokens, emblems, single attack trigger, until end of turn effects, power/toughness modification, dynamic keywords, trample, 
+- [ ] __Garruk, Apex Predator__ - tokens, emblems, single attack trigger, until end of turn effects, power/toughness modification, dynamic keywords, trample, 
 - [ ] __Sliver Hivelord__ - static abilities, dynamic keywords, indestructibility
 
 ### Artifacts
 
-- [ ] __Avarice Amulet__ - static abilities, power/toughness modification, dynamic keywords, vigilance, triggered abilities granting, death trigger, permanent control changing, equipment, 
+- [ ] __Avarice Amulet__ - static abilities, power/toughness modification, dynamic keywords, vigilance, triggered abilities granting, permanent control changing, equipment, 
 - [ ] __Brawler's Plate__ - static abilities, power/toughness modification, dynamic keywords, trample, equipment, 
 - [ ] __Bronze Sable__ - _vanilla_
 - [ ] __The Chain Veil__ - TODO
 - [ ] __Gargoyle Sentinel__ - keywords, defender, until end of turn effects, dynamic keyword stripping, 
 - [ ] __Grindclock__ - counters, 
 - [ ] __Haunted Plate Mail__ - static abilities, power/toughness modification, until end of turn effects, activated ability activation restrictions, 
-- [ ] __Hot Soup__ - unblockability, damage dealt trigger, permanent destruction, equipment, 
+- [ ] __Hot Soup__ - unblockability, damage dealt trigger, equipment, 
 - [ ] __Juggernaut__ - static abilities, attack promises, block restrictions, 
 - [ ] __Meteorite__ - _implementable_
 - [ ] __Obelisk or Urd__ - permanent memory, keywords, convoke, static abilities, power/toughness modification, 
@@ -546,7 +544,7 @@ trigger if clauses,
 - [ ] __Profane Momento__ - card zone change triggers, not tested
 - [ ] __Rogue's Gloves__ - damage trigger, may effects, equipment, 
 - [ ] __Sacred Armory__ - until end of turn effects, power/toughness modification, 
-- [ ] __Scuttling Doom Engine__ - block restrictions, death trigger, 
+- [ ] __Scuttling Doom Engine__ - block restrictions, 
 - [ ] __Shield of the Avatar__ - TODO
 - [ ] __Soul of New Phyrexia__ - keywords, trample, dynamic keywords, indestructible, exile, 
 - [ ] __Staff of the Flame Magus__ - _implementable_
@@ -582,7 +580,7 @@ trigger if clauses,
 - [ ] __Soulmender__ - _implementable_
 - [X] __Tireless Missionaries__
 - [ ] __Aegis Angel__ - static abilities, keywords, indestructible, "as long as you control"
-- [ ] __Divine Verdict__ - permanent destruction
+- [ ] __Divine Verdict__ - _implementable_
 - [ ] __Inspired Charge__ - static abilities, power/toughness modification, until end of turn effects
 - [ ] __Serra Angel__ - keywords, flying, vigilance
 
