@@ -180,5 +180,18 @@ function Select:Cards()
         end)
     end
 
+    function select:OfTypes(...)
+        local types = {...}
+
+        return select:_AddFilter(function (ctx, card)
+            for _, type in ipairs(types) do
+                if CardHasType(card, type) then
+                    return true
+                end
+            end
+            return false
+        end)
+    end
+
     return select
 end

@@ -1,5 +1,30 @@
 OneShot = {}
 
+function OneShot:May(prompt, ...)
+    local effects = {...}
+
+    return function (ctx)
+        local player = Player:You()(ctx)
+        local resp = ChooseString(player, { 'Yes', 'No' }, prompt)
+        if resp.Rollback ~= nil then
+            return resp.Rollback
+        end
+
+        if resp.Response ~= 'Yes' then
+            return nil
+        end
+
+        for _, e in ipairs(effects) do
+            local rollback = e(ctx)
+
+            if rollback ~= nil then
+                return rollback
+            end
+        end
+
+        return nil
+    end
+end
 
 function OneShot:Draw(manyPlayers, number)
     return function (ctx)

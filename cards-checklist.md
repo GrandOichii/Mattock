@@ -28,7 +28,6 @@ block restriction,
 number of blockable creatures modification, 
 spell cast restriction, 
 attack promises, 
-may effects, 
 entering the battlefield as, 
 copy effects, 
 as this enters the battlefield, 
@@ -119,7 +118,7 @@ trigger if clauses,
 - [ ] __Air Elemental__ - keywords, flying, 
 - [ ] __Alluring Siren__ - attack promises, 
 - [ ] __Cancel__ - spell countering, 
-- [ ] __Clone__ - may effects, entering the battlefield as, copy effects, 
+- [ ] __Clone__ - entering the battlefield as, copy effects, 
 - [ ] __Convincing Mirage__ - auras, static abilities, as this enters the battlefield, type modification, 
 - [ ] __Coral Merfolk__ - _vanilla_
 - [ ] __Disorient__ - power/toughness modification, until end of turn effects, 
@@ -181,7 +180,7 @@ trigger if clauses,
 - [ ] __Liliana Vess__ - planeswalkers, tutoring, moving cards from non-battlefield zones to the battlefield, 
 - [ ] __Looming Shade__ - power/toughness modification, until end of turn effects, 
 - [X] __Megrim__
-- [ ] __Mind Rot__ - discard effects
+- [X] __Mind Rot__
 - [ ] __Mind Shatter__ - X costs, 
 - [ ] __Relentless Rats__ - power/toughness modification, until end of turn effects, amount in deck restrictions, 
 - [ ] __Rise from the Grave__ - moving cards from non-battlefield zones to the battlefield, adding colors to permanents, adding sybtypes to permanents, 
@@ -258,7 +257,7 @@ trigger if clauses,
 - [ ] __Cudgel Troll__ - regeneration, 
 - [ ] __Deadly Recluse__ - keywords, reach, deathtouch, 
 - [ ] __Elvish Archdruid__ - static abilities, power/toughness modification, 
-- [ ] __Elvish Piper__ - may effects, moving cards from non-battlefield zones to the battlefield, 
+- [ ] __Elvish Piper__ - moving cards from non-battlefield zones to the battlefield, 
 - [ ] __Elvish Visionary__ - _implementable_
 - [ ] __Emerald Onyx__ - keywords, landwalk, 
 - [ ] __Enormous Baloth__ - _vanilla_
@@ -275,7 +274,7 @@ trigger if clauses,
 - [ ] __Master of the Wild Hunt__ - TODO
 - [ ] __Might of Oaks__ - power/toughness modification, until end of turn effects, 
 - [ ] __Mist Leopard__ - keywords, shroud, 
-- [ ] __Mold Adder__ - may effects, counters, power/toughness modification, 
+- [ ] __Mold Adder__ - counters, power/toughness modification, 
 - [X] __Naturalize__
 - [ ] __Nature's Spiral__ - moving cards between zones, 
 - [ ] __Oakenform__ - auras, static abilities, power/toughness modification, 
@@ -335,7 +334,7 @@ trigger if clauses,
 - [ ] __Ephemeral Shields__ - keywords, convoke, dynamic keywords, indestructible, 
 - [ ] __First Response__ - amount of lost life check, tokens, 
 - [ ] __Geist of the Moors__ - keywords, flying, 
-- [ ] __Heliod's Pilgrim__ - may effects, tutoring, moving cards between zones, 
+- [ ] __Heliod's Pilgrim__ - tutoring, moving cards between zones, 
 - [ ] __Hushwing Gryff__ - keywords, flash, flying, trigger restrictions, 
 - [ ] __Mass Calcify__ - _implementable_
 - [ ] __Meditation Puzzle__ - keywords, convoke, 
@@ -384,7 +383,7 @@ trigger if clauses,
 - [ ] __Jorubai Murk Lurker__ - static abilities, power/toughness modification, until end of turn effects, dynamic keywords, lifelink, 
 - [ ] __Kapso Kitefins__ - keywords, flying, 
 - [ ] __Master of Predicaments__ - TODO
-- [ ] __Mercurial Pretender__ - may effects, entering the battlefield as, copy effects, exept it gains, 
+- [ ] __Mercurial Pretender__ - entering the battlefield as, copy effects, exept it gains, 
 - [ ] __Military Intelligence__ - attack triggers, not tested
 - [X] __Mind Sculpt__
 - [ ] __Nimbus of the Isles__ - keywords, flying, 
@@ -445,7 +444,7 @@ trigger if clauses,
 - [ ] __Chandra, Pyromaster__ - planeswalkers, up to, until end of turn effects, block restrictions, 
 - [ ] __Circle of Flame__ - single attack trigger, 
 - [ ] __Clear a Path__ - keywords, 
-- [ ] __Cone of Flame__ -different targets, 
+- [ ] __Cone of Flame__ - different targets, 
 - [ ] __Crowd's Favor__ - keywords, convoke, until end of turn effects, power/toughness modification, dynamic keywords, first strike, 
 - [ ] __Crucible of Fire__ - static abilities, power/toughness modification, 
 - [ ] __Forge Devil__ - _implementable_
@@ -504,7 +503,7 @@ trigger if clauses,
 - [ ] __Phytotitan__ - delayed triggers, 
 - [ ] __Plummet__ - keywords, 
 - [ ] __Ranger's Guile__ - until end of turn effects, dynamic keywords, power/toughness modification, hexproof, 
-- [ ] __Reclamation Sage__ - may effects, 
+- [ ] __Reclamation Sage__ - _implementable_
 - [ ] __Restock__ - moving cards between zones, exile, 
 - [ ] __Roaring Primadox__ - moving permanents to non-battlefield zones, 
 - [ ] __Runeclaw Bear__ - _vanilla_
@@ -542,7 +541,7 @@ trigger if clauses,
 - [ ] __Perilous Vault__ - exile as cost, exile, 
 - [ ] __Phyrexian Revoker__ - TODO
 - [ ] __Profane Momento__ - card zone change triggers, not tested
-- [ ] __Rogue's Gloves__ - damage trigger, may effects, equipment, 
+- [ ] __Rogue's Gloves__ - damage trigger, equipment, 
 - [ ] __Sacred Armory__ - until end of turn effects, power/toughness modification, 
 - [ ] __Scuttling Doom Engine__ - block restrictions, 
 - [ ] __Shield of the Avatar__ - TODO
@@ -570,7 +569,7 @@ trigger if clauses,
 ## M15 intro decks
 
 ### White
-- [ ] __Ajani's Pridemate__ - may effects, life gain triggers, counters, power/toughness modification, 
+- [ ] __Ajani's Pridemate__ - life gain triggers, counters, power/toughness modification, 
 - [ ] __Divine Favor__ - auras, static abilities, power/toughness modification, 
 - [ ] __Kinsbale Skirmisher__ - until end of turn effects, static abilities, power/toughtness modification, 
 - [ ] __Marked by Honor__ - auras, static abilities, power/toughness modification, keywords, dynamic keywords

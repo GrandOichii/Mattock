@@ -1,0 +1,222 @@
+{
+  "StartId": 0,
+  "Nodes": [
+    {
+      "Id": 0,
+      "Name": "New:Card",
+      "EditorOffsetX": 260.0,
+      "EditorOffsetY": 100.0,
+      "EditorSizeX": 234.0,
+      "EditorSizeY": 300.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 1,
+      "Name": "TriggeredAbilities",
+      "EditorOffsetX": 540.0,
+      "EditorOffsetY": 160.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 2,
+      "Name": "New:TriggeredAbility",
+      "EditorOffsetX": 840.0,
+      "EditorOffsetY": 300.0,
+      "EditorSizeX": 400.0,
+      "EditorSizeY": 238.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "Whenever you cast an enchantment spell, you may draw a card."
+      }
+    },
+    {
+      "Id": 3,
+      "Name": "New:Effect",
+      "EditorOffsetX": 1340.0,
+      "EditorOffsetY": 340.0,
+      "EditorSizeX": 240.0,
+      "EditorSizeY": 271.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {
+        "text": "You may draw a card.",
+        "canProduceMana": false
+      }
+    },
+    {
+      "Id": 4,
+      "Name": "OneShot:May",
+      "EditorOffsetX": 1700.0,
+      "EditorOffsetY": 480.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 136.0,
+      "InputArray": null,
+      "Data": {
+        "prompt": "Draw a card?"
+      }
+    },
+    {
+      "Id": 5,
+      "Name": "OneShot:Draw",
+      "EditorOffsetX": 2085.0,
+      "EditorOffsetY": 707.0,
+      "EditorSizeX": 212.0,
+      "EditorSizeY": 128.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 6,
+      "Name": "Select:Player.You",
+      "EditorOffsetX": 80.0,
+      "EditorOffsetY": 980.0,
+      "EditorSizeX": 176.0,
+      "EditorSizeY": 78.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 7,
+      "Name": "Number:Const",
+      "EditorOffsetX": 1760.0,
+      "EditorOffsetY": 940.0,
+      "EditorSizeX": 160.0,
+      "EditorSizeY": 111.0,
+      "InputArray": null,
+      "Data": {
+        "value": 1
+      }
+    },
+    {
+      "Id": 8,
+      "Name": "Triggers:SpellCast",
+      "EditorOffsetX": 600.0,
+      "EditorOffsetY": 440.0,
+      "EditorSizeX": 186.0,
+      "EditorSizeY": 103.0,
+      "InputArray": null,
+      "Data": {}
+    },
+    {
+      "Id": 9,
+      "Name": "Select:Player",
+      "EditorOffsetX": 320.0,
+      "EditorOffsetY": 900.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 10,
+      "Name": "Select:Card",
+      "EditorOffsetX": 340.0,
+      "EditorOffsetY": 500.0,
+      "EditorSizeX": 142.0,
+      "EditorSizeY": 186.0,
+      "InputArray": {
+        "SlotCount": 1
+      },
+      "Data": {}
+    },
+    {
+      "Id": 11,
+      "Name": "Select:Cards.OfTypes",
+      "EditorOffsetX": 60.0,
+      "EditorOffsetY": 600.0,
+      "EditorSizeX": 203.0,
+      "EditorSizeY": 146.0,
+      "InputArray": null,
+      "Data": {
+        "types": [
+          "Enchantment"
+        ]
+      }
+    }
+  ],
+  "Connections": [
+    {
+      "FromId": 0,
+      "FromPort": 2,
+      "ToId": 1,
+      "ToPort": 0
+    },
+    {
+      "FromId": 1,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 0
+    },
+    {
+      "FromId": 2,
+      "FromPort": 0,
+      "ToId": 3,
+      "ToPort": 0
+    },
+    {
+      "FromId": 3,
+      "FromPort": 0,
+      "ToId": 4,
+      "ToPort": 0
+    },
+    {
+      "FromId": 9,
+      "FromPort": 1,
+      "ToId": 5,
+      "ToPort": 1
+    },
+    {
+      "FromId": 6,
+      "FromPort": 0,
+      "ToId": 9,
+      "ToPort": 0
+    },
+    {
+      "FromId": 7,
+      "FromPort": 0,
+      "ToId": 5,
+      "ToPort": 2
+    },
+    {
+      "FromId": 8,
+      "FromPort": 0,
+      "ToId": 2,
+      "ToPort": 1
+    },
+    {
+      "FromId": 9,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 0
+    },
+    {
+      "FromId": 10,
+      "FromPort": 0,
+      "ToId": 8,
+      "ToPort": 1
+    },
+    {
+      "FromId": 4,
+      "FromPort": 1,
+      "ToId": 5,
+      "ToPort": 0
+    },
+    {
+      "FromId": 11,
+      "FromPort": 0,
+      "ToId": 10,
+      "ToPort": 0
+    }
+  ]
+}

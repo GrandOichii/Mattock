@@ -386,6 +386,53 @@ public class ScriptLoader
             (
                 new()
                 {
+                    Name = "OneShot:May",
+                    Label = "May effect",
+                    Inputs = [
+                        new() {
+                           AllowMultiple = false,
+                           HasMissingScript = false,
+                           Key = "mayEffects",
+                           Label = "Effects",
+                           MissingScript = "",
+                           MultipleSeparator = "",
+                           Position = ScriptNodePortPosition.Right,
+                           Postfix = "",
+                           Prefix = "",
+                           Type = "SingleEffect",
+                        }
+                    ],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new() {
+                            Key = "prompt",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            Config = new StringArgConfig() {
+                                Default = "",
+                                Multiline = false,
+                                Placeholder = "Prompt",
+                            }
+                        }
+                    ],
+                    Description = "TODO"
+                },
+                """
+                OneShot:May(
+                '$prompt',
+                $mayEffects
+                )
+                """
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.OneShot
+            (
+                new()
+                {
                     Name = "OneShot:Draw",
                     Label = "Draw cards",
                     Inputs = [
@@ -1390,6 +1437,37 @@ public class ScriptLoader
                 "",
                 "Card",
                 ":OfColors($colors)"
+            )
+        );
+
+        ScriptNodes.Nodes.Add(
+            Scripts.Filter
+            (
+                new()
+                {
+                    Name = "Select:Cards.OfTypes",
+                    Label = "Of types",
+                    Inputs = [],
+                    Outputs = [],
+                    InputArray = null,
+                    SimpleArgs = [
+                        new ScriptNodeArrayArg() {
+                            Key = "types",
+                            NoScriptIfEmpty = false,
+                            Postfix = "",
+                            Prefix = "",
+                            AddButtonText = "Add type",
+                            ItemPostfix = "'",
+                            ItemPrefix = "'",
+                            Separator = ", ",
+                            Config = ArgConfigs.Types(),
+                        },
+                    ],
+                    Description = "TODO",
+                },
+                "",
+                "Card",
+                ":OfTypes($types)"
             )
         );
 

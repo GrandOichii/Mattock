@@ -1,0 +1,29 @@
+{
+    "Script": "",
+    "Name": "Mesa Enchantress",
+    "ManaCosts": [
+        {
+            "Type": null,
+            "Amount": 1
+        },
+        {
+            "Type": 0,
+            "Amount": 2
+        }
+    ],
+    "ColorIndicator": [
+        0
+    ],
+
+    "Types": [ "Creature" ],
+    "Subtypes": [ "Human", "Druid" ],
+    "Supertypes": [ ],
+    
+    "TextBox": "Whenever you cast an enchantment spell, you may draw a card.",
+    "Power": "",
+    "Toughness": "",
+    "Loyalty": "",
+    "Defense": "",
+    "HandModifier": "",
+    "LifeModifier": ""
+}

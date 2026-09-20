@@ -33,6 +33,7 @@
         "GetCards",
         "CardHasColor",
         "ChooseAnyTargets",
-        "DealDamageToAnyTargets"
+        "DealDamageToAnyTargets",
+        "CardHasType"
     ]
 }

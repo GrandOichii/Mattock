@@ -1,6 +1,5 @@
 -- Whenever you cast a white spell or a Plains you control enters, you gain 1 life.
 
-
 function _Create()
     return New:Card()
         :TriggeredAbilities(

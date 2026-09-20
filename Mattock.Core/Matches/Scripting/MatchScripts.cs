@@ -372,4 +372,10 @@ public class MatchScripts
     {
         return card.HasColor((Color)color);
     }
+
+    [LuaCommand]
+    public bool CardHasType(Card card, string type)
+    {
+        return card.HasType(type);
+    }
 }
