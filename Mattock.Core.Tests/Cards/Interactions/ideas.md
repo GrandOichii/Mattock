@@ -10,4 +10,5 @@
 - Megrim + Mind Rot
 - Sanguine Blood + Exquisite Blood
 - Act of Treason + Vampire Aristocrat
-- 
+- Living Plane + Humility (no lands can tap for mana)
+- Opalescence + Humility (both play orders)

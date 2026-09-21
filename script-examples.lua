@@ -1,210 +1,217 @@
--- local New = {}
--- local Keywords = {}
--- local Costs = {}
--- local Acts = {}
--- local Many = {}
--- local Mana = {}
--- local Number = {}
--- local Single = {}
--- local Types = {}
+-- static abilities
 
--- -- Thrill-Kill Assassin
--- -- Deathtouch
--- -- Unleash
+ContinuousEffectLayers = {}
+Continuous = {}
 
--- function _Create()
---     return New:Card()
---         :AddKeyword(Keywords.Deathtouch)
---         :AddKeyword(Keywords.Unleash)
---         :Build()
--- end
+----==== Layer 1: Rules and effects that modify copiable values are applied ====---- 
 
--- -- Rakdos Cluestone
--- function _Create()
---     return New:Card()
---         :ActivatedAbility(
---             New:ActivatedAbility('{T}: Add {B} or {R}.')
---                 :ManaAbility()
---                 :Cost(
---                     Costs:TapMe()
---                 )
---                 :Act(
---                     Acts:AddMana(
---                         Many:Players()
---                             :EffectOwner(),
---                         Mana:Choose(
---                             Mana:Black(),
---                             Mana:Red()
---                         )
---                     )
---                 )
---                 :Build()
---         )
---         :ActivatedAbility(
---             New:ActivatedAbility('{B}{R}, {T}, Sacrifice Rakdos Clueston: Draw a card.')
---                 :Cost(
---                     Costs:Combine(
---                         Costs:PayMana(Mana:Black()),
---                         Costs:PayMana(Mana:Red()),
---                         Costs:TapMe(),
---                         Costs:SacrificeMe()
---                     )
---                 )
---                 :Act(
---                     Acts:Draw(
---                         Many:Players()
---                             :EffectOwner(),
---                         Number:Const(1)
---                     )
---                 )
---                 :Build()
---         )
--- end
+-- Clone
+-- You may have this creature enter as a copy of any creature on the battlefield.
 
--- -- Riot Spikes
--- -- Enchant creature
--- -- Enchanted creature gets +2/-1.
+function _Create()
+    return New:Card()
+        -- TODO
+        :Build()
+end
 
--- function _Create()
---     return New:Card()
---         -- TODO enchant target
---         :ContinuousEffect(
---             New.Acts:PowerToughnessModification('Enchanted creature gets +2/-1.')
---                 :Permanents(
---                     Many:Permanents()
---                         :Only(
---                             Single.Permanent:Enchanted()
---                         )
---                 )
---                 :Power(
---                     Number:Cost(2)
---                 )
---                 :Toughness(
---                     Number:Cost(-1)
---                 )
---                 :Build()
---         )
---         :Build()
--- end
+----==== Layer 2: Control-changing effects are applied ====---- 
 
--- -- Wrecking Ball
--- -- Destroy target creature or land.
+-- Mind Control
+-- Enchant creature
+-- You control enchanted creature.
 
--- function _Create()
---     return New:Card()
---         :SpellEffect(
---             New:Act('Destroy target creature or land.')
---                 :PermanentTarget(
---                     'T1',
---                     Many:Permanents()
---                         :Typed(
---                             Types.Creature,
---                             Types.Land
---                         )
---                 )
---                 :Act(
---                     Acts:Destroy(
---                         Many:Permanents()
---                             :Target('T1')
---                     )
---                 )
---                 :Build()
---         )
---         :Build()
--- end
+function _Create()
+    return New:Card()
+        -- TODO enchant
+        :StaticAbilities(
+            New:StaticAbility('You control enchanted creature.')
+                :Zones(
+                    Select:Zones()
+                        :Battlefield()
+                )
+                :Continuous(
+                    Continuous:ControlChanging()
+                        :Permanents(
+                            Select:Permanents()
+                                :AuraHost()
+                        )
+                        :NewController(
+                            Player:You()
+                        )
+                        :Build()
+                )
+                :Build()
+        )
+        :Build()
+end
 
--- -- Divination
--- -- Draw 2 cards
+----==== Layer 3: Text-changing effects are applied ====---- 
 
--- function _Create()
---     return New:Card()
---         :SpellEffect(
---             New:Act('Draw 2 cards.')
---                 :Act(
---                     Acts:Draw(
---                         Many:Players()
---                             :You(),
---                         Number:Const(2)
---                     )
---                 )
---                 :Build()
---         )
---         :Build()
--- end
+-- TODO
 
--- -- Diversionary Tactics
--- -- Tap two untapped creatures you control: Tap target creature
+----==== Layer 4: Type-changing effects are applied ====---- 
 
--- local New = {}
--- local Target = {}
--- local Act = {}
+-- TODO
 
--- function _Create()
---     return New:Card()
---         :ActivatedAbility(
---             New:ActivatedAbility('Tap two untapped creatures you control: Tap target creature')
---                 :Target(
---                     New.Target:Permanent()
---                         :Build()
---                 )
---                 :Build()
---         )
---         :Build()
--- end
+----==== Layer 5: Color-changing effects are applied ====---- 
 
--- -- Divination
--- -- Draw two cards
+-- Transguild Courier
+-- Transguild Courier is all colors.
 
--- local New = {}
--- local OneShot = {}
--- local Select = {}
--- local Number = {}
--- local CardTypes = {}
+function _Create()
+    return New:Card()
+        :StaticAbilities(
+            New:StaticAbility('Transguild Courier is all colors.')
+                :CharacteristicDefining()
+                :Continuous(
+                    Continuous:ColorChanging()
+                        :Cards(
+                            Select:Cards()
+                                :This()
+                        )
+                        :AddColors(
+                            Colors.White,
+                            Colors.Blue,
+                            Colors.Black,
+                            Colors.Red,
+                            Colors.Green
+                        )
+                        :Build()
+                )
+        )
+        :Build()
+end
 
--- function _Create()
---     return New:Card()
---         :SpellEffect(
---             New:Effects('Draw 2 cards.')
---                 :Effects(
---                     OneShot:Draw(
---                         Select:Players()
---                             :You()
---                             :Many(),
---                         Number:Const(2)
---                     )
---                 )
---                 :Build()
---         )
---         :Build()
--- end
+----==== Layer 6: Ability-adding effects, keyword counters, ability-removing effects, and effects that say an object can't have an ability are applied ====---- 
 
--- -- Bedevil
--- -- Destroy target artifact, creature or planeswalker.
+-- Stormfront Pegasus
+-- Flying
 
--- function _Create()
---     return New:Card()
---         :SpellEffect(
---             New:Effects('Destroy target artifact, creature or planeswalker.')
---                 :Target(
---                     'T1',
---                     Target:Permanent(
---                         Select:Permanents()
---                             :OfTypes(
---                             CardTypes.Artifact,
---                             CardTypes.Creature,
---                             CardTypes.Planeswalker)
---                             :Filter()
---                     ),
---                     Number:Const(1)
---                 )
---                 :Effects(
---                     OneShot:Destroy(
---                         Select:Permanents()
---                             :FromTarget('T1')
---                             :Many()
---                     )
---                 )
---                 :Build()
---         )
---         :Build()
--- end
+function _Create()
+    return New:Card()
+        :StaticAbilities(
+            New:StaticAbility('Flying')
+                :Continuous(
+                    Continuous.Keywords:Flying()
+                )
+                :Build()
+        )
+        :Build()
+end
+
+----==== Layer 7: Power- and/or toughness-changing effects are applied ====---- 
+
+---=== Layer 7a: Effects from characteristic-defining abilities that define power and/or toughness are applied ===--- 
+
+-- Nightmare
+-- Flying
+-- Nightmare's power and toughness are each equal to the number of Swamps you control.
+
+function _Create()
+    return New:Card()
+        :StaticAbilities(
+            New:StaticAbility('Flying')
+                :Continuous(
+                    Continuous.Keywords:Flying()
+                )
+                :Build(),
+            New:StaticAbility('Nightmare\'s power and toughness are each equal to the number of Swamps you control.')
+                :CharacteristicDefining()
+                :Continuous(
+                    Continuous:PowerToughnessDefinition()
+                        :Cards(
+                            Select:Cards()
+                                :This()
+                        )
+                        :Power(
+                            Select:Permanents()
+                                :OfSubtypes('Swamp')
+                                :ControlledBy(Player:You())
+                                :Count()
+                        )
+                        :Toughness(
+                            Select:Permanents()
+                                :OfSubtypes('Swamp')
+                                :ControlledBy(Player:You())
+                                :Count()
+                        )
+                        :Build()
+                )
+                :Build()
+        )
+        :Build()
+end
+
+---=== Layer 7b: Effects that set power and/or toughness to a specific number or value are applied. ===--- 
+
+-- Utter Insignificance
+-- Flash
+-- Enchant creature
+-- Enchanted creature loses all abilities and has base power and toughness 1/1.
+-- {2}{C}: Exile enchanted creature.
+function _Create()
+    return New:Card()
+        -- TODO
+        :StaticAbilities(
+            New:StaticAbility('Enchanted creature loses all abilities and hase base power and toughness 1/1.')
+                -- TODO first part
+                :Zones(
+                    Select:Zones()
+                        :Battlefield()
+                )
+                :Continuous(
+                    Continuous:PowerToughnessSetting()
+                        :Permanents(
+                            Select:Permanents()
+                                :AuraHost()
+                        )
+                        :Power(
+                            Number:Const(1)
+                        )
+                        :Toughness(
+                            Number:Const(1)
+                        )
+                        :Build()
+                )
+                :Build()
+        )
+        -- TODO
+        :Build()
+end
+
+---=== Layer 7c: Effects and counters that modify power and/or toughness are applied. ===--- 
+
+-- Honor of the Pure
+-- White creatures you control get +1/+1.
+
+function _Create()
+    return New:Card()
+        :StaticAbilities(
+            New:StaticAbility('White creatures you control get +1/+1.')
+                :Zones(
+                    Select:Zones()
+                        :Battlefield()
+                )
+                :Continuous(
+                    Continuous:PowerToughnessModification()
+                        :Permanents(
+                            Select:Permanents()
+                                :OfColors(Colors.White)
+                                :ControlledBy(Player:You())
+                        )
+                        :PowerAdd(
+                            Number:Const(1)
+                        )
+                        :ToughnessAdd(
+                            Number:Const(1)
+                        )
+                        :Build()
+                )
+                :Build()
+        )
+        :Build()
+end
+
+---=== Layer 7d: Effects that switch a creature's power and toughness are applied. ===--- 
+
+-- TODO

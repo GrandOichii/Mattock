@@ -9,11 +9,10 @@ using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
-using Mattock.Core.Matches.Scripting.Context.Data;
 using Mattock.Core.Matches.Triggers;
 using Mattock.Core.Matches.Triggers.Context;
 
-namespace Mattock.Core.Matches;
+namespace Mattock.Core.Matches.Events;
 
 public class EventsManager(
     Match _match

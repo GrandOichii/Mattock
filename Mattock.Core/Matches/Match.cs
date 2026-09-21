@@ -7,6 +7,7 @@ using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Players.Mechanics.Mulligans;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
+using Mattock.Core.Matches.Scripting.Continuous;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Stack;
 using Mattock.Core.Matches.StateBasedActions;
@@ -27,6 +28,7 @@ public class Match
     public Battlefield Battlefield { get; }
     public MatchStack Stack { get; }
     public TurnManager TurnManager { get; }
+    public ContinuousEffectsManager ContinuousEffects { get; }
     public List<Card> Cards { get; private set; }
     public Priority? Priority { get; private set; }
     public IdManager Ids { get; }
@@ -63,6 +65,7 @@ public class Match
         Events = new(this);
         Battlefield = new(this);
         TurnManager = new(this);
+        ContinuousEffects = new(this);
         StateBasedActions = new(this);
         Triggers = new(this);
         Cards = [];

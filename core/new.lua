@@ -5,6 +5,7 @@ function New:Card()
         spellEffects = {},
         activatedAbilities = {},
         triggeredAbilities = {},
+        staticAbilities = {},
     }
 
     function builder:Build()
@@ -12,6 +13,7 @@ function New:Card()
             SpellEffects = builder.spellEffects,
             ActivatedAbilities = builder.activatedAbilities,
             TriggeredAbilities = builder.triggeredAbilities,
+            StaticAbilities = builder.staticAbilities,
         }
     end
 
@@ -32,6 +34,15 @@ function New:Card()
         local abilities = {...}
         for _, ability in ipairs(abilities) do
             builder.triggeredAbilities[#builder.triggeredAbilities+1] = ability
+        end
+        return builder
+    end
+
+    function builder:StaticAbilities(...)
+        local abilities = {...}
+
+        for _, ability in ipairs(abilities) do
+            builder.staticAbilities[#builder.staticAbilities+1] = ability
         end
         return builder
     end
