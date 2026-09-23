@@ -5,6 +5,12 @@ namespace Mattock.Core.Tests.Setup.Asserts;
 
 public class MatchAsserts(TestSessionWrapper match)
 {
+    public MatchAsserts Assert(Action<Match> a)
+    {
+        a(match.GetMatch());
+        return this;
+    }
+    
     public MatchAsserts DidntCrash()
     {
         if (match.Exception is not null)

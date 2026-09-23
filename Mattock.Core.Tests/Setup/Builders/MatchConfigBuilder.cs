@@ -12,6 +12,12 @@ public class MatchConfigBuilder
 
     public MatchConfig Build() => _result;
 
+    public MatchConfigBuilder DrawStepDrawAmount(int amount)
+    {
+        _result.DrawStepDrawAmount = amount;
+        return this;
+    }
+
     public MatchConfigBuilder FirstPlayerIdx(int idx)
     {
         _result.FirstPlayerIdx = idx;

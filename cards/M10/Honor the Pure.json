@@ -1,6 +1,6 @@
 {
     "Script": "",
-    "Name": "Mesa Enchantress",
+    "Name": "Honor the Pure",
     "ManaCosts": [
         {
             "Type": null,
@@ -15,13 +15,13 @@
         0
     ],
 
-    "Types": [ "Creature" ],
-    "Subtypes": [ "Human", "Druid" ],
+    "Types": [ "Enchantment" ],
+    "Subtypes": [  ],
     "Supertypes": [ ],
     
-    "TextBox": "Whenever you cast an enchantment spell, you may draw a card.",
-    "Power": "0",
-    "Toughness": "2",
+    "TextBox": "White creatures you control get +1/+1.",
+    "Power": "",
+    "Toughness": "",
     "Loyalty": "",
     "Defense": "",
     "HandModifier": "",

@@ -64,7 +64,8 @@ public abstract class OwnedCardZone(
             if (card.OwnerIdx != zone.Player.Idx)
             {
                 var newZone = match.Players[card.OwnerIdx].GetZoneByName(zone.GetZoneName());
-                return new CardZoneChanger(newZone).Do(card, type);
+                ICardZoneChanger c = new CardZoneChanger(newZone);
+                return c.Move(card, type);
             }
             
             switch (type)

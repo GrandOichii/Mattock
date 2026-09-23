@@ -166,3 +166,33 @@ function New:TriggeredAbility(text)
 
     return builder
 end
+
+function New:StaticAbility(text)
+    local builder = {
+        zones = {},
+        conEffects = {},
+    }
+
+    function builder:Build()
+        return {
+            ContinuousEffects = builder.conEffects,
+            -- TODO zones
+        }
+    end
+
+    function builder:Zones(...)
+        error('New:StaticAbility:Zones not implemented')
+    end
+
+    function builder:Continuous(...)
+        local conEffects = {...}
+
+        for _, e in ipairs(conEffects) do
+            builder.conEffects[#builder.conEffects+1] = e
+        end
+
+        return builder
+    end
+
+    return builder
+end

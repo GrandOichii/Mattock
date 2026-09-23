@@ -66,3 +66,17 @@ TriggerTypes = {
     SingleDraw = 5,
     SingleDeath = 6,
 }
+
+ContinuousEffectLayers = {
+    CopiableValues = 0,
+    FaceDownModifications = 1,
+    ControlChanging = 2,
+    TextChanging = 3,
+    TypeChanging = 4,
+    ColorChanging = 5,
+    AbilityAdding_KeywordCounters_AbilityRemoving_AbilityRestricting = 6,
+    PowerToughnessDefinition = 7,
+    PowerToughnessSetting = 8,
+    PowerToughnessModification = 9,
+    PowerToughnessSwitching = 10,
+}

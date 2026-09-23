@@ -23,7 +23,7 @@ public class CardZoneChange(
         Card.Zone.Remove(Card);
 
         Card.SetZone(Changer.GetTargetZone());
-        return await Changer.Do(Card, Type);
+        return await Changer.Move(Card, Type);
     }
 }
 

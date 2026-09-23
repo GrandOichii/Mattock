@@ -1,10 +1,10 @@
-using Mattock.Core.Matches.Players.Cards.CardZones;
 using Mattock.Core.Matches.Players.Costs;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Scripting;
 using Mattock.Core.Matches.Scripting.Activated;
 using Mattock.Core.Matches.Scripting.Context;
 using Mattock.Core.Matches.Scripting.Context.Data;
+using Mattock.Core.Matches.Scripting.Static;
 using Mattock.Core.Matches.Scripting.Targets;
 using Mattock.Core.Matches.Scripting.Triggered;
 using Mattock.Core.Matches.Zones;
@@ -21,6 +21,7 @@ public class Card
     public string Id { get; }
     public CardTemplate Template { get; }
     public ICardZone Zone { get; private set; }
+    public long Timestamp { get; private set; }
 
     public Effect[] SpellEffects { get; }
 
@@ -30,12 +31,16 @@ public class Card
     public TriggeredAbilityTemplate[] TriggeredAbilityTemplates { get; }
     public TriggeredAbility[] TriggeredAbilities { get; }
 
+    public StaticAbility[] StaticAbilities { get; }
+    public StaticAbilityTemplate[] StaticAbilityTemplates { get; }
+
     public Card(Player owner, CardTemplate template)
     {
         Match = owner.Match;
         OwnerIdx = owner.Idx;
         Template = template;
         Zone = owner.Library; // TODO sus
+        Timestamp = Match.ContinuousEffects.CreateTimestamp();
 
         Id = Match.Ids.GenerateCardId(this);
 
@@ -96,6 +101,23 @@ public class Card
         } catch (Exception e)
         {
             throw new ScriptingException($"Failed to get triggered abilities for card {template.Name}", e);
+        }
+
+        #endregion
+
+        #region Static abilities
+
+        try
+        {
+            var saTable = LuaCommon.Get<LuaTable>(data, "StaticAbilities");
+            var arr = LuaCommon.ParseTable<LuaTable>(saTable);
+            StaticAbilityTemplates = [.. arr.Select(t => new StaticAbilityTemplate(t))];
+
+            // TODO might have to move this somewhere
+            StaticAbilities = [.. StaticAbilityTemplates.Select(t => new StaticAbility(Match, t, this))];
+        } catch (Exception e)
+        {
+            throw new ScriptingException($"Failed to get static abilities for card {template.Name}", e);
         }
 
         #endregion
@@ -251,5 +273,16 @@ public class Card
     {
         // TODO
         return [.. TriggeredAbilities];
+    }
+
+    public StaticAbility[] GetStaticAbilities()
+    {
+        // TODO
+        return [.. StaticAbilities];
+    }
+
+    public void UpdateTimestamp()
+    {
+        Timestamp = Match.ContinuousEffects.CreateTimestamp();
     }
 }

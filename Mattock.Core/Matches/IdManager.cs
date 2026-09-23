@@ -10,6 +10,7 @@ public class IdManager(
     private int _lastCardId = 0;
     private int _lastActivatedAbilityId = 0;
     private int _lastTriggeredAbilityId = 0;
+    private int _lastStaticAbilityId = 0;
     private int _lastPermanentId = 0;
     private int _lastStackEffectId = 0;
 
@@ -21,6 +22,9 @@ public class IdManager(
 
     public string GenerateTriggeredAbilityId()
         => $"TriggeredAbility[{++_lastTriggeredAbilityId}]";
+
+    public string GenerateStaticAbilityId()
+        => $"StaticAbility[{++_lastStaticAbilityId}]";
 
     public string GenerateCardId(Card card) {
         match.Cards.Add(card);

@@ -1,7 +1,6 @@
 -- static abilities
 
 ContinuousEffectLayers = {}
-Continuous = {}
 
 ----==== Layer 1: Rules and effects that modify copiable values are applied ====---- 
 
@@ -92,7 +91,15 @@ function _Create()
         :StaticAbilities(
             New:StaticAbility('Flying')
                 :Continuous(
-                    Continuous.Keywords:Flying()
+                    Continuous:AddKeywords()
+                        :Cards(
+                            Select:Cards()
+                                :This()
+                        )
+                        :Keywords(
+                            Continuous.Keywords:Flying()
+                        )
+                        :Build()
                 )
                 :Build()
         )
@@ -112,8 +119,16 @@ function _Create()
         :StaticAbilities(
             New:StaticAbility('Flying')
                 :Continuous(
-                    Continuous.Keywords:Flying()
-                )
+                    Continuous:AddKeywords()
+                        :Cards(
+                            Select:Cards()
+                            :This()
+                        )
+                        :Keywords(
+                            Continuous.Keywords:Flying()
+                        )
+                        :Build()
+                    )
                 :Build(),
             New:StaticAbility('Nightmare\'s power and toughness are each equal to the number of Swamps you control.')
                 :CharacteristicDefining()
