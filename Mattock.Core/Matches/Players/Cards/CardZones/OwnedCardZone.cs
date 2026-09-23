@@ -1,3 +1,4 @@
+using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Snapshots;
 using Mattock.Core.Matches.Zones;
 
@@ -56,7 +57,7 @@ public abstract class OwnedCardZone(
             return true;
         }
 
-        public Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type)
+        public Task<(CardZoneChangeResult, RollbackRequest?)> Do(Card card, CardZoneChangeType type)
         {
             var match = zone.Player.Match;
 
@@ -65,20 +66,20 @@ public abstract class OwnedCardZone(
             {
                 var newZone = match.Players[card.OwnerIdx].GetZoneByName(zone.GetZoneName());
                 ICardZoneChanger c = new CardZoneChanger(newZone);
-                return c.Move(card, type);
+                return c.Do(card, type);
             }
             
             switch (type)
             {
                 case CardZoneChangeType.Bottom:
                     zone.Cards.Add(card);
-                    return Task.FromResult<CardZoneChangeResult>(
-                        new(card.Id, null)
+                    return Task.FromResult<(CardZoneChangeResult, RollbackRequest?)>(
+                        new(new(card.Id), null)
                     );
                 case CardZoneChangeType.Top:
                     zone.Cards.Insert(0, card);
-                    return Task.FromResult<CardZoneChangeResult>(
-                        new(card.Id, null)
+                    return Task.FromResult<(CardZoneChangeResult, RollbackRequest?)>(
+                        new(new(card.Id), null)
                     );
                 default:
                     throw new CodeErrorException($"Unrecognized {nameof(CardZoneChangeType)}: {type}");

@@ -13,17 +13,17 @@ public class CardZoneChange(
     public CardZoneChangeType Type { get; private set; } = type;
     public ICardZoneChanger Changer { get; private set; } = changer;
 
-    public async Task<CardZoneChangeResult> Process()
+    public async Task<(CardZoneChangeResult, RollbackRequest?)> Process()
     {
         if (!Changer.Accepts(Card))
         {
-            return new(null, null);
+            return new(new(null), null);
         }
         
         Card.Zone.Remove(Card);
 
         Card.SetZone(Changer.GetTargetZone());
-        return await Changer.Move(Card, Type);
+        return await Changer.Do(Card, Type);
     }
 }
 

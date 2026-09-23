@@ -15,14 +15,7 @@ public interface ICardZone
 
 public interface ICardZoneChanger
 {
-    Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type);
-
-    public async Task<CardZoneChangeResult> Move(Card card, CardZoneChangeType type)
-    {
-        var result = await Do(card, type);
-        card.UpdateTimestamp();
-        return result;
-    }
+    Task<(CardZoneChangeResult, RollbackRequest?)> Do(Card card, CardZoneChangeType type);
 
     bool Accepts(Card card);
     
@@ -30,6 +23,5 @@ public interface ICardZoneChanger
 }
 
 public record CardZoneChangeResult(
-    string? Id,
-    RollbackRequest? Request
+    string? Id
 );

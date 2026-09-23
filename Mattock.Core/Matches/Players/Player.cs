@@ -266,30 +266,34 @@ public class Player
             return ([], null);
         }
 
-        var (_, request) = await Match.MoveCard(
-            card,
-            CardZoneChangeType.Bottom,
-            Hand.GetCardZoneChanger()
-        );
+        var (_, rollback) = await Match.MoveCards([
+            new(
+                card,
+                CardZoneChangeType.Bottom,
+                Hand.GetCardZoneChanger()
+            )
+        ]);
 
-        if (request is not null)
-            return ([], request);
+        if (rollback is not null)
+            return ([], rollback);
 
-        return ([card], request);
+        return ([card], null);
     }
 
     public async Task<RollbackRequest?> ShuffleHandIntoLibrary()
     {
         for (var last = Hand.GetLast(); last is not null; last = Hand.GetLast())
         {
-            var (_, request) = await Match.MoveCard(
-                last,
-                CardZoneChangeType.Bottom,
-                Library.GetCardZoneChanger()
-            );
+            var (_, rollback) = await Match.MoveCards([
+                new(
+                    last,
+                    CardZoneChangeType.Bottom,
+                    Library.GetCardZoneChanger()
+                )
+            ]);
 
-            if (request is not null)
-                return request;
+            if (rollback is not null)
+                return rollback;
         }
 
         Library.Shuffle();
@@ -398,16 +402,20 @@ public class Player
         List<Card> result = [];
         foreach (var card in cards)
         {
-            var (_, request) = await Match.MoveCard(
-                card,
-                CardZoneChangeType.Top, // TODO
-                Graveyard.GetCardZoneChanger()
-            );
+            var (_, rollback) = await Match.MoveCards([
+                new(
+                    card,
+                    CardZoneChangeType.Top, // TODO
+                    Graveyard.GetCardZoneChanger()
+                )
+            ]);
+
+            if (rollback is not null)
+                return ([], rollback);
+            
+            // TODO check whether card was actually discarded
 
             result.Add(card);
-
-            if (request is not null)
-                return ([], request);
         }
 
         return ([.. cards], null);
@@ -469,10 +477,16 @@ public class Player
             if (top is null)
                 break;
             
-            var (_, rollback) = await Match.MoveCard(top, CardZoneChangeType.Top, Graveyard.GetCardZoneChanger());
+            var (_, rollback) = await Match.MoveCards([
+                new(
+                    top,
+                    CardZoneChangeType.Top,
+                    Graveyard.GetCardZoneChanger()
+                )
+            ]);
+
             if (rollback is not null)
                 return rollback;
-
         }
 
         // i = amount of cards milled

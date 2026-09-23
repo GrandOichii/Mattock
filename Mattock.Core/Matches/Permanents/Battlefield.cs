@@ -32,9 +32,9 @@ public class Battlefield(
     public Permanent? GetPermanentByPermanentid(string permanentId)
         => _permanents.SingleOrDefault(p => p.PermanentId == permanentId);
 
-    public async Task<CardZoneChangeResult> MoveCard(Card card, Player controller)
+    public async Task<(CardZoneChangeResult[], RollbackRequest?)> MoveCards(Card[] cards, Player controller)
     {
-        return await match.MoveCard(
+        return await match.MoveCards([..cards.Select(card => new CardZoneChange(
             card,
             CardZoneChangeType.Bottom,
             new CardZoneChanger(
@@ -42,7 +42,7 @@ public class Battlefield(
                 _permanents,
                 controller
             )
-        );
+        ))]);
     }
 
     public Permanent[] GetPermanents()
@@ -92,15 +92,16 @@ public class Battlefield(
             return !card.IsSorcery() && !card.IsInstant();
         }
 
-        public Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type)
+        public Task<(CardZoneChangeResult, RollbackRequest?)> Do(Card card, CardZoneChangeType type)
         {
             // * type doesn't matter
             var permanent = new Permanent(card, controller);
             permanents.Add(permanent);
 
-            return Task.FromResult(
-                new CardZoneChangeResult(permanent.PermanentId, null)
-            );
+            return Task.FromResult<(CardZoneChangeResult, RollbackRequest?)>((
+                new (permanent.PermanentId),
+                null
+            ));
         }
 
         public ICardZone GetTargetZone()

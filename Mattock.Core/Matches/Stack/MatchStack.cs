@@ -28,17 +28,24 @@ public class MatchStack(
         EffectContext ctx
     )
     {
-        var (stackEffectId, rollback) = await Match.MoveCard(
-            card,
-            CardZoneChangeType.Bottom,
-            new SpellCardZoneChanger(
-                ctx.Controller,
-                ctx
+        var (moveResults, rollback) = await Match.MoveCards([
+            new(
+                card,
+                CardZoneChangeType.Bottom,
+                new SpellCardZoneChanger(
+                    ctx.Controller,
+                    ctx
+                )
             )
-        );
+        ]);
 
         if (rollback is not null)
             return (null, rollback);
+
+        if (moveResults.Length != 1)
+            throw new CodeErrorException($"After creating spell card zone changer move results had length = {moveResults.Length} (has to be 1)");
+
+        var stackEffectId = moveResults[0].Id;
 
         if (stackEffectId is null)
             throw new CodeErrorException($"Failed to move a card stack effect for card {card.GetDisplayName()}");
@@ -103,7 +110,7 @@ public class MatchStack(
             return true;
         }
 
-        public Task<CardZoneChangeResult> Do(Card card, CardZoneChangeType type)
+        public Task<(CardZoneChangeResult, RollbackRequest?)> Do(Card card, CardZoneChangeType type)
         {
             var stack = card.Match.Stack;
 
@@ -117,9 +124,10 @@ public class MatchStack(
             );
 
             card.Match.Stack.Effects.Add(effect);
-            return Task.FromResult(
-                new CardZoneChangeResult(effect.StackEffectId, null)
-            );
+            return Task.FromResult<(CardZoneChangeResult, RollbackRequest?)>((
+                new (effect.StackEffectId),
+                null
+            ));
         }
 
         public ICardZone GetTargetZone()

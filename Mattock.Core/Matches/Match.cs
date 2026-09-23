@@ -37,7 +37,7 @@ public class Match
     public MatchConfig Config { get; }
     public Mechanics Mechanics { get; }
     private readonly Dictionary<int, Player[]> _teams;
-    public CardZoneChange? ZoneChange { get; private set; }
+    public CardZoneChangeGroup? ZoneChangeGroup { get; private set; }
     public EventsManager Events { get; }
     public StateBasedActionsManager StateBasedActions { get; }
     public TriggerManager Triggers { get; }
@@ -58,7 +58,7 @@ public class Match
         Config = config;
         Mechanics = mechanics;
 
-        ZoneChange = null;
+        ZoneChangeGroup = null;
         Priority = null;
         Ids = new(this);
         Stack = new(this);
@@ -245,18 +245,16 @@ public class Match
 
     public (Card, Player)[] GetCardControllerPairs() => [.. GetZones().SelectMany(z => z.GetCardControllerPairs())];
 
-    public async Task<CardZoneChangeResult> MoveCard(
-        Card card,
-        CardZoneChangeType type,
-        ICardZoneChanger changer
+    public async Task<(CardZoneChangeResult[], RollbackRequest?)> MoveCards(
+        CardZoneChange[] zoneChanges
     )
     {
-        ZoneChange = new(card, type, changer);
+        ZoneChangeGroup = new(zoneChanges);
 
         // TODO apply all zone change replacement effects
 
-        var result = await ZoneChange.Process();
-        ZoneChange = null;
+        var result = await ZoneChangeGroup.Process();
+        ZoneChangeGroup = null;
         return result;
     }
 

@@ -28,11 +28,13 @@ public class LondonMulliganRule(
                 throw new CodeErrorException($"Got more than 1 card for moving card to bottom for {nameof(LondonMulliganRule)}");
 
             // TODO ignored rollback
-            await player.Match.MoveCard(
-                choices[0],
-                CardZoneChangeType.Bottom,
-                player.Library.GetCardZoneChanger()
-            );
+            await player.Match.MoveCards([
+                new(
+                    choices[0],
+                    CardZoneChangeType.Bottom,
+                    player.Library.GetCardZoneChanger()
+                )
+            ]);
         }
     }
 }

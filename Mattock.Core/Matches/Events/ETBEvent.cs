@@ -15,9 +15,13 @@ public class ETBEvent(
         List<string> newPermanentIds = [];
         foreach (var (card, controller) in pairs)
         {
-            var (permanentId, request) = await match.Battlefield.MoveCard(card, controller);
+            var (moveResults, request) = await match.Battlefield.MoveCards([card], controller);
             if (request is not null)
                 return request;
+            if (moveResults.Length != 1)
+                throw new CodeErrorException($"Invalid number of move results after calling {nameof(match.Battlefield.MoveCards)} = {moveResults.Length} (has to be 1)");
+
+            var permanentId = moveResults[0].Id;
             if (permanentId is null) continue;
             newPermanentIds.Add(permanentId);
         }

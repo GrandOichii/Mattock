@@ -38,11 +38,13 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        await match.GetMatch().MoveCard(
-                            opp.Library.GetLast()!,
-                            CardZoneChangeType.Bottom,
-                            player.Graveyard.GetCardZoneChanger()
-                        );
+                        await match.GetMatch().MoveCards([
+                            new(
+                                opp.Library.GetLast()!,
+                                CardZoneChangeType.Bottom,
+                                player.Graveyard.GetCardZoneChanger()
+                            )
+                        ]);
                         return ((null, null), false, true);
                     },
                     true
@@ -129,11 +131,13 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        await match.GetMatch().MoveCard(
-                            opp.Library.GetLast()!,
-                            CardZoneChangeType.Bottom,
-                            player.Hand.GetCardZoneChanger()
-                        );
+                        await match.GetMatch().MoveCards([
+                            new(
+                                opp.Library.GetLast()!,
+                                CardZoneChangeType.Bottom,
+                                player.Hand.GetCardZoneChanger()
+                            )
+                        ]);
                         return ((null, null), false, true);
                     },
                     true
@@ -220,11 +224,13 @@ public class GeneralZoneTests
                     async (match, player, options) =>
                     {
                         var opp = match.GetMatch().Players[1];
-                        await match.GetMatch().MoveCard(
-                            opp.Hand.GetLast()!,
-                            CardZoneChangeType.Bottom,
-                            player.Library.GetCardZoneChanger()
-                        );
+                        await match.GetMatch().MoveCards([
+                            new(
+                                opp.Hand.GetLast()!,
+                                CardZoneChangeType.Bottom,
+                                player.Library.GetCardZoneChanger()
+                            )
+                        ]);
                         return ((null, null), false, true);
                     },
                     true

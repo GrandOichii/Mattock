@@ -1,8 +1,10 @@
 using Mattock.Core.Matches.Permanents;
 using Mattock.Core.Matches.Players.Cards;
+using Mattock.Core.Matches.Players.Controllers;
 using Mattock.Core.Matches.Rollback;
 using Mattock.Core.Matches.Triggers;
 using Mattock.Core.Matches.Triggers.Context;
+using Mattock.Core.Matches.Zones;
 
 namespace Mattock.Core.Matches.Events;
 
@@ -15,18 +17,23 @@ public class DestroyEvent(
         // List<Permanent> destroyed = [];
         foreach (var permanent in _permanents)
         {
-            var rollback = await Destroy(permanent);
+            var rollback = await PreDestroy(permanent);
             if (rollback is not null)
                 return rollback;
-
         }
 
-        // TODO trigger
+        await match.MoveCards([..
+            _permanents.Select(p => new CardZoneChange(
+                p.Card,
+                CardZoneChangeType.Top,
+                p.GetController().Graveyard.GetCardZoneChanger()
+            ))
+        ]);
 
         return null;
     }
 
-    private async Task<RollbackRequest?> Destroy(Permanent permanent)
+    private async Task<RollbackRequest?> PreDestroy(Permanent permanent)
     {
         // TODO very basic
         var controller = permanent.GetController();
@@ -42,14 +49,14 @@ public class DestroyEvent(
             ));
         }
 
-        var (_, request) = await controller.Match.MoveCard(
-            permanent.Card,
-            Zones.CardZoneChangeType.Top,
-            changer
-        );
+        // var (_, request) = await controller.Match.MoveCard(
+        //     permanent.Card,
+        //     Zones.CardZoneChangeType.Top,
+        //     changer
+        // );
 
-        if (request is not null)
-            return request;
+        // if (request is not null)
+        //     return request;
 
         return null;
     }

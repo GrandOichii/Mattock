@@ -91,11 +91,13 @@ public class SpellResolver(
         // TODO
 
         // 608.2n Move from stack to owner's graveyard
-        (_, rollback) = await match.MoveCard(
-            Card,
-            CardZoneChangeType.Top,
-            match.Players[Card.OwnerIdx].Graveyard.GetCardZoneChanger()
-        );
+        (_, rollback) = await match.MoveCards([
+            new(
+                Card,
+                CardZoneChangeType.Top,
+                match.Players[Card.OwnerIdx].Graveyard.GetCardZoneChanger()
+            )
+        ]);
 
         if (rollback is not null)
             return rollback;
