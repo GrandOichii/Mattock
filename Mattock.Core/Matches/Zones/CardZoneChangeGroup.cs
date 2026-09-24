@@ -3,10 +3,12 @@ using Mattock.Core.Matches.Rollback;
 namespace Mattock.Core.Matches.Zones;
 
 public class CardZoneChangeGroup(
+    Match match,
     CardZoneChange[] zoneChanges
 )
 {
     public CardZoneChange[] ZoneChanges { get; } = zoneChanges;
+
     public async Task<(CardZoneChangeResult[], RollbackRequest?)> Process()
     {
         List<CardZoneChangeResult> result = [];
@@ -23,6 +25,9 @@ public class CardZoneChangeGroup(
         {
             zoneChange.Card.UpdateTimestamp();
         }
+
+        // static abilities
+        match.ContinuousEffects.UpdateEffectsFor([.. ZoneChanges.Select(c => c.Card)]);
 
         return ([.. result], null);
     }

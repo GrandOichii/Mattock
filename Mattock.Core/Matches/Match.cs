@@ -249,7 +249,7 @@ public class Match
         CardZoneChange[] zoneChanges
     )
     {
-        ZoneChangeGroup = new(zoneChanges);
+        ZoneChangeGroup = new(this, zoneChanges);
 
         // TODO apply all zone change replacement effects
 
