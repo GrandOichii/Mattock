@@ -285,4 +285,38 @@ public class Card
     {
         Timestamp = Match.ContinuousEffects.CreateTimestamp();
     }
+
+    public int GetPower()
+    {
+        if (string.IsNullOrEmpty(Template.Power))
+            throw new CodeErrorException($"Tried to get power of {GetDisplayName()}, which has no power");
+        
+        if (!int.TryParse(Template.Power, out var result))
+            throw new NotImplementedException("Non-int power is not implemented yet");
+
+        return result;
+    }
+
+    public int GetToughness()
+    {
+        if (string.IsNullOrEmpty(Template.Toughness))
+            throw new CodeErrorException($"Tried to get toughness of {GetDisplayName()}, which has no toughness");
+        
+        if (!int.TryParse(Template.Toughness, out var result))
+            throw new NotImplementedException("Non-int toughness is not implemented yet");
+
+        return result;
+    }
+
+    public bool HasPower()
+    {
+        // TODO
+        return Template.Power is not null;
+    }
+
+    public bool HasToughness()
+    {
+        // TODO
+        return Template.Power is not null;
+    }
 }

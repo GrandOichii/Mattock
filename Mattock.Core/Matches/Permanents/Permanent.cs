@@ -190,16 +190,29 @@ public class Permanent
         return true;
     }
 
+    public bool HasPower()
+    {
+        // TODO
+        return Card.HasPower();
+    }
+
+    public bool HasToughness()
+    {
+        // TODO
+        return Card.HasToughness();
+    }
+
     public int GetPower()
     {
-        if (string.IsNullOrEmpty(Card.Template.Power))
-            throw new CodeErrorException($"Tried to get power of {GetDisplayName()}, which has no power");
-        
-        if (!int.TryParse(Card.Template.Power, out var result))
-            throw new NotImplementedException("Non-int power is not implemented yet");
-
-        return result;
+        // TODO
+        return Card.GetPower();
     }
+
+    public int GetToughness()
+    {
+        // TODO
+        return Card.GetToughness();
+    }    
 
     public void DealDamage(int amount)
     {
