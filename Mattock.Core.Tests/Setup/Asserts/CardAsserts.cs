@@ -6,7 +6,12 @@ public class CardAsserts(Card card)
 {
     public CardAsserts HasName(string name)
     {
-        card.HasName(name).ShouldBeTrue($"Card {card.GetDisplayName()} should have had name {name}, bu didn't");
+        card.HasName(name).ShouldBeTrue($"Card {card.GetDisplayName()} should have had name {name}, but didn't");
         return this;
+    }
+
+    public CardAsserts HasPower(int power)
+    {
+        
     }
 }

@@ -113,4 +113,18 @@ public class PermanentAsserts(Permanent permanent)
         permanent.MarkedDamage.ShouldBe(0);
         return this;
     }
+
+    public PermanentAsserts HasPower(int expected)
+    {
+        permanent.HasPower().ShouldBeTrue();
+        permanent.GetPower().ShouldBe(expected);
+        return this;
+    }
+
+    public PermanentAsserts HasToughness(int expected)
+    {
+        permanent.HasToughness().ShouldBeTrue();
+        permanent.GetToughness().ShouldBe(expected);
+        return this;
+    }
 }
